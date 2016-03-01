@@ -1755,9 +1755,16 @@ void yyfree (void * ptr )
 #line 12 "mccompiler.l"
 
 
-int main()
+int main(int argc, char* argv[])
 {
-yylex();
+if(argc>1)
+{
+	if(strcmp(argv[1], "-l")==0)
+{
+	yylex();
+
+}
+}
 return 0;
 }
 
