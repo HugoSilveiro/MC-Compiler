@@ -2,8 +2,8 @@ ID 				([a-z]|[A-Z]|"_")+([0-9]|[a-z]|[A-Z]|"_")*
 INTLIT			[0-9]+
 CHRLIT          [a-zA-Z]
 
-%%
 
+%%
 
 "{"									{printf("LBRACE\n");}
 "<="								{printf("LE\n");}
@@ -22,13 +22,16 @@ CHRLIT          [a-zA-Z]
 "]"									{printf("RSQ\n");}
 ";"									{printf("SEMI\n");}
 "void"								{printf("VOID\n");}
-"++"								{printf("RESERVED\n");}
-
+"auto"|"break"|"case"|"const"|"continue"|"default"|"do"|"double"|"enum"|"extern"|"float"|"goto"|"long"|"register"|"short"|"signed"|"sizeof"|"static"|"struct"|"switch"|"typedef"|"union"|"unsigned"|"volatile"|"while"|"++"|"--" 	{ printf("RESERVED\n"); }
+								
 
 {CHRLIT}                            {printf("CHRLIT(%s)\n", yytext);}
 {ID}								{printf("ID(%s)\n", yytext);}
 {INTLIT}							{printf("INTLIT(%s)\n", yytext);}
 
+"\n"								{;}
+"\t"								{;}
+" "								{;}
 %%
 int main(int argc, char* argv[])
 {
