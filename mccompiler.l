@@ -1,10 +1,25 @@
+
 ID 				([a-z]|[A-Z]|"_")+([0-9]|[a-z]|[A-Z]|"_")*
 INTLIT			[0-9]+
-CHRLIT          [a-zA-Z]
+STRLIT			
 
 
 %%
 
+"&"									{printf("AMP\n");}
+"&&"								{printf("AND\n");}
+"="									{printf("ASSIGN\n");}
+"*"									{printf("AST\n");}
+"char"								{printf("CHAR\n");}
+","									{printf("COMMA\n");}
+"/"									{printf("DIV\n");}
+"else"								{printf("ELSE\n");}
+"=="								{printf("EQ\n");}
+"for"								{printf("FOR\n");}
+">="								{printf("GE\n");}
+">"									{printf("GT\n");}
+"if"								{printf("IF\n");}
+"int"								{printf("INT\n");}
 "{"									{printf("LBRACE\n");}
 "<="								{printf("LE\n");}
 "("									{printf("LPAR\n");}
@@ -22,7 +37,7 @@ CHRLIT          [a-zA-Z]
 "]"									{printf("RSQ\n");}
 ";"									{printf("SEMI\n");}
 "void"								{printf("VOID\n");}
-"auto"|"break"|"case"|"const"|"continue"|"default"|"do"|"double"|"enum"|"extern"|"float"|"goto"|"long"|"register"|"short"|"signed"|"sizeof"|"static"|"struct"|"switch"|"typedef"|"union"|"unsigned"|"volatile"|"while"|"++"|"--" 	{ printf("RESERVED\n"); }
+"auto"|"break"|"case"|"const"|"continue"|"default"|"do"|"double"|"enum"|"extern"|"float"|"goto"|"long"|"register"|"short"|"signed"|"sizeof"|"static"|"struct"|"switch"|"typedef"|"union"|"unsigned"|"volatile"|"while"|"++"|"--" 	{ printf("RESERVED(%s)\n", yytext); }
 								
 
 {CHRLIT}                            {printf("CHRLIT(%s)\n", yytext);}
