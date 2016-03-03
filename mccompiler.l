@@ -3,7 +3,7 @@ ID 				([a-z]|[A-Z]|"_")+([0-9]|[a-z]|[A-Z]|"_")*
 INTLIT			[0-9]+
 STRLIT			"'"([^""\n])*"'"
 
-
+%X IGNORE
 %%
 
 "&"									{printf("AMP\n");}
@@ -45,9 +45,16 @@ STRLIT			"'"([^""\n])*"'"
 {INTLIT}							{printf("INTLIT(%s)\n", yytext);}
 {STRLIT}							{printf("STRLIT(%s)\n", yytext);}
 
+"/*"								{BEGIN (IGNORE);}
+<IGNORE>"*/"						{BEGIN (0);}
+<IGNORE>"\n"						{;}
+<IGNORE>.							{;}
+
 "\n"								{;}
 "\t"								{;}
-" "								{;}
+" "									{;}
+
+
 %%
 int main(int argc, char* argv[])
 {
