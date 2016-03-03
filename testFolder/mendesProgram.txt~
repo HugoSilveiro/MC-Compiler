@@ -1,0 +1,5 @@
+#include <stdio.h>
+int main(){
+	printf("Godinho és um fixe");
+	return 0;
+}
