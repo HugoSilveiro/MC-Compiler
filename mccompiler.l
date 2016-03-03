@@ -1,9 +1,9 @@
 
 ID 				([a-z]|[A-Z]|"_")+([0-9]|[a-z]|[A-Z]|"_")*
 INTLIT			[0-9]+
-STRLIT			"'"([^""\n])*"'"
+STRLIT			"\""([^"\n])*"\""
 
-%X IGNORE
+%X COMMENT
 %%
 
 "&"									{printf("AMP\n");}
@@ -45,10 +45,10 @@ STRLIT			"'"([^""\n])*"'"
 {INTLIT}							{printf("INTLIT(%s)\n", yytext);}
 {STRLIT}							{printf("STRLIT(%s)\n", yytext);}
 
-"/*"								{BEGIN (IGNORE);}
-<IGNORE>"*/"						{BEGIN (0);}
-<IGNORE>"\n"						{;}
-<IGNORE>.							{;}
+"/*"								{BEGIN (COMMENT);}
+<COMMENT>"*/"						{BEGIN (0);}
+<COMMENT>"\n"						{;}
+<COMMENT>.							{;}
 
 "\n"								{;}
 "\t"								{;}
