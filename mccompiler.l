@@ -3,11 +3,11 @@ ID 				([a-z]|[A-Z]|"_")+([0-9]|[a-z]|[A-Z]|"_")*
 INTLIT			[0-9]+
 ESCAPE			"\\"+([0-7]){1,3}|"\\n"|"\\t"|"\\\\"|"\\'"|"\\\""
 STRLIT			"\""(([^"\n])*|{ESCAPE}*)"\""
-CHRLIT			("'"(([^'\n])|{ESCAPE})"'") 
+CHRLIT			("'"(([^'\n])|{ESCAPE})"'")
 
 
 %{
-	#define YY_USER_ACTION columnNumber += yyleng;
+	#define YY_USER_ACTION columnNumber += yyleng; lineNumber = yylineno;
 	#include <stdio.h>
 	#include <stdlib.h>
 	#include <string.h>
@@ -18,6 +18,8 @@ CHRLIT			("'"(([^'\n])|{ESCAPE})"'")
 	int lineComment;
 %}
 
+
+%option yylineno
 %X COMMENT
 %%
 
@@ -62,11 +64,11 @@ CHRLIT			("'"(([^'\n])|{ESCAPE})"'")
 {CHRLIT}							{printf("CHRLIT(%s)\n", yytext);}
 
 
-"/*"								{BEGIN (COMMENT);}
+"/*"								{BEGIN (COMMENT); if(yytext[0]=='('){	colComment = columnNumber-1;	}else{	colComment=columnNumber;	} lineComment=yylineno;}
 <COMMENT>"*/"						{BEGIN (0);}
 <COMMENT>"\n"						{columnNumber = 0;}
 <COMMENT>.							{;}
-<COMMENT><<EOF>>					{printf("Line %d, col %d: unterminated comment\n", lineComment,  columnNumber);}
+<COMMENT><<EOF>>					{printf("Line %d, col %d: unterminated comment\n", lineComment,  colComment); yyterminate();}
 "\n"								{columnNumber= 0;}
 "\t"								{;}
 " "									{;}
