@@ -17,7 +17,7 @@ CHRLIT			("'"([^'\\\n])"'")|("'"{ESCAPE}"'")
 	int colComment;
 	int lineComment;
 
-	bool flag = 0;
+	bool flag = false;
 %}
 
 
@@ -83,12 +83,12 @@ if(argc>1)
 {
 
 	if(strcmp(argv[1], "-l")==0)
-{
-	flag = 1;
+	{
+		flag = true;
+	}
 
 }
 yylex();
-}
 return 0;
 }
 
