@@ -39,31 +39,31 @@ CHRLIT			("'"([^'\\\n])"'")|("'"{ESCAPE}"'")
 ">"									{printf("GT\n");}
 "if"								{printf("IF\n");}
 "int"								{printf("INT\n");}
-"{"									{printf("LBRACE\n");}
-"<="								{printf("LE\n");}
-"("									{printf("LPAR\n");}
-"["									{printf("LSQ\n");}
-"<"									{printf("LT\n");}
-"-"									{printf("MINUS\n");}
-"%" 								{printf("MOD\n");}
-"!="								{printf("NE\n");}
-"!"									{printf("NOT\n");}
-"||" 								{printf("OR\n");}
-"+" 								{printf("PLUS\n");}
-"}"									{printf("RBRACE\n");}
-"return" 							{printf("RETURN\n");}
-")"									{printf("RPAR\n");}
-"]"									{printf("RSQ\n");}
-";"									{printf("SEMI\n");}
-"void"								{printf("VOID\n");}
-"auto"|"break"|"case"|"const"|"continue"|"default"|"do"|"double"|"enum"|"extern"|"float"|"goto"|"long"|"register"|"short"|"signed"|"sizeof"|"static"|"struct"|"switch"|"typedef"|"union"|"unsigned"|"volatile"|"while"|"++"|"--" 	{ printf("RESERVED(%s)\n", yytext); }
+"{"									{if(flag)printf("LBRACE\n");}
+"<="								{if(flag)printf("LE\n");}
+"("									{if(flag)printf("LPAR\n");}
+"["									{if(flag)printf("LSQ\n");}
+"<"									{if(flag)printf("LT\n");}
+"-"									{if(flag)printf("MINUS\n");}
+"%" 								{if(flag)printf("MOD\n");}
+"!="								{if(flag)printf("NE\n");}
+"!"									{if(flag)printf("NOT\n");}
+"||" 								{if(flag)printf("OR\n");}
+"+" 								{if(flag)printf("PLUS\n");}
+"}"									{if(flag)printf("RBRACE\n");}
+"return" 							{if(flag)printf("RETURN\n");}
+")"									{if(flag)printf("RPAR\n");}
+"]"									{if(flag)printf("RSQ\n");}
+";"									{if(flag)printf("SEMI\n");}
+"void"								{if(flag)printf("VOID\n");}
+"auto"|"break"|"case"|"const"|"continue"|"default"|"do"|"double"|"enum"|"extern"|"float"|"goto"|"long"|"register"|"short"|"signed"|"sizeof"|"static"|"struct"|"switch"|"typedef"|"union"|"unsigned"|"volatile"|"while"|"++"|"--" 	{ if(flag)printf("RESERVED(%s)\n", yytext); }
 
 
 
-{ID}								{printf("ID(%s)\n", yytext);}
-{INTLIT}							{printf("INTLIT(%s)\n", yytext);}
-{STRLIT}							{printf("STRLIT(%s)\n", yytext);}
-{CHRLIT}							{printf("CHRLIT(%s)\n", yytext);}
+{ID}								{if(flag)printf("ID(%s)\n", yytext);}
+{INTLIT}							{if(flag)printf("INTLIT(%s)\n", yytext);}
+{STRLIT}							{if(flag)printf("STRLIT(%s)\n", yytext);}
+{CHRLIT}							{if(flag)printf("CHRLIT(%s)\n", yytext);}
 
 
 "/*"								{BEGIN (COMMENT); {	colComment = columnNumber-1;	}lineComment=yylineno;}
