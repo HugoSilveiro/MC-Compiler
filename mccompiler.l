@@ -1,7 +1,10 @@
 
 ID 				([a-z]|[A-Z]|"_")+([0-9]|[a-z]|[A-Z]|"_")*
 INTLIT			[0-9]+
-STRLIT			"\""([^"\n])*"\""
+ESCAPE			"\\"+([0-7]){1,3}|"\\n"|"\\t"|"\\\\"|"\\'"|"\\\""
+STRLIT			"\""(([^"\n])*|{ESCAPE}*)"\""
+CHRLIT			("'"(([^'\n])?|{ESCAPE}?)"'") 
+
 
 %X COMMENT
 %%
@@ -44,6 +47,8 @@ STRLIT			"\""([^"\n])*"\""
 {ID}								{printf("ID(%s)\n", yytext);}
 {INTLIT}							{printf("INTLIT(%s)\n", yytext);}
 {STRLIT}							{printf("STRLIT(%s)\n", yytext);}
+{CHRLIT}							{printf("CHRLIT(%s)\n", yytext);}
+
 
 "/*"								{BEGIN (COMMENT);}
 <COMMENT>"*/"						{BEGIN (0);}
