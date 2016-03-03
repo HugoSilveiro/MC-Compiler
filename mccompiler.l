@@ -1,9 +1,9 @@
 
 ID 				([a-z]|[A-Z]|"_")+([0-9]|[a-z]|[A-Z]|"_")*
 INTLIT			[0-9]+
-ESCAPE			"\\"+([0-7]){1,3}|"\\n"|"\\t"|"\\\\"|"\\'"|"\\\""
-STRLIT			"\""(([^"\n]+{ESCAPE})*)"\""
-CHRLIT			("'"([^'\n])"'")|("'"{ESCAPE}"'")
+ESCAPE			"\\"([0-7]){1,3}|"\\n"|"\\t"|"\\\\"|"\\'"|"\\\""
+STRLIT			"\""(([^"\\\n]|{ESCAPE})*)"\""
+CHRLIT			("'"([^'\\\n])"'")|("'"{ESCAPE}"'")
 
 
 %{
@@ -11,11 +11,13 @@ CHRLIT			("'"([^'\n])"'")|("'"{ESCAPE}"'")
 	#include <stdio.h>
 	#include <stdlib.h>
 	#include <string.h>
-
+	#include <stdbool.h>
 	int lineNumber = 1;
 	int columnNumber = 0;
 	int colComment;
 	int lineComment;
+
+	bool flag = 0;
 %}
 
 
@@ -23,8 +25,8 @@ CHRLIT			("'"([^'\n])"'")|("'"{ESCAPE}"'")
 %X COMMENT
 %%
 
-"&"									{printf("AMP\n");}
-"&&"								{printf("AND\n");}
+"&"									{if(flag)printf("AMP\n");}
+"&&"								{if(flag)printf("AND\n");}
 "="									{printf("ASSIGN\n");}
 "*"									{printf("AST\n");}
 "char"								{printf("CHAR\n");}
@@ -64,7 +66,7 @@ CHRLIT			("'"([^'\n])"'")|("'"{ESCAPE}"'")
 {CHRLIT}							{printf("CHRLIT(%s)\n", yytext);}
 
 
-"/*"								{BEGIN (COMMENT); if(yytext[0]=='/'){	colComment = columnNumber-1;	}lineComment=yylineno;}
+"/*"								{BEGIN (COMMENT); {	colComment = columnNumber-1;	}lineComment=yylineno;}
 <COMMENT>"*/"						{BEGIN (0);}
 <COMMENT>"\n"						{columnNumber = 0;}
 <COMMENT>.							{;}
@@ -80,11 +82,13 @@ int main(int argc, char* argv[])
 {
 if(argc>1)
 {
+
 	if(strcmp(argv[1], "-l")==0)
 {
-	yylex();
+	flag = 1;
 
 }
+yylex();
 }
 return 0;
 }
