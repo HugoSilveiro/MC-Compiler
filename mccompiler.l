@@ -3,8 +3,9 @@ ID 				([a-z]|[A-Z]|"_")+([0-9]|[a-z]|[A-Z]|"_")*
 INTLIT			[0-9]+
 ESCAPE			"\\"([0-7]){1,3}|"\\n"|"\\t"|"\\\\"|"\\'"|"\\\""
 STRLIT			"\""(([^"\\\n]|{ESCAPE})*)"\""
-CHRLIT			("'"([^'\\\n])"'")|("'"{ESCAPE}"'")
+CHRLIT			("'"([^'\\\n]|{ESCAPE})"'")
 NOSTRLIT 		"\""(([^"\\\n]|{ESCAPE})*)
+NOCHRLIT		("'"([^'\\\n]|{ESCAPE}))
 
 
 %{
@@ -63,7 +64,7 @@ NOSTRLIT 		"\""(([^"\\\n]|{ESCAPE})*)
 {ID}								{if(flag)printf("ID(%s)\n", yytext);}
 {INTLIT}							{if(flag)printf("INTLIT(%s)\n", yytext);}
 {STRLIT}							{if(flag)printf("STRLIT(%s)\n", yytext);}
-{NOSTRLIT}							{printf("Line %d, col %d: unterminates string constant\n", yylineno, columnNumber-yyleng+1);}	
+{NOSTRLIT}							{printf("Line %d, col %lu: unterminated string constant\n", yylineno, columnNumber-yyleng+1);}	
 {CHRLIT}							{if(flag)printf("CHRLIT(%s)\n", yytext);}
 
 
