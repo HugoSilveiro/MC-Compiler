@@ -2,8 +2,8 @@
 ID 				([a-z]|[A-Z]|"_")+([0-9]|[a-z]|[A-Z]|"_")*
 INTLIT			[0-9]+
 ESCAPE			"\\"+([0-7]){1,3}|"\\n"|"\\t"|"\\\\"|"\\'"|"\\\""
-STRLIT			"\""(([^"\n])*|{ESCAPE}*)"\""
-CHRLIT			("'"(([^'\n])|{ESCAPE})"'")
+STRLIT			"\""(([^"\n]+{ESCAPE})*)"\""
+CHRLIT			("'"([^'\n])"'")|("'"{ESCAPE}"'")
 
 
 %{
@@ -64,7 +64,7 @@ CHRLIT			("'"(([^'\n])|{ESCAPE})"'")
 {CHRLIT}							{printf("CHRLIT(%s)\n", yytext);}
 
 
-"/*"								{BEGIN (COMMENT); if(yytext[0]=='('){	colComment = columnNumber-1;	}else{	colComment=columnNumber;	} lineComment=yylineno;}
+"/*"								{BEGIN (COMMENT); if(yytext[0]=='/'){	colComment = columnNumber-1;	}lineComment=yylineno;}
 <COMMENT>"*/"						{BEGIN (0);}
 <COMMENT>"\n"						{columnNumber = 0;}
 <COMMENT>.							{;}
@@ -72,7 +72,7 @@ CHRLIT			("'"(([^'\n])|{ESCAPE})"'")
 "\n"								{columnNumber= 0;}
 "\t"								{;}
 " "									{;}
-. 									{printf("Line %d, col %d: illegal character\n", lineComment,  columnNumber);}
+. 									{printf("Line %d, col %d: illegal character ('%s')\n", yylineno, columnNumber, yytext);}
 
 
 %%
