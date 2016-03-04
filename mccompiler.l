@@ -4,7 +4,7 @@ INTLIT			[0-9]+
 ESCAPE			"\\"([0-7]){1,3}|"\\n"|"\\t"|"\\\\"|"\\'"|"\\\""
 STRLIT			"\""(([^"\\\n]|{ESCAPE})*)"\""
 CHRLIT			("'"([^'\\\n]|{ESCAPE})"'")
-NOSTRLIT 		"\""(([^"\n])*)
+NOSTRLIT 		("\""([^"\n])*)
 NOCHRLIT		("'"([^'\n])*)
 
 INVALIDCHR		("'""'")|("'"([^'\\\n]|{ESCAPE})([^'\\\n]|{ESCAPE})*"'")
