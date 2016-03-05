@@ -8,7 +8,6 @@ CHRLIT			("'"([^'\\\n]|{ESCAPE})"'")
 
 
 NOSTRLIT 		\"([^\"\n]|{ESCAPE})*
-
 NOCHRLIT		\'({ESCAPE}*|(\\.|[^'\n\\]))*\\?
 
 INVALIDCHR		\'([^'\n\\]|{NOTESCAPE})*\'
@@ -78,6 +77,7 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 
 {INVALIDSTRLIT}						{printf("Line %d, col %d: invalid string constant ('%s')\n", yylineno, (int)(columnNumber-yyleng+1), yytext);}
 {INVALIDCHR}						{printf("Line %d, col %d: invalid char constant (%s)\n", yylineno, (int)(columnNumber-yyleng+1), yytext);}
+
 "/*"								{BEGIN (COMMENT); {	colComment = columnNumber-1;	}lineComment=yylineno;}
 <COMMENT>"*/"						{BEGIN (0);}
 <COMMENT>"\n"						{columnNumber = 0;}
