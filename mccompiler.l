@@ -75,7 +75,7 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 {NOCHRLIT}							{printf("Line %d, col %d: unterminated char constant\n", yylineno, (int)(columnNumber-yyleng+1));}
 {CHRLIT}							{if(flag)printf("CHRLIT(%s)\n", yytext);}
 
-{INVALIDSTRLIT}						{printf("Line %d, col %d: invalid string constant ('%s')\n", yylineno, (int)(columnNumber-yyleng+1), yytext);}
+{INVALIDSTRLIT}						{printf("Line %d, col %d: invalid string constant (%s)\n", yylineno, (int)(columnNumber-yyleng+1), yytext);}
 {INVALIDCHR}						{printf("Line %d, col %d: invalid char constant (%s)\n", yylineno, (int)(columnNumber-yyleng+1), yytext);}
 
 "/*"								{BEGIN (COMMENT); {	colComment = columnNumber-1;	}lineComment=yylineno;}
@@ -86,7 +86,7 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 "\n"								{columnNumber= 0;}
 "\t"								{;}
 " "									{;}
-. 									{printf("Line %d, col %d: illegal character ('%s')\n", yylineno, columnNumber, yytext);}
+. 									{printf("Line %d, col %d: illegal character (%s)\n", yylineno, columnNumber, yytext);}
 
 
 %%
