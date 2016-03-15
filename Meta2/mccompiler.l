@@ -20,6 +20,7 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 	#include <stdlib.h>
 	#include <string.h>
 	#include <stdbool.h>
+	#include "y.tab.h"
 	int lineNumber = 1;
 	int columnNumber = 0;
 	int colComment;
@@ -67,7 +68,8 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 "auto"|"break"|"case"|"const"|"continue"|"default"|"do"|"double"|"enum"|"extern"|"float"|"goto"|"long"|"register"|"short"|"signed"|"sizeof"|"static"|"struct"|"switch"|"typedef"|"union"|"unsigned"|"volatile"|"while"|"++"|"--" 	{ if(flag)printf("RESERVED(%s)\n", yytext); }
 
 
-{ID}								{if(flag)printf("ID(%s)\n", yytext);}
+{ID}								{if(flag)printf("ID(%s)\n", yytext); yylval = yytext; return ID;}
+
 {INTLIT}							{if(flag)printf("INTLIT(%s)\n", yytext);}
 {STRLIT}							{if(flag)printf("STRLIT(%s)\n", yytext);}
 
@@ -90,6 +92,11 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 
 
 %%
+
+int yywrap(){
+	return 1;
+}
+
 int main(int argc, char* argv[])
 {
 if(argc>1)
@@ -101,11 +108,7 @@ if(argc>1)
 	}
 
 }
-yylex();
-return 0;
-}
 
-int yywrap()
-{
-return 1;
+yyparse();
+return 0;
 }
