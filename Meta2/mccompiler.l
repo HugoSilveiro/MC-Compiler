@@ -87,8 +87,8 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 <COMMENT><<EOF>>						{printf("Line %d, col %d: unterminated comment\n", lineComment,  colComment); yyterminate();}
 "\n"								{columnNumber= 0;}
 "\t"								{;}
-" "								{;}
-. 								{printf("Line %d, col %d: illegal character (%s)\n", yylineno, columnNumber, yytext);}
+" "									{;}
+. 									{printf("Line %d, col %d: illegal character (%s)\n", yylineno, columnNumber, yytext);}
 
 
 %%

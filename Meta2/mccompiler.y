@@ -37,18 +37,22 @@
 %token SEMI
 %token VOID
 %token RESERVED
-%token ID
-%token INTLIT
-%token STRLIT
-%token CHRLIT
+%token ID 		
+%token INTLIT	
+%token STRLIT	
+%token CHRLIT	
 
+%nonassoc AMP ELSE IF 
 
-%left PLUS MINUS
+%left PLUS MINUS 
 %left COMMA
 %left AND DIV MOD AST 
 %left OR
 %left LBRACE RBRACE
-%right NOT
+%left LPAR RPAR
+%left LT EQ LE NE
+%left LSQ RSQ
+%right ASSIGN NOT 
 
 %%
 
