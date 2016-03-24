@@ -45,7 +45,8 @@
 %%
 
  /*Falta FunctionDefinition FunctionDeclaration Declaration */ 
-start: FunctionDefinition | FunctionDeclaration | Declaration;
+Start: FunctionDefinition FuncDefDecDec | FunctionDeclaration  FuncDefDecDec| Declaration  FuncDefDecDec;
+FuncDefDecDec:  FunctionDefinition FuncDefDecDec | FunctionDeclaration FuncDefDecDec | Declaration FuncDefDecDec | Empty; 
 
 FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody;
 
@@ -102,7 +103,6 @@ Expr: Expr LSQ Expr RSQ;
 Expr: ID LPAR RPAR;
 
 Expr: ID | INTLIT | CHRLIT | STRLIT | LPAR Expr RPAR;
-
 
 
 FunctionDefinition: ID  {$$ = $1; printf("%d\n", $1);}
