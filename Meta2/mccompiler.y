@@ -46,8 +46,9 @@
 
 %%
 
-Start: FunctionDefinition FuncDefDecDec| FunctionDeclaration  FuncDefDecDec| Declaration FuncDefDecDec;
-FuncDefDecDec:  Empty | FuncDefDecDec FunctionDefinition | FuncDefDecDec FunctionDeclaration  | FuncDefDecDec Declaration;
+Start: FuncDefDecDec FuncDefDecDec1;
+FuncDefDecDec: FunctionDefinition | FunctionDeclaration | Declaration;
+FuncDefDecDec1: Empty | FuncDefDecDec1 FuncDefDecDec ;
 
 FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody;
 
