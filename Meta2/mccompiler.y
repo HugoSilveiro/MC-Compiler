@@ -50,7 +50,7 @@ start: FunctionDefinition | FunctionDeclaration | Declaration;
 FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody;
 
  /*Falta a Declaration e Statement */
-FunctionBody: LBRACE RBRACE;
+FunctionBody: LBRACE Declaration1 Statement1 RBRACE;
 
 FunctionDeclaration: TypeSpec FunctionDeclarator SEMI;
 
@@ -64,7 +64,9 @@ ParameterList: ParameterDeclaration;
 ParameterDeclaration: TypeSpec;
 
  /*Falta o COMMA Declarator */
-Declaration: TypeSpec Declarator SEMI;
+Declaration: TypeSpec Declarator COMMA_Declarator SEMI;
+//In case of brackets -> [0,inf[
+Declaration1: Empty | TypeSpec Declarator COMMA_Declarator SEMI;
 
 TypeSpec: CHAR | INT | VOID;
 
@@ -82,7 +84,8 @@ Statement: IF LPAR Expr RPAR Statement;
 
  /*Falta a Expr*/
 Statement: FOR LPAR SEMI SEMI RPAR Statement;
-
+//In case of brackets -> [0,inf[
+Statement1: Empty | Statement1 | Statement;
  /*Falta a Expr/
 Statement: RETURN SEMI;
 
@@ -103,7 +106,7 @@ Expr: ID LPAR RPAR;
 
 Expr: ID | INTLIT | CHRLIT | STRLIT | LPAR Expr RPAR;
 
-
+Empty: ;
 
 FunctionDefinition: ID  {$$ = $1; printf("%d\n", $1);}
 	;
