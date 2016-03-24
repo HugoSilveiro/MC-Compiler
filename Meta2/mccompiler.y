@@ -44,7 +44,7 @@
 
 %%
 
- /*Falta FunctionDefinition FunctionDeclaration Declaration */ 
+ /*Falta FunctionDefinition FunctionDeclaration Declaration */
 start: FunctionDefinition | FunctionDeclaration | Declaration;
 
 FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody;
@@ -63,7 +63,7 @@ ParameterList: ParameterDeclaration;
  /*Falta o AST ID*/
 ParameterDeclaration: TypeSpec;
 
- /*Falta o COMMA Declarator */ 
+ /*Falta o COMMA Declarator */
 Declaration: TypeSpec Declarator SEMI;
 
 TypeSpec: CHAR | INT | VOID;
@@ -71,8 +71,8 @@ TypeSpec: CHAR | INT | VOID;
  /*Falta o AST e LSQ INTLIT RSQ*/
 Declarator: ID;
 
- /*Falta a Expr*/
-Statement: SEMI;
+
+Statement: SEMI | Expr SEMI;
 
  /*Falta a Statement*/
 Statement: LBRACE RBRACE;
