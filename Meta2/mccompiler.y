@@ -80,8 +80,8 @@ Statement: IF LPAR Expr RPAR Statement;
 Statement: FOR LPAR SEMI SEMI RPAR Statement;
 //In case of brackets -> [0,inf[
 Statement1: Empty | Statement1 | Statement;
- /*Falta a Expr/
-Statement: RETURN SEMI;
+
+Statement: RETURN SEMI | RETURN Expr SEMI;
 
 Expr: Expr ASSIGN Expr | Expr COMMA Expr;
 
