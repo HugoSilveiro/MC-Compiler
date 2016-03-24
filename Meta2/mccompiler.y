@@ -49,13 +49,11 @@ FuncDefDecDec:  FunctionDefinition FuncDefDecDec | FunctionDeclaration FuncDefDe
 
 FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody;
 
- /*Falta a Declaration e Statement */
 FunctionBody: LBRACE Declaration1 Statement1 RBRACE;
 
 FunctionDeclaration: TypeSpec FunctionDeclarator SEMI;
 
- /*Falta o AST */
-FunctionDeclarator: ID LPAR ParameterList RPAR;
+FunctionDeclarator: Asterisk ID LPAR ParameterList RPAR;
 
  /*Falta o COMMA ParameterDeclaration */
 ParameterList: ParameterDeclaration;
@@ -102,6 +100,8 @@ Expr: Expr LSQ Expr RSQ;
 Expr: ID LPAR RPAR;
 
 Expr: ID | INTLIT | CHRLIT | STRLIT | LPAR Expr RPAR;
+
+Asterisk: Empty | Asterisk  AST;
 
 Empty: ;
 
