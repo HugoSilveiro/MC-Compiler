@@ -1158,7 +1158,7 @@ YY_RULE_SETUP
 case 32:
 YY_RULE_SETUP
 #line 68 "mccompiler.l"
-{ if(flag)printf("RESERVED(%s)\n", yytext); }
+{if(flag)printf("RESERVED(%s)\n", yytext); }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
@@ -2271,17 +2271,17 @@ int yywrap(){
 
 int main(int argc, char* argv[])
 {
-if(argc>1)
-{
-
-	if(strcmp(argv[1], "-l")==0)
+	if(argc>1)
 	{
-		flag = true;
+
+		if(strcmp(argv[1], "-l")==0)
+		{
+			flag = true;
+		}
+
 	}
 
-}
-
-yyparse();
-return 0;
+	yyparse();
+	return 0;
 }
 

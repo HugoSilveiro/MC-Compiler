@@ -45,11 +45,81 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    ID = 258
+    AMP = 258,
+    AND = 259,
+    ASSIGN = 260,
+    AST = 261,
+    CHAR = 262,
+    COMMA = 263,
+    DIV = 264,
+    ELSE = 265,
+    EQ = 266,
+    FOR = 267,
+    GE = 268,
+    GT = 269,
+    IF = 270,
+    INT = 271,
+    LBRACE = 272,
+    LE = 273,
+    LPAR = 274,
+    LSQ = 275,
+    LT = 276,
+    MINUS = 277,
+    MOD = 278,
+    NE = 279,
+    NOT = 280,
+    OR = 281,
+    PLUS = 282,
+    RBRACE = 283,
+    RETURN = 284,
+    RPAR = 285,
+    RSQ = 286,
+    SEMI = 287,
+    VOID = 288,
+    RESERVED = 289,
+    ID = 290,
+    INTLIT = 291,
+    STRLIT = 292,
+    CHRLIT = 293
   };
 #endif
 /* Tokens.  */
-#define ID 258
+#define AMP 258
+#define AND 259
+#define ASSIGN 260
+#define AST 261
+#define CHAR 262
+#define COMMA 263
+#define DIV 264
+#define ELSE 265
+#define EQ 266
+#define FOR 267
+#define GE 268
+#define GT 269
+#define IF 270
+#define INT 271
+#define LBRACE 272
+#define LE 273
+#define LPAR 274
+#define LSQ 275
+#define LT 276
+#define MINUS 277
+#define MOD 278
+#define NE 279
+#define NOT 280
+#define OR 281
+#define PLUS 282
+#define RBRACE 283
+#define RETURN 284
+#define RPAR 285
+#define RSQ 286
+#define SEMI 287
+#define VOID 288
+#define RESERVED 289
+#define ID 290
+#define INTLIT 291
+#define STRLIT 292
+#define CHRLIT 293
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
