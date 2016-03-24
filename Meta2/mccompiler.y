@@ -42,6 +42,7 @@
 %token STRLIT
 %token CHRLIT
 
+%left PLUS MINUS
 %left COMMA
 
 %%
