@@ -42,6 +42,8 @@
 %token STRLIT
 %token CHRLIT
 
+%nonassoc AMP ELSE IF
+
 
 %left PLUS MINUS
 %left LBRACE RBRACE
@@ -53,6 +55,7 @@
 %left OR
 %right ASSIGN
 %left COMMA
+
 
 %%
 
