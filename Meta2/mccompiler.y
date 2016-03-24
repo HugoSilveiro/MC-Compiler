@@ -55,7 +55,6 @@ FunctionDeclaration: TypeSpec FunctionDeclarator SEMI;
 
 FunctionDeclarator: Asterisk ID LPAR ParameterList RPAR;
 
- /*Falta o COMMA ParameterDeclaration */
 ParameterList: ParameterDeclaration COMMA_ParameterDeclaration;
 
 ParameterDeclaration: TypeSpec Asterisk | TypeSpec Asterisk ID;
@@ -106,6 +105,9 @@ Expr: ID | INTLIT | CHRLIT | STRLIT | LPAR Expr RPAR;
 Asterisk: Empty | Asterisk  AST;
 
 COMMA_Declarator: Empty | COMMA_Declarator COMMA Declarator;
+
+COMMA_ParameterDeclaration: Empty | COMMA_ParameterDeclaration COMMA ParameterDeclaration;
+
 Empty: ;
 
 FunctionDefinition: ID  {$$ = $1; printf("%d\n", $1);}
