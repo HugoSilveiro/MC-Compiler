@@ -60,7 +60,7 @@ ParameterList: ParameterDeclaration COMMA_ParameterDeclaration;
 ParameterDeclaration: TypeSpec Asterisk | TypeSpec Asterisk ID;
 
 Declaration: TypeSpec Declarator COMMA_Declarator SEMI;
-//In case of brackets -> [0,inf[
+
 Declaration1: Empty | TypeSpec Declarator COMMA_Declarator SEMI;
 
 TypeSpec: CHAR | INT | VOID;
@@ -76,12 +76,11 @@ Statement: IF LPAR Expr RPAR Statement ElseStatement;
 Statement: FOR LPAR Expr0 SEMI Expr0 SEMI Expr0 RPAR Statement;
 Expr0: Expr | Empty;
 
-//In case of brackets -> [0,inf[
 Statement1: Empty | Statement1 Statement;
 
 Statement: RETURN SEMI | RETURN Expr SEMI;
 
-ElseStatement: Empty | Else Statement;
+ElseStatement: Empty | ELSE Statement;
 
 Expr: Expr ASSIGN Expr | Expr COMMA Expr;
 
@@ -97,11 +96,11 @@ Expr: Expr LSQ Expr RSQ;
 
 Expr: ID LPAR RPAR | ID LPAR Expr_COMMAExpr RPAR;
 Expr_COMMAExpr: Empty | Expr COMMA_Expr;
-COMMA_Expr: Empty | COMMA Expr COMMA_Expr ;
+COMMA_Expr: Empty | COMMA Expr COMMA_Expr;
 
 Expr: ID | INTLIT | CHRLIT | STRLIT | LPAR Expr RPAR;
 
-Asterisk: Empty | Asterisk  AST;
+Asterisk: Empty | Asterisk AST;
 
 COMMA_Declarator: Empty | COMMA_Declarator COMMA Declarator;
 
@@ -109,6 +108,5 @@ COMMA_ParameterDeclaration: Empty | COMMA_ParameterDeclaration COMMA ParameterDe
 
 Empty: ;
 
-FunctionDefinition: ID  {$$ = $1; printf("%d\n", $1);}
-	;
+
 %%
