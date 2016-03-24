@@ -59,7 +59,6 @@ ParameterList: ParameterDeclaration COMMA_ParameterDeclaration;
 
 ParameterDeclaration: TypeSpec Asterisk | TypeSpec Asterisk ID;
 
- /*Falta o COMMA Declarator */
 Declaration: TypeSpec Declarator COMMA_Declarator SEMI;
 //In case of brackets -> [0,inf[
 Declaration1: Empty | TypeSpec Declarator COMMA_Declarator SEMI;
@@ -70,19 +69,19 @@ Declarator: Asterisk ID | Asterisk ID LSQ INTLIT RSQ;
 
 Statement: SEMI | Expr SEMI;
 
- /*Falta a Statement*/
-Statement: LBRACE RBRACE;
+Statement: LBRACE Statement1 RBRACE;
 
- /*Falta a ELSE Statement*/
-Statement: IF LPAR Expr RPAR Statement;
+Statement: IF LPAR Expr RPAR Statement ElseStatement;
 
 Statement: FOR LPAR Expr0 SEMI Expr0 SEMI Expr0 RPAR Statement;
 Expr0: Expr | Empty;
 
 //In case of brackets -> [0,inf[
-Statement1: Empty | Statement1 | Statement;
+Statement1: Empty | Statement1 Statement;
 
 Statement: RETURN SEMI | RETURN Expr SEMI;
+
+ElseStatement: Empty | Else Statement;
 
 Expr: Expr ASSIGN Expr | Expr COMMA Expr;
 
