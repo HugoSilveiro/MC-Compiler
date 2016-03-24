@@ -42,8 +42,13 @@
 %token STRLIT
 %token CHRLIT
 
+
+
 %left PLUS MINUS
 %left COMMA
+%left AND DIV MOD 
+%left LBRACE RBRACE
+%right NOT
 
 %%
 
