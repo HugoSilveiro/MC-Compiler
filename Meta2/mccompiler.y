@@ -77,8 +77,9 @@ Statement: LBRACE RBRACE;
  /*Falta a ELSE Statement*/
 Statement: IF LPAR Expr RPAR Statement;
 
- /*Falta a Expr*/
-Statement: FOR LPAR SEMI SEMI RPAR Statement;
+Statement: FOR LPAR Expr0 SEMI Expr0 SEMI Expr0 RPAR Statement;
+Expr0: Expr | Empty;
+
 //In case of brackets -> [0,inf[
 Statement1: Empty | Statement1 | Statement;
 
