@@ -43,10 +43,9 @@
 %token CHRLIT
 
 
-
 %left PLUS MINUS
 %left COMMA
-%left AND DIV MOD 
+%left AND DIV MOD AST 
 %left LBRACE RBRACE
 %right NOT
 
