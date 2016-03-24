@@ -108,10 +108,7 @@ Expr: ID LPAR RPAR;
 
 Expr: ID | INTLIT | CHRLIT | STRLIT | LPAR Expr RPAR;
 
-<<<<<<< HEAD
-=======
 Empty: ;
->>>>>>> e165ed23201d18b2c0448f9cb4a43f18aa66dac3
 
 FunctionDefinition: ID  {$$ = $1; printf("%d\n", $1);}
 	;
