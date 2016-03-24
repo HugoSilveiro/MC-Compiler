@@ -26,7 +26,8 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 	int colComment;
 	int lineComment;
 
-	bool flag = false;
+	bool flagTokens = false;
+	bool flagErrors = false;
 %}
 
 
@@ -34,48 +35,109 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 %X COMMENT
 %%
 
-"&"								{if(flag)printf("AMP\n");}
-"&&"								{if(flag)printf("AND\n");}
-"="								{if(flag)printf("ASSIGN\n");}
-"*"								{if(flag)printf("AST\n");}
-"char"								{if(flag)printf("CHAR\n");}
-","								{if(flag)printf("COMMA\n");}
-"/"								{if(flag)printf("DIV\n");}
-"else"								{if(flag)printf("ELSE\n");}
-"=="								{if(flag)printf("EQ\n");}
-"for"								{if(flag)printf("FOR\n");}
-">="								{if(flag)printf("GE\n");}
-">"								{if(flag)printf("GT\n");}
-"if"								{if(flag)printf("IF\n");}
-"int"								{if(flag)printf("INT\n");}
-"{"								{if(flag)printf("LBRACE\n");}
-"<="								{if(flag)printf("LE\n");}
-"("								{if(flag)printf("LPAR\n");}
-"["								{if(flag)printf("LSQ\n");}
-"<"								{if(flag)printf("LT\n");}
-"-"								{if(flag)printf("MINUS\n");}
-"%" 								{if(flag)printf("MOD\n");}
-"!="								{if(flag)printf("NE\n");}
-"!"								{if(flag)printf("NOT\n");}
-"||" 								{if(flag)printf("OR\n");}
-"+" 								{if(flag)printf("PLUS\n");}
-"}"								{if(flag)printf("RBRACE\n");}
-"return" 							{if(flag)printf("RETURN\n");}
-")"								{if(flag)printf("RPAR\n");}
-"]"								{if(flag)printf("RSQ\n");}
-";"								{if(flag)printf("SEMI\n");}
-"void"								{if(flag)printf("VOID\n");}
-"auto"|"break"|"case"|"const"|"continue"|"default"|"do"|"double"|"enum"|"extern"|"float"|"goto"|"long"|"register"|"short"|"signed"|"sizeof"|"static"|"struct"|"switch"|"typedef"|"union"|"unsigned"|"volatile"|"while"|"++"|"--" 							{if(flag)printf("RESERVED(%s)\n", yytext); }
+"&"								{
+									if(flagTokens)printf("AMP\n");
+									if(flagErrors)return AMP;}
+"&&"							{
+									if(flagTokens)printf("AND\n");
+									if(flagErrors)return AND;}
+"="								{
+									if(flagTokens)printf("ASSIGN\n");
+									if(flagErrors)return ASSIGN;}
+"*"								{
+									if(flagTokens)printf("AST\n");
+									if(flagErrors)return AST;}
+"char"							{
+									if(flagTokens)printf("CHAR\n");
+									if(flagErrors)return CHAR;}
+","								{
+									if(flagTokens)printf("COMMA\n");
+									if(flagErrors)return COMMA;}
+"/"								{
+									if(flagTokens)printf("DIV\n");
+									if(flagErrors)return DIV;}
+"else"							{
+									if(flagTokens)printf("ELSE\n");
+									if(flagErrors)return ELSE;}
+"=="							{
+									if(flagTokens)printf("EQ\n");
+									if(flagErrors)return EQ;}
+"for"							{	if(flagTokens)printf("FOR\n");
+									if(flagErrors)return FOR;}
+">="							{
+									if(flagTokens)printf("GE\n");
+									if(flagErrors)return GE;}
+">"								{	if(flagTokens)printf("GT\n");
+									if(flagErrors)return GT;}
+"if"							{
+									if(flagTokens)printf("IF\n");
+									if(flagErrors)return IF;}
+"int"							{
+									if(flagTokens)printf("INT\n");
+									if(flagErrors)return INT;}
+"{"								{
+									if(flagTokens)printf("LBRACE\n");
+									if(flagErrors)return LBRACE;}
+"<="							{
+									if(flagTokens)printf("LE\n");
+									if(flagErrors)return LE;}
+"("								{
+									if(flagTokens)printf("LPAR\n");
+									if(flagErrors)return LPAR;}
+"["								{
+									if(flagTokens)printf("LSQ\n");
+									if(flagErrors)return LSQ;}
+"<"								{
+									if(flagTokens)printf("LT\n");
+									if(flagErrors)return LT;}
+"-"								{
+									if(flagTokens)printf("MINUS\n");
+									if(flagErrors)return MINUS;}
+"%" 							{
+									if(flagTokens)printf("MOD\n");
+									if(flagErrors)return MOD;}
+"!="							{
+									if(flagTokens)printf("NE\n");
+									if(flagErrors)return NE;}
+"!"								{
+									if(flagTokens)printf("NOT\n");
+									if(flagErrors)return NOT;}
+"||" 							{
+									if(flagTokens)printf("OR\n");
+									if(flagErrors)return OR;}
+"+" 							{
+									if(flagTokens)printf("PLUS\n");
+									if(flagErrors)return PLUS;}
+"}"								{
+									if(flagTokens)printf("RBRACE\n");
+									if(flagErrors)return RBRACE;}
+"return" 						{
+									if(flagTokens)printf("RETURN\n");
+									if(flagErrors)return RETURN;}
+")"								{
+									if(flagTokens)printf("RPAR\n");
+									if(flagErrors)return RPAR;}
+"]"								{
+									if(flagTokens)printf("RSQ\n");
+									if(flagErrors)return RSQ;}
+";"								{
+									if(flagTokens)printf("SEMI\n");
+									if(flagErrors)return SEMI;}
+"void"							{	if(flagTokens)printf("VOID\n");
+									if(flagErrors)return AMP;}
+"auto"|"break"|"case"|"const"|"continue"|"default"|"do"|"double"|"enum"|"extern"|"float"|"goto"|"long"|"register"|"short"|"signed"|"sizeof"|"static"|"struct"|"switch"|"typedef"|"union"|"unsigned"|"volatile"|"while"|"++"|"--" 							{
+																																																																if(flagTokens)printf("RESERVED(%s)\n", yytext);
+																																																																if(flagErrors)return yytext;}
 
 
-{ID}								{if(flag)printf("ID(%s)\n", yytext); yylval = yytext; return ID;}
+{ID}								{if(flagTokens)printf("ID(%s)\n", yytext); yylval = yytext; return ID;}
 
-{INTLIT}							{if(flag)printf("INTLIT(%s)\n", yytext);}
-{STRLIT}							{if(flag)printf("STRLIT(%s)\n", yytext);}
+{INTLIT}							{if(flagTokens)printf("INTLIT(%s)\n", yytext);}
+{STRLIT}							{if(flagTokens)printf("STRLIT(%s)\n", yytext);}
 
 {NOSTRLIT}							{printf("Line %d, col %d: unterminated string constant\n", yylineno, (int)(columnNumber-yyleng+1));}
 {NOCHRLIT}							{printf("Line %d, col %d: unterminated char constant\n", yylineno, (int)(columnNumber-yyleng+1));}
-{CHRLIT}							{if(flag)printf("CHRLIT(%s)\n", yytext);}
+{CHRLIT}							{if(flagTokens)printf("CHRLIT(%s)\n", yytext);}
 
 {INVALIDSTRLIT}							{printf("Line %d, col %d: invalid string constant (%s)\n", yylineno, (int)(columnNumber-yyleng+1), yytext);}
 {INVALIDCHR}							{printf("Line %d, col %d: invalid char constant (%s)\n", yylineno, (int)(columnNumber-yyleng+1), yytext);}
@@ -104,7 +166,11 @@ int main(int argc, char* argv[])
 
 		if(strcmp(argv[1], "-l")==0)
 		{
-			flag = true;
+			flagTokens = true;
+		}
+		else if(strcmp(argv[1], "-1") == 0)
+		{
+			flagErrors = true;
 		}
 
 	}
