@@ -69,9 +69,7 @@ Declaration1: Empty | TypeSpec Declarator COMMA_Declarator SEMI;
 
 TypeSpec: CHAR | INT | VOID;
 
- /*Falta o AST e LSQ INTLIT RSQ*/
-Declarator: ID;
-
+Declarator: Asterisk ID | Asterisk ID LSQ INTLIT RSQ;
 
 Statement: SEMI | Expr SEMI;
 
