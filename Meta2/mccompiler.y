@@ -44,8 +44,6 @@
 
 %%
 
-
- /*Falta FunctionDefinition FunctionDeclaration Declaration */ 
 Start: FunctionDefinition FuncDefDecDec | FunctionDeclaration  FuncDefDecDec| Declaration  FuncDefDecDec;
 FuncDefDecDec:  FunctionDefinition FuncDefDecDec | FunctionDeclaration FuncDefDecDec | Declaration FuncDefDecDec | Empty; 
 
