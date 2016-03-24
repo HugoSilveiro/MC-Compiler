@@ -71,7 +71,6 @@ Statement: SEMI | Expr SEMI;
 
 Statement: LBRACE Statement1 RBRACE;
 
- /*Falta a ELSE Statement*/
 Statement: IF LPAR Expr RPAR Statement ElseStatement;
 
 Statement: FOR LPAR Expr0 SEMI Expr0 SEMI Expr0 RPAR Statement;
