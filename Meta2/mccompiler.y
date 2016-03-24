@@ -64,7 +64,7 @@ ParameterDeclaration: TypeSpec Asterisk | TypeSpec Asterisk ID;
 
 Declaration: TypeSpec Declarator COMMA_Declarator SEMI;
 
-Declaration1: Empty | TypeSpec Declarator COMMA_Declarator SEMI;
+Declaration1: Empty | Declaration1 Declaration;
 
 TypeSpec: CHAR | INT | VOID;
 
@@ -97,7 +97,7 @@ Expr: AMP Expr | AST Expr | PLUS Expr |MINUS Expr |NOT Expr;
 
 Expr: Expr LSQ Expr RSQ;
 
-Expr: ID LPAR RPAR | ID LPAR Expr_COMMAExpr RPAR;
+Expr: ID LPAR Expr_COMMAExpr RPAR;
 Expr_COMMAExpr: Empty | Expr COMMA_Expr;
 COMMA_Expr: Empty | COMMA Expr COMMA_Expr;
 
