@@ -42,10 +42,12 @@
 %token STRLIT
 %token CHRLIT
 
+%left COMMA
+
 %%
 
-Start: FunctionDefinition FuncDefDecDec | FunctionDeclaration  FuncDefDecDec| Declaration  FuncDefDecDec;
-FuncDefDecDec:  FunctionDefinition FuncDefDecDec | FunctionDeclaration FuncDefDecDec | Declaration FuncDefDecDec | Empty;
+Start: FunctionDefinition FuncDefDecDec| FunctionDeclaration  FuncDefDecDec| Declaration FuncDefDecDec;
+FuncDefDecDec:  Empty | FuncDefDecDec FunctionDefinition | FuncDefDecDec FunctionDeclaration  | FuncDefDecDec Declaration;
 
 FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody;
 
