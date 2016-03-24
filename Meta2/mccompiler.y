@@ -44,8 +44,8 @@
 
 %%
 
- /*Falta FunctionDefinition FunctionDeclaration Declaration */
-start: FunctionDefinition | FunctionDeclaration | Declaration;
+Start: FunctionDefinition FuncDefDecDec | FunctionDeclaration  FuncDefDecDec| Declaration  FuncDefDecDec;
+FuncDefDecDec:  FunctionDefinition FuncDefDecDec | FunctionDeclaration FuncDefDecDec | Declaration FuncDefDecDec | Empty; 
 
 FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody;
 
@@ -58,8 +58,7 @@ FunctionDeclarator: Asterisk ID LPAR ParameterList RPAR;
  /*Falta o COMMA ParameterDeclaration */
 ParameterList: ParameterDeclaration;
 
- /*Falta o AST ID*/
-ParameterDeclaration: TypeSpec;
+ParameterDeclaration: TypeSpec Asterisk | TypeSpec Asterisk ID;
 
  /*Falta o COMMA Declarator */
 Declaration: TypeSpec Declarator COMMA_Declarator SEMI;
