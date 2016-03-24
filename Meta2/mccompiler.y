@@ -60,8 +60,7 @@ FunctionDeclarator: ID LPAR ParameterList RPAR;
  /*Falta o COMMA ParameterDeclaration */
 ParameterList: ParameterDeclaration;
 
- /*Falta o AST ID*/
-ParameterDeclaration: TypeSpec;
+ParameterDeclaration: TypeSpec Asterisk | TypeSpec Asterisk ID;
 
  /*Falta o COMMA Declarator */
 Declaration: TypeSpec Declarator COMMA_Declarator SEMI;
