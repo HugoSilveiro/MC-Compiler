@@ -96,8 +96,9 @@ Expr: AMP Expr | AST Expr | PLUS Expr |MINUS Expr |NOT Expr;
 
 Expr: Expr LSQ Expr RSQ;
 
- /*Falta a Expr COMMA Expr*/
-Expr: ID LPAR RPAR;
+Expr: ID LPAR RPAR | ID LPAR Expr_COMMAExpr RPAR;
+Expr_COMMAExpr: Empty | Expr COMMA_Expr;
+COMMA_Expr: Empty | COMMA Expr COMMA_Expr ;
 
 Expr: ID | INTLIT | CHRLIT | STRLIT | LPAR Expr RPAR;
 
