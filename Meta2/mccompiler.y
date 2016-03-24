@@ -44,6 +44,7 @@
 
 %%
 
+
  /*Falta FunctionDefinition FunctionDeclaration Declaration */ 
 Start: FunctionDefinition FuncDefDecDec | FunctionDeclaration  FuncDefDecDec| Declaration  FuncDefDecDec;
 FuncDefDecDec:  FunctionDefinition FuncDefDecDec | FunctionDeclaration FuncDefDecDec | Declaration FuncDefDecDec | Empty; 
@@ -51,7 +52,7 @@ FuncDefDecDec:  FunctionDefinition FuncDefDecDec | FunctionDeclaration FuncDefDe
 FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody;
 
  /*Falta a Declaration e Statement */
-FunctionBody: LBRACE RBRACE;
+FunctionBody: LBRACE Declaration1 Statement1 RBRACE;
 
 FunctionDeclaration: TypeSpec FunctionDeclarator SEMI;
 
@@ -64,16 +65,18 @@ ParameterList: ParameterDeclaration;
  /*Falta o AST ID*/
 ParameterDeclaration: TypeSpec;
 
- /*Falta o COMMA Declarator */ 
-Declaration: TypeSpec Declarator SEMI;
+ /*Falta o COMMA Declarator */
+Declaration: TypeSpec Declarator COMMA_Declarator SEMI;
+//In case of brackets -> [0,inf[
+Declaration1: Empty | TypeSpec Declarator COMMA_Declarator SEMI;
 
 TypeSpec: CHAR | INT | VOID;
 
  /*Falta o AST e LSQ INTLIT RSQ*/
 Declarator: ID;
 
- /*Falta a Expr*/
-Statement: SEMI;
+
+Statement: SEMI | Expr SEMI;
 
  /*Falta a Statement*/
 Statement: LBRACE RBRACE;
@@ -83,7 +86,8 @@ Statement: IF LPAR Expr RPAR Statement;
 
  /*Falta a Expr*/
 Statement: FOR LPAR SEMI SEMI RPAR Statement;
-
+//In case of brackets -> [0,inf[
+Statement1: Empty | Statement1 | Statement;
  /*Falta a Expr/
 Statement: RETURN SEMI;
 
@@ -104,6 +108,10 @@ Expr: ID LPAR RPAR;
 
 Expr: ID | INTLIT | CHRLIT | STRLIT | LPAR Expr RPAR;
 
+<<<<<<< HEAD
+=======
+Empty: ;
+>>>>>>> e165ed23201d18b2c0448f9cb4a43f18aa66dac3
 
 FunctionDefinition: ID  {$$ = $1; printf("%d\n", $1);}
 	;
