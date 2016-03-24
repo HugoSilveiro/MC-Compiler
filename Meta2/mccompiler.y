@@ -46,7 +46,8 @@
 
 %left PLUS MINUS
 %left COMMA
-%left AND DIV MOD 
+%left OR
+%left AND DIV MOD
 %left LBRACE RBRACE
 %right NOT
 
