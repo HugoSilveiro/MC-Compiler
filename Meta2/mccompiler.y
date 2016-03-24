@@ -44,11 +44,15 @@
 
 
 %left PLUS MINUS
-%left COMMA
-%left AND DIV MOD AST 
-%left OR
 %left LBRACE RBRACE
+%left LPAR RPAR
+%left  LSQ RSQ
 %right NOT
+%left AND
+%left AND DIV MOD AST
+%left OR
+%right ASSIGN
+%left COMMA
 
 %%
 
