@@ -50,7 +50,6 @@
 %left LPAR RPAR
 %left  LSQ RSQ
 %right NOT
-%left AND
 %left AND DIV MOD AST
 %left OR
 %right ASSIGN
@@ -67,17 +66,25 @@ FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody;
 
 FunctionBody: LBRACE Declaration1 Statement1 RBRACE;
 
+Declaration1: Empty | Declaration1 Declaration;
+
+Statement1: Empty | Statement1 Statement;
+
 FunctionDeclaration: TypeSpec FunctionDeclarator SEMI;
 
 FunctionDeclarator: Asterisk ID LPAR ParameterList RPAR;
 
+Asterisk: Empty | Asterisk AST;
+
 ParameterList: ParameterDeclaration COMMA_ParameterDeclaration;
+
+COMMA_ParameterDeclaration: Empty | COMMA_ParameterDeclaration COMMA ParameterDeclaration;
 
 ParameterDeclaration: TypeSpec Asterisk | TypeSpec Asterisk ID;
 
 Declaration: TypeSpec Declarator COMMA_Declarator SEMI;
 
-Declaration1: Empty | Declaration1 Declaration;
+COMMA_Declarator: Empty | COMMA_Declarator COMMA Declarator;
 
 TypeSpec: CHAR | INT | VOID;
 
@@ -89,24 +96,23 @@ Statement: LBRACE Statement1 RBRACE;
 
 Statement: IF LPAR Expr RPAR Statement ElseStatement;
 
-Statement: FOR LPAR Expr0 SEMI Expr0 SEMI Expr0 RPAR Statement;
-Expr0: Expr | Empty;
+ElseStatement: Empty | ELSE Statement;
 
-Statement1: Empty | Statement1 Statement;
+Statement: FOR LPAR Expr0 SEMI Expr0 SEMI Expr0 RPAR Statement;
+
+Expr0: Expr | Empty;
 
 Statement: RETURN SEMI | RETURN Expr SEMI;
 
-ElseStatement: Empty | ELSE Statement;
+Expr: Expr ASSIGN_COMMA Expr ;
 
-Expr: Expr ASSIGN Expr | Expr COMMA Expr;
+Expr: Expr AND_OR Expr;
 
-Expr: Expr AND Expr | Expr OR Expr;
+Expr: Expr COMP Expr ;
 
-Expr: Expr EQ Expr | Expr NE Expr | Expr LT Expr | Expr GT Expr | Expr LE Expr | Expr GE Expr;
+Expr: Expr OPS Expr;
 
-Expr: Expr PLUS Expr| Expr MINUS Expr | Expr AST Expr | Expr DIV Expr| Expr MOD Expr;
-
-Expr: AMP Expr | AST Expr | PLUS Expr |MINUS Expr |NOT Expr;
+Expr: OTHER Expr;
 
 Expr: Expr LSQ Expr RSQ;
 
@@ -114,13 +120,14 @@ Expr: ID LPAR Expr_COMMAExpr RPAR;
 Expr_COMMAExpr: Empty | Expr COMMA_Expr;
 COMMA_Expr: Empty | COMMA Expr COMMA_Expr;
 
-Expr: ID | INTLIT | CHRLIT | STRLIT | LPAR Expr RPAR;
+Expr: ID_LITS LPAR Expr RPAR;
 
-Asterisk: Empty | Asterisk AST;
-
-COMMA_Declarator: Empty | COMMA_Declarator COMMA Declarator;
-
-COMMA_ParameterDeclaration: Empty | COMMA_ParameterDeclaration COMMA ParameterDeclaration;
+ASSIGN_COMMA: ASSIGN | COMMA;
+AND_OR: AND | OR;
+ID_LITS: ID | INTLIT |CHRLIT | STRLIT;
+COMP: EQ | NE | LT | GT | LE | GE;
+OPS: PLUS | MINUS | AST | DIV | MOD;
+OTHER: AMP| AST | PLUS | MINUS |NOT;
 
 Empty: ;
 
