@@ -104,7 +104,7 @@ Expr0: Expr | Empty;
 
 Statement: RETURN SEMI | RETURN Expr SEMI;
 
-Expr: Expr ASSIGN_COMMA Expr ;
+Expr: Expr ASSIGN_COMMA Expr;
 
 Expr: Expr AND_OR Expr;
 
@@ -120,7 +120,7 @@ Expr: ID LPAR Expr_COMMAExpr RPAR;
 Expr_COMMAExpr: Empty | Expr COMMA_Expr;
 COMMA_Expr: Empty | COMMA Expr COMMA_Expr;
 
-Expr: ID_LITS LPAR Expr RPAR;
+Expr: ID_LITS | LPAR Expr RPAR;
 
 ASSIGN_COMMA: ASSIGN | COMMA;
 AND_OR: AND | OR;
