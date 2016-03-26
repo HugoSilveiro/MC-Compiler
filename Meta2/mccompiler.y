@@ -59,33 +59,32 @@
 %%
 
 Start: FuncDefDecDec FuncDefDecDec1;
-FuncDefDecDec1: Empty | FuncDefDecDec FuncDefDecDec1;
 FuncDefDecDec: FunctionDefinition | FunctionDeclaration | Declaration;
-
+FuncDefDecDec1: Empty | FuncDefDecDec1 FuncDefDecDec ;
 
 FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody;
 
 FunctionBody: LBRACE Declaration1 Statement1 RBRACE;
 
-Declaration1: Empty | Declaration Declaration1;
+Declaration1: Empty | Declaration1 Declaration;
 
-Statement1: Empty | Statement Statement1;
+Statement1: Empty | Statement1 Statement;
 
 FunctionDeclaration: TypeSpec FunctionDeclarator SEMI;
 
 FunctionDeclarator: Asterisk ID LPAR ParameterList RPAR;
 
-Asterisk: Empty | AST Asterisk;
+Asterisk: Empty | Asterisk AST;
 
 ParameterList: ParameterDeclaration COMMA_ParameterDeclaration;
 
-COMMA_ParameterDeclaration: Empty | COMMA ParameterDeclaration COMMA_ParameterDeclaration;
+COMMA_ParameterDeclaration: Empty | COMMA_ParameterDeclaration COMMA ParameterDeclaration;
 
 ParameterDeclaration: TypeSpec Asterisk | TypeSpec Asterisk ID;
 
 Declaration: TypeSpec Declarator COMMA_Declarator SEMI;
 
-COMMA_Declarator: Empty | COMMA Declarator COMMA_Declarator;
+COMMA_Declarator: Empty | COMMA_Declarator COMMA Declarator;
 
 TypeSpec: CHAR | INT | VOID;
 
@@ -101,11 +100,11 @@ ElseStatement: Empty | ELSE Statement;
 
 Statement: FOR LPAR Expr0 SEMI Expr0 SEMI Expr0 RPAR Statement;
 
-Expr0: Empty | Expr;
+Expr0: Expr | Empty;
 
 Statement: RETURN SEMI | RETURN Expr SEMI;
 
-Expr: Expr ASSIGN_COMMA Expr ;
+Expr: Expr ASSIGN_COMMA Expr;
 
 Expr: Expr AND_OR Expr;
 
@@ -121,7 +120,7 @@ Expr: ID LPAR Expr_COMMAExpr RPAR;
 Expr_COMMAExpr: Empty | Expr COMMA_Expr;
 COMMA_Expr: Empty | COMMA Expr COMMA_Expr;
 
-Expr: ID_LITS  | LPAR Expr RPAR;
+Expr: ID_LITS | LPAR Expr RPAR;
 
 ASSIGN_COMMA: ASSIGN | COMMA;
 AND_OR: AND | OR;
