@@ -95,7 +95,9 @@ Statement: SEMI | Expr SEMI;
 
 Statement: LBRACE Statement1 RBRACE;
 
-Statement: IF LPAR Expr RPAR Statement ELSE Statement | IF LPAR Expr RPAR Statement;
+Statement: IF LPAR Expr RPAR Statement ElseStatement;
+
+ElseStatement: Empty | ELSE Statement;
 
 Statement: FOR LPAR Expr0 SEMI Expr0 SEMI Expr0 RPAR Statement;
 
@@ -120,6 +122,7 @@ Expr_COMMAExpr: Empty | Expr COMMA_Expr;
 COMMA_Expr: Empty | COMMA Expr COMMA_Expr;
 
 Expr: ID_LITS | LPAR Expr RPAR;
+
 
 ASSIGN_COMMA: ASSIGN | COMMA;
 AND_OR: AND | OR;
