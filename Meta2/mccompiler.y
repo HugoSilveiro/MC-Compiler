@@ -59,32 +59,33 @@
 %%
 
 Start: FuncDefDecDec FuncDefDecDec1;
+FuncDefDecDec1: Empty | FuncDefDecDec FuncDefDecDec1;
 FuncDefDecDec: FunctionDefinition | FunctionDeclaration | Declaration;
-FuncDefDecDec1: Empty | FuncDefDecDec1 FuncDefDecDec ;
+
 
 FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody;
 
 FunctionBody: LBRACE Declaration1 Statement1 RBRACE;
 
-Declaration1: Empty | Declaration1 Declaration;
+Declaration1: Empty | Declaration Declaration1;
 
-Statement1: Empty | Statement1 Statement;
+Statement1: Empty | Statement Statement1;
 
 FunctionDeclaration: TypeSpec FunctionDeclarator SEMI;
 
 FunctionDeclarator: Asterisk ID LPAR ParameterList RPAR;
 
-Asterisk: Empty | Asterisk AST;
+Asterisk: Empty | AST Asterisk;
 
 ParameterList: ParameterDeclaration COMMA_ParameterDeclaration;
 
-COMMA_ParameterDeclaration: Empty | COMMA_ParameterDeclaration COMMA ParameterDeclaration;
+COMMA_ParameterDeclaration: Empty | COMMA ParameterDeclaration COMMA_ParameterDeclaration;
 
 ParameterDeclaration: TypeSpec Asterisk | TypeSpec Asterisk ID;
 
 Declaration: TypeSpec Declarator COMMA_Declarator SEMI;
 
-COMMA_Declarator: Empty | COMMA_Declarator COMMA Declarator;
+COMMA_Declarator: Empty | COMMA Declarator COMMA_Declarator;
 
 TypeSpec: CHAR | INT | VOID;
 
@@ -94,13 +95,11 @@ Statement: SEMI | Expr SEMI;
 
 Statement: LBRACE Statement1 RBRACE;
 
-Statement: IF LPAR Expr RPAR Statement ElseStatement;
-
-ElseStatement: Empty | ELSE Statement;
+Statement: IF LPAR Expr RPAR Statement ELSE Statement | IF LPAR Expr RPAR Statement;
 
 Statement: FOR LPAR Expr0 SEMI Expr0 SEMI Expr0 RPAR Statement;
 
-Expr0: Expr | Empty;
+Expr0: Empty | Expr;
 
 Statement: RETURN SEMI | RETURN Expr SEMI;
 
