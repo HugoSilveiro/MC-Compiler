@@ -1,4 +1,5 @@
 %{
+	#define DEBUG 2>1
 	#include <stdio.h>
 	#include <stdlib.h>
 	#include <string.h>
@@ -64,51 +65,51 @@
 
 %%
 
-Start: FuncDefDecDec FuncDefDecDec1 				{printf("Start\n");};
+Start: FuncDefDecDec FuncDefDecDec1 				{if(DEBUG)printf("Start\n");};
 FuncDefDecDec: FunctionDefinition | FunctionDeclaration | Declaration; 
 FuncDefDecDec1: Empty | FuncDefDecDec1 FuncDefDecDec ;
 
-FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody 	{printf("FunctionDefinition\n");};
+FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody 	{if(DEBUG)printf("FunctionDefinition\n");};
 
-FunctionBody: LBRACE Declaration1 Statement1 RBRACE			{printf("FunctionBody\n");}; 
+FunctionBody: LBRACE Declaration1 Statement1 RBRACE			{if(DEBUG)printf("FunctionBody\n");}; 
 
 Declaration1: Empty | Declaration1 Declaration ;
 
 Statement1: Empty | Statement1 Statement;
 
-FunctionDeclaration: TypeSpec FunctionDeclarator SEMI {printf("FunctionDeclaration\n");};
+FunctionDeclaration: TypeSpec FunctionDeclarator SEMI {if(DEBUG)printf("FunctionDeclaration\n");};
 
-FunctionDeclarator: Asterisk ID LPAR ParameterList RPAR {printf("FunctionDeclarator\n");};
+FunctionDeclarator: Asterisk ID LPAR ParameterList RPAR {if(DEBUG)printf("FunctionDeclarator\n");};
 
 Asterisk: Empty | Asterisk AST;
 
-ParameterList: ParameterDeclaration COMMA_ParameterDeclaration {printf("ParameterList\n");};
+ParameterList: ParameterDeclaration COMMA_ParameterDeclaration {if(DEBUG)printf("ParameterList\n");};
 
 COMMA_ParameterDeclaration: Empty | COMMA_ParameterDeclaration COMMA ParameterDeclaration;
 
-ParameterDeclaration: TypeSpec Asterisk {printf("ParameterDeclaration[1]\n");} | TypeSpec Asterisk ID  {printf("ParameterDeclaration[2]\n");};
+ParameterDeclaration: TypeSpec Asterisk {if(DEBUG)printf("ParameterDeclaration[1]\n");} | TypeSpec Asterisk ID  {if(DEBUG)printf("ParameterDeclaration[2]\n");};
 
-Declaration: TypeSpec Declarator COMMA_Declarator SEMI {printf("Declaration\n");};
+Declaration: TypeSpec Declarator COMMA_Declarator SEMI {if(DEBUG)printf("Declaration\n");};
 
 COMMA_Declarator: Empty | COMMA_Declarator COMMA Declarator ;
 
-TypeSpec: CHAR  {printf("TypeSpec[CHAR]\n");} | INT {printf("TypeSpec[INT]\n");} | VOID {printf("TypeSpec[VOID]\n");};
+TypeSpec: CHAR  {if(DEBUG)printf("TypeSpec[CHAR]\n");} | INT {if(DEBUG)printf("TypeSpec[INT]\n");} | VOID {printf("TypeSpec[VOID]\n");};
 
-Declarator: Asterisk ID  {printf("Declarator[1]\n");} | Asterisk ID LSQ INTLIT RSQ {printf("Declarator[2]\n");};;
+Declarator: Asterisk ID  {if(DEBUG)printf("Declarator[1]\n");} | Asterisk ID LSQ INTLIT RSQ {if(DEBUG)printf("Declarator[2]\n");};
 
-Statement: SEMI {printf("Statement[1]\n");} | Expr SEMI 	{printf("Statement[1]\n");};;
+Statement: SEMI {if(DEBUG)printf("Statement[1]\n");} | Expr SEMI 	{if(DEBUG)printf("Statement[1]\n");};
 
-Statement: LBRACE Statement1 RBRACE {printf("Statement[2]\n");} ;
+Statement: LBRACE Statement1 RBRACE {if(DEBUG)printf("Statement[2]\n");} ;
 
-Statement: IF LPAR Expr RPAR Statement ElseStatement {printf("IF\n");};
+Statement: IF LPAR Expr RPAR Statement ElseStatement {if(DEBUG)printf("IF\n");};
 
 ElseStatement: Empty | ELSE Statement;
 
-Statement: FOR LPAR Expr0 SEMI Expr0 SEMI Expr0 RPAR Statement {printf("For Cycle\n");};
+Statement: FOR LPAR Expr0 SEMI Expr0 SEMI Expr0 RPAR Statement {if(DEBUG)if(DEBUG)printf("For Cycle\n");};
 
 Expr0: Expr | Empty;
 
-Statement: RETURN SEMI {printf("Return Without Value\n");} | RETURN Expr SEMI {printf("Return With Value\n");};
+Statement: RETURN SEMI {if(DEBUG)printf("Return Without Value\n");} | RETURN Expr SEMI {if(DEBUG)printf("Return With Value\n");};
 
 Expr: Expr ASSIGN_COMMA Expr;
 
@@ -135,7 +136,7 @@ COMP: EQ | NE | LT | GT | LE | GE;
 OPS: PLUS | MINUS | AST | DIV | MOD;
 OTHER: AMP| AST | PLUS | MINUS |NOT;
 
-Empty: {printf("Empty\n");};
+Empty: {if(DEBUG)printf("Empty\n");};
 
 
 %%
