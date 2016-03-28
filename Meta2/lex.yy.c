@@ -1230,12 +1230,12 @@ YY_RULE_SETUP
 case 34:
 YY_RULE_SETUP
 #line 135 "mccompiler.l"
-{if(flagTokens)printf("INTLIT(%s)\n", yytext);}
+{if(flagTokens)printf("INTLIT(%s)\n", yytext); return INTLIT;}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
 #line 136 "mccompiler.l"
-{if(flagTokens)printf("STRLIT(%s)\n", yytext);}
+{if(flagTokens)printf("STRLIT(%s)\n", yytext); return STRLIT;}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP

@@ -132,8 +132,8 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 
 {ID}								{if(flagTokens)printf("ID(%s)\n", yytext); yylval = yytext; return ID;}
 
-{INTLIT}							{if(flagTokens)printf("INTLIT(%s)\n", yytext);}
-{STRLIT}							{if(flagTokens)printf("STRLIT(%s)\n", yytext);}
+{INTLIT}							{if(flagTokens)printf("INTLIT(%s)\n", yytext); return INTLIT;}
+{STRLIT}							{if(flagTokens)printf("STRLIT(%s)\n", yytext); return STRLIT;}
 
 {NOSTRLIT}							{printf("Line %d, col %d: unterminated string constant\n", yylineno, (int)(columnNumber-yyleng+1));}
 {NOCHRLIT}							{printf("Line %d, col %d: unterminated char constant\n", yylineno, (int)(columnNumber-yyleng+1));}
