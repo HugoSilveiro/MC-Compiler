@@ -8,7 +8,7 @@
 	extern int lineNumber;
 	extern int columnNumber;
 	extern char * yytext;
-	
+
 	void yyerror (char *s);
 %}
 
@@ -66,12 +66,12 @@
 %%
 
 Start: FuncDefDecDec FuncDefDecDec1 				{if(DEBUG)printf("Start\n");};
-FuncDefDecDec: FunctionDefinition | FunctionDeclaration | Declaration; 
+FuncDefDecDec: FunctionDefinition | FunctionDeclaration | Declaration;
 FuncDefDecDec1: Empty | FuncDefDecDec1 FuncDefDecDec ;
 
 FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody 	{if(DEBUG)printf("FunctionDefinition\n");};
 
-FunctionBody: LBRACE Declaration1 Statement1 RBRACE			{if(DEBUG)printf("FunctionBody\n");}; 
+FunctionBody: LBRACE Declaration1 Statement1 RBRACE			{if(DEBUG)printf("FunctionBody\n");};
 
 Declaration1: Empty | Declaration1 Declaration ;
 
@@ -95,8 +95,11 @@ COMMA_Declarator: Empty | COMMA_Declarator COMMA Declarator ;
 
 TypeSpec: CHAR  {if(DEBUG)printf("TypeSpec[CHAR]\n");} | INT {if(DEBUG)printf("TypeSpec[INT]\n");} | VOID {printf("TypeSpec[VOID]\n");};
 
-Declarator: Asterisk ID  {if(DEBUG)printf("Declarator[1]\n");} | Asterisk ID LSQ INTLIT RSQ {if(DEBUG)printf("Declarator[2]\n");};
+Declarator: Asterisk ID  {if(DEBUG)printf("Declarator[1]\n");} | Asterisk ID LSQSTATE INTLITSTATE RSQSTATE {if(DEBUG)printf("Declarator[2]\n");};
 
+LSQSTATE: LSQ {if(DEBUG)printf("LSQ\n");};
+RSQSTATE: RSQ {if(DEBUG)printf("RSQ\n");};
+INTLITSTATE: INTLIT {if(DEBUG)printf("INTLIT");};
 Statement: SEMI {if(DEBUG)printf("Statement[1]\n");} | Expr SEMI 	{if(DEBUG)printf("Statement[1]\n");};
 
 Statement: LBRACE Statement1 RBRACE {if(DEBUG)printf("Statement[2]\n");} ;
