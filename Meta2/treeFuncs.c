@@ -2,12 +2,19 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "structs.h"
+
+Node * insert_node(char * node_type);
+Node * insert_term_node(char * node_type, char* value);
+void insert_child(Node * father, Node * child);
+void insert_brother(Node * node, Node * brother);
+
 Node * insert_node(char * node_type)
 {
 	Node * node = (Node *) malloc(sizeof(Node));
 	node->node_type = node_type;
-	node->right=NULL;
-	node->left=NULL;
+	node->brother=NULL;
+	node->child=NULL;
 
 	return node;
 }
@@ -15,26 +22,44 @@ Node * insert_node(char * node_type)
 Node * insert_term_node(char * node_type, char* value)
 {
 	Node * node = insert_node(node_type);
-	node->vale = value;
+	node->value = value;
 	return node;
 }
 
 void insert_child(Node * father, Node * child)
 {
 
-	Node * temp = father->left;
+	Node * temp = father->child;
 
 	if(temp==NULL)
 	{
-		father->left = child;
+		father->child = child;
 	}
 	else
 	{
-		while(temp->right != NULL)
+		while(temp->brother != NULL)
 		{
-			temp = temp->right;
+			temp = temp->brother;
 		}
-		temp->right = child;
+		temp->brother = child;
 	}
 
+}
+
+
+void insert_brother(Node * node, Node * brother)
+{
+	Node * temp = node->brother;
+	if(temp==NULL)
+	{
+		node->brother = brother;
+	}
+	else
+	{
+		while(temp->brother!=NULL)
+		{
+			temp = temp->brother;
+		}
+		temp->brother=brother;
+	}
 }
