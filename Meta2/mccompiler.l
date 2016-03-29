@@ -62,11 +62,13 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 "=="							{
 									if(flagTokens)printf("EQ\n");
 									if(flagErrors)return EQ;}
+
 "for"							{	if(flagTokens)printf("FOR\n");
 									if(flagErrors)return FOR;}
 ">="							{
 									if(flagTokens)printf("GE\n");
 									if(flagErrors)return GE;}
+
 ">"								{	if(flagTokens)printf("GT\n");
 									if(flagErrors)return GT;}
 "if"							{
@@ -127,30 +129,42 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 									if(flagErrors)return AMP;}
 "auto"|"break"|"case"|"const"|"continue"|"default"|"do"|"double"|"enum"|"extern"|"float"|"goto"|"long"|"register"|"short"|"signed"|"sizeof"|"static"|"struct"|"switch"|"typedef"|"union"|"unsigned"|"volatile"|"while"|"++"|"--" 							{
 																																																																if(flagTokens)printf("RESERVED(%s)\n", yytext);
-																																																																if(flagErrors)return yytext;}
+																																																																if(flagErrors)return RESERVED;}
 
 
-{ID}								{if(flagTokens)printf("ID(%s)\n", yytext); yylval = yytext; return ID;}
+{ID}							{	if(flagTokens)printf("ID(%s)\n", yytext); 
+									if(flagErrors){yylval.value = strdup(yytext); return ID;}}
 
-{INTLIT}							{if(flagTokens)printf("INTLIT(%s)\n", yytext); return INTLIT;}
-{STRLIT}							{if(flagTokens)printf("STRLIT(%s)\n", yytext); return STRLIT;}
+{INTLIT}						{	if(flagTokens)printf("INTLIT(%s)\n", yytext); 
+									if(flagErrors){yylval.value = strdup(yytext); return INTLIT;}}
 
-{NOSTRLIT}							{printf("Line %d, col %d: unterminated string constant\n", yylineno, (int)(columnNumber-yyleng+1));}
-{NOCHRLIT}							{printf("Line %d, col %d: unterminated char constant\n", yylineno, (int)(columnNumber-yyleng+1));}
-{CHRLIT}							{if(flagTokens)printf("CHRLIT(%s)\n", yytext); return CHRLIT;}
+{STRLIT}						{	if(flagTokens)printf("STRLIT(%s)\n", yytext); 
+									if(flagErrors){yylval.value = strdup(yytext); return STRLIT;}}	
 
-{INVALIDSTRLIT}							{printf("Line %d, col %d: invalid string constant (%s)\n", yylineno, (int)(columnNumber-yyleng+1), yytext);}
-{INVALIDCHR}							{printf("Line %d, col %d: invalid char constant (%s)\n", yylineno, (int)(columnNumber-yyleng+1), yytext);}
+{NOSTRLIT}						{	printf("Line %d, col %d: unterminated string constant\n", yylineno, (int)(columnNumber-yyleng+1));}
 
-"/*"								{BEGIN (COMMENT); {	colComment = columnNumber-1;	}lineComment=yylineno;}
-<COMMENT>"*/"							{BEGIN (0);}
-<COMMENT>"\n"							{columnNumber = 0;}
-<COMMENT>.							{;}
-<COMMENT><<EOF>>						{printf("Line %d, col %d: unterminated comment\n", lineComment,  colComment); yyterminate();}
-"\n"								{columnNumber= 0;}
-"\t"								{;}
-" "									{;}
-. 									{printf("Line %d, col %d: illegal character (%s)\n", yylineno, columnNumber, yytext);}
+{NOCHRLIT}						{	printf("Line %d, col %d: unterminated char constant\n", yylineno, (int)(columnNumber-yyleng+1));}
+
+{CHRLIT}						{	if(flagTokens)printf("CHRLIT(%s)\n", yytext);
+									if(flagErrors){yylval.value=strdup(yytext); return CHRLIT;}} 
+
+{INVALIDSTRLIT}					{	printf("Line %d, col %d: invalid string constant (%s)\n", yylineno, (int)(columnNumber-yyleng+1), yytext);}
+
+{INVALIDCHR}					{	printf("Line %d, col %d: invalid char constant (%s)\n", yylineno, (int)(columnNumber-yyleng+1), yytext);}
+
+"/*"							{	BEGIN (COMMENT); {	colComment = columnNumber-1;	}lineComment=yylineno;}
+<COMMENT>"*/"					{	BEGIN (0);}
+<COMMENT>"\n"					{	columnNumber = 0;}
+<COMMENT>.						{	;}
+<COMMENT><<EOF>>				{	printf("Line %d, col %d: unterminated comment\n", lineComment,  colComment); yyterminate();}
+
+"\n"							{	columnNumber= 0;}
+
+"\t"							{	;}
+
+" "								{	;}
+
+. 								{	printf("Line %d, col %d: illegal character (%s)\n", yylineno, columnNumber, yytext);}
 
 
 %%

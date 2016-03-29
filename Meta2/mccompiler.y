@@ -12,6 +12,10 @@
 	void yyerror (char *s);
 %}
 
+%union{
+    char *value;
+}
+
 %token AMP
 %token AND
 %token ASSIGN

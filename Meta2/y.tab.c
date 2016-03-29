@@ -189,7 +189,15 @@ extern int yydebug;
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+typedef union YYSTYPE YYSTYPE;
+union YYSTYPE
+{
+#line 15 "mccompiler.y" /* yacc.c:355  */
+
+    char *value;
+
+#line 200 "y.tab.c" /* yacc.c:355  */
+};
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
@@ -203,7 +211,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 207 "y.tab.c" /* yacc.c:358  */
+#line 215 "y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -504,11 +512,11 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    58,    58,    61,    62,    63,    64,    65,    67,    70,
-      73,    74,    76,    77,    79,    82,    85,    86,    88,    91,
-      92,    94,    96,    99,   102,   103,   105,   107,   109,   112,
-     114,   117,   120,   123,   126,   128,   131,   134,   137,   138,
-     170,   171,   178,   179,   180,   181,   198
+       0,    62,    62,    65,    66,    67,    68,    69,    71,    74,
+      77,    78,    80,    81,    83,    86,    89,    90,    92,    95,
+      96,    98,   100,   103,   106,   107,   109,   111,   113,   116,
+     118,   121,   124,   127,   130,   132,   135,   138,   141,   142,
+     174,   175,   182,   183,   184,   185,   202
 };
 #endif
 
@@ -1335,139 +1343,139 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 59 "mccompiler.y" /* yacc.c:1646  */
+#line 63 "mccompiler.y" /* yacc.c:1646  */
     {if(DEBUG)printf("Start\n");}
-#line 1341 "y.tab.c" /* yacc.c:1646  */
+#line 1349 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 68 "mccompiler.y" /* yacc.c:1646  */
+#line 72 "mccompiler.y" /* yacc.c:1646  */
     {if(DEBUG)printf("FunctionDefinition\n");}
-#line 1347 "y.tab.c" /* yacc.c:1646  */
+#line 1355 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 71 "mccompiler.y" /* yacc.c:1646  */
+#line 75 "mccompiler.y" /* yacc.c:1646  */
     {if(DEBUG)printf("FunctionBody\n");}
-#line 1353 "y.tab.c" /* yacc.c:1646  */
+#line 1361 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 80 "mccompiler.y" /* yacc.c:1646  */
+#line 84 "mccompiler.y" /* yacc.c:1646  */
     {if(DEBUG)printf("FunctionDeclaration\n");}
-#line 1359 "y.tab.c" /* yacc.c:1646  */
+#line 1367 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 83 "mccompiler.y" /* yacc.c:1646  */
+#line 87 "mccompiler.y" /* yacc.c:1646  */
     {if(DEBUG)printf("FunctionDeclarator\n");}
-#line 1365 "y.tab.c" /* yacc.c:1646  */
+#line 1373 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 89 "mccompiler.y" /* yacc.c:1646  */
+#line 93 "mccompiler.y" /* yacc.c:1646  */
     {if(DEBUG)printf("ParameterList\n");}
-#line 1371 "y.tab.c" /* yacc.c:1646  */
+#line 1379 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 95 "mccompiler.y" /* yacc.c:1646  */
+#line 99 "mccompiler.y" /* yacc.c:1646  */
     {if(DEBUG)printf("ParameterDeclaration[1]\n");}
-#line 1377 "y.tab.c" /* yacc.c:1646  */
+#line 1385 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 97 "mccompiler.y" /* yacc.c:1646  */
+#line 101 "mccompiler.y" /* yacc.c:1646  */
     {if(DEBUG)printf("ParameterDeclaration[2]\n");}
-#line 1383 "y.tab.c" /* yacc.c:1646  */
+#line 1391 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 100 "mccompiler.y" /* yacc.c:1646  */
+#line 104 "mccompiler.y" /* yacc.c:1646  */
     {if(DEBUG)printf("Declaration\n");}
-#line 1389 "y.tab.c" /* yacc.c:1646  */
+#line 1397 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 106 "mccompiler.y" /* yacc.c:1646  */
+#line 110 "mccompiler.y" /* yacc.c:1646  */
     {if(DEBUG)printf("TypeSpec[CHAR]\n");}
-#line 1395 "y.tab.c" /* yacc.c:1646  */
+#line 1403 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 108 "mccompiler.y" /* yacc.c:1646  */
+#line 112 "mccompiler.y" /* yacc.c:1646  */
     {if(DEBUG)printf("TypeSpec[INT]\n");}
-#line 1401 "y.tab.c" /* yacc.c:1646  */
+#line 1409 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 110 "mccompiler.y" /* yacc.c:1646  */
+#line 114 "mccompiler.y" /* yacc.c:1646  */
     {printf("TypeSpec[VOID]\n");}
-#line 1407 "y.tab.c" /* yacc.c:1646  */
+#line 1415 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 113 "mccompiler.y" /* yacc.c:1646  */
+#line 117 "mccompiler.y" /* yacc.c:1646  */
     {if(DEBUG)printf("Declarator[1]\n");}
-#line 1413 "y.tab.c" /* yacc.c:1646  */
+#line 1421 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 115 "mccompiler.y" /* yacc.c:1646  */
+#line 119 "mccompiler.y" /* yacc.c:1646  */
     {if(DEBUG)printf("Declarator[2]\n");}
-#line 1419 "y.tab.c" /* yacc.c:1646  */
+#line 1427 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
-#line 118 "mccompiler.y" /* yacc.c:1646  */
+#line 122 "mccompiler.y" /* yacc.c:1646  */
     {if(DEBUG)printf("LSQ\n");}
-#line 1425 "y.tab.c" /* yacc.c:1646  */
+#line 1433 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
-#line 121 "mccompiler.y" /* yacc.c:1646  */
+#line 125 "mccompiler.y" /* yacc.c:1646  */
     {if(DEBUG)printf("RSQ\n");}
-#line 1431 "y.tab.c" /* yacc.c:1646  */
+#line 1439 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
-#line 124 "mccompiler.y" /* yacc.c:1646  */
+#line 128 "mccompiler.y" /* yacc.c:1646  */
     {if(DEBUG)printf("INTLIT");}
-#line 1437 "y.tab.c" /* yacc.c:1646  */
+#line 1445 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
-#line 127 "mccompiler.y" /* yacc.c:1646  */
+#line 131 "mccompiler.y" /* yacc.c:1646  */
     {if(DEBUG)printf("Statement[1]\n");}
-#line 1443 "y.tab.c" /* yacc.c:1646  */
+#line 1451 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
-#line 129 "mccompiler.y" /* yacc.c:1646  */
+#line 133 "mccompiler.y" /* yacc.c:1646  */
     {if(DEBUG)printf("Statement[1]\n");}
-#line 1449 "y.tab.c" /* yacc.c:1646  */
+#line 1457 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
-#line 132 "mccompiler.y" /* yacc.c:1646  */
+#line 136 "mccompiler.y" /* yacc.c:1646  */
     {if(DEBUG)printf("Statement[2]\n");}
-#line 1455 "y.tab.c" /* yacc.c:1646  */
+#line 1463 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
-#line 135 "mccompiler.y" /* yacc.c:1646  */
+#line 139 "mccompiler.y" /* yacc.c:1646  */
     {if(DEBUG)printf("IF\n");}
-#line 1461 "y.tab.c" /* yacc.c:1646  */
+#line 1469 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 46:
-#line 198 "mccompiler.y" /* yacc.c:1646  */
+#line 202 "mccompiler.y" /* yacc.c:1646  */
     {if(DEBUG)printf("Empty\n");}
-#line 1467 "y.tab.c" /* yacc.c:1646  */
+#line 1475 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1471 "y.tab.c" /* yacc.c:1646  */
+#line 1479 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1695,7 +1703,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 201 "mccompiler.y" /* yacc.c:1906  */
+#line 205 "mccompiler.y" /* yacc.c:1906  */
 
 
 void yyerror (char *s) {
