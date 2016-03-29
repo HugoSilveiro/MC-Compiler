@@ -137,7 +137,7 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 
 {NOSTRLIT}							{printf("Line %d, col %d: unterminated string constant\n", yylineno, (int)(columnNumber-yyleng+1));}
 {NOCHRLIT}							{printf("Line %d, col %d: unterminated char constant\n", yylineno, (int)(columnNumber-yyleng+1));}
-{CHRLIT}							{if(flagTokens)printf("CHRLIT(%s)\n", yytext);}
+{CHRLIT}							{if(flagTokens)printf("CHRLIT(%s)\n", yytext); return CHRLIT;}
 
 {INVALIDSTRLIT}							{printf("Line %d, col %d: invalid string constant (%s)\n", yylineno, (int)(columnNumber-yyleng+1), yytext);}
 {INVALIDCHR}							{printf("Line %d, col %d: invalid char constant (%s)\n", yylineno, (int)(columnNumber-yyleng+1), yytext);}

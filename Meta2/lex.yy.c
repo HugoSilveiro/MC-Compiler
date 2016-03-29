@@ -1250,7 +1250,7 @@ YY_RULE_SETUP
 case 38:
 YY_RULE_SETUP
 #line 140 "mccompiler.l"
-{if(flagTokens)printf("CHRLIT(%s)\n", yytext);}
+{if(flagTokens)printf("CHRLIT(%s)\n", yytext); return CHRLIT;}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
