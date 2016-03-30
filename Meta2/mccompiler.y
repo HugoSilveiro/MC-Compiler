@@ -136,20 +136,12 @@ Statement: 	SEMI
 	   {if(DEBUG)printf("Statement[2]\n");} ;
 	   		|StateIF
 			|FOR LPAR Expr0 SEMI Expr0 SEMI Expr0 RPAR Statement
-		{if(DEBUG)if(DEBUG)printf("For Cycle\n");}
+			{if(DEBUG)printf("For Cycle\n");}
 
 StateIF: 	IF LPAR Expr RPAR Statement   %prec "then"
 			|IF LPAR Expr RPAR Statement ELSE Statement
 			{if(DEBUG)printf("IF\n");}
-//Statement: LBRACE Statement1 RBRACE
-	//{if(DEBUG)printf("Statement[2]\n");} ;
 
-//Statement: IF LPAR Expr RPAR Statement ELSE Statement
-	//{if(DEBUG)printf("IF\n");}
-			//|IF LPAR Expr RPAR Statement;
-
-//Statement: FOR LPAR Expr0 SEMI Expr0 SEMI Expr0 RPAR Statement
-	//{if(DEBUG)if(DEBUG)printf("For Cycle\n");};
 
 Expr0: 	Empty
 		| Expr;
@@ -178,18 +170,18 @@ Expr0: 	Empty
 //COMMA_Expr: 	Empty
 				//| COMMA Expr COMMA_Expr;
 
-Expr: 	ID_LITS
-		| LPAR Expr RPAR;
+Expr:	LPAR Expr RPAR
+		| ID
+		| INTLIT
+		|CHRLIT
+		| STRLIT;
 
 
 //ASSIGN_COMMA: 	ASSIGN
 					//| COMMA;
 //AND_OR: 	AND
 			//| OR;
-ID_LITS: 	ID
-			| INTLIT
-			|CHRLIT
-			| STRLIT;
+
 //COMP: 	EQ
 			//| NE
 			//| LT
