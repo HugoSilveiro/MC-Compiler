@@ -55,6 +55,8 @@
 
 %nonassoc "then"
 %nonassoc ELSE
+%left COMMA
+%right ASSIGN
 
 
 
@@ -152,7 +154,8 @@ Expr0: 	Empty
 
 
 
-//Expr: Expr ASSIGN_COMMA Expr;
+Expr: 	Expr ASSIGN Expr
+		|Expr COMMA Expr;
 
 //Expr: Expr AND_OR Expr;
 
@@ -178,8 +181,6 @@ Expr:	LPAR Expr RPAR
 		| STRLIT;
 
 
-//ASSIGN_COMMA: 	ASSIGN
-					//| COMMA;
 //AND_OR: 	AND
 			//| OR;
 
