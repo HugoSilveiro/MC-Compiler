@@ -55,8 +55,15 @@
 
 %nonassoc "then"
 %nonassoc ELSE
-%left AND
+
+%left GE
+%left LE
+%left GT
+%left LT
+%left EQ
+%left NE
 %left OR
+%left AND
 %right ASSIGN
 %left COMMA
 
@@ -155,17 +162,19 @@ Statement: 	RETURN SEMI
 Expr0: 	Empty
 		| Expr;
 
-
-
 Expr: 	Expr ASSIGN Expr
 		|Expr COMMA Expr;
 
 Expr: 	Expr AND Expr
-		|Expr OR Expr;
+		|Expr OR Expr
+		|Expr EQ Expr
+		| Expr NE Expr
+		| Expr LT Expr
+		| Expr GT Expr
+		| Expr LE Expr
+		| Expr GE Expr;
 
-//Expr: Expr COMP Expr ;
-
-//Expr: Expr OPS Expr;
+Expr: Expr OPS Expr;
 
 //Expr: OTHER Expr;
 
@@ -188,12 +197,7 @@ Expr:	LPAR Expr RPAR
 //AND_OR: 	AND
 			//| OR;
 
-//COMP: 	EQ
-			//| NE
-			//| LT
-			//| GT
-			//| LE
-			//| GE;
+
 //OPS: 	PLUS
 		//| MINUS
 		//| AST
