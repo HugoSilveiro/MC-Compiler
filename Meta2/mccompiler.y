@@ -73,6 +73,7 @@
 %left NOT
 %left OR
 %left AND
+%left AMP
 %right ASSIGN
 %left COMMA
 
@@ -186,30 +187,23 @@ Expr: 	Expr AND Expr
 		| Expr MINUS Expr
 		| Expr AST Expr
 		| Expr DIV Expr
-		| Expr MOD Expr;
-
-
-/*
-Expr: 	AMP Expr
+		| Expr MOD Expr
+		| AMP Expr
 		| AST Expr
 		| PLUS Expr
 		| MINUS Expr
 		| NOT Expr
-*/
+		| Expr LSQ Expr RSQ
+		| ID LPAR Expr_COMMAExpr RPAR
 
-Expr: Expr LSQ Expr RSQ;
 
-Expr: 	ID LPAR  RPAR
-		| ID LPAR  Expr RPAR
-		| ID LPAR  Expr COMMA Expr RPAR
-/*
 Expr_COMMAExpr: 	Empty
-					| Expr COMMA_Expr;
-*/
-/*
+					| COMMA_Expr Expr;
+
+
 COMMA_Expr: 	Empty
-				| COMMA Expr COMMA_Expr;
-*/
+				| COMMA_Expr COMMA Expr;
+
 Expr:	LPAR Expr RPAR
 		| ID
 		| INTLIT
