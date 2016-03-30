@@ -55,10 +55,11 @@
 
 %nonassoc "then"
 %nonassoc ELSE
-
-
+%left AND
+%left OR
 %right ASSIGN
 %left COMMA
+
 
 
 %%
@@ -159,7 +160,8 @@ Expr0: 	Empty
 Expr: 	Expr ASSIGN Expr
 		|Expr COMMA Expr;
 
-//Expr: Expr AND_OR Expr;
+Expr: 	Expr AND Expr
+		|Expr OR Expr;
 
 //Expr: Expr COMP Expr ;
 
