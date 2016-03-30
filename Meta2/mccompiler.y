@@ -74,8 +74,8 @@ FuncDefDecDec1: Empty
 FunctionDefinition: 	TypeSpec FunctionDeclarator FunctionBody
 	{if(DEBUG)printf("FunctionDefinition\n");};
 
-FunctionBody: 	LBRACE Declaration1 Statement1 RBRACE
-	{if(DEBUG)printf("FunctionBody\n");};
+FunctionBody: 	LBRACE Declaration1 Statement1 RBRACE {if(DEBUG)printf("FunctionBody\n");}
+				| LBRACE error RBRACE {if(DEBUG)printf("Error on Function Body\n");} ;
 
 Declaration1: 	Empty
 				| Declaration1 Declaration ;
