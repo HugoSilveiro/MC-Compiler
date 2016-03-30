@@ -106,7 +106,8 @@ ParameterDeclaration: 	TypeSpec Asterisk
 						{if(DEBUG)printf("ParameterDeclaration[2]\n");};
 
 Declaration: TypeSpec Declarator COMMA_Declarator SEMI
-	{if(DEBUG)printf("Declaration\n");};
+	{if(DEBUG)printf("Declaration\n");}
+			| error SEMI {if(DEBUG)printf("Error on Declaration\n");};
 
 COMMA_Declarator: 	Empty
 					| COMMA_Declarator COMMA Declarator ;
