@@ -55,7 +55,7 @@
 
 %nonassoc "then"
 %nonassoc ELSE
-%left LPAR
+%left LPAR 
 %left RPAR
 %left LSQ
 %left RSQ
@@ -96,11 +96,11 @@ FunctionDefinition: 	TypeSpec FunctionDeclarator FunctionBody
 FunctionBody: 	LBRACE Declaration1 Statement1 RBRACE {if(DEBUG)printf("FunctionBody\n");}
 				| LBRACE error RBRACE 	{if(DEBUG)printf("Error on Function Body\n");} ;
 
-Declaration1: 	Declaration Declaration1
-				| Empty;
+Declaration1: 	Empty
+				|  Declaration Declaration1;
 
-Statement1: 	Statement Statement1
-				| Empty;
+Statement1: 	Empty 
+				| Statement Statement1;
 
 FunctionDeclaration: TypeSpec FunctionDeclarator SEMI
 	{if(DEBUG)printf("FunctionDeclaration\n");};
@@ -124,7 +124,7 @@ ParameterDeclaration: 	TypeSpec Asterisk
 
 Declaration: TypeSpec Declarator COMMA_Declarator SEMI
 	{if(DEBUG)printf("Declaration\n");}
-			| error SEMI {if(DEBUG)printf("Error on Declaration\n");};
+			| error SEMI 	{if(DEBUG)printf("Error on Declaration\n");};
 
 COMMA_Declarator: 	Empty
 					| COMMA_Declarator COMMA Declarator ;
@@ -168,9 +168,14 @@ StateIF: 	IF LPAR Expr RPAR Statement   %prec "then"
 Statement: 	RETURN SEMI
 			{if(DEBUG)printf("Return Without Value\n");}
 			| RETURN Expr SEMI
-			{if(DEBUG)printf("Return With Value\n");};
+			{if(DEBUG)printf("Return With Value\n");}
+			| LBRACE error RBRACE 	{if(DEBUG)printf("Statement Error\n");}
+			| error SEMI 			{if(DEBUG)printf("Statement Error\n");};
 Expr0: 	Empty
 		| Expr;
+
+Expr: 	ID LPAR error RPAR {if(DEBUG)printf("Expr Error\n");} 
+		| LPAR error RPAR {if(DEBUG)printf("Expr Error\n");};
 
 Expr: 	Expr ASSIGN Expr
 		|Expr COMMA Expr;
@@ -218,5 +223,5 @@ Empty: {if(DEBUG)printf("Empty\n");};
 %%
 
 void yyerror (char *s) {
-printf ("Line %d, col %d: %s: %s\n",lineNumber, columnNumber-((int) strlen(yytext))+1, s, yytext);
+	printf ("Line %d, col %d: %s: %s\n",lineNumber, columnNumber-((int) strlen(yytext))+1, s, yytext);
 }
