@@ -143,13 +143,14 @@ StateIF: 	IF LPAR Expr RPAR Statement   %prec "then"
 			{if(DEBUG)printf("IF\n");}
 
 
+Statement: 	RETURN SEMI
+			{if(DEBUG)printf("Return Without Value\n");}
+			| RETURN Expr SEMI
+			{if(DEBUG)printf("Return With Value\n");};
 Expr0: 	Empty
 		| Expr;
 
-//Statement: 	RETURN SEMI
-	//{if(DEBUG)printf("Return Without Value\n");}
-				//| RETURN Expr SEMI
-	//{if(DEBUG)printf("Return With Value\n");};
+
 
 //Expr: Expr ASSIGN_COMMA Expr;
 
