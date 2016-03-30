@@ -84,13 +84,13 @@ FunctionDefinition: 	TypeSpec FunctionDeclarator FunctionBody
 	{if(DEBUG)printf("FunctionDefinition\n");};
 
 FunctionBody: 	LBRACE Declaration1 Statement1 RBRACE {if(DEBUG)printf("FunctionBody\n");}
-				| LBRACE error RBRACE {if(DEBUG)printf("Error on Function Body\n");} ;
+				| LBRACE error RBRACE 	{if(DEBUG)printf("Error on Function Body\n");} ;
 
-Declaration1: 	Empty
-				| Declaration1 Declaration ;
+Declaration1: 	Declaration Declaration1 
+				| Empty;
 
-Statement1: 	Empty
-				| Statement1 Statement;
+Statement1: 	Statement Statement1
+				| Empty;
 
 FunctionDeclaration: TypeSpec FunctionDeclarator SEMI
 	{if(DEBUG)printf("FunctionDeclaration\n");};
@@ -112,7 +112,7 @@ ParameterDeclaration: 	TypeSpec Asterisk
 						| TypeSpec Asterisk ID
 						{if(DEBUG)printf("ParameterDeclaration[2]\n");};
 
-Declaration: TypeSpec Declarator COMMA_Declarator SEMI
+Declaration: TypeSpec Declarator COMMA_Declarator SEMI 
 	{if(DEBUG)printf("Declaration\n");}
 			| error SEMI {if(DEBUG)printf("Error on Declaration\n");};
 
