@@ -204,17 +204,12 @@ Expr: 	AMP Expr
 
 Expr: Expr LSQ Expr RSQ;
 
-Expr: 	ID LPAR  RPAR
-		| ID LPAR  Expr RPAR
-		| ID LPAR  Expr COMMA Expr RPAR
-/*
-Expr_COMMAExpr: 	Empty
-					| Expr COMMA_Expr;
-*/
-/*
-COMMA_Expr: 	Empty
-				| COMMA Expr COMMA_Expr;
-*/
+Expr: 	ID LPAR RPAR
+		| ID LPAR  Expr COMMA_Expr RPAR
+
+COMMA_Expr: Empty
+			| COMMA_Expr COMMA Expr;
+
 Expr:	LPAR Expr RPAR
 		| ID
 		| INTLIT
