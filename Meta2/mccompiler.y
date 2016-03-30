@@ -55,7 +55,7 @@
 
 %nonassoc "then"
 %nonassoc ELSE
-%left LPAR 
+%left LPAR
 %left RPAR
 %left LSQ
 %left RSQ
@@ -99,7 +99,7 @@ FunctionBody: 	LBRACE Declaration1 Statement1 RBRACE {if(DEBUG)printf("FunctionB
 Declaration1: 	Empty
 				|  Declaration Declaration1;
 
-Statement1: 	Empty 
+Statement1: 	Empty
 				| Statement Statement1;
 
 FunctionDeclaration: TypeSpec FunctionDeclarator SEMI
@@ -174,31 +174,31 @@ Statement: 	RETURN SEMI
 Expr0: 	Empty
 		| Expr;
 
-Expr: 	ID LPAR error RPAR {if(DEBUG)printf("Expr Error\n");} 
+Expr: 	ID LPAR error RPAR {if(DEBUG)printf("Expr Error\n");}
 		| LPAR error RPAR {if(DEBUG)printf("Expr Error\n");};
 
-Expr: 	Expr ASSIGN Expr
-		|Expr COMMA Expr;
+Expr: 	ExprNew
+		|Expr COMMA ExprNew;
 
-Expr: 	Expr AND Expr
-		| Expr OR Expr
-		| Expr EQ Expr
-		| Expr NE Expr
-		| Expr LT Expr
-		| Expr GT Expr
-		| Expr LE Expr
-		| Expr GE Expr
-		| Expr PLUS Expr
-		| Expr MINUS Expr
-		| Expr AST Expr
-		| Expr DIV Expr
-		| Expr MOD Expr
-		| AMP Expr
-		| AST Expr
-		| PLUS Expr
-		| MINUS Expr
-		| NOT Expr
-		| Expr LSQ Expr RSQ
+ExprNew: 	ExprNew AND ExprNew
+		| ExprNew OR ExprNew
+		| ExprNew EQ ExprNew
+		| ExprNew NE ExprNew
+		| ExprNew LT ExprNew
+		| ExprNew GT ExprNew
+		| ExprNew LE ExprNew
+		| ExprNew GE ExprNew
+		| ExprNew PLUS ExprNew
+		| ExprNew MINUS ExprNew
+		| ExprNew AST ExprNew
+		| ExprNew DIV ExprNew
+		| ExprNew MOD ExprNew
+		| AMP ExprNew
+		| AST ExprNew
+		| PLUS ExprNew
+		| MINUS ExprNew
+		| NOT ExprNew
+		| ExprNew LSQ Expr RSQ
 		| ID LPAR Expr_COMMAExpr RPAR
 
 
@@ -207,7 +207,7 @@ Expr_COMMAExpr: 	Empty
 
 
 COMMA_Expr: 	Empty
-				| COMMA_Expr COMMA Expr;
+				| COMMA_Expr COMMA ExprNew;
 
 Expr:	LPAR Expr RPAR
 		| ID
