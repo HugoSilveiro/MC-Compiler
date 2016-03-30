@@ -55,13 +55,22 @@
 
 %nonassoc "then"
 %nonassoc ELSE
-
+%left LPAR
+%left RPAR
+%left LSQ
+%left RSQ
+%left MOD
+%left AST
+%left DIV
+%left MINUS
+%left PLUS
 %left GE
 %left LE
 %left GT
 %left LT
 %left EQ
 %left NE
+%left NOT
 %left OR
 %left AND
 %right ASSIGN
@@ -86,7 +95,7 @@ FunctionDefinition: 	TypeSpec FunctionDeclarator FunctionBody
 FunctionBody: 	LBRACE Declaration1 Statement1 RBRACE {if(DEBUG)printf("FunctionBody\n");}
 				| LBRACE error RBRACE 	{if(DEBUG)printf("Error on Function Body\n");} ;
 
-Declaration1: 	Declaration Declaration1 
+Declaration1: 	Declaration Declaration1
 				| Empty;
 
 Statement1: 	Statement Statement1
@@ -112,7 +121,7 @@ ParameterDeclaration: 	TypeSpec Asterisk
 						| TypeSpec Asterisk ID
 						{if(DEBUG)printf("ParameterDeclaration[2]\n");};
 
-Declaration: TypeSpec Declarator COMMA_Declarator SEMI 
+Declaration: TypeSpec Declarator COMMA_Declarator SEMI
 	{if(DEBUG)printf("Declaration\n");}
 			| error SEMI {if(DEBUG)printf("Error on Declaration\n");};
 
@@ -166,47 +175,48 @@ Expr: 	Expr ASSIGN Expr
 		|Expr COMMA Expr;
 
 Expr: 	Expr AND Expr
-		|Expr OR Expr
-		|Expr EQ Expr
+		| Expr OR Expr
+		| Expr EQ Expr
 		| Expr NE Expr
 		| Expr LT Expr
 		| Expr GT Expr
 		| Expr LE Expr
-		| Expr GE Expr;
+		| Expr GE Expr
+		| Expr PLUS Expr
+		| Expr MINUS Expr
+		| Expr AST Expr
+		| Expr DIV Expr
+		| Expr MOD Expr;
 
-Expr: Expr OPS Expr;
 
-//Expr: OTHER Expr;
+/*
+Expr: 	AMP Expr
+		| AST Expr
+		| PLUS Expr
+		| MINUS Expr
+		| NOT Expr
+*/
 
-//Expr: Expr LSQ Expr RSQ;
+Expr: Expr LSQ Expr RSQ;
 
-//Expr: ID LPAR Expr_COMMAExpr RPAR;
-
-//Expr_COMMAExpr: 	Empty
-					//| Expr COMMA_Expr;
-//COMMA_Expr: 	Empty
-				//| COMMA Expr COMMA_Expr;
-
+Expr: 	ID LPAR  RPAR
+		| ID LPAR  Expr RPAR
+		| ID LPAR  Expr COMMA Expr RPAR
+/*
+Expr_COMMAExpr: 	Empty
+					| Expr COMMA_Expr;
+*/
+/*
+COMMA_Expr: 	Empty
+				| COMMA Expr COMMA_Expr;
+*/
 Expr:	LPAR Expr RPAR
 		| ID
 		| INTLIT
-		|CHRLIT
+		| CHRLIT
 		| STRLIT;
 
 
-//AND_OR: 	AND
-			//| OR;
-
-
-//OPS: 	PLUS
-		//| MINUS
-		//| AST
-		//| DIV
-		//| MOD;
-//OTHER: 	AMP
-			//| AST
-			//| PLUS
-			//| MINUS |NOT;
 
 Empty: {if(DEBUG)printf("Empty\n");};
 
