@@ -49,7 +49,8 @@
 %token STRLIT
 %token CHRLIT
 
-%nonassoc AMP ELSE IF
+%nonassoc "then"
+%nonassoc ELSE
 
 
 
@@ -127,21 +128,27 @@ Statement: 	SEMI
 	{if(DEBUG)printf("Statement[1]\n");}
 			| Expr SEMI
 	{if(DEBUG)printf("Statement[1]\n");};
+			|LBRACE Statement1 RBRACE
+	   {if(DEBUG)printf("Statement[2]\n");} ;
+	   		|StateIF
+			|FOR LPAR Expr0 SEMI Expr0 SEMI Expr0 RPAR Statement
+		{if(DEBUG)if(DEBUG)printf("For Cycle\n");}
 
-Statement: LBRACE Statement1 RBRACE
-	{if(DEBUG)printf("Statement[2]\n");} ;
+StateIF: 	IF LPAR Expr RPAR Statement   %prec "then"
+			|IF LPAR Expr RPAR Statement ELSE Statement
+			{if(DEBUG)printf("IF\n");}
+//Statement: LBRACE Statement1 RBRACE
+	//{if(DEBUG)printf("Statement[2]\n");} ;
 
-Statement: IF LPAR Expr RPAR Statement ElseStatement
-	{if(DEBUG)printf("IF\n");};
-
-ElseStatement: 	Empty
-				| ELSE Statement;
+//Statement: IF LPAR Expr RPAR Statement ELSE Statement
+	//{if(DEBUG)printf("IF\n");}
+			//|IF LPAR Expr RPAR Statement;
 
 //Statement: FOR LPAR Expr0 SEMI Expr0 SEMI Expr0 RPAR Statement
 	//{if(DEBUG)if(DEBUG)printf("For Cycle\n");};
 
-//Expr0: 	Expr
-			//| Empty;
+Expr0: 	Empty
+		| Expr;
 
 //Statement: 	RETURN SEMI
 	//{if(DEBUG)printf("Return Without Value\n");}
