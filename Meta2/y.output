@@ -18,6 +18,9 @@ Terminals unused in grammar
    RESERVED
 
 
+State 20 conflicts: 1 shift/reduce
+
+
 Grammar
 
     0 $accept: Start $end
@@ -58,69 +61,70 @@ Grammar
    22                     | TypeSpec Asterisk ID
 
    23 Declaration: TypeSpec Declarator COMMA_Declarator SEMI
+   24            | error SEMI
 
-   24 COMMA_Declarator: Empty
-   25                 | COMMA_Declarator COMMA Declarator
+   25 COMMA_Declarator: Empty
+   26                 | COMMA_Declarator COMMA Declarator
 
-   26 TypeSpec: CHAR
-   27         | INT
-   28         | VOID
+   27 TypeSpec: CHAR
+   28         | INT
+   29         | VOID
 
-   29 Declarator: Asterisk ID
-   30           | Asterisk ID LSQSTATE INTLITSTATE RSQSTATE
+   30 Declarator: Asterisk ID
+   31           | Asterisk ID LSQSTATE INTLITSTATE RSQSTATE
 
-   31 LSQSTATE: LSQ
+   32 LSQSTATE: LSQ
 
-   32 RSQSTATE: RSQ
+   33 RSQSTATE: RSQ
 
-   33 INTLITSTATE: INTLIT
+   34 INTLITSTATE: INTLIT
 
-   34 Statement: SEMI
-   35          | Expr SEMI
-   36          | LBRACE Statement1 RBRACE
-   37          | StateIF
-   38          | FOR LPAR Expr0 SEMI Expr0 SEMI Expr0 RPAR Statement
+   35 Statement: SEMI
+   36          | Expr SEMI
+   37          | LBRACE Statement1 RBRACE
+   38          | StateIF
+   39          | FOR LPAR Expr0 SEMI Expr0 SEMI Expr0 RPAR Statement
 
-   39 StateIF: IF LPAR Expr RPAR Statement
-   40        | IF LPAR Expr RPAR Statement ELSE Statement
+   40 StateIF: IF LPAR Expr RPAR Statement
+   41        | IF LPAR Expr RPAR Statement ELSE Statement
 
-   41 Statement: RETURN SEMI
-   42          | RETURN Expr SEMI
+   42 Statement: RETURN SEMI
+   43          | RETURN Expr SEMI
 
-   43 Expr0: Empty
-   44      | Expr
+   44 Expr0: Empty
+   45      | Expr
 
-   45 Expr: LPAR Expr RPAR
-   46     | ID
-   47     | INTLIT
-   48     | CHRLIT
-   49     | STRLIT
+   46 Expr: LPAR Expr RPAR
+   47     | ID
+   48     | INTLIT
+   49     | CHRLIT
+   50     | STRLIT
 
-   50 Empty: %empty
+   51 Empty: %empty
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
-error (256) 9
+error (256) 9 24
 AMP (258)
 AND (259)
 ASSIGN (260)
 AST (261) 17
-CHAR (262) 26
-COMMA (263) 20 25
+CHAR (262) 27
+COMMA (263) 20 26
 DIV (264)
-ELSE (265) 40
+ELSE (265) 41
 EQ (266)
-FOR (267) 38
+FOR (267) 39
 GE (268)
 GT (269)
-IF (270) 39 40
-INT (271) 27
-LBRACE (272) 8 9 36
+IF (270) 40 41
+INT (271) 28
+LBRACE (272) 8 9 37
 LE (273)
-LPAR (274) 15 38 39 40 45
-LSQ (275) 31
+LPAR (274) 15 39 40 41 46
+LSQ (275) 32
 LT (276)
 MINUS (277)
 MOD (278)
@@ -128,17 +132,17 @@ NE (279)
 NOT (280)
 OR (281)
 PLUS (282)
-RBRACE (283) 8 9 36
-RETURN (284) 41 42
-RPAR (285) 15 38 39 40 45
-RSQ (286) 32
-SEMI (287) 14 23 34 35 38 41 42
-VOID (288) 28
+RBRACE (283) 8 9 37
+RETURN (284) 42 43
+RPAR (285) 15 39 40 41 46
+RSQ (286) 33
+SEMI (287) 14 23 24 35 36 39 42 43
+VOID (288) 29
 RESERVED (289)
-ID (290) 15 22 29 30 46
-INTLIT (291) 33 47
-STRLIT (292) 49
-CHRLIT (293) 48
+ID (290) 15 22 30 31 47
+INTLIT (291) 34 48
+STRLIT (292) 50
+CHRLIT (293) 49
 "then" (294)
 
 
@@ -159,13 +163,13 @@ FunctionBody (45)
 Declaration1 (46)
     on left: 10 11, on right: 8 11
 Statement1 (47)
-    on left: 12 13, on right: 8 13 36
+    on left: 12 13, on right: 8 13 37
 FunctionDeclaration (48)
     on left: 14, on right: 3
 FunctionDeclarator (49)
     on left: 15, on right: 7 14
 Asterisk (50)
-    on left: 16 17, on right: 15 17 21 22 29 30
+    on left: 16 17, on right: 15 17 21 22 30 31
 ParameterList (51)
     on left: 18, on right: 15
 COMMA_ParameterDeclaration (52)
@@ -173,931 +177,959 @@ COMMA_ParameterDeclaration (52)
 ParameterDeclaration (53)
     on left: 21 22, on right: 18 20
 Declaration (54)
-    on left: 23, on right: 4 11
+    on left: 23 24, on right: 4 11
 COMMA_Declarator (55)
-    on left: 24 25, on right: 23 25
+    on left: 25 26, on right: 23 26
 TypeSpec (56)
-    on left: 26 27 28, on right: 7 14 21 22 23
+    on left: 27 28 29, on right: 7 14 21 22 23
 Declarator (57)
-    on left: 29 30, on right: 23 25
+    on left: 30 31, on right: 23 26
 LSQSTATE (58)
-    on left: 31, on right: 30
+    on left: 32, on right: 31
 RSQSTATE (59)
-    on left: 32, on right: 30
+    on left: 33, on right: 31
 INTLITSTATE (60)
-    on left: 33, on right: 30
+    on left: 34, on right: 31
 Statement (61)
-    on left: 34 35 36 37 38 41 42, on right: 13 38 39 40
+    on left: 35 36 37 38 39 42 43, on right: 13 39 40 41
 StateIF (62)
-    on left: 39 40, on right: 37
+    on left: 40 41, on right: 38
 Expr0 (63)
-    on left: 43 44, on right: 38
+    on left: 44 45, on right: 39
 Expr (64)
-    on left: 45 46 47 48 49, on right: 35 39 40 42 44 45
+    on left: 46 47 48 49 50, on right: 36 40 41 43 45 46
 Empty (65)
-    on left: 50, on right: 5 10 12 16 19 24 43
+    on left: 51, on right: 5 10 12 16 19 25 44
 
 
 State 0
 
     0 $accept: . Start $end
 
-    CHAR  shift, and go to state 1
-    INT   shift, and go to state 2
-    VOID  shift, and go to state 3
+    error  shift, and go to state 1
+    CHAR   shift, and go to state 2
+    INT    shift, and go to state 3
+    VOID   shift, and go to state 4
 
-    Start                go to state 4
-    FuncDefDecDec        go to state 5
-    FunctionDefinition   go to state 6
-    FunctionDeclaration  go to state 7
-    Declaration          go to state 8
-    TypeSpec             go to state 9
+    Start                go to state 5
+    FuncDefDecDec        go to state 6
+    FunctionDefinition   go to state 7
+    FunctionDeclaration  go to state 8
+    Declaration          go to state 9
+    TypeSpec             go to state 10
 
 
 State 1
 
-   26 TypeSpec: CHAR .
+   24 Declaration: error . SEMI
 
-    $default  reduce using rule 26 (TypeSpec)
+    SEMI  shift, and go to state 11
 
 
 State 2
 
-   27 TypeSpec: INT .
+   27 TypeSpec: CHAR .
 
     $default  reduce using rule 27 (TypeSpec)
 
 
 State 3
 
-   28 TypeSpec: VOID .
+   28 TypeSpec: INT .
 
     $default  reduce using rule 28 (TypeSpec)
 
 
 State 4
 
-    0 $accept: Start . $end
+   29 TypeSpec: VOID .
 
-    $end  shift, and go to state 10
+    $default  reduce using rule 29 (TypeSpec)
 
 
 State 5
 
-    1 Start: FuncDefDecDec . FuncDefDecDec1
+    0 $accept: Start . $end
 
-    $default  reduce using rule 50 (Empty)
-
-    FuncDefDecDec1  go to state 11
-    Empty           go to state 12
+    $end  shift, and go to state 12
 
 
 State 6
+
+    1 Start: FuncDefDecDec . FuncDefDecDec1
+
+    $default  reduce using rule 51 (Empty)
+
+    FuncDefDecDec1  go to state 13
+    Empty           go to state 14
+
+
+State 7
 
     2 FuncDefDecDec: FunctionDefinition .
 
     $default  reduce using rule 2 (FuncDefDecDec)
 
 
-State 7
+State 8
 
     3 FuncDefDecDec: FunctionDeclaration .
 
     $default  reduce using rule 3 (FuncDefDecDec)
 
 
-State 8
+State 9
 
     4 FuncDefDecDec: Declaration .
 
     $default  reduce using rule 4 (FuncDefDecDec)
 
 
-State 9
+State 10
 
     7 FunctionDefinition: TypeSpec . FunctionDeclarator FunctionBody
    14 FunctionDeclaration: TypeSpec . FunctionDeclarator SEMI
    23 Declaration: TypeSpec . Declarator COMMA_Declarator SEMI
 
-    $default  reduce using rule 50 (Empty)
+    $default  reduce using rule 51 (Empty)
 
-    FunctionDeclarator  go to state 13
-    Asterisk            go to state 14
-    Declarator          go to state 15
-    Empty               go to state 16
+    FunctionDeclarator  go to state 15
+    Asterisk            go to state 16
+    Declarator          go to state 17
+    Empty               go to state 18
 
 
-State 10
+State 11
+
+   24 Declaration: error SEMI .
+
+    $default  reduce using rule 24 (Declaration)
+
+
+State 12
 
     0 $accept: Start $end .
 
     $default  accept
 
 
-State 11
+State 13
 
     1 Start: FuncDefDecDec FuncDefDecDec1 .
     6 FuncDefDecDec1: FuncDefDecDec1 . FuncDefDecDec
 
-    CHAR  shift, and go to state 1
-    INT   shift, and go to state 2
-    VOID  shift, and go to state 3
+    error  shift, and go to state 1
+    CHAR   shift, and go to state 2
+    INT    shift, and go to state 3
+    VOID   shift, and go to state 4
 
-    $default  reduce using rule 1 (Start)
+    $end  reduce using rule 1 (Start)
 
-    FuncDefDecDec        go to state 17
-    FunctionDefinition   go to state 6
-    FunctionDeclaration  go to state 7
-    Declaration          go to state 8
-    TypeSpec             go to state 9
+    FuncDefDecDec        go to state 19
+    FunctionDefinition   go to state 7
+    FunctionDeclaration  go to state 8
+    Declaration          go to state 9
+    TypeSpec             go to state 10
 
 
-State 12
+State 14
 
     5 FuncDefDecDec1: Empty .
 
     $default  reduce using rule 5 (FuncDefDecDec1)
 
 
-State 13
+State 15
 
     7 FunctionDefinition: TypeSpec FunctionDeclarator . FunctionBody
    14 FunctionDeclaration: TypeSpec FunctionDeclarator . SEMI
 
-    LBRACE  shift, and go to state 18
-    SEMI    shift, and go to state 19
+    LBRACE  shift, and go to state 20
+    SEMI    shift, and go to state 21
 
-    FunctionBody  go to state 20
-
-
-State 14
-
-   15 FunctionDeclarator: Asterisk . ID LPAR ParameterList RPAR
-   17 Asterisk: Asterisk . AST
-   29 Declarator: Asterisk . ID
-   30           | Asterisk . ID LSQSTATE INTLITSTATE RSQSTATE
-
-    AST  shift, and go to state 21
-    ID   shift, and go to state 22
-
-
-State 15
-
-   23 Declaration: TypeSpec Declarator . COMMA_Declarator SEMI
-
-    $default  reduce using rule 50 (Empty)
-
-    COMMA_Declarator  go to state 23
-    Empty             go to state 24
+    FunctionBody  go to state 22
 
 
 State 16
+
+   15 FunctionDeclarator: Asterisk . ID LPAR ParameterList RPAR
+   17 Asterisk: Asterisk . AST
+   30 Declarator: Asterisk . ID
+   31           | Asterisk . ID LSQSTATE INTLITSTATE RSQSTATE
+
+    AST  shift, and go to state 23
+    ID   shift, and go to state 24
+
+
+State 17
+
+   23 Declaration: TypeSpec Declarator . COMMA_Declarator SEMI
+
+    $default  reduce using rule 51 (Empty)
+
+    COMMA_Declarator  go to state 25
+    Empty             go to state 26
+
+
+State 18
 
    16 Asterisk: Empty .
 
     $default  reduce using rule 16 (Asterisk)
 
 
-State 17
+State 19
 
     6 FuncDefDecDec1: FuncDefDecDec1 FuncDefDecDec .
 
     $default  reduce using rule 6 (FuncDefDecDec1)
 
 
-State 18
+State 20
 
     8 FunctionBody: LBRACE . Declaration1 Statement1 RBRACE
     9             | LBRACE . error RBRACE
 
-    error  shift, and go to state 25
+    error  shift, and go to state 27
 
-    CHAR    reduce using rule 50 (Empty)
-    FOR     reduce using rule 50 (Empty)
-    IF      reduce using rule 50 (Empty)
-    INT     reduce using rule 50 (Empty)
-    LBRACE  reduce using rule 50 (Empty)
-    LPAR    reduce using rule 50 (Empty)
-    RBRACE  reduce using rule 50 (Empty)
-    RETURN  reduce using rule 50 (Empty)
-    SEMI    reduce using rule 50 (Empty)
-    VOID    reduce using rule 50 (Empty)
-    ID      reduce using rule 50 (Empty)
-    INTLIT  reduce using rule 50 (Empty)
-    STRLIT  reduce using rule 50 (Empty)
-    CHRLIT  reduce using rule 50 (Empty)
+    error   [reduce using rule 51 (Empty)]
+    CHAR    reduce using rule 51 (Empty)
+    FOR     reduce using rule 51 (Empty)
+    IF      reduce using rule 51 (Empty)
+    INT     reduce using rule 51 (Empty)
+    LBRACE  reduce using rule 51 (Empty)
+    LPAR    reduce using rule 51 (Empty)
+    RBRACE  reduce using rule 51 (Empty)
+    RETURN  reduce using rule 51 (Empty)
+    SEMI    reduce using rule 51 (Empty)
+    VOID    reduce using rule 51 (Empty)
+    ID      reduce using rule 51 (Empty)
+    INTLIT  reduce using rule 51 (Empty)
+    STRLIT  reduce using rule 51 (Empty)
+    CHRLIT  reduce using rule 51 (Empty)
 
-    Declaration1  go to state 26
-    Empty         go to state 27
+    Declaration1  go to state 28
+    Empty         go to state 29
 
 
-State 19
+State 21
 
    14 FunctionDeclaration: TypeSpec FunctionDeclarator SEMI .
 
     $default  reduce using rule 14 (FunctionDeclaration)
 
 
-State 20
+State 22
 
     7 FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody .
 
     $default  reduce using rule 7 (FunctionDefinition)
 
 
-State 21
+State 23
 
    17 Asterisk: Asterisk AST .
 
     $default  reduce using rule 17 (Asterisk)
 
 
-State 22
-
-   15 FunctionDeclarator: Asterisk ID . LPAR ParameterList RPAR
-   29 Declarator: Asterisk ID .
-   30           | Asterisk ID . LSQSTATE INTLITSTATE RSQSTATE
-
-    LPAR  shift, and go to state 28
-    LSQ   shift, and go to state 29
-
-    $default  reduce using rule 29 (Declarator)
-
-    LSQSTATE  go to state 30
-
-
-State 23
-
-   23 Declaration: TypeSpec Declarator COMMA_Declarator . SEMI
-   25 COMMA_Declarator: COMMA_Declarator . COMMA Declarator
-
-    COMMA  shift, and go to state 31
-    SEMI   shift, and go to state 32
-
-
 State 24
 
-   24 COMMA_Declarator: Empty .
+   15 FunctionDeclarator: Asterisk ID . LPAR ParameterList RPAR
+   30 Declarator: Asterisk ID .
+   31           | Asterisk ID . LSQSTATE INTLITSTATE RSQSTATE
 
-    $default  reduce using rule 24 (COMMA_Declarator)
+    LPAR  shift, and go to state 30
+    LSQ   shift, and go to state 31
+
+    $default  reduce using rule 30 (Declarator)
+
+    LSQSTATE  go to state 32
 
 
 State 25
 
-    9 FunctionBody: LBRACE error . RBRACE
+   23 Declaration: TypeSpec Declarator COMMA_Declarator . SEMI
+   26 COMMA_Declarator: COMMA_Declarator . COMMA Declarator
 
-    RBRACE  shift, and go to state 33
+    COMMA  shift, and go to state 33
+    SEMI   shift, and go to state 34
 
 
 State 26
 
-    8 FunctionBody: LBRACE Declaration1 . Statement1 RBRACE
-   11 Declaration1: Declaration1 . Declaration
+   25 COMMA_Declarator: Empty .
 
-    CHAR  shift, and go to state 1
-    INT   shift, and go to state 2
-    VOID  shift, and go to state 3
-
-    $default  reduce using rule 50 (Empty)
-
-    Statement1   go to state 34
-    Declaration  go to state 35
-    TypeSpec     go to state 36
-    Empty        go to state 37
+    $default  reduce using rule 25 (COMMA_Declarator)
 
 
 State 27
+
+    9 FunctionBody: LBRACE error . RBRACE
+
+    RBRACE  shift, and go to state 35
+
+
+State 28
+
+    8 FunctionBody: LBRACE Declaration1 . Statement1 RBRACE
+   11 Declaration1: Declaration1 . Declaration
+
+    error  shift, and go to state 1
+    CHAR   shift, and go to state 2
+    INT    shift, and go to state 3
+    VOID   shift, and go to state 4
+
+    FOR     reduce using rule 51 (Empty)
+    IF      reduce using rule 51 (Empty)
+    LBRACE  reduce using rule 51 (Empty)
+    LPAR    reduce using rule 51 (Empty)
+    RBRACE  reduce using rule 51 (Empty)
+    RETURN  reduce using rule 51 (Empty)
+    SEMI    reduce using rule 51 (Empty)
+    ID      reduce using rule 51 (Empty)
+    INTLIT  reduce using rule 51 (Empty)
+    STRLIT  reduce using rule 51 (Empty)
+    CHRLIT  reduce using rule 51 (Empty)
+
+    Statement1   go to state 36
+    Declaration  go to state 37
+    TypeSpec     go to state 38
+    Empty        go to state 39
+
+
+State 29
 
    10 Declaration1: Empty .
 
     $default  reduce using rule 10 (Declaration1)
 
 
-State 28
+State 30
 
    15 FunctionDeclarator: Asterisk ID LPAR . ParameterList RPAR
 
-    CHAR  shift, and go to state 1
-    INT   shift, and go to state 2
-    VOID  shift, and go to state 3
+    CHAR  shift, and go to state 2
+    INT   shift, and go to state 3
+    VOID  shift, and go to state 4
 
-    ParameterList         go to state 38
-    ParameterDeclaration  go to state 39
-    TypeSpec              go to state 40
-
-
-State 29
-
-   31 LSQSTATE: LSQ .
-
-    $default  reduce using rule 31 (LSQSTATE)
-
-
-State 30
-
-   30 Declarator: Asterisk ID LSQSTATE . INTLITSTATE RSQSTATE
-
-    INTLIT  shift, and go to state 41
-
-    INTLITSTATE  go to state 42
+    ParameterList         go to state 40
+    ParameterDeclaration  go to state 41
+    TypeSpec              go to state 42
 
 
 State 31
 
-   25 COMMA_Declarator: COMMA_Declarator COMMA . Declarator
+   32 LSQSTATE: LSQ .
 
-    $default  reduce using rule 50 (Empty)
-
-    Asterisk    go to state 43
-    Declarator  go to state 44
-    Empty       go to state 16
+    $default  reduce using rule 32 (LSQSTATE)
 
 
 State 32
+
+   31 Declarator: Asterisk ID LSQSTATE . INTLITSTATE RSQSTATE
+
+    INTLIT  shift, and go to state 43
+
+    INTLITSTATE  go to state 44
+
+
+State 33
+
+   26 COMMA_Declarator: COMMA_Declarator COMMA . Declarator
+
+    $default  reduce using rule 51 (Empty)
+
+    Asterisk    go to state 45
+    Declarator  go to state 46
+    Empty       go to state 18
+
+
+State 34
 
    23 Declaration: TypeSpec Declarator COMMA_Declarator SEMI .
 
     $default  reduce using rule 23 (Declaration)
 
 
-State 33
+State 35
 
     9 FunctionBody: LBRACE error RBRACE .
 
     $default  reduce using rule 9 (FunctionBody)
 
 
-State 34
+State 36
 
     8 FunctionBody: LBRACE Declaration1 Statement1 . RBRACE
    13 Statement1: Statement1 . Statement
 
-    FOR     shift, and go to state 45
-    IF      shift, and go to state 46
-    LBRACE  shift, and go to state 47
-    LPAR    shift, and go to state 48
-    RBRACE  shift, and go to state 49
-    RETURN  shift, and go to state 50
-    SEMI    shift, and go to state 51
-    ID      shift, and go to state 52
-    INTLIT  shift, and go to state 53
-    STRLIT  shift, and go to state 54
-    CHRLIT  shift, and go to state 55
+    FOR     shift, and go to state 47
+    IF      shift, and go to state 48
+    LBRACE  shift, and go to state 49
+    LPAR    shift, and go to state 50
+    RBRACE  shift, and go to state 51
+    RETURN  shift, and go to state 52
+    SEMI    shift, and go to state 53
+    ID      shift, and go to state 54
+    INTLIT  shift, and go to state 55
+    STRLIT  shift, and go to state 56
+    CHRLIT  shift, and go to state 57
 
-    Statement  go to state 56
-    StateIF    go to state 57
-    Expr       go to state 58
+    Statement  go to state 58
+    StateIF    go to state 59
+    Expr       go to state 60
 
 
-State 35
+State 37
 
    11 Declaration1: Declaration1 Declaration .
 
     $default  reduce using rule 11 (Declaration1)
 
 
-State 36
+State 38
 
    23 Declaration: TypeSpec . Declarator COMMA_Declarator SEMI
 
-    $default  reduce using rule 50 (Empty)
+    $default  reduce using rule 51 (Empty)
 
-    Asterisk    go to state 43
-    Declarator  go to state 15
-    Empty       go to state 16
+    Asterisk    go to state 45
+    Declarator  go to state 17
+    Empty       go to state 18
 
 
-State 37
+State 39
 
    12 Statement1: Empty .
 
     $default  reduce using rule 12 (Statement1)
 
 
-State 38
+State 40
 
    15 FunctionDeclarator: Asterisk ID LPAR ParameterList . RPAR
 
-    RPAR  shift, and go to state 59
-
-
-State 39
-
-   18 ParameterList: ParameterDeclaration . COMMA_ParameterDeclaration
-
-    $default  reduce using rule 50 (Empty)
-
-    COMMA_ParameterDeclaration  go to state 60
-    Empty                       go to state 61
-
-
-State 40
-
-   21 ParameterDeclaration: TypeSpec . Asterisk
-   22                     | TypeSpec . Asterisk ID
-
-    $default  reduce using rule 50 (Empty)
-
-    Asterisk  go to state 62
-    Empty     go to state 16
+    RPAR  shift, and go to state 61
 
 
 State 41
 
-   33 INTLITSTATE: INTLIT .
+   18 ParameterList: ParameterDeclaration . COMMA_ParameterDeclaration
 
-    $default  reduce using rule 33 (INTLITSTATE)
+    $default  reduce using rule 51 (Empty)
+
+    COMMA_ParameterDeclaration  go to state 62
+    Empty                       go to state 63
 
 
 State 42
 
-   30 Declarator: Asterisk ID LSQSTATE INTLITSTATE . RSQSTATE
+   21 ParameterDeclaration: TypeSpec . Asterisk
+   22                     | TypeSpec . Asterisk ID
 
-    RSQ  shift, and go to state 63
+    $default  reduce using rule 51 (Empty)
 
-    RSQSTATE  go to state 64
+    Asterisk  go to state 64
+    Empty     go to state 18
 
 
 State 43
 
-   17 Asterisk: Asterisk . AST
-   29 Declarator: Asterisk . ID
-   30           | Asterisk . ID LSQSTATE INTLITSTATE RSQSTATE
+   34 INTLITSTATE: INTLIT .
 
-    AST  shift, and go to state 21
-    ID   shift, and go to state 65
+    $default  reduce using rule 34 (INTLITSTATE)
 
 
 State 44
 
-   25 COMMA_Declarator: COMMA_Declarator COMMA Declarator .
+   31 Declarator: Asterisk ID LSQSTATE INTLITSTATE . RSQSTATE
 
-    $default  reduce using rule 25 (COMMA_Declarator)
+    RSQ  shift, and go to state 65
+
+    RSQSTATE  go to state 66
 
 
 State 45
 
-   38 Statement: FOR . LPAR Expr0 SEMI Expr0 SEMI Expr0 RPAR Statement
+   17 Asterisk: Asterisk . AST
+   30 Declarator: Asterisk . ID
+   31           | Asterisk . ID LSQSTATE INTLITSTATE RSQSTATE
 
-    LPAR  shift, and go to state 66
+    AST  shift, and go to state 23
+    ID   shift, and go to state 67
 
 
 State 46
 
-   39 StateIF: IF . LPAR Expr RPAR Statement
-   40        | IF . LPAR Expr RPAR Statement ELSE Statement
+   26 COMMA_Declarator: COMMA_Declarator COMMA Declarator .
 
-    LPAR  shift, and go to state 67
+    $default  reduce using rule 26 (COMMA_Declarator)
 
 
 State 47
 
-   36 Statement: LBRACE . Statement1 RBRACE
+   39 Statement: FOR . LPAR Expr0 SEMI Expr0 SEMI Expr0 RPAR Statement
 
-    $default  reduce using rule 50 (Empty)
-
-    Statement1  go to state 68
-    Empty       go to state 37
+    LPAR  shift, and go to state 68
 
 
 State 48
 
-   45 Expr: LPAR . Expr RPAR
+   40 StateIF: IF . LPAR Expr RPAR Statement
+   41        | IF . LPAR Expr RPAR Statement ELSE Statement
 
-    LPAR    shift, and go to state 48
-    ID      shift, and go to state 52
-    INTLIT  shift, and go to state 53
-    STRLIT  shift, and go to state 54
-    CHRLIT  shift, and go to state 55
-
-    Expr  go to state 69
+    LPAR  shift, and go to state 69
 
 
 State 49
 
-    8 FunctionBody: LBRACE Declaration1 Statement1 RBRACE .
+   37 Statement: LBRACE . Statement1 RBRACE
 
-    $default  reduce using rule 8 (FunctionBody)
+    $default  reduce using rule 51 (Empty)
+
+    Statement1  go to state 70
+    Empty       go to state 39
 
 
 State 50
 
-   41 Statement: RETURN . SEMI
-   42          | RETURN . Expr SEMI
+   46 Expr: LPAR . Expr RPAR
 
-    LPAR    shift, and go to state 48
-    SEMI    shift, and go to state 70
-    ID      shift, and go to state 52
-    INTLIT  shift, and go to state 53
-    STRLIT  shift, and go to state 54
-    CHRLIT  shift, and go to state 55
+    LPAR    shift, and go to state 50
+    ID      shift, and go to state 54
+    INTLIT  shift, and go to state 55
+    STRLIT  shift, and go to state 56
+    CHRLIT  shift, and go to state 57
 
     Expr  go to state 71
 
 
 State 51
 
-   34 Statement: SEMI .
+    8 FunctionBody: LBRACE Declaration1 Statement1 RBRACE .
 
-    $default  reduce using rule 34 (Statement)
+    $default  reduce using rule 8 (FunctionBody)
 
 
 State 52
 
-   46 Expr: ID .
+   42 Statement: RETURN . SEMI
+   43          | RETURN . Expr SEMI
 
-    $default  reduce using rule 46 (Expr)
+    LPAR    shift, and go to state 50
+    SEMI    shift, and go to state 72
+    ID      shift, and go to state 54
+    INTLIT  shift, and go to state 55
+    STRLIT  shift, and go to state 56
+    CHRLIT  shift, and go to state 57
+
+    Expr  go to state 73
 
 
 State 53
 
-   47 Expr: INTLIT .
+   35 Statement: SEMI .
 
-    $default  reduce using rule 47 (Expr)
+    $default  reduce using rule 35 (Statement)
 
 
 State 54
 
-   49 Expr: STRLIT .
+   47 Expr: ID .
 
-    $default  reduce using rule 49 (Expr)
+    $default  reduce using rule 47 (Expr)
 
 
 State 55
 
-   48 Expr: CHRLIT .
+   48 Expr: INTLIT .
 
     $default  reduce using rule 48 (Expr)
 
 
 State 56
 
+   50 Expr: STRLIT .
+
+    $default  reduce using rule 50 (Expr)
+
+
+State 57
+
+   49 Expr: CHRLIT .
+
+    $default  reduce using rule 49 (Expr)
+
+
+State 58
+
    13 Statement1: Statement1 Statement .
 
     $default  reduce using rule 13 (Statement1)
 
 
-State 57
-
-   37 Statement: StateIF .
-
-    $default  reduce using rule 37 (Statement)
-
-
-State 58
-
-   35 Statement: Expr . SEMI
-
-    SEMI  shift, and go to state 72
-
-
 State 59
+
+   38 Statement: StateIF .
+
+    $default  reduce using rule 38 (Statement)
+
+
+State 60
+
+   36 Statement: Expr . SEMI
+
+    SEMI  shift, and go to state 74
+
+
+State 61
 
    15 FunctionDeclarator: Asterisk ID LPAR ParameterList RPAR .
 
     $default  reduce using rule 15 (FunctionDeclarator)
 
 
-State 60
+State 62
 
    18 ParameterList: ParameterDeclaration COMMA_ParameterDeclaration .
    20 COMMA_ParameterDeclaration: COMMA_ParameterDeclaration . COMMA ParameterDeclaration
 
-    COMMA  shift, and go to state 73
+    COMMA  shift, and go to state 75
 
     $default  reduce using rule 18 (ParameterList)
 
 
-State 61
+State 63
 
    19 COMMA_ParameterDeclaration: Empty .
 
     $default  reduce using rule 19 (COMMA_ParameterDeclaration)
 
 
-State 62
+State 64
 
    17 Asterisk: Asterisk . AST
    21 ParameterDeclaration: TypeSpec Asterisk .
    22                     | TypeSpec Asterisk . ID
 
-    AST  shift, and go to state 21
-    ID   shift, and go to state 74
+    AST  shift, and go to state 23
+    ID   shift, and go to state 76
 
     $default  reduce using rule 21 (ParameterDeclaration)
 
 
-State 63
-
-   32 RSQSTATE: RSQ .
-
-    $default  reduce using rule 32 (RSQSTATE)
-
-
-State 64
-
-   30 Declarator: Asterisk ID LSQSTATE INTLITSTATE RSQSTATE .
-
-    $default  reduce using rule 30 (Declarator)
-
-
 State 65
 
-   29 Declarator: Asterisk ID .
-   30           | Asterisk ID . LSQSTATE INTLITSTATE RSQSTATE
+   33 RSQSTATE: RSQ .
 
-    LSQ  shift, and go to state 29
-
-    $default  reduce using rule 29 (Declarator)
-
-    LSQSTATE  go to state 30
+    $default  reduce using rule 33 (RSQSTATE)
 
 
 State 66
 
-   38 Statement: FOR LPAR . Expr0 SEMI Expr0 SEMI Expr0 RPAR Statement
+   31 Declarator: Asterisk ID LSQSTATE INTLITSTATE RSQSTATE .
 
-    LPAR    shift, and go to state 48
-    ID      shift, and go to state 52
-    INTLIT  shift, and go to state 53
-    STRLIT  shift, and go to state 54
-    CHRLIT  shift, and go to state 55
-
-    $default  reduce using rule 50 (Empty)
-
-    Expr0  go to state 75
-    Expr   go to state 76
-    Empty  go to state 77
+    $default  reduce using rule 31 (Declarator)
 
 
 State 67
 
-   39 StateIF: IF LPAR . Expr RPAR Statement
-   40        | IF LPAR . Expr RPAR Statement ELSE Statement
+   30 Declarator: Asterisk ID .
+   31           | Asterisk ID . LSQSTATE INTLITSTATE RSQSTATE
 
-    LPAR    shift, and go to state 48
-    ID      shift, and go to state 52
-    INTLIT  shift, and go to state 53
-    STRLIT  shift, and go to state 54
-    CHRLIT  shift, and go to state 55
+    LSQ  shift, and go to state 31
 
-    Expr  go to state 78
+    $default  reduce using rule 30 (Declarator)
+
+    LSQSTATE  go to state 32
 
 
 State 68
 
-   13 Statement1: Statement1 . Statement
-   36 Statement: LBRACE Statement1 . RBRACE
+   39 Statement: FOR LPAR . Expr0 SEMI Expr0 SEMI Expr0 RPAR Statement
 
-    FOR     shift, and go to state 45
-    IF      shift, and go to state 46
-    LBRACE  shift, and go to state 47
-    LPAR    shift, and go to state 48
-    RBRACE  shift, and go to state 79
-    RETURN  shift, and go to state 50
-    SEMI    shift, and go to state 51
-    ID      shift, and go to state 52
-    INTLIT  shift, and go to state 53
-    STRLIT  shift, and go to state 54
-    CHRLIT  shift, and go to state 55
+    LPAR    shift, and go to state 50
+    ID      shift, and go to state 54
+    INTLIT  shift, and go to state 55
+    STRLIT  shift, and go to state 56
+    CHRLIT  shift, and go to state 57
 
-    Statement  go to state 56
-    StateIF    go to state 57
-    Expr       go to state 58
+    $default  reduce using rule 51 (Empty)
+
+    Expr0  go to state 77
+    Expr   go to state 78
+    Empty  go to state 79
 
 
 State 69
 
-   45 Expr: LPAR Expr . RPAR
+   40 StateIF: IF LPAR . Expr RPAR Statement
+   41        | IF LPAR . Expr RPAR Statement ELSE Statement
 
-    RPAR  shift, and go to state 80
+    LPAR    shift, and go to state 50
+    ID      shift, and go to state 54
+    INTLIT  shift, and go to state 55
+    STRLIT  shift, and go to state 56
+    CHRLIT  shift, and go to state 57
+
+    Expr  go to state 80
 
 
 State 70
 
-   41 Statement: RETURN SEMI .
+   13 Statement1: Statement1 . Statement
+   37 Statement: LBRACE Statement1 . RBRACE
 
-    $default  reduce using rule 41 (Statement)
+    FOR     shift, and go to state 47
+    IF      shift, and go to state 48
+    LBRACE  shift, and go to state 49
+    LPAR    shift, and go to state 50
+    RBRACE  shift, and go to state 81
+    RETURN  shift, and go to state 52
+    SEMI    shift, and go to state 53
+    ID      shift, and go to state 54
+    INTLIT  shift, and go to state 55
+    STRLIT  shift, and go to state 56
+    CHRLIT  shift, and go to state 57
+
+    Statement  go to state 58
+    StateIF    go to state 59
+    Expr       go to state 60
 
 
 State 71
 
-   42 Statement: RETURN Expr . SEMI
+   46 Expr: LPAR Expr . RPAR
 
-    SEMI  shift, and go to state 81
+    RPAR  shift, and go to state 82
 
 
 State 72
 
-   35 Statement: Expr SEMI .
+   42 Statement: RETURN SEMI .
 
-    $default  reduce using rule 35 (Statement)
+    $default  reduce using rule 42 (Statement)
 
 
 State 73
 
-   20 COMMA_ParameterDeclaration: COMMA_ParameterDeclaration COMMA . ParameterDeclaration
+   43 Statement: RETURN Expr . SEMI
 
-    CHAR  shift, and go to state 1
-    INT   shift, and go to state 2
-    VOID  shift, and go to state 3
-
-    ParameterDeclaration  go to state 82
-    TypeSpec              go to state 40
+    SEMI  shift, and go to state 83
 
 
 State 74
+
+   36 Statement: Expr SEMI .
+
+    $default  reduce using rule 36 (Statement)
+
+
+State 75
+
+   20 COMMA_ParameterDeclaration: COMMA_ParameterDeclaration COMMA . ParameterDeclaration
+
+    CHAR  shift, and go to state 2
+    INT   shift, and go to state 3
+    VOID  shift, and go to state 4
+
+    ParameterDeclaration  go to state 84
+    TypeSpec              go to state 42
+
+
+State 76
 
    22 ParameterDeclaration: TypeSpec Asterisk ID .
 
     $default  reduce using rule 22 (ParameterDeclaration)
 
 
-State 75
-
-   38 Statement: FOR LPAR Expr0 . SEMI Expr0 SEMI Expr0 RPAR Statement
-
-    SEMI  shift, and go to state 83
-
-
-State 76
-
-   44 Expr0: Expr .
-
-    $default  reduce using rule 44 (Expr0)
-
-
 State 77
 
-   43 Expr0: Empty .
+   39 Statement: FOR LPAR Expr0 . SEMI Expr0 SEMI Expr0 RPAR Statement
 
-    $default  reduce using rule 43 (Expr0)
+    SEMI  shift, and go to state 85
 
 
 State 78
 
-   39 StateIF: IF LPAR Expr . RPAR Statement
-   40        | IF LPAR Expr . RPAR Statement ELSE Statement
+   45 Expr0: Expr .
 
-    RPAR  shift, and go to state 84
+    $default  reduce using rule 45 (Expr0)
 
 
 State 79
 
-   36 Statement: LBRACE Statement1 RBRACE .
+   44 Expr0: Empty .
 
-    $default  reduce using rule 36 (Statement)
+    $default  reduce using rule 44 (Expr0)
 
 
 State 80
 
-   45 Expr: LPAR Expr RPAR .
+   40 StateIF: IF LPAR Expr . RPAR Statement
+   41        | IF LPAR Expr . RPAR Statement ELSE Statement
 
-    $default  reduce using rule 45 (Expr)
+    RPAR  shift, and go to state 86
 
 
 State 81
 
-   42 Statement: RETURN Expr SEMI .
+   37 Statement: LBRACE Statement1 RBRACE .
 
-    $default  reduce using rule 42 (Statement)
+    $default  reduce using rule 37 (Statement)
 
 
 State 82
+
+   46 Expr: LPAR Expr RPAR .
+
+    $default  reduce using rule 46 (Expr)
+
+
+State 83
+
+   43 Statement: RETURN Expr SEMI .
+
+    $default  reduce using rule 43 (Statement)
+
+
+State 84
 
    20 COMMA_ParameterDeclaration: COMMA_ParameterDeclaration COMMA ParameterDeclaration .
 
     $default  reduce using rule 20 (COMMA_ParameterDeclaration)
 
 
-State 83
-
-   38 Statement: FOR LPAR Expr0 SEMI . Expr0 SEMI Expr0 RPAR Statement
-
-    LPAR    shift, and go to state 48
-    ID      shift, and go to state 52
-    INTLIT  shift, and go to state 53
-    STRLIT  shift, and go to state 54
-    CHRLIT  shift, and go to state 55
-
-    $default  reduce using rule 50 (Empty)
-
-    Expr0  go to state 85
-    Expr   go to state 76
-    Empty  go to state 77
-
-
-State 84
-
-   39 StateIF: IF LPAR Expr RPAR . Statement
-   40        | IF LPAR Expr RPAR . Statement ELSE Statement
-
-    FOR     shift, and go to state 45
-    IF      shift, and go to state 46
-    LBRACE  shift, and go to state 47
-    LPAR    shift, and go to state 48
-    RETURN  shift, and go to state 50
-    SEMI    shift, and go to state 51
-    ID      shift, and go to state 52
-    INTLIT  shift, and go to state 53
-    STRLIT  shift, and go to state 54
-    CHRLIT  shift, and go to state 55
-
-    Statement  go to state 86
-    StateIF    go to state 57
-    Expr       go to state 58
-
-
 State 85
 
-   38 Statement: FOR LPAR Expr0 SEMI Expr0 . SEMI Expr0 RPAR Statement
+   39 Statement: FOR LPAR Expr0 SEMI . Expr0 SEMI Expr0 RPAR Statement
 
-    SEMI  shift, and go to state 87
+    LPAR    shift, and go to state 50
+    ID      shift, and go to state 54
+    INTLIT  shift, and go to state 55
+    STRLIT  shift, and go to state 56
+    CHRLIT  shift, and go to state 57
+
+    $default  reduce using rule 51 (Empty)
+
+    Expr0  go to state 87
+    Expr   go to state 78
+    Empty  go to state 79
 
 
 State 86
 
-   39 StateIF: IF LPAR Expr RPAR Statement .
-   40        | IF LPAR Expr RPAR Statement . ELSE Statement
+   40 StateIF: IF LPAR Expr RPAR . Statement
+   41        | IF LPAR Expr RPAR . Statement ELSE Statement
 
-    ELSE  shift, and go to state 88
+    FOR     shift, and go to state 47
+    IF      shift, and go to state 48
+    LBRACE  shift, and go to state 49
+    LPAR    shift, and go to state 50
+    RETURN  shift, and go to state 52
+    SEMI    shift, and go to state 53
+    ID      shift, and go to state 54
+    INTLIT  shift, and go to state 55
+    STRLIT  shift, and go to state 56
+    CHRLIT  shift, and go to state 57
 
-    $default  reduce using rule 39 (StateIF)
+    Statement  go to state 88
+    StateIF    go to state 59
+    Expr       go to state 60
 
 
 State 87
 
-   38 Statement: FOR LPAR Expr0 SEMI Expr0 SEMI . Expr0 RPAR Statement
+   39 Statement: FOR LPAR Expr0 SEMI Expr0 . SEMI Expr0 RPAR Statement
 
-    LPAR    shift, and go to state 48
-    ID      shift, and go to state 52
-    INTLIT  shift, and go to state 53
-    STRLIT  shift, and go to state 54
-    CHRLIT  shift, and go to state 55
-
-    $default  reduce using rule 50 (Empty)
-
-    Expr0  go to state 89
-    Expr   go to state 76
-    Empty  go to state 77
+    SEMI  shift, and go to state 89
 
 
 State 88
 
-   40 StateIF: IF LPAR Expr RPAR Statement ELSE . Statement
+   40 StateIF: IF LPAR Expr RPAR Statement .
+   41        | IF LPAR Expr RPAR Statement . ELSE Statement
 
-    FOR     shift, and go to state 45
-    IF      shift, and go to state 46
-    LBRACE  shift, and go to state 47
-    LPAR    shift, and go to state 48
-    RETURN  shift, and go to state 50
-    SEMI    shift, and go to state 51
-    ID      shift, and go to state 52
-    INTLIT  shift, and go to state 53
-    STRLIT  shift, and go to state 54
-    CHRLIT  shift, and go to state 55
-
-    Statement  go to state 90
-    StateIF    go to state 57
-    Expr       go to state 58
-
-
-State 89
-
-   38 Statement: FOR LPAR Expr0 SEMI Expr0 SEMI Expr0 . RPAR Statement
-
-    RPAR  shift, and go to state 91
-
-
-State 90
-
-   40 StateIF: IF LPAR Expr RPAR Statement ELSE Statement .
+    ELSE  shift, and go to state 90
 
     $default  reduce using rule 40 (StateIF)
 
 
-State 91
+State 89
 
-   38 Statement: FOR LPAR Expr0 SEMI Expr0 SEMI Expr0 RPAR . Statement
+   39 Statement: FOR LPAR Expr0 SEMI Expr0 SEMI . Expr0 RPAR Statement
 
-    FOR     shift, and go to state 45
-    IF      shift, and go to state 46
-    LBRACE  shift, and go to state 47
-    LPAR    shift, and go to state 48
-    RETURN  shift, and go to state 50
-    SEMI    shift, and go to state 51
-    ID      shift, and go to state 52
-    INTLIT  shift, and go to state 53
-    STRLIT  shift, and go to state 54
-    CHRLIT  shift, and go to state 55
+    LPAR    shift, and go to state 50
+    ID      shift, and go to state 54
+    INTLIT  shift, and go to state 55
+    STRLIT  shift, and go to state 56
+    CHRLIT  shift, and go to state 57
+
+    $default  reduce using rule 51 (Empty)
+
+    Expr0  go to state 91
+    Expr   go to state 78
+    Empty  go to state 79
+
+
+State 90
+
+   41 StateIF: IF LPAR Expr RPAR Statement ELSE . Statement
+
+    FOR     shift, and go to state 47
+    IF      shift, and go to state 48
+    LBRACE  shift, and go to state 49
+    LPAR    shift, and go to state 50
+    RETURN  shift, and go to state 52
+    SEMI    shift, and go to state 53
+    ID      shift, and go to state 54
+    INTLIT  shift, and go to state 55
+    STRLIT  shift, and go to state 56
+    CHRLIT  shift, and go to state 57
 
     Statement  go to state 92
-    StateIF    go to state 57
-    Expr       go to state 58
+    StateIF    go to state 59
+    Expr       go to state 60
+
+
+State 91
+
+   39 Statement: FOR LPAR Expr0 SEMI Expr0 SEMI Expr0 . RPAR Statement
+
+    RPAR  shift, and go to state 93
 
 
 State 92
 
-   38 Statement: FOR LPAR Expr0 SEMI Expr0 SEMI Expr0 RPAR Statement .
+   41 StateIF: IF LPAR Expr RPAR Statement ELSE Statement .
 
-    $default  reduce using rule 38 (Statement)
+    $default  reduce using rule 41 (StateIF)
+
+
+State 93
+
+   39 Statement: FOR LPAR Expr0 SEMI Expr0 SEMI Expr0 RPAR . Statement
+
+    FOR     shift, and go to state 47
+    IF      shift, and go to state 48
+    LBRACE  shift, and go to state 49
+    LPAR    shift, and go to state 50
+    RETURN  shift, and go to state 52
+    SEMI    shift, and go to state 53
+    ID      shift, and go to state 54
+    INTLIT  shift, and go to state 55
+    STRLIT  shift, and go to state 56
+    CHRLIT  shift, and go to state 57
+
+    Statement  go to state 94
+    StateIF    go to state 59
+    Expr       go to state 60
+
+
+State 94
+
+   39 Statement: FOR LPAR Expr0 SEMI Expr0 SEMI Expr0 RPAR Statement .
+
+    $default  reduce using rule 39 (Statement)
