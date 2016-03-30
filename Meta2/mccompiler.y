@@ -8,7 +8,7 @@
 	extern int lineNumber;
 	extern int columnNumber;
 	extern char * yytext;
-
+	int yylex(void);
 	void yyerror (char *s);
 %}
 
@@ -170,17 +170,14 @@ Statement: 	RETURN SEMI
 			| RETURN Expr SEMI
 			{if(DEBUG)printf("Return With Value\n");}
 			| LBRACE error RBRACE 	{if(DEBUG)printf("Statement Error\n");}
-			| error SEMI 			{if(DEBUG)printf("Statement Error\n");};
+			;
 Expr0: 	Empty
 		| Expr;
-
-Expr: 	ID LPAR error RPAR {if(DEBUG)printf("Expr Error\n");}
-		| LPAR error RPAR {if(DEBUG)printf("Expr Error\n");};
 
 Expr: 	ExprNew
 		|Expr COMMA ExprNew;
 
-ExprNew: 	ExprNew AND ExprNew
+ExprNew:  ExprNew AND ExprNew
 		| ExprNew OR ExprNew
 		| ExprNew EQ ExprNew
 		| ExprNew NE ExprNew
@@ -200,22 +197,20 @@ ExprNew: 	ExprNew AND ExprNew
 		| NOT ExprNew
 		| ExprNew LSQ Expr RSQ
 		| ID LPAR Expr_COMMAExpr RPAR
+		| LPAR Expr RPAR
+		| INTLIT
+		| CHRLIT
+		| STRLIT
+		| ID LPAR error RPAR {if(DEBUG)printf("Expr Error\n");}
+		| LPAR error RPAR {if(DEBUG)printf("Expr Error\n");}
+		;
 
 
 Expr_COMMAExpr: 	Empty
 					| COMMA_Expr Expr;
 
-
 COMMA_Expr: 	Empty
 				| COMMA_Expr COMMA ExprNew;
-
-Expr:	LPAR Expr RPAR
-		| ID
-		| INTLIT
-		| CHRLIT
-		| STRLIT;
-
-
 
 Empty: {if(DEBUG)printf("Empty\n");};
 
