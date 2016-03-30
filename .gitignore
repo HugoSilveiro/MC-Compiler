@@ -3,3 +3,5 @@ Meta1/mccompiler
 *.zip
 *.~
 Meta2/mccompiler.zip
+y.output
+y.tab.c
