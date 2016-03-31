@@ -55,21 +55,12 @@
 
 %nonassoc "then"
 %nonassoc ELSE
-%left LPAR
-%left RPAR
-%left LSQ
-%left RSQ
-%left MOD
-%left AST
-%left DIV
-%left MINUS
-%left PLUS
-%left GE
-%left LE
-%left GT
-%left LT
-%left EQ
-%left NE
+%left LPAR RPAR
+%left LSQ RSQ
+%left MOD AST DIV
+%left MINUS PLUS
+%left GE LE GT LT
+%left EQ NE
 %left NOT
 %left OR
 %left AND
@@ -93,14 +84,13 @@ FuncDefDecDec1: Empty
 FunctionDefinition: 	TypeSpec FunctionDeclarator FunctionBody
 	{if(DEBUG)printf("FunctionDefinition\n");};
 
-FunctionBody: 	LBRACE Declaration1 Statement1 RBRACE {if(DEBUG)printf("FunctionBody\n");}
+FunctionBody: 	LBRACE Declaration1 Statement2 RBRACE {if(DEBUG)printf("FunctionBody\n");}
 				| LBRACE error RBRACE 	{if(DEBUG)printf("Error on Function Body\n");} ;
+
+Statement2: 	Statement_List Statement2 | Empty;
 
 Declaration1: 	Empty
 				|  Declaration Declaration1;
-
-Statement1: 	Empty
-				| Statement Statement1;
 
 FunctionDeclaration: TypeSpec FunctionDeclarator SEMI
 	{if(DEBUG)printf("FunctionDeclaration\n");};
@@ -127,7 +117,7 @@ Declaration: TypeSpec Declarator COMMA_Declarator SEMI
 			| error SEMI 	{if(DEBUG)printf("Error on Declaration\n");};
 
 COMMA_Declarator: 	Empty
-					| COMMA_Declarator COMMA Declarator ;
+					|  COMMA Declarator COMMA_Declarator;
 
 TypeSpec: 	CHAR
 	{if(DEBUG)printf("TypeSpec[CHAR]\n");}
@@ -150,27 +140,28 @@ RSQSTATE: RSQ
 INTLITSTATE: INTLIT
 	{if(DEBUG)printf("INTLIT");};
 
-Statement: 	SEMI
-	{if(DEBUG)printf("Statement[1]\n");}
-			| Expr SEMI
-	{if(DEBUG)printf("Statement[1]\n");};
-			|LBRACE Statement1 RBRACE
-	   {if(DEBUG)printf("Statement[2]\n");} ;
-	   		|StateIF
-			|FOR LPAR Expr0 SEMI Expr0 SEMI Expr0 RPAR Statement
-			{if(DEBUG)printf("For Cycle\n");}
+
+Statement: 	 error SEMI 			{if(DEBUG)printf("Statement Error\n");}
+			| Statement_List
+			;
+
+Statement_List: 	LBRACE error RBRACE 	{if(DEBUG)printf("Statement Error\n");}
+					|SEMI														{if(DEBUG)printf("Statement[1]\n");}
+					| Expr SEMI													{if(DEBUG)printf("Statement[1]\n");};
+					| LBRACE Statement1 RBRACE									{if(DEBUG)printf("Statement[2]\n");} ;
+			   		| StateIF
+					| FOR LPAR Expr0 SEMI Expr0 SEMI Expr0 RPAR Statement 		{if(DEBUG)printf("For Cycle\n");}
+					| RETURN SEMI  												{if(DEBUG)printf("Return Without Value\n");}
+					| RETURN Expr SEMI 											{if(DEBUG)printf("Return With Value\n");}
+					;	
 
 StateIF: 	IF LPAR Expr RPAR Statement   %prec "then"
-			|IF LPAR Expr RPAR Statement ELSE Statement
-			{if(DEBUG)printf("IF\n");}
+			|IF LPAR Expr RPAR Statement ELSE Statement 						{if(DEBUG)printf("IF\n");}
 
+Statement1: 	Statement Statement1 
+				| Empty
+				;
 
-Statement: 	RETURN SEMI
-			{if(DEBUG)printf("Return Without Value\n");}
-			| RETURN Expr SEMI
-			{if(DEBUG)printf("Return With Value\n");}
-			| LBRACE error RBRACE 	{if(DEBUG)printf("Statement Error\n");}
-			;
 Expr0: 	Empty
 		| Expr;
 
