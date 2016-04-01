@@ -1,5 +1,5 @@
 %{
-	#define DEBUG 2<1
+	#define DEBUG 2>1
 	#include <stdio.h>
 	#include <stdlib.h>
 	#include <string.h>
@@ -55,18 +55,22 @@
 
 %nonassoc "then"
 %nonassoc ELSE
-%left LPAR RPAR
-%left LSQ RSQ
+
+%left COMMA
+%right ASSIGN
+%left AMP
+%left AND
+%left OR
+%left NOT
+%left EQ NE
+%left GE LE GT LT
 %left MOD AST DIV
 %left MINUS PLUS
-%left GE LE GT LT
-%left EQ NE
-%left NOT
-%left OR
-%left AND
-%left AMP
-%right ASSIGN
-%left COMMA
+%left LSQ RSQ
+%left LPAR RPAR
+
+
+
 
 
 
@@ -81,17 +85,17 @@ FuncDefDecDec: 	FunctionDefinition
 				;
 
 FuncDefDecDec1: Empty
-				| FuncDefDecDec1 FuncDefDecDec 
+				| FuncDefDecDec1 FuncDefDecDec
 				;
 
 FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody			{if(DEBUG)printf("FunctionDefinition\n");}
 					;
 
 FunctionBody: 	LBRACE DeclNot StateNot RBRACE		 					{if(DEBUG)printf("FunctionBody\n");}
-				| LBRACE error RBRACE 									{if(DEBUG)printf("Error on Function Body\n");} 
+				| LBRACE error RBRACE 									{if(DEBUG)printf("Error on Function Body\n");}
 				;
 
-StateNot: 	Statement_List StateNot 
+StateNot: 	Statement_List StateNot
 				|	Empty
 				;
 
@@ -106,14 +110,14 @@ FunctionDeclarator: Asterisk ID LPAR ParameterList RPAR					{if(DEBUG)printf("Fu
 					;
 
 Asterisk: 	Empty
-			| AST Asterisk 
+			| AST Asterisk
 			;
 
 ParameterList: 	ParameterDeclaration COMMA_ParameterDeclaration			{if(DEBUG)printf("ParameterList\n");}
 				;
 
 COMMA_ParameterDeclaration: 	Empty
-								| COMMA ParameterDeclaration COMMA_ParameterDeclaration 
+								| COMMA ParameterDeclaration COMMA_ParameterDeclaration
 								;
 
 ParameterDeclaration: 	TypeSpec Asterisk								{if(DEBUG)printf("ParameterDeclaration[1]\n");}
@@ -143,26 +147,26 @@ Statement: 	LBRACE error RBRACE 									{if(DEBUG)printf("Statement Error\n");}
 			;
 
 Statement_List: 	SEMI													{if(DEBUG)printf("Statement[1]\n");}
-					| ExprNew SEMI												{if(DEBUG)printf("Statement[1]\n");};
+					| Expr SEMI												{if(DEBUG)printf("Statement[1]\n");};
 					| LBRACE Statement1 RBRACE								{if(DEBUG)printf("Statement[2]\n");} ;
-			   		| StateIF
+
 					| FOR LPAR Expr0 SEMI Expr0 SEMI Expr0 RPAR Statement	{if(DEBUG)printf("For Cycle\n");}
 					| RETURN SEMI  											{if(DEBUG)printf("Return Without Value\n");}
-					| RETURN ExprNew SEMI 										{if(DEBUG)printf("Return With Value\n");}
-					;	
+					| RETURN Expr SEMI 										{if(DEBUG)printf("Return With Value\n");}
+					|IF LPAR Expr RPAR Statement   %prec "then"
+					|IF LPAR Expr RPAR Statement ELSE Statement 					{if(DEBUG)printf("IF\n");}
+					;
 
-StateIF: 	IF LPAR ExprNew RPAR Statement   %prec "then"
-			|IF LPAR ExprNew RPAR Statement ELSE Statement 					{if(DEBUG)printf("IF\n");}
-			;
-
-Statement1: 	Statement Statement1 
+Statement1: 	Statement Statement1
 				| Statement
 				;
 
 Expr0: 	Empty
-		| ExprNew
+		| Expr
 		;
 
+Expr:	ExprNew
+		| Expr COMMA ExprNew;
 
 ExprNew:  ExprNew ASSIGN ExprNew
 		| ExprNew AND ExprNew
