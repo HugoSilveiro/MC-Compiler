@@ -180,10 +180,12 @@ int main(int argc, char* argv[])
 		if(strcmp(argv[1], "-l")==0)
 		{
 			flag = 1;
+			yylex();
 		}
 		else if(strcmp(argv[1], "-1") == 0)
 		{
 			flag = 2;
+			yylex();
 		}
 
 	}

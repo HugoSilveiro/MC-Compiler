@@ -2341,13 +2341,13 @@ int main(int argc, char* argv[])
 
 		if(strcmp(argv[1], "-l")==0)
 		{
-			printf("HERE\n");
 			flag = 1;
+			yylex();
 		}
 		else if(strcmp(argv[1], "-1") == 0)
 		{
-			printf("HERE2\n");
 			flag = 2;
+			yylex();
 		}
 
 	}
