@@ -26,8 +26,7 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 	int colComment;
 	int lineComment;
 
-	bool flagTokens = false;
-	bool flagErrors = false;
+	int flag = 0;
 %}
 
 
@@ -36,127 +35,127 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 %%
 
 "&"								{
-									if(flagTokens)printf("AMP\n");
-									if(flagErrors)return AMP;}
+									if(flag == 1)printf("AMP\n");
+									if(flag == 0)return AMP;}
 "&&"							{
-									if(flagTokens)printf("AND\n");
-									if(flagErrors)return AND;}
+									if(flag == 1)printf("AND\n");
+									if(flag == 0)return AND;}
 "="								{
-									if(flagTokens)printf("ASSIGN\n");
-									if(flagErrors)return ASSIGN;}
+									if(flag == 1)printf("ASSIGN\n");
+									if(flag == 0)return ASSIGN;}
 "*"								{
-									if(flagTokens)printf("AST\n");
-									if(flagErrors)return AST;}
+									if(flag == 1)printf("AST\n");
+									if(flag == 0)return AST;}
 "char"							{
-									if(flagTokens)printf("CHAR\n");
-									if(flagErrors)return CHAR;}
+									if(flag == 1)printf("CHAR\n");
+									if(flag == 0)return CHAR;}
 ","								{
-									if(flagTokens)printf("COMMA\n");
-									if(flagErrors)return COMMA;}
+									if(flag == 1)printf("COMMA\n");
+									if(flag == 0)return COMMA;}
 "/"								{
-									if(flagTokens)printf("DIV\n");
-									if(flagErrors)return DIV;}
+									if(flag == 1)printf("DIV\n");
+									if(flag == 0)return DIV;}
 "else"							{
-									if(flagTokens)printf("ELSE\n");
-									if(flagErrors)return ELSE;}
+									if(flag == 1)printf("ELSE\n");
+									if(flag == 0)return ELSE;}
 "=="							{
-									if(flagTokens)printf("EQ\n");
-									if(flagErrors)return EQ;}
+									if(flag == 1)printf("EQ\n");
+									if(flag == 0)return EQ;}
 
-"for"							{	if(flagTokens)printf("FOR\n");
-									if(flagErrors)return FOR;}
+"for"							{	if(flag == 1)printf("FOR\n");
+									if(flag == 0)return FOR;}
 ">="							{
-									if(flagTokens)printf("GE\n");
-									if(flagErrors)return GE;}
+									if(flag == 1)printf("GE\n");
+									if(flag == 0)return GE;}
 
-">"								{	if(flagTokens)printf("GT\n");
-									if(flagErrors)return GT;}
+">"								{	if(flag == 1)printf("GT\n");
+									if(flag == 0)return GT;}
 "if"							{
-									if(flagTokens)printf("IF\n");
-									if(flagErrors)return IF;}
+									if(flag == 1)printf("IF\n");
+									if(flag == 0)return IF;}
 "int"							{
-									if(flagTokens)printf("INT\n");
-									if(flagErrors)return INT;}
+									if(flag == 1)printf("INT\n");
+									if(flag == 0)return INT;}
 "{"								{
-									if(flagTokens)printf("LBRACE\n");
-									if(flagErrors)return LBRACE;}
+									if(flag == 1)printf("LBRACE\n");
+									if(flag == 0)return LBRACE;}
 "<="							{
-									if(flagTokens)printf("LE\n");
-									if(flagErrors)return LE;}
+									if(flag == 1)printf("LE\n");
+									if(flag == 0)return LE;}
 "("								{
-									if(flagTokens)printf("LPAR\n");
-									if(flagErrors)return LPAR;}
+									if(flag == 1)printf("LPAR\n");
+									if(flag == 0)return LPAR;}
 "["								{
-									if(flagTokens)printf("LSQ\n");
-									if(flagErrors)return LSQ;}
+									if(flag == 1)printf("LSQ\n");
+									if(flag == 0)return LSQ;}
 "<"								{
-									if(flagTokens)printf("LT\n");
-									if(flagErrors)return LT;}
+									if(flag == 1)printf("LT\n");
+									if(flag == 0)return LT;}
 "-"								{
-									if(flagTokens)printf("MINUS\n");
-									if(flagErrors)return MINUS;}
+									if(flag == 1)printf("MINUS\n");
+									if(flag == 0)return MINUS;}
 "%" 							{
-									if(flagTokens)printf("MOD\n");
-									if(flagErrors)return MOD;}
+									if(flag == 1)printf("MOD\n");
+									if(flag == 0)return MOD;}
 "!="							{
-									if(flagTokens)printf("NE\n");
-									if(flagErrors)return NE;}
+									if(flag == 1)printf("NE\n");
+									if(flag == 0)return NE;}
 "!"								{
-									if(flagTokens)printf("NOT\n");
-									if(flagErrors)return NOT;}
+									if(flag == 1)printf("NOT\n");
+									if(flag == 0)return NOT;}
 "||" 							{
-									if(flagTokens)printf("OR\n");
-									if(flagErrors)return OR;}
+									if(flag == 1)printf("OR\n");
+									if(flag == 0)return OR;}
 "+" 							{
-									if(flagTokens)printf("PLUS\n");
-									if(flagErrors)return PLUS;}
+									if(flag == 1)printf("PLUS\n");
+									if(flag == 0)return PLUS;}
 "}"								{
-									if(flagTokens)printf("RBRACE\n");
-									if(flagErrors)return RBRACE;}
+									if(flag == 1)printf("RBRACE\n");
+									if(flag == 0)return RBRACE;}
 "return" 						{
-									if(flagTokens)printf("RETURN\n");
-									if(flagErrors)return RETURN;}
+									if(flag == 1)printf("RETURN\n");
+									if(flag == 0)return RETURN;}
 ")"								{
-									if(flagTokens)printf("RPAR\n");
-									if(flagErrors)return RPAR;}
+									if(flag == 1)printf("RPAR\n");
+									if(flag == 0)return RPAR;}
 "]"								{
-									if(flagTokens)printf("RSQ\n");
-									if(flagErrors)return RSQ;}
+									if(flag == 1)printf("RSQ\n");
+									if(flag == 0)return RSQ;}
 ";"								{
-									if(flagTokens)printf("SEMI\n");
-									if(flagErrors)return SEMI;}
-"void"							{	if(flagTokens)printf("VOID\n");
-									if(flagErrors)return AMP;}
+									if(flag == 1)printf("SEMI\n");
+									if(flag == 0)return SEMI;}
+"void"							{	if(flag == 1)printf("VOID\n");
+									if(flag == 0)return AMP;}
 "auto"|"break"|"case"|"const"|"continue"|"default"|"do"|"double"|"enum"|"extern"|"float"|"goto"|"long"|"register"|"short"|"signed"|"sizeof"|"static"|"struct"|"switch"|"typedef"|"union"|"unsigned"|"volatile"|"while"|"++"|"--" 							{
-																																																																if(flagTokens)printf("RESERVED(%s)\n", yytext);
-																																																																if(flagErrors)return RESERVED;}
+																																																																if(flag == 1)printf("RESERVED(%s)\n", yytext);
+																																																																if(flag == 0)return RESERVED;}
 
 
-{ID}							{	if(flagTokens)printf("ID(%s)\n", yytext); 
-									if(flagErrors){yylval.value = strdup(yytext); return ID;}}
+{ID}							{	if(flag == 1)printf("ID(%s)\n", yytext); 
+									if(flag == 0){yylval.value = strdup(yytext); return ID;}}
 
-{INTLIT}						{	if(flagTokens)printf("INTLIT(%s)\n", yytext); 
-									if(flagErrors){yylval.value = strdup(yytext); return INTLIT;}}
+{INTLIT}						{	if(flag == 1)printf("INTLIT(%s)\n", yytext); 
+									if(flag == 0){yylval.value = strdup(yytext); return INTLIT;}}
 
-{STRLIT}						{	if(flagTokens)printf("STRLIT(%s)\n", yytext); 
-									if(flagErrors){yylval.value = strdup(yytext); return STRLIT;}}	
+{STRLIT}						{	if(flag == 1)printf("STRLIT(%s)\n", yytext); 
+									if(flag == 0){yylval.value = strdup(yytext); return STRLIT;}}	
 
-{NOSTRLIT}						{	printf("Line %d, col %d: unterminated string constant\n", yylineno, (int)(columnNumber-yyleng+1));}
+{NOSTRLIT}						{	if(flag == 2 || flag==1)printf("Line %d, col %d: unterminated string constant\n", yylineno, (int)(columnNumber-yyleng+1));}
 
-{NOCHRLIT}						{	printf("Line %d, col %d: unterminated char constant\n", yylineno, (int)(columnNumber-yyleng+1));}
+{NOCHRLIT}						{	if(flag == 2 || flag==1)printf("Line %d, col %d: unterminated char constant\n", yylineno, (int)(columnNumber-yyleng+1));}
 
-{CHRLIT}						{	if(flagTokens)printf("CHRLIT(%s)\n", yytext);
-									if(flagErrors){yylval.value=strdup(yytext); return CHRLIT;}} 
+{CHRLIT}						{	if(flag == 1)printf("CHRLIT(%s)\n", yytext);
+									if(flag == 0){yylval.value=strdup(yytext); return CHRLIT;}} 
 
-{INVALIDSTRLIT}					{	printf("Line %d, col %d: invalid string constant (%s)\n", yylineno, (int)(columnNumber-yyleng+1), yytext);}
+{INVALIDSTRLIT}					{	if(flag == 2 || flag==1)printf("Line %d, col %d: invalid string constant (%s)\n", yylineno, (int)(columnNumber-yyleng+1), yytext);}
 
-{INVALIDCHR}					{	printf("Line %d, col %d: invalid char constant (%s)\n", yylineno, (int)(columnNumber-yyleng+1), yytext);}
+{INVALIDCHR}					{	if(flag == 2 || flag==1)printf("Line %d, col %d: invalid char constant (%s)\n", yylineno, (int)(columnNumber-yyleng+1), yytext);}
 
 "/*"							{	BEGIN (COMMENT); {	colComment = columnNumber-1;	}lineComment=yylineno;}
 <COMMENT>"*/"					{	BEGIN (0);}
 <COMMENT>"\n"					{	columnNumber = 0;}
 <COMMENT>.						{	;}
-<COMMENT><<EOF>>				{	printf("Line %d, col %d: unterminated comment\n", lineComment,  colComment); yyterminate();}
+<COMMENT><<EOF>>				{	if(flag == 2 || flag==1 )printf("Line %d, col %d: unterminated comment\n", lineComment,  colComment); yyterminate();}
 
 "\n"							{	columnNumber= 0;}
 
@@ -164,7 +163,7 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 
 " "								{	;}
 
-. 								{	printf("Line %d, col %d: illegal character (%s)\n", yylineno, columnNumber, yytext);}
+. 								{	if(flag == 2 || flag==1)printf("Line %d, col %d: illegal character (%s)\n", yylineno, columnNumber, yytext);}
 
 
 %%
@@ -180,15 +179,17 @@ int main(int argc, char* argv[])
 
 		if(strcmp(argv[1], "-l")==0)
 		{
-			flagTokens = true;
+			flag = 1;
 		}
 		else if(strcmp(argv[1], "-1") == 0)
 		{
-			flagErrors = true;
+			flag = 2;
 		}
 
 	}
-
-	yyparse();
+	if(flag==0)
+	{
+		yyparse();	
+	}
 	return 0;
 }
