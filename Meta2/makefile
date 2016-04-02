@@ -1,10 +1,10 @@
 all: mccompiler.zip mccompiler
 
-mccompiler.zip: mccompiler.l mccompiler.y structs.h treeFuncs.c 
-	zip mccompiler.zip mccompiler.l mccompiler.y structs.h treeFuncs.c
+mccompiler.zip: mccompiler.l mccompiler.y structs.h treeFuncs.h 
+	zip mccompiler.zip mccompiler.l mccompiler.y structs.h treeFuncs.h
 
 mccompiler: y.tab.c lex.yy.c
-	gcc -g -o mccompiler y.tab.c lex.yy.c treeFuncs.c
+	gcc -g -o mccompiler y.tab.c lex.yy.c treeFuncs.h
 
 y.tab.c y.tab.h: mccompiler.y
 	yacc -d mccompiler.y

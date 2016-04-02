@@ -3,8 +3,9 @@
 	#include <stdio.h>
 	#include <stdlib.h>
 	#include <string.h>
-	#include "struct.h"
-	#include "treeFuncs.c"
+
+	#include "structs.h"
+	#include "treeFuncs.h"
 
 	extern int lineNumber;
 	extern int columnNumber;
@@ -23,7 +24,7 @@
 
 %union{
     char *string;
-	struct Node_elem* Node_Type;
+	struct Node_elem* node;
 }
 
 %token AMP
