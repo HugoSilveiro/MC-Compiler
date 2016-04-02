@@ -66,25 +66,10 @@
 
 
 %type <node> Start
-%type <node> FunDefDeclUn
 %type <node> FunctionDefinition
-//Nó raiz
-%type <node> Program
-
-//Declaração de variáveis
+%type <node> FunctionDeclaration
 %type <node> Declaration
-%type <node> ArrayDeclaration
-%type <node> FuncDeclaration
-%type <node> FuncDefinition
-%type <node> ParamList
-%type <node> FuncBody
-%type <node> ParamDeclaration
-
-//Statement_List
-%type <node> StatList
-%type <node> IF
-%type <node> FOR
-%type <node> RETURN
+%type <node> Restart
 
 
 %nonassoc "then"
@@ -110,32 +95,17 @@
 //Un -> 0 or 1
 //Rep -> 0 or more
 
-Start: FunDefDeclUn FunDefDeclRep 																	{if(DEBUG)printf("Start\n");
-																										$$ = insert_node(NODE_Program);
-																										tree = $$;
-																									}
-		;
-FunDefDeclUn: 	FunctionDefinition																	{if(DEBUG)printf("FuncDefinition\n");
-																										nodeAux = insert_node(NODE_FuncDefinition);
-																										insert_child($$, nodeAux);
+Start:  FunctionDefinition  Restart                                                	{$$ = insert_node(NODE_Program); tree=$$; }
+        | FunctionDeclaration Restart                                              	{$$ = insert_node(NODE_Program); tree=$$; }
+        | Declaration Restart                                                     	{$$ = insert_node(NODE_Program); tree=$$; }
+        ;
 
+Restart: FunctionDefinition Restart                                             	{insert_child($1,$2); }
+            | FunctionDeclaration Restart                                          	{insert_child($1,$2); }
+            | Declaration Restart                                             		{insert_child($1,$2); }
+            | Empty                                                                 {$$ = NULL; }
+            ;
 
-																									}
-				| FunctionDeclaration																{if(DEBUG)printf("FuncDeclaration\n");
-																										nodeAux = insert_node(NODE_FuncDeclaration);
-																										insert_child($$, nodeAux);
-
-																									}
-				| Declaration																		{if(DEBUG)printf("Declaration\n");
-																										nodeAux = insert_node(NODE_Declaration);
-																										insert_child($$, nodeAux);
-																										printf("oiiii\n");
-
-																									}
-				;
-FunDefDeclRep: 	Empty
-				| FunDefDeclRep FunDefDeclUn
-				;
 FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{if(DEBUG)printf("FunctionDefinition\n");
 
 
