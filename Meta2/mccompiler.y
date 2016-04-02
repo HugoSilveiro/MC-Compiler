@@ -3,13 +3,17 @@
 	#include <stdio.h>
 	#include <stdlib.h>
 	#include <string.h>
-
+	#include "struct.h"
+	#include "treeFuncs.c"
 
 	extern int lineNumber;
 	extern int columnNumber;
 	extern int yyleng;
 	extern int yylineno;
 	extern char * yytext;
+
+	Node *tree = NULL;
+	Node *nodeAux;
 
 	int yacc_errors = 0;
 
@@ -19,6 +23,7 @@
 
 %union{
     char *string;
+	struct Node_elem* Node_Type;
 }
 
 %token AMP
@@ -58,6 +63,25 @@
 %token <string> STRLIT
 %token <string> CHRLIT
 
+//Nó raiz
+%type <node> Program
+
+//Declaração de variáveis
+%type <node> Declaration
+%type <node> ArrayDeclaration
+%type <node> FuncDeclaration
+%type <node> FuncDefinition
+%type <node> ParamList
+%type <node> FuncBody
+%type <node> ParamDeclaration
+
+//Statement_List
+%type <node> StatList
+%type <node> IF
+%type <node> FOR
+%type <node> RETURN
+
+
 %nonassoc "then"
 %nonassoc ELSE
 
@@ -81,16 +105,30 @@
 //Un -> 0 or 1
 //Rep -> 0 or more
 
-Start: FunDefDeclUn FunDefDeclRep 																	{if(DEBUG)printf("Start\n");}
+Start: FunDefDeclUn FunDefDeclRep 																	{if(DEBUG)printf("Start\n");
+																										$$ = insert_node(NODE_PROGRAM);
+																										tree = $$;
+																									}
 		;
-FunDefDeclUn: 	FunctionDefinition
-				| FunctionDeclaration
-				| Declaration
+FunDefDeclUn: 	FunctionDefinition																	{
+																										nodeAux = insert_node(NODE_FUNC_DEF);
+																										printf("%s\n", $1);
+																										add_child($$, nodeAux);
+																									}
+				| FunctionDeclaration																{
+																										add_child($$, $1);
+																									}
+				| Declaration																		{
+																										add_child($$, $1);
+																									}
 				;
 FunDefDeclRep: 	Empty
 				| FunDefDeclRep FunDefDeclUn
 				;
-FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{if(DEBUG)printf("FunctionDefinition\n");}
+FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{if(DEBUG)printf("FunctionDefinition\n");
+																										$$ = $1
+																										add_child()
+																									}
 					;
 
 FunctionDeclaration: 	TypeSpec FunctionDeclarator SEMI											{if(DEBUG)printf("FunctionDeclaration\n");}
@@ -239,8 +277,9 @@ Empty: 																								{if(DEBUG)printf("Empty\n");};
 void yyerror (char *s) {
 	printf ("Line %d, col %d: %s: %s\n",yylineno, (int)(columnNumber - strlen(yytext)+1), s, yytext);
 }
-
+/*
 void printTree()
 {
 	printf("OLAAAA\n");
 }
+*/

@@ -4,8 +4,8 @@
 #include "printer.h"
 #include "structs.h"
 
-Node * insert_node(char * node_type);
-Node * insert_term_node(char * node_type, char* value);
+Node * insert_node(Node_Type node_type);
+Node * insert_term_node(Node_Type node_type, char* value);
 void insert_child(Node * father, Node * child);
 void insert_brother(Node * node, Node * brother);
 
@@ -19,7 +19,7 @@ Node * insert_node(Node_Type node_type)
 	return node;
 }
 
-Node * insert_term_node(char * node_type, char* value)
+Node * insert_term_node(Node_Type node_type, char* value)
 {
 	Node * node = insert_node(node_type);
 	node->value = value;
