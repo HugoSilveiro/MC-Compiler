@@ -64,6 +64,10 @@
 %token <string> STRLIT
 %token <string> CHRLIT
 
+
+%type <node> Start
+%type <node> FunDefDeclUn
+%type <node> FunctionDefinition
 //Nó raiz
 %type <node> Program
 
@@ -113,22 +117,26 @@ Start: FunDefDeclUn FunDefDeclRep 																	{if(DEBUG)printf("Start\n");
 		;
 FunDefDeclUn: 	FunctionDefinition																	{
 																										nodeAux = insert_node(NODE_FUNC_DEF);
-																										printf("%s\n", $1);
-																										add_child($$, nodeAux);
+
+																										insert_child($$, nodeAux);
 																									}
 				| FunctionDeclaration																{
-																										add_child($$, $1);
+																										nodeAux = insert_node(NODE_FUNC_DECL);
+
+																										insert_child($$, nodeAux);
 																									}
 				| Declaration																		{
-																										add_child($$, $1);
+																										nodeAux = insert_node(NODE_DECL);
+
+																										insert_child($$, nodeAux);
 																									}
 				;
 FunDefDeclRep: 	Empty
 				| FunDefDeclRep FunDefDeclUn
 				;
 FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{if(DEBUG)printf("FunctionDefinition\n");
-																										$$ = $1
-																										add_child()
+
+
 																									}
 					;
 

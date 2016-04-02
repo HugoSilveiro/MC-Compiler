@@ -715,7 +715,7 @@ char *yytext;
 	int lineComment;
 	int treeFlag = 0;
 	extern int yacc_errors;
-	int printTree();
+	//int printTree();
 	int flag = 0;
 
 #line 722 "lex.yy.c"
@@ -2364,7 +2364,7 @@ int main(int argc, char* argv[])
 		yyparse();
 		if(yacc_errors == 0 && treeFlag == 1)
 		{
-			printTree();
+
 		}
 
 	}
