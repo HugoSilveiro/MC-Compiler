@@ -107,7 +107,9 @@ Restart: FunctionDefinition Restart                                             
             ;
 
 FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{if(DEBUG)printf("FunctionDefinition\n");
-
+																										nodeAux = insert_node(NODE_FuncDefinition);
+																										insert_child($$, nodeAux);
+																										
 
 																									}
 					;
