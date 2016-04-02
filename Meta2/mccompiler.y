@@ -6,6 +6,7 @@
 
 	#include "structs.h"
 	#include "treeFuncs.h"
+	#include "printer.h"
 
 	extern int lineNumber;
 	extern int columnNumber;
@@ -70,6 +71,10 @@
 %type <node> FunctionDeclaration
 %type <node> Declaration
 %type <node> Restart
+%type <node> TypeSpec
+%type <node> FunctionDeclarator
+%type <node> FunctionBody
+
 
 
 %nonassoc "then"
@@ -95,23 +100,22 @@
 //Un -> 0 or 1
 //Rep -> 0 or more
 
-Start:  FunctionDefinition  Restart                                                					{$$ = insert_node(NODE_Program); tree=$$; }
-        | FunctionDeclaration Restart                                              					{$$ = insert_node(NODE_Program); tree=$$; }
-        | Declaration Restart                                                     					{$$ = insert_node(NODE_Program); tree=$$; }
+Start:  FunctionDefinition  Restart                                                					{if(DEBUG)printf("Start1\n"); $$ = insert_node(NODE_Program); tree=$$; }
+        | FunctionDeclaration Restart                                              					{if(DEBUG)printf("Start2\n"); $$ = insert_node(NODE_Program); tree=$$; }
+        | Declaration Restart                                                     					{if(DEBUG)printf("Start3\n"); $$ = insert_node(NODE_Program); tree=$$; }
         ;
 
-Restart: FunctionDefinition Restart                                             					{insert_child($1,$2); }
-            | FunctionDeclaration Restart                                          					{insert_child($1,$2); }
-            | Declaration Restart                                             						{insert_child($1,$2); }
+Restart: FunctionDefinition Restart                                             					{if(DEBUG)printf("Restart1\n"); insert_child($1,$2); }
+            | FunctionDeclaration Restart                                          					{if(DEBUG)printf("Restart2\n"); insert_child($1,$2); }
+            | Declaration Restart                                             						{if(DEBUG)printf("Restart3\n"); insert_child($1,$2); }
             | Empty                                                                 				{$$ = NULL; }
             ;
 
 FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{if(DEBUG)printf("FunctionDefinition\n");
-																										nodeAux = insert_node(NODE_FuncDefinition);
-																										insert_child($$, nodeAux);
-																										
-
-
+																										$$ = insert_node(NODE_FuncDefinition);
+																										insert_child($$, $1);
+																										insert_brother($$, $2);
+																										insert_brother($$, $3);
 																									}
 					;
 

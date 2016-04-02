@@ -1,6 +1,3 @@
-#ifndef _PRINTER_H
-#define _PRINTER_H
-
 #include "structs.h"
 
 /* list of names for the nodes of the abstract syntax tree */
@@ -55,4 +52,3 @@ void print_tree(Node *node, int level);
 void print_points(int n);
 void print_terminal(Node *node);
 
-#endif

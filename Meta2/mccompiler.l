@@ -22,6 +22,8 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 	#include <stdbool.h>
 	#include "y.tab.h"
 	#include "structs.h"
+	#include "treeFuncs.h"
+	#include "printer.h"
 	int lineNumber = 1;
 	int columnNumber = 0;
 	int colComment;

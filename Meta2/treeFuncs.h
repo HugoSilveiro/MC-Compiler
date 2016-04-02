@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <string.h>
 #include "printer.h"
-#include "structs.h"
 
 Node * insert_node(Node_Type node_type);
 Node * insert_term_node(Node_Type node_type, char* value);
@@ -28,7 +27,6 @@ Node * insert_term_node(Node_Type node_type, char* value)
 
 void insert_child(Node * father, Node * child)
 {
-
 	Node * temp = father->child;
 
 	if(temp==NULL)
