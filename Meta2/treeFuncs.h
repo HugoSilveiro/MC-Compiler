@@ -67,7 +67,7 @@ void print_tree(Node *node, int level){
 
 	print_points(level);
 
-	if(node->node_type == NODE_ID || node->node_type == NODE_INTLIT || node->node_type == NODE_CHRLIT || node->node_type == NODE_STRLIT){
+	if(node->node_type == NODE_Id || node->node_type == NODE_Intlit || node->node_type == NODE_Chrlit || node->node_type == NODE_Strlit){
 		print_terminal(node);
 	}
 	else{

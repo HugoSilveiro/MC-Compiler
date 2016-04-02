@@ -52,7 +52,7 @@ typedef enum {
 	NODE_Strlit,
 
 	//Especial
-	NODE_NULL		
+	NODE_NULL
 
 
 } Node_Type;
