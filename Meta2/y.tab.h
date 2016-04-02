@@ -126,11 +126,12 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 20 "mccompiler.y" /* yacc.c:1909  */
+#line 25 "mccompiler.y" /* yacc.c:1909  */
 
     char *string;
+	struct Node_elem* node;
 
-#line 134 "y.tab.h" /* yacc.c:1909  */
+#line 135 "y.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
