@@ -128,7 +128,7 @@ union YYSTYPE
 {
 #line 17 "mccompiler.y" /* yacc.c:1909  */
 
-    char *value;
+    char *string;
 
 #line 134 "y.tab.h" /* yacc.c:1909  */
 };

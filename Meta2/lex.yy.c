@@ -1219,51 +1219,51 @@ YY_RULE_SETUP
 #line 129 "mccompiler.l"
 {
 																																																																if(flag == 1)printf("RESERVED(%s)\n", yytext);
-																																																																if(flag == 0)return RESERVED;}
+																																																																if(flag == 0){yylval.string = strdup(yytext);return RESERVED;}}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
 #line 134 "mccompiler.l"
 {	if(flag == 1)printf("ID(%s)\n", yytext); 
-									if(flag == 0){yylval.value = strdup(yytext); return ID;}}
+									if(flag == 0){yylval.string = strdup(yytext); return ID;}}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
 #line 137 "mccompiler.l"
 {	if(flag == 1)printf("INTLIT(%s)\n", yytext); 
-									if(flag == 0){yylval.value = strdup(yytext); return INTLIT;}}
+									if(flag == 0){yylval.string = strdup(yytext); return INTLIT;}}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
 #line 140 "mccompiler.l"
 {	if(flag == 1)printf("STRLIT(%s)\n", yytext); 
-									if(flag == 0){yylval.value = strdup(yytext); return STRLIT;}}	
+									if(flag == 0){yylval.string = strdup(yytext); return STRLIT;}}	
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
 #line 143 "mccompiler.l"
-{	if(flag == 2 || flag==1)printf("Line %d, col %d: unterminated string constant\n", yylineno, (int)(columnNumber-yyleng+1));}
+{	printf("Line %d, col %d: unterminated string constant\n", yylineno, (int)(columnNumber-yyleng+1));}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
 #line 145 "mccompiler.l"
-{	if(flag == 2 || flag==1)printf("Line %d, col %d: unterminated char constant\n", yylineno, (int)(columnNumber-yyleng+1));}
+{	printf("Line %d, col %d: unterminated char constant\n", yylineno, (int)(columnNumber-yyleng+1));}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
 #line 147 "mccompiler.l"
 {	if(flag == 1)printf("CHRLIT(%s)\n", yytext);
-									if(flag == 0){yylval.value=strdup(yytext); return CHRLIT;}} 
+									if(flag == 0){yylval.string=strdup(yytext); return CHRLIT;}} 
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
 #line 150 "mccompiler.l"
-{	if(flag == 2 || flag==1)printf("Line %d, col %d: invalid string constant (%s)\n", yylineno, (int)(columnNumber-yyleng+1), yytext);}
+{	printf("Line %d, col %d: invalid string constant (%s)\n", yylineno, (int)(columnNumber-yyleng+1), yytext);}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
 #line 152 "mccompiler.l"
-{	if(flag == 2 || flag==1)printf("Line %d, col %d: invalid char constant (%s)\n", yylineno, (int)(columnNumber-yyleng+1), yytext);}
+{	printf("Line %d, col %d: invalid char constant (%s)\n", yylineno, (int)(columnNumber-yyleng+1), yytext);}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
@@ -1288,7 +1288,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case YY_STATE_EOF(COMMENT):
 #line 158 "mccompiler.l"
-{	if(flag == 2 || flag==1 )printf("Line %d, col %d: unterminated comment\n", lineComment,  colComment); yyterminate();}
+{	printf("Line %d, col %d: unterminated comment\n", lineComment,  colComment); yyterminate();}
 	YY_BREAK
 case 45:
 /* rule 45 can match eol */
@@ -1309,7 +1309,7 @@ YY_RULE_SETUP
 case 48:
 YY_RULE_SETUP
 #line 166 "mccompiler.l"
-{	if(flag == 2 || flag==1)printf("Line %d, col %d: illegal character (%s)\n", yylineno, columnNumber, yytext);}
+{	printf("Line %d, col %d: illegal character (%s)\n", yylineno, columnNumber, yytext);}
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
