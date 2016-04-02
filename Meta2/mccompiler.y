@@ -1,5 +1,5 @@
 %{
-	#define DEBUG 2>1
+	#define DEBUG 2<1
 	#include <stdio.h>
 	#include <stdlib.h>
 	#include <string.h>
@@ -95,19 +95,18 @@
 //Un -> 0 or 1
 //Rep -> 0 or more
 
-Start:  FunctionDefinition  Restart                                                	{$$ = insert_node(NODE_Program); tree=$$; }
-        | FunctionDeclaration Restart                                              	{$$ = insert_node(NODE_Program); tree=$$; }
-        | Declaration Restart                                                     	{$$ = insert_node(NODE_Program); tree=$$; }
+Start:  FunctionDefinition  Restart                                                					{$$ = insert_node(NODE_Program); tree=$$; }
+        | FunctionDeclaration Restart                                              					{$$ = insert_node(NODE_Program); tree=$$; }
+        | Declaration Restart                                                     					{$$ = insert_node(NODE_Program); tree=$$; }
         ;
 
-Restart: FunctionDefinition Restart                                             	{insert_child($1,$2); }
-            | FunctionDeclaration Restart                                          	{insert_child($1,$2); }
-            | Declaration Restart                                             		{insert_child($1,$2); }
-            | Empty                                                                 {$$ = NULL; }
+Restart: FunctionDefinition Restart                                             					{insert_child($1,$2); }
+            | FunctionDeclaration Restart                                          					{insert_child($1,$2); }
+            | Declaration Restart                                             						{insert_child($1,$2); }
+            | Empty                                                                 				{$$ = NULL; }
             ;
 
 FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{if(DEBUG)printf("FunctionDefinition\n");
-
 
 																									}
 					;

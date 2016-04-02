@@ -21,12 +21,14 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 	#include <string.h>
 	#include <stdbool.h>
 	#include "y.tab.h"
+	#include "structs.h"
 	int lineNumber = 1;
 	int columnNumber = 0;
 	int colComment;
 	int lineComment;
 	int treeFlag = 0;
 	extern int yacc_errors;
+	extern Node *tree;
 	//int printTree();
 	int flag = 0;
 %}
@@ -202,7 +204,7 @@ int main(int argc, char* argv[])
 		yyparse();
 		if(yacc_errors == 0 && treeFlag == 1)
 		{
-
+			print_tree(tree, 0);
 		}
 
 	}
