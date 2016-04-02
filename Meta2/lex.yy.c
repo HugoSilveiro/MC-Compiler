@@ -1212,7 +1212,7 @@ case 31:
 YY_RULE_SETUP
 #line 127 "mccompiler.l"
 {	if(flag == 1)printf("VOID\n");
-									if(flag == 0)return AMP;}
+									if(flag == 0)return VOID;}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP

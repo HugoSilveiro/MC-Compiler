@@ -182,8 +182,7 @@ ExprNew:  ExprNew ASSIGN ExprNew
 		| PLUS ExprNew
 		| MINUS ExprNew
 		| NOT ExprNew
-		| ID LPAR ExprNew COMMA_Expr RPAR
-		| ID LPAR RPAR
+		| ID LPAR ExprCOMMA_Expr RPAR
 		| LPAR Expr RPAR
 		| ID
 		| INTLIT
@@ -196,9 +195,11 @@ ExprNew:  ExprNew ASSIGN ExprNew
 
 
 
-COMMA_Expr: 	COMMA ExprNew COMMA_Expr
+ExprCOMMA_Expr: ExprNew COMMA_Expr
 				| Empty
 				;
+
+COMMA_Expr: Empty | COMMA_Expr COMMA ExprNew;
 
 Expr0: 	Expr
 		| Empty

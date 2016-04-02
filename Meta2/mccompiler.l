@@ -125,7 +125,7 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 									if(flag == 1)printf("SEMI\n");
 									if(flag == 0)return SEMI;}
 "void"							{	if(flag == 1)printf("VOID\n");
-									if(flag == 0)return AMP;}
+									if(flag == 0)return VOID;}
 "auto"|"break"|"case"|"const"|"continue"|"default"|"do"|"double"|"enum"|"extern"|"float"|"goto"|"long"|"register"|"short"|"signed"|"sizeof"|"static"|"struct"|"switch"|"typedef"|"union"|"unsigned"|"volatile"|"while"|"++"|"--" 							{
 																																																																if(flag == 1)printf("RESERVED(%s)\n", yytext);
 																																																																if(flag == 0){yylval.string = strdup(yytext);return RESERVED;}}
