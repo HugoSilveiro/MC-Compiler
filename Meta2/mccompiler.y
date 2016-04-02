@@ -84,7 +84,7 @@ FunDefDeclUn: 	FunctionDefinition
 				| FunctionDeclaration
 				| Declaration
 				;
-FunDefDeclRep: Empty
+FunDefDeclRep: 	Empty
 				| FunDefDeclRep FunDefDeclUn
 				;
 FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{if(DEBUG)printf("FunctionDefinition\n");}
@@ -95,7 +95,7 @@ FunctionDeclaration: 	TypeSpec FunctionDeclarator SEMI											{if(DEBUG)print
 
 
 FunctionDeclarator: Asterisk ID LPAR ParameterList RPAR												{if(DEBUG)printf("FunctionDeclarator\n");}
-				;
+					;
 
 
 FunctionBody: 	LBRACE Declaration_Un State_List_UN RBRACE		 									{if(DEBUG)printf("FunctionBody\n");}
@@ -170,30 +170,30 @@ Expressions_List:  	Expressions_List ASSIGN Expressions_List										{if(DEBUG)
 					| Expressions_List AND Expressions_List											{if(DEBUG)printf("Expressions_List AND Expressions_List\n");}
 					| Expressions_List OR Expressions_List											{if(DEBUG)printf("Expressions_List OR Expressions_List\n");}
 					| Expressions_List EQ Expressions_List											{if(DEBUG)printf("Expressions_List EQ Expressions_List\n");}
-					| Expressions_List NE Expressions_List											{if(DEBUG)printf("Expressions_List EQ Expressions_List\n");}
-					| Expressions_List LT Expressions_List											{if(DEBUG)printf("Expressions_List EQ Expressions_List\n");}
-					| Expressions_List GT Expressions_List											{if(DEBUG)printf("Expressions_List EQ Expressions_List\n");}
-					| Expressions_List LE Expressions_List											{if(DEBUG)printf("Expressions_List EQ Expressions_List\n");}
-					| Expressions_List GE Expressions_List											{if(DEBUG)printf("Expressions_List EQ Expressions_List\n");}
-					| Expressions_List PLUS Expressions_List										{if(DEBUG)printf("Expressions_List EQ Expressions_List\n");}
-					| Expressions_List MINUS Expressions_List										{if(DEBUG)printf("Expressions_List EQ Expressions_List\n");}
-					| Expressions_List AST Expressions_List											{if(DEBUG)printf("Expressions_List EQ Expressions_List\n");}
-					| Expressions_List DIV Expressions_List											{if(DEBUG)printf("Expressions_List EQ Expressions_List\n");}
-					| Expressions_List MOD Expressions_List											{if(DEBUG)printf("Expressions_List EQ Expressions_List\n");}
-					| AMP Expressions_List															{if(DEBUG)printf("Expressions_List EQ Expressions_List\n");}
-					| AST Expressions_List															{if(DEBUG)printf("Expressions_List EQ Expressions_List\n");}
-					| PLUS Expressions_List															{if(DEBUG)printf("Expressions_List EQ Expressions_List\n");}
-					| MINUS Expressions_List														{if(DEBUG)printf("Expressions_List EQ Expressions_List\n");}
-					| NOT Expressions_List															{if(DEBUG)printf("Expressions_List EQ Expressions_List\n");}
-					| ID LPAR ExprCOMMA_Expr RPAR													{if(DEBUG)printf("Expressions_List EQ Expressions_List\n");}
-					| LPAR Expr RPAR																{if(DEBUG)printf("Expressions_List EQ Expressions_List\n");}
-					| ID																			{if(DEBUG)printf("Expressions_List EQ Expressions_List\n");}
-					| INTLIT																		{if(DEBUG)printf("Expressions_List EQ Expressions_List\n");}
-					| CHRLIT																		{if(DEBUG)printf("Expressions_List EQ Expressions_List\n");}
-					| STRLIT																		{if(DEBUG)printf("Expressions_List EQ Expressions_List\n");}
-					| ID LPAR error RPAR 															{if(DEBUG)printf("Expr Error\n");}
-					| LPAR error RPAR 																{if(DEBUG)printf("Expr Error\n");}
-					| Expressions_List LSQ Expr RSQ													{if(DEBUG)printf("Expressions_List EQ Expressions_List\n");}
+					| Expressions_List NE Expressions_List											{if(DEBUG)printf("Expressions_List NE Expressions_List\n");}
+					| Expressions_List LT Expressions_List											{if(DEBUG)printf("Expressions_List LT Expressions_List\n");}
+					| Expressions_List GT Expressions_List											{if(DEBUG)printf("Expressions_List GT Expressions_List\n");}
+					| Expressions_List LE Expressions_List											{if(DEBUG)printf("Expressions_List LE Expressions_List\n");}
+					| Expressions_List GE Expressions_List											{if(DEBUG)printf("Expressions_List GE Expressions_List\n");}
+					| Expressions_List PLUS Expressions_List										{if(DEBUG)printf("Expressions_List PLUS Expressions_List\n");}
+					| Expressions_List MINUS Expressions_List										{if(DEBUG)printf("Expressions_List MINUS Expressions_List\n");}
+					| Expressions_List AST Expressions_List											{if(DEBUG)printf("Expressions_List AST Expressions_List\n");}
+					| Expressions_List DIV Expressions_List											{if(DEBUG)printf("Expressions_List DIV Expressions_List\n");}
+					| Expressions_List MOD Expressions_List											{if(DEBUG)printf("Expressions_List MOD Expressions_List\n");}
+					| AMP Expressions_List															{if(DEBUG)printf("AMP Expressions_List\n");}
+					| AST Expressions_List															{if(DEBUG)printf("AST Expressions_List\n");}
+					| PLUS Expressions_List															{if(DEBUG)printf("PLUS Expressions_List\n");}
+					| MINUS Expressions_List														{if(DEBUG)printf("MINUS Expressions_List\n");}
+					| NOT Expressions_List															{if(DEBUG)printf("NOT Expressions_List\n");}
+					| ID LPAR ExprCOMMA_Expr RPAR													{if(DEBUG)printf("ID LPAR ExprCOMMA_Expr RPAR\n");}
+					| LPAR Expr RPAR																{if(DEBUG)printf("LPAR Expr RPAR\n");}
+					| ID																			{if(DEBUG)printf("ID\n");}
+					| INTLIT																		{if(DEBUG)printf("INTLIT\n");}
+					| CHRLIT																		{if(DEBUG)printf("CHRLIT\n");}
+					| STRLIT																		{if(DEBUG)printf("STRLIT\n");}
+					| ID LPAR error RPAR 															{if(DEBUG)printf("ID LPAR error RPAR \n");}
+					| LPAR error RPAR 																{if(DEBUG)printf("LPAR error RPAR \n");}
+					| Expressions_List LSQ Expr RSQ													{if(DEBUG)printf("Expressions_List LSQ Expr RSQ	\n");}
 					;
 
 
