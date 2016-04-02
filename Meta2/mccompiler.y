@@ -1,5 +1,5 @@
 %{
-	#define DEBUG 2<1
+	#define DEBUG 2>1
 	#include <stdio.h>
 	#include <stdlib.h>
 	#include <string.h>
@@ -111,24 +111,26 @@
 //Rep -> 0 or more
 
 Start: FunDefDeclUn FunDefDeclRep 																	{if(DEBUG)printf("Start\n");
-																										$$ = insert_node(NODE_PROGRAM);
+																										$$ = insert_node(NODE_Program);
 																										tree = $$;
 																									}
 		;
-FunDefDeclUn: 	FunctionDefinition																	{
-																										nodeAux = insert_node(NODE_FUNC_DEF);
-
+FunDefDeclUn: 	FunctionDefinition																	{if(DEBUG)printf("FuncDefinition\n");
+																										nodeAux = insert_node(NODE_FuncDefinition);
 																										insert_child($$, nodeAux);
+
+
 																									}
-				| FunctionDeclaration																{
-																										nodeAux = insert_node(NODE_FUNC_DECL);
-
+				| FunctionDeclaration																{if(DEBUG)printf("FuncDeclaration\n");
+																										nodeAux = insert_node(NODE_FuncDeclaration);
 																										insert_child($$, nodeAux);
+
 																									}
-				| Declaration																		{
-																										nodeAux = insert_node(NODE_DECL);
-
+				| Declaration																		{if(DEBUG)printf("Declaration\n");
+																										nodeAux = insert_node(NODE_Declaration);
 																										insert_child($$, nodeAux);
+																										printf("oiiii\n");
+
 																									}
 				;
 FunDefDeclRep: 	Empty
