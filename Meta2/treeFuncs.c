@@ -7,6 +7,7 @@
 
 Node * insert_node(Node_Type node_type)
 {
+	printf("insert_node\n");
 	Node * node = (Node *) malloc(sizeof(Node));
 	node->node_type = node_type;
 	node->brother=NULL;
@@ -17,6 +18,7 @@ Node * insert_node(Node_Type node_type)
 
 Node * insert_term_node(Node_Type node_type, char* value)
 {
+	printf("insert_term_node\n");
 	Node * node = insert_node(node_type);
 	node->value = value;
 	return node;
@@ -24,6 +26,7 @@ Node * insert_term_node(Node_Type node_type, char* value)
 
 void insert_child(Node * father, Node * child)
 {
+	printf("insert_child\n");
 	Node * temp = father->child;
 
 	if(temp==NULL)
@@ -44,6 +47,7 @@ void insert_child(Node * father, Node * child)
 
 void insert_brother(Node * node, Node * brother)
 {
+	printf("insert_brother\n");
 	Node * temp = node->brother;
 	if(temp==NULL)
 	{

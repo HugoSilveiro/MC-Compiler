@@ -2367,7 +2367,7 @@ int main(int argc, char* argv[])
 		yyparse();
 		if(yacc_errors == 0 && treeFlag == 1)
 		{
-			
+			print_tree(tree, 0);
 		}
 
 	}
