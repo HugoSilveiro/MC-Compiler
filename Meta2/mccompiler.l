@@ -27,7 +27,7 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 	int lineComment;
 	int treeFlag = 0;
 	extern int yacc_errors;
-
+	int printTree();
 	int flag = 0;
 %}
 
