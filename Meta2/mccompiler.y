@@ -10,6 +10,9 @@
 	extern int yyleng;
 	extern int yylineno;
 	extern char * yytext;
+
+	int yacc_errors = 0;
+
 	int yylex(void);
 	void yyerror (char *s);
 %}
@@ -99,7 +102,9 @@ FunctionDeclarator: Asterisk ID LPAR ParameterList RPAR												{if(DEBUG)pri
 
 
 FunctionBody: 	LBRACE Declaration_Un State_List_UN RBRACE		 									{if(DEBUG)printf("FunctionBody\n");}
-				| LBRACE error RBRACE 																{if(DEBUG)printf("Error on Function Body\n");}
+				| LBRACE error RBRACE 																{if(DEBUG)printf("Error on Function Body\n");
+																										yacc_errors++;
+																									}
 				;
 
 ParameterList: 	ParameterDeclaration COMMA_ParameterDeclaration										{if(DEBUG)printf("ParameterList\n");}
@@ -117,7 +122,10 @@ COMMA_ParameterDeclaration: 	COMMA ParameterDeclaration COMMA_ParameterDeclarati
 
 
 Declaration: TypeSpec Declarator COMMA_Declarator SEMI												{if(DEBUG)printf("Declaration\n");}
-			| error SEMI 																			{if(DEBUG)printf("Error on Declaration\n");}
+			| error SEMI 																			{
+																										if(DEBUG)printf("Error on Declaration\n");
+																										yacc_errors++;
+																									}
 			;
 
 Declaration_Un: Declaration Declaration_Un															{if(DEBUG)printf("Declaration_Un\n");}
@@ -138,14 +146,18 @@ COMMA_Declarator: 	COMMA Declarator COMMA_Declarator												{if(DEBUG)printf
 					|  Empty
 					;
 
-Statement: 	error SEMI 																				{if(DEBUG)printf("Statement Error\n");}
+Statement: 	error SEMI 																				{if(DEBUG)printf("Statement Error\n");
+																										yacc_errors++;
+																									}
 			| Statement_List																		{if(DEBUG)printf("Statement\n");}
 			;
 
 Statement_List: 	 Expression_Un SEMI																{if(DEBUG)printf("Expression_Un SEMI\n");}
 					| LBRACE St RBRACE																{if(DEBUG)printf("LBRACE St RBRACE\n");}
 					| LBRACE RBRACE																	{if(DEBUG)printf("LBRACE RBRACE\n");}
-					| LBRACE error RBRACE															{if(DEBUG)printf("LBRACE error RBRACE\n");}
+					| LBRACE error RBRACE															{if(DEBUG)printf("LBRACE error RBRACE\n");
+																										yacc_errors++;
+																									}
 					| IF LPAR Expr RPAR Statement   %prec "then"									{if(DEBUG)printf("IF LPAR Expr RPAR Statement");}
 					| IF LPAR Expr RPAR Statement ELSE Statement 									{if(DEBUG)printf("IF LPAR Expr RPAR Statement ELSE Statement \n");}
 					| FOR LPAR Expression_Un SEMI Expression_Un SEMI Expression_Un RPAR Statement	{if(DEBUG)printf("For Cycle\n");}
@@ -191,8 +203,12 @@ Expressions_List:  	Expressions_List ASSIGN Expressions_List										{if(DEBUG)
 					| INTLIT																		{if(DEBUG)printf("INTLIT\n");}
 					| CHRLIT																		{if(DEBUG)printf("CHRLIT\n");}
 					| STRLIT																		{if(DEBUG)printf("STRLIT\n");}
-					| ID LPAR error RPAR 															{if(DEBUG)printf("ID LPAR error RPAR \n");}
-					| LPAR error RPAR 																{if(DEBUG)printf("LPAR error RPAR \n");}
+					| ID LPAR error RPAR 															{if(DEBUG)printf("ID LPAR error RPAR \n");
+																										yacc_errors++;
+																									}
+					| LPAR error RPAR 																{if(DEBUG)printf("LPAR error RPAR \n");
+																										yacc_errors++;
+																									}
 					| Expressions_List LSQ Expr RSQ													{if(DEBUG)printf("Expressions_List LSQ Expr RSQ	\n");}
 					;
 
@@ -222,4 +238,9 @@ Empty: 																								{if(DEBUG)printf("Empty\n");};
 
 void yyerror (char *s) {
 	printf ("Line %d, col %d: %s: %s\n",yylineno, (int)(columnNumber - strlen(yytext)+1), s, yytext);
+}
+
+void printTree()
+{
+	printf("OLAAAA\n");
 }

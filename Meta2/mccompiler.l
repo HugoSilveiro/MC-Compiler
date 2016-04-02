@@ -25,6 +25,8 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 	int columnNumber = 0;
 	int colComment;
 	int lineComment;
+	int treeFlag = 0;
+	extern int yacc_errors;
 
 	int flag = 0;
 %}
@@ -187,11 +189,22 @@ int main(int argc, char* argv[])
 			flag = 2;
 			yylex();
 		}
+		else if(strcmp(argv[1], "-t") == 0)
+		{
+			treeFlag = 1;
+		}
+
+
 
 	}
 	if(flag==0)
 	{
 		yyparse();
+		if(yacc_errors == 0 && treeFlag == 1)
+		{
+			printTree();
+		}
+
 	}
 	return 0;
 }
