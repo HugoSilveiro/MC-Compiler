@@ -1224,20 +1224,20 @@ YY_RULE_SETUP
 case 33:
 YY_RULE_SETUP
 #line 134 "mccompiler.l"
-{	if(flag == 1)printf("ID(%s)\n", yytext); 
+{	if(flag == 1)printf("ID(%s)\n", yytext);
 									if(flag == 0){yylval.string = strdup(yytext); return ID;}}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
 #line 137 "mccompiler.l"
-{	if(flag == 1)printf("INTLIT(%s)\n", yytext); 
+{	if(flag == 1)printf("INTLIT(%s)\n", yytext);
 									if(flag == 0){yylval.string = strdup(yytext); return INTLIT;}}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
 #line 140 "mccompiler.l"
-{	if(flag == 1)printf("STRLIT(%s)\n", yytext); 
-									if(flag == 0){yylval.string = strdup(yytext); return STRLIT;}}	
+{	if(flag == 1)printf("STRLIT(%s)\n", yytext);
+									if(flag == 0){yylval.string = strdup(yytext); return STRLIT;}}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
@@ -1253,7 +1253,7 @@ case 38:
 YY_RULE_SETUP
 #line 147 "mccompiler.l"
 {	if(flag == 1)printf("CHRLIT(%s)\n", yytext);
-									if(flag == 0){yylval.string=strdup(yytext); return CHRLIT;}} 
+									if(flag == 0){yylval.string=strdup(yytext); return CHRLIT;}}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
@@ -2353,7 +2353,7 @@ int main(int argc, char* argv[])
 	}
 	if(flag==0)
 	{
-		yyparse();	
+		yyparse();
 	}
 	return 0;
 }

@@ -90,7 +90,7 @@ FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody			{if(DEBUG)printf(
 					;
 
 FunctionDeclaration: 	TypeSpec FunctionDeclarator SEMI				{if(DEBUG)printf("FunctionDeclaration\n");}
-						;					
+						;
 
 
 FunctionDeclarator: Asterisk ID LPAR ParameterList RPAR					{if(DEBUG)printf("FunctionDeclarator\n");}
@@ -102,14 +102,14 @@ FunctionBody: 	LBRACE DeclNot StateSpec RBRACE		 					{if(DEBUG)printf("Function
 				;
 
 ParameterList: 	ParameterDeclaration COMMA_ParameterDeclaration			{if(DEBUG)printf("ParameterList\n");}
-				;	
+				;
 
 ParameterDeclaration: 	TypeSpec Asterisk									{if(DEBUG)printf("ParameterDeclaration[1]\n");}
 						| TypeSpec Asterisk ID 								{if(DEBUG)printf("ParameterDeclaration[2]\n");}
-						;		
+						;
 
 
-COMMA_ParameterDeclaration: 	COMMA ParameterDeclaration COMMA_ParameterDeclaration 
+COMMA_ParameterDeclaration: 	COMMA ParameterDeclaration COMMA_ParameterDeclaration
 								| Empty
 								;
 
@@ -119,7 +119,7 @@ Declaration: TypeSpec Declarator COMMA_Declarator SEMI						{if(DEBUG)printf("De
 			| error SEMI 													{if(DEBUG)printf("Error on Declaration\n");}
 			;
 
-DeclNot: Declaration DeclNot 
+DeclNot: Declaration DeclNot
 		| Empty
 		;
 
@@ -133,7 +133,7 @@ Declarator: 	Asterisk ID LSQ INTLIT RSQ  								{if(DEBUG)printf("Declarator[1]
 				| Asterisk ID												{if(DEBUG)printf("Declarator[2]\n");}
 				;
 
-COMMA_Declarator: 	COMMA Declarator COMMA_Declarator 
+COMMA_Declarator: 	COMMA Declarator COMMA_Declarator
 					|  Empty
 					;
 
@@ -142,17 +142,16 @@ Statement: 	error SEMI 														{if(DEBUG)printf("Statement Error\n");}
 			;
 
 Statement_List: 	 Expr0 SEMI												{if(DEBUG)printf("Statement[1]\n");}
-					| LBRACE St RBRACE										{if(DEBUG)printf("Statement[2]\n");} 
+					| LBRACE St RBRACE										{if(DEBUG)printf("Statement[2]\n");}
 					| LBRACE RBRACE
-					| LBRACE error RBRACE 
+					| LBRACE error RBRACE
 					| IF LPAR Expr RPAR Statement   %prec "then"
 					| IF LPAR Expr RPAR Statement ELSE Statement 			{if(DEBUG)printf("IF\n");}
 					| FOR LPAR Expr0 SEMI Expr0 SEMI Expr0 RPAR Statement	{if(DEBUG)printf("For Cycle\n");}
-					| RETURN SEMI  											{if(DEBUG)printf("Return Without Value\n");}
-					| RETURN Expr SEMI 										{if(DEBUG)printf("Return With Value\n");}
+					| RETURN Expr0 SEMI 										{if(DEBUG)printf("Return With Value\n");}
 					;
 
-St: Statement St 
+St: Statement StateNot
 	;
 
 StateSpec: Empty | Statement_List StateSpec;
@@ -197,17 +196,17 @@ ExprNew:  ExprNew ASSIGN ExprNew
 
 
 
-COMMA_Expr: 	COMMA ExprNew COMMA_Expr 
+COMMA_Expr: 	COMMA ExprNew COMMA_Expr
 				| Empty
 				;
 
-Expr0: 	ExprNew
+Expr0: 	Expr
 		| Empty
 		;
 
 
 
-Asterisk: 	AST Asterisk 
+Asterisk: 	AST Asterisk
 			| Empty
 			;
 
