@@ -9,7 +9,7 @@ Node * insert_term_node(char * node_type, char* value);
 void insert_child(Node * father, Node * child);
 void insert_brother(Node * node, Node * brother);
 
-Node * insert_node(char * node_type)
+Node * insert_node(Node_Type node_type)
 {
 	Node * node = (Node *) malloc(sizeof(Node));
 	node->node_type = node_type;
