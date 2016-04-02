@@ -75,6 +75,8 @@
 %type <node> FunctionDeclarator
 %type <node> FunctionBody
 
+%type <node> Empty
+
 
 
 %nonassoc "then"
@@ -100,22 +102,19 @@
 //Un -> 0 or 1
 //Rep -> 0 or more
 
-Start:  FunctionDefinition  Restart                                                					{if(DEBUG)printf("Start1\n"); $$ = insert_node(NODE_Program); tree=$$; }
-        | FunctionDeclaration Restart                                              					{if(DEBUG)printf("Start2\n"); $$ = insert_node(NODE_Program); tree=$$; }
-        | Declaration Restart                                                     					{if(DEBUG)printf("Start3\n"); $$ = insert_node(NODE_Program); tree=$$; }
+Start:  FunctionDefinition  Restart                                                					{if(DEBUG)printf("Start1\n"); $$ = insert_node(NODE_Program); insert_child($$, $1); tree=$$; }
+        | FunctionDeclaration Restart                                              					{if(DEBUG)printf("Start2\n"); $$ = insert_node(NODE_Program); insert_child($$, $1); tree=$$; }
+        | Declaration Restart                                                     					{if(DEBUG)printf("Start3\n"); $$ = insert_node(NODE_Program); insert_child($$, $1); tree=$$; }
         ;
 
-Restart: FunctionDefinition Restart                                             					{if(DEBUG)printf("Restart1\n"); insert_child($1,$2); }
-            | FunctionDeclaration Restart                                          					{if(DEBUG)printf("Restart2\n"); insert_child($1,$2); }
-            | Declaration Restart                                             						{if(DEBUG)printf("Restart3\n"); insert_child($1,$2); }
-            | Empty                                                                 				{$$ = NULL; }
+Restart: FunctionDefinition Restart                                             					{if(DEBUG)printf("Restart1\n"); insert_child($$,$1); }
+            | FunctionDeclaration Restart                                          					
+            | Declaration Restart                                             						
+            | Empty                                                                 				
             ;
 
 FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{if(DEBUG)printf("FunctionDefinition\n");
 																										$$ = insert_node(NODE_FuncDefinition);
-																										insert_child($$, $1);
-																										insert_brother($$, $2);
-																										insert_brother($$, $3);
 																									}
 					;
 
