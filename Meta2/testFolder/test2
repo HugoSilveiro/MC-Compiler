@@ -1,3 +1,5 @@
 char buffer[20];
 int a;
 int c;
+int *a;
+int **b;

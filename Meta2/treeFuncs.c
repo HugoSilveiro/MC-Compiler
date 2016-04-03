@@ -56,6 +56,7 @@ void changeOrder(Node * father, Node * child)
 
 
 }
+
 void insert_brother(Node * node, Node * brother)
 {
 	printf("insert_brother\n");
