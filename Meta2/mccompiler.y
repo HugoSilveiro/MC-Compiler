@@ -102,104 +102,180 @@
 //Un -> 0 or 1
 //Rep -> 0 or more
 
-Start:  FunctionDefinition  Restart                                                					{if(DEBUG)printf("Start1\n"); $$ = insert_node(NODE_Program); insert_child($$, $1); tree=$$; }
-        | FunctionDeclaration Restart                                              					{if(DEBUG)printf("Start2\n"); $$ = insert_node(NODE_Program); insert_child($$, $1); tree=$$; }
-        | Declaration Restart                                                     					{if(DEBUG)printf("Start3\n"); $$ = insert_node(NODE_Program); insert_child($$, $1); tree=$$; }
+Start:  FunctionDefinition  Restart                                                					{
+																										if(DEBUG)printf("Start1\n"); 
+																										$$ = insert_node(NODE_Program); 
+																										insert_child($$, $1); 
+																										tree=$$; 
+																									}
+        | FunctionDeclaration Restart                                              					{
+        																								if(DEBUG)printf("Start2\n"); 
+        																								$$ = insert_node(NODE_Program); 
+        																								insert_child($$, $1); 
+        																								tree=$$; 
+        																							}
+        | Declaration Restart                                                     					{
+        																								if(DEBUG)printf("Start3\n"); 
+        																								$$ = insert_node(NODE_Program); 
+        																								insert_child($$, $1); 
+        																								tree=$$; 
+        																							}
         ;
 
-Restart: FunctionDefinition Restart                                             					{if(DEBUG)printf("Restart1\n"); insert_child($$,$1); }
+Restart: FunctionDefinition Restart                                             					{
+																										if(DEBUG)printf("Restart1\n"); 
+																										insert_child($$,$1); 
+																									}
             | FunctionDeclaration Restart                                          					
             | Declaration Restart                                             						
             | Empty                                                                 				
             ;
 
-FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{if(DEBUG)printf("FunctionDefinition\n");
+FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{
+																										if(DEBUG)printf("FunctionDefinition\n");
 																										$$ = insert_node(NODE_FuncDefinition);
 																									}
 					;
 
-FunctionDeclaration: 	TypeSpec FunctionDeclarator SEMI											{if(DEBUG)printf("FunctionDeclaration\n");}
+FunctionDeclaration: 	TypeSpec FunctionDeclarator SEMI											{
+																										if(DEBUG)printf("FunctionDeclaration\n");
+																									}
 						;
 
 
-FunctionDeclarator: Asterisk ID LPAR ParameterList RPAR												{if(DEBUG)printf("FunctionDeclarator\n");}
+FunctionDeclarator: Asterisk ID LPAR ParameterList RPAR												{
+																										if(DEBUG)printf("FunctionDeclarator\n");
+																									}
 					;
 
 
-FunctionBody: 	LBRACE Declaration_Un State_List_UN RBRACE		 									{if(DEBUG)printf("FunctionBody\n");}
-				| LBRACE error RBRACE 																{if(DEBUG)printf("Error on Function Body\n");
+FunctionBody: 	LBRACE Declaration_Un State_List_UN RBRACE		 									{
+																										if(DEBUG)printf("FunctionBody\n");
+																									}
+				| LBRACE error RBRACE 																{
+																										if(DEBUG)printf("Error on Function Body\n");
 																										yacc_errors++;
 																									}
 				;
 
-ParameterList: 	ParameterDeclaration COMMA_ParameterDeclaration										{if(DEBUG)printf("ParameterList\n");}
+ParameterList: 	ParameterDeclaration COMMA_ParameterDeclaration										{
+																										if(DEBUG)printf("ParameterList\n");
+																									}
 				;
 
-ParameterDeclaration: 	TypeSpec Asterisk															{if(DEBUG)printf("ParameterDeclaration[1]\n");}
-						| TypeSpec Asterisk ID 														{if(DEBUG)printf("ParameterDeclaration[2]\n");}
+ParameterDeclaration: 	TypeSpec Asterisk															{
+																										if(DEBUG)printf("ParameterDeclaration[1]\n");
+																									}
+						| TypeSpec Asterisk ID 														{
+																										if(DEBUG)printf("ParameterDeclaration[2]\n");
+																									}
 						;
 
 
-COMMA_ParameterDeclaration: 	COMMA ParameterDeclaration COMMA_ParameterDeclaration				{if(DEBUG)printf("COMMA_ParameterDeclaration\n");}
+COMMA_ParameterDeclaration: 	COMMA ParameterDeclaration COMMA_ParameterDeclaration				{
+																										if(DEBUG)printf("COMMA_ParameterDeclaration\n");
+																									}
 								| Empty
 								;
 
 
 
-Declaration: TypeSpec Declarator COMMA_Declarator SEMI												{if(DEBUG)printf("Declaration\n");}
+Declaration: TypeSpec Declarator COMMA_Declarator SEMI												{
+																										if(DEBUG)printf("Declaration\n");
+																									}
 			| error SEMI 																			{
 																										if(DEBUG)printf("Error on Declaration\n");
 																										yacc_errors++;
 																									}
 			;
 
-Declaration_Un: Declaration Declaration_Un															{if(DEBUG)printf("Declaration_Un\n");}
+Declaration_Un: Declaration Declaration_Un															{
+																										if(DEBUG)printf("Declaration_Un\n");
+																									}
 		| Empty
 		;
 
-TypeSpec: 	CHAR 																					{if(DEBUG)printf("TypeSpec[CHAR]\n");}
-			| INT 																					{if(DEBUG)printf("TypeSpec[INT]\n");}
-			| VOID 																					{if(DEBUG)printf("TypeSpec[VOID]\n");}
+TypeSpec: 	CHAR 																					{
+																										if(DEBUG)printf("TypeSpec[CHAR]\n");
+																									}
+			| INT 																					{
+																										if(DEBUG)printf("TypeSpec[INT]\n");
+																									}
+			| VOID 																					{
+																										if(DEBUG)printf("TypeSpec[VOID]\n");
+																									}
 			;
 
 
-Declarator: 	Asterisk ID LSQ INTLIT RSQ  														{if(DEBUG)printf("Declarator[1]\n");}
-				| Asterisk ID																		{if(DEBUG)printf("Declarator[2]\n");}
+Declarator: 	Asterisk ID LSQ INTLIT RSQ  														{
+																										if(DEBUG)printf("Declarator[1]\n");
+																									}
+				| Asterisk ID																		{
+																										if(DEBUG)printf("Declarator[2]\n");
+																									}
 				;
 
-COMMA_Declarator: 	COMMA Declarator COMMA_Declarator												{if(DEBUG)printf("COMMA_Declarator\n");}
+COMMA_Declarator: 	COMMA Declarator COMMA_Declarator												{
+																										if(DEBUG)printf("COMMA_Declarator\n");
+																									}
 					|  Empty
 					;
 
-Statement: 	error SEMI 																				{if(DEBUG)printf("Statement Error\n");
+Statement: 	error SEMI 																				{
+																										if(DEBUG)printf("Statement Error\n");
 																										yacc_errors++;
 																									}
-			| Statement_List																		{if(DEBUG)printf("Statement\n");}
+			| Statement_List																		{
+																										if(DEBUG)printf("Statement\n");
+																									}
 			;
 
-Statement_List: 	 Expression_Un SEMI																{if(DEBUG)printf("Expression_Un SEMI\n");}
-					| LBRACE St RBRACE																{if(DEBUG)printf("LBRACE St RBRACE\n");}
-					| LBRACE RBRACE																	{if(DEBUG)printf("LBRACE RBRACE\n");}
-					| LBRACE error RBRACE															{if(DEBUG)printf("LBRACE error RBRACE\n");
+Statement_List: 	 Expression_Un SEMI																{
+																										if(DEBUG)printf("Expression_Un SEMI\n");
+																									}
+					| LBRACE St RBRACE																{
+																										if(DEBUG)printf("LBRACE St RBRACE\n");
+																									}
+					| LBRACE RBRACE																	{
+																										if(DEBUG)printf("LBRACE RBRACE\n");
+																									}
+					| LBRACE error RBRACE															{
+																										if(DEBUG)printf("LBRACE error RBRACE\n");
 																										yacc_errors++;
 																									}
-					| IF LPAR Expr RPAR Statement   %prec "then"									{if(DEBUG)printf("IF LPAR Expr RPAR Statement");}
-					| IF LPAR Expr RPAR Statement ELSE Statement 									{if(DEBUG)printf("IF LPAR Expr RPAR Statement ELSE Statement \n");}
-					| FOR LPAR Expression_Un SEMI Expression_Un SEMI Expression_Un RPAR Statement	{if(DEBUG)printf("For Cycle\n");}
-					| RETURN Expression_Un SEMI 													{if(DEBUG)printf("RETURN Expression_Un SEMI \n");}
+					| IF LPAR Expr RPAR Statement   %prec "then"									{
+																										if(DEBUG)printf("IF LPAR Expr RPAR Statement");
+																									}
+					| IF LPAR Expr RPAR Statement ELSE Statement 									{
+																										if(DEBUG)printf("IF LPAR Expr RPAR Statement ELSE Statement \n");
+																									}
+					| FOR LPAR Expression_Un SEMI Expression_Un SEMI Expression_Un RPAR Statement	{
+																										if(DEBUG)printf("For Cycle\n");
+																									}
+					| RETURN Expression_Un SEMI 													{
+																										if(DEBUG)printf("RETURN Expression_Un SEMI \n");
+																									}
 					;
 
-St: Statement Statement_Un																			{if(DEBUG)printf("St\n");}
+St: Statement Statement_Un																			{
+																										if(DEBUG)printf("St\n");
+																									}
 	;
 
-State_List_UN: Empty | Statement_List State_List_UN													{if(DEBUG)printf("State_List_UN\n");}
+State_List_UN: Empty | Statement_List State_List_UN													{
+																										if(DEBUG)printf("State_List_UN\n");
+																									}
 				;
 
 Statement_Un: 	Empty
-			| Statement Statement_Un																{if(DEBUG)printf("Statement_Un\n");}
+			| Statement Statement_Un																{
+																										if(DEBUG)printf("Statement_Un\n");
+																									}
 			;
 
-Expr: Expressions_List | Expr COMMA Expressions_List												{if(DEBUG)printf("Expr\n");}
+Expr: Expressions_List | Expr COMMA Expressions_List												{
+																										if(DEBUG)printf("Expr\n");
+																									}
 		;
 
 
@@ -239,25 +315,36 @@ Expressions_List:  	Expressions_List ASSIGN Expressions_List										{if(DEBUG)
 
 
 
-ExprCOMMA_Expr: Expressions_List COMMA_Expr															{if(DEBUG)printf("Expressions_List COMMA_Expr\n");}
+ExprCOMMA_Expr: Expressions_List COMMA_Expr															{
+																										if(DEBUG)printf("Expressions_List COMMA_Expr\n");
+																									}
 				| Empty
 				;
 
-COMMA_Expr: Empty | COMMA_Expr COMMA Expressions_List												{if(DEBUG)printf("COMMA_Expr\n");}
+COMMA_Expr: Empty | COMMA_Expr COMMA Expressions_List												{
+																										if(DEBUG)printf("COMMA_Expr\n");
+																									}
 			;
 
 
-Expression_Un: 	Expr																				{if(DEBUG)printf("Expression_Un\n");}
+Expression_Un: 	Expr																				{
+																										if(DEBUG)printf("Expression_Un\n");
+																									}
 		| Empty
 		;
 
 
 
-Asterisk: 	AST Asterisk																			{if(DEBUG)printf("Asterisk\n");}
+Asterisk: 	AST Asterisk																			{
+																										if(DEBUG)printf("Asterisk\n");
+																									}
 			| Empty
 			;
 
-Empty: 																								{if(DEBUG)printf("Empty\n");};
+Empty: 																								{
+																										if(DEBUG)printf("Empty\n");
+																									}
+	;
 
 %%
 
