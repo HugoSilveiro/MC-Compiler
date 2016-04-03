@@ -1,5 +1,5 @@
 %{
-	#define DEBUG 1
+	#define DEBUG 0
 	#include <stdio.h>
 	#include <stdlib.h>
 	#include <string.h>
@@ -108,18 +108,21 @@ Start:  FunctionDefinition  Restart                                             
 																										if(DEBUG)printf("Start1\n");
 																										$$ = insert_node(NODE_Program);
 																										insert_child($$, $1);
+																										insert_child($$, $2);
 																										tree=$$;
 																									}
         | FunctionDeclaration Restart                                              					{
         																								if(DEBUG)printf("Start2\n");
         																								$$ = insert_node(NODE_Program);
         																								insert_child($$, $1);
+        																								insert_child($$, $2);
         																								tree=$$;
         																							}
         | Declaration Restart                                                     					{
         																								if(DEBUG)printf("Start3\n");
         																								$$ = insert_node(NODE_Program);
         																								insert_child($$, $1);
+        																								insert_child($$, $2);
         																								tree=$$;
         																							}
         ;
