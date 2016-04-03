@@ -186,9 +186,8 @@ FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{
 FunctionDeclaration: 	TypeSpec FunctionDeclarator SEMI											{
 																										if(DEBUG)printf("FunctionDeclaration\n");
 																										$$ = insert_node(NODE_FuncDeclaration);
-
-																										insert_child($$, $1, 0);
 																										insert_child($$, $2, 0);
+																										insert_child($$, $1, 0);
 
 																									}
 						;
@@ -208,8 +207,9 @@ FunctionDeclarator: Asterisk ID LPAR ParameterList RPAR												{
 FunctionBody: 	LBRACE Declaration_Un State_List_UN RBRACE		 									{
 																										if(DEBUG)printf("FunctionBody\n");
 																										$$ = insert_node(NODE_FuncBody);
-																										insert_child($$, $2, 0);
 																										insert_child($$, $3, 0);
+																										insert_child($$, $2, 0);
+																										
 
 																									}
 				| LBRACE error RBRACE 																{
