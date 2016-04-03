@@ -47,7 +47,7 @@ static const char *NODE_NAME[] = {
 	"Pointer",
 	"Void",
 	"Id",
-	"IntLit"
+	"IntLit",
 	"ChrLit",
 	"StrLit"
 

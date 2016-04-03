@@ -19,7 +19,7 @@ Node * insert_node(Node_Type node_type)
 
 Node * insert_term_node(Node_Type node_type, char* value)
 {
-	//printf("insert_term_node\n");
+	printf("insert_term_node: %s\n", value);
 	Node * node = insert_node(node_type);
 	node->value = value;
 	return node;

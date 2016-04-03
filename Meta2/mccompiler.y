@@ -126,15 +126,15 @@ Start:  FunctionDefinition  Restart                                             
 
 Restart: FunctionDefinition Restart                                             					{
 																										if(DEBUG)printf("Restart1\n");
-																										insert_child($$,$1);
+																										insert_brother($$,$1);
 																									}
             | FunctionDeclaration Restart															{
 																										if(DEBUG)printf("Restart2\n");
-																										insert_child($$,$1);
+																										insert_brother($$,$1);
 																									}
             | Declaration Restart																	{
 																										if(DEBUG)printf("Restart1\n");
-																										insert_child($$,$1);
+																										insert_brother($$,$1);
 																									}
             | Empty
             ;
@@ -143,6 +143,8 @@ FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{
 																										if(DEBUG)printf("FunctionDefinition\n");
 																										$$ = insert_node(NODE_FuncDefinition);
 																										insert_child($$, $1);
+																										insert_brother($1, $2);
+
 																									}
 					;
 
@@ -156,7 +158,8 @@ FunctionDeclaration: 	TypeSpec FunctionDeclarator SEMI											{
 
 FunctionDeclarator: Asterisk ID LPAR ParameterList RPAR												{
 																										if(DEBUG)printf("FunctionDeclarator\n");
-
+																										$$ = insert_term_node(NODE_Id, "main");
+																										//insert_child($$, $1);
 																									}
 					;
 
