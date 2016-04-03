@@ -107,39 +107,56 @@
 Start:  FunctionDefinition  Restart                                                					{
 																										if(DEBUG)printf("Start1\n");
 																										$$ = insert_node(NODE_Program);
-																										insert_child($$, $1);
-																										insert_child($$, $2);
 																										tree=$$;
+																										insert_child($$, $1);
+																										$$ = $1;
+																										insert_brother($$, $2);
+
+
 																									}
         | FunctionDeclaration Restart                                              					{
         																								if(DEBUG)printf("Start2\n");
         																								$$ = insert_node(NODE_Program);
+																										tree=$$;
         																								insert_child($$, $1);
-        																								insert_child($$, $2);
-        																								tree=$$;
+																										$$ = $1;
+																										insert_brother($$, $2);
+
+
         																							}
         | Declaration Restart                                                     					{
         																								if(DEBUG)printf("Start3\n");
         																								$$ = insert_node(NODE_Program);
-        																								insert_child($$, $1);
-        																								insert_child($$, $2);
-        																								tree=$$;
+																										tree=$$;
+																										insert_child($$, $1);
+																										$$ = $1;
+																										insert_brother($$, $2);
+
+
         																							}
         ;
 
 Restart: FunctionDefinition Restart                                             					{
 																										if(DEBUG)printf("Restart1\n");
-																										insert_brother($$,$1);
+
+																										$$ = $1;
+																										insert_brother($$, $2);
+
 																									}
             | FunctionDeclaration Restart															{
 																										if(DEBUG)printf("Restart2\n");
-																										insert_brother($$,$1);
+																										$$ = $1;
+																										insert_brother($$, $2);
 																									}
             | Declaration Restart																	{
 																										if(DEBUG)printf("Restart1\n");
-																										insert_brother($$,$1);
+																										$$ = $1;
+																										insert_brother($$, $2);
+
 																									}
-            | Empty
+            | Empty																					{
+																										$$ = NULL;
+																									}
             ;
 
 FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{
