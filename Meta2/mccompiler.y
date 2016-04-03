@@ -1,5 +1,5 @@
 %{
-	#define DEBUG 0
+	#define DEBUG 1
 	#include <stdio.h>
 	#include <stdlib.h>
 	#include <string.h>
@@ -201,7 +201,6 @@ Declaration: TypeSpec Declarator COMMA_Declarator SEMI												{
 																										$$ = $2;
 																										insert_child($$, $1);
 
-
 																									}
 			| error SEMI 																			{
 																										if(DEBUG)printf("Error on Declaration\n");
@@ -234,12 +233,18 @@ TypeSpec: 	CHAR 																					{
 Declarator: 	Asterisk ID LSQ INTLIT RSQ  														{
 																										if(DEBUG)printf("Declarator[1]\n");
 																										$$ = insert_node(NODE_ArrayDeclaration);
-																										nodeAux = insert_term_node(NODE_Id, "buffer");
+
+																										nodeAux = insert_term_node(NODE_Intlit, $4);
+																										insert_child($$, nodeAux);
+
+																										nodeAux = insert_term_node(NODE_Id, $2);
 																										insert_child($$, nodeAux);
 																									}
 				| Asterisk ID																		{
 																										if(DEBUG)printf("Declarator[2]\n");
-																										$$ = insert_term_node(NODE_Id, "oi");
+																										$$ = insert_node(NODE_Declaration);
+																										nodeAux = insert_term_node(NODE_Id, $2);
+																										insert_child($$, nodeAux);
 																									}
 				;
 
@@ -383,9 +388,3 @@ Empty: 																								{
 void yyerror (char *s) {
 	printf ("Line %d, col %d: %s: %s\n",yylineno, (int)(columnNumber - strlen(yytext)+1), s, yytext);
 }
-/*
-void printTree()
-{
-	printf("OLAAAA\n");
-}
-*/

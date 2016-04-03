@@ -27,7 +27,7 @@ Node * insert_term_node(Node_Type node_type, char* value)
 
 void insert_child(Node * father, Node * child)
 {
-	//printf("insert_child\n");
+	printf("insert_child: %s -> %s\n", NODE_NAME[father->node_type], NODE_NAME[child->node_type]);
 	Node * temp = father->child;
 
 	if(temp==NULL)
@@ -36,19 +36,29 @@ void insert_child(Node * father, Node * child)
 	}
 	else
 	{
-		while(temp->brother != NULL)
+		changeOrder(father, child);
+
+		/*while(temp->brother != NULL)
 		{
 			temp = temp->brother;
 		}
-		temp->brother = child;
+		temp->brother = child;*/
 	}
 
 }
 
+void changeOrder(Node * father, Node * child)
+{
+	Node * temp = father->child;
+	Node *aux;
+	father->child = child;
+	child->brother = temp;
 
+
+}
 void insert_brother(Node * node, Node * brother)
 {
-	//printf("insert_brother\n");
+	printf("insert_brother\n");
 	Node * temp = node->brother;
 	if(temp==NULL)
 	{
