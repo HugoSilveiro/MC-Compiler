@@ -184,6 +184,7 @@ FunctionDeclaration: 	TypeSpec FunctionDeclarator SEMI											{
 FunctionDeclarator: Asterisk ID LPAR ParameterList RPAR												{
 																										if(DEBUG)printf("FunctionDeclarator\n");
 																										$$ = insert_term_node(NODE_Id, "main");
+																										insert_brother($$, $4);
 																										//insert_child($$, $1);
 																									}
 					;
