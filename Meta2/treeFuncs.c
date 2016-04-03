@@ -36,13 +36,13 @@ void insert_child(Node * father, Node * child)
 	}
 	else
 	{
-		changeOrder(father, child);
+		//changeOrder(father, child);
 
-		/*while(temp->brother != NULL)
+		while(temp->brother != NULL)
 		{
 			temp = temp->brother;
 		}
-		temp->brother = child;*/
+		temp->brother = child;
 	}
 
 }

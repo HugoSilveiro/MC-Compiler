@@ -166,7 +166,9 @@ FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{
 																										if(DEBUG)printf("FunctionDefinition\n");
 																										$$ = insert_node(NODE_FuncDefinition);
 																										insert_child($$, $1);
-																										insert_brother($1, $2);
+																										insert_child($$, $2);
+																										insert_child($$, $3);
+
 
 																									}
 					;
@@ -191,7 +193,7 @@ FunctionBody: 	LBRACE Declaration_Un State_List_UN RBRACE		 									{
 																										if(DEBUG)printf("FunctionBody\n");
 																										$$ = insert_node(NODE_FuncBody);
 																										insert_child($$, $2);
-																										insert_child($$, $3);
+																										insert_brother($2, $3);
 															
 																									}
 				| LBRACE error RBRACE 																{
