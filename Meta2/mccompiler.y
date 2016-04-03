@@ -252,12 +252,19 @@ Declaration: TypeSpec Declarator COMMA_Declarator SEMI												{
 																										if(DEBUG)printf("Declaration\n");
 
 																										$$ = $2;
-																										//insert_brother($$, $3);
-																										
+
+
 																										insert_child($$, $1, 0);
+																										if($3 != NULL){
 
-																										//insert_brother($$, $1);
+																											insert_brother($$, $3);
+																											//printf("inside: %s\n", NODE_NAME[$1->node_type]);
+																											if(strcmp(NODE_NAME[$1->node_type], "Int") == 0){
+																												nodeAux = insert_node(NODE_Int);
+																											}
+																											insert_child($3, nodeAux, 0);
 
+																										}
 
 																									}
 			| error SEMI 																			{
@@ -316,8 +323,8 @@ Declarator: 	Asterisk ID LSQ INTLIT RSQ  														{
 
 COMMA_Declarator: 	COMMA Declarator COMMA_Declarator												{
 																										if(DEBUG)printf("COMMA_Declarator\n");
-																										/*$$ = $2;
-																										insert_brother($2, $3);*/
+																										$$ = $2;
+																										insert_brother($2, $3);
 																									}
 					|  Empty
 					;
