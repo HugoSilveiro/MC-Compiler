@@ -6,7 +6,7 @@
 #include "printer.h"
 
 void print_tree(Node *node, int level){
-
+	printf("print_tree\n");
 	print_points(level);
 
 	if(node->node_type == NODE_Id || node->node_type == NODE_Intlit || node->node_type == NODE_Chrlit || node->node_type == NODE_Strlit){
@@ -39,5 +39,6 @@ void print_points(int n){
 }
 
 void print_terminal(Node *node){
+
 	printf("%s(%s)\n", NODE_NAME[node->node_type], node->value);
 }

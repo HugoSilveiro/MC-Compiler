@@ -75,6 +75,7 @@
 %type <node> FunctionDeclarator
 %type <node> FunctionBody
 %type <node> Declarator
+%type <node> Expressions_List
 
 %type <node> Empty
 
@@ -141,18 +142,21 @@ Restart: FunctionDefinition Restart                                             
 FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{
 																										if(DEBUG)printf("FunctionDefinition\n");
 																										$$ = insert_node(NODE_FuncDefinition);
+																										insert_child($$, $1);
 																									}
 					;
 
 FunctionDeclaration: 	TypeSpec FunctionDeclarator SEMI											{
 																										if(DEBUG)printf("FunctionDeclaration\n");
 																										$$ = insert_node(NODE_FuncDeclaration);
+																										insert_child($$, $1);
 																									}
 						;
 
 
 FunctionDeclarator: Asterisk ID LPAR ParameterList RPAR												{
 																										if(DEBUG)printf("FunctionDeclarator\n");
+
 																									}
 					;
 
@@ -168,6 +172,7 @@ FunctionBody: 	LBRACE Declaration_Un State_List_UN RBRACE		 									{
 
 ParameterList: 	ParameterDeclaration COMMA_ParameterDeclaration										{
 																										if(DEBUG)printf("ParameterList\n");
+
 																									}
 				;
 
@@ -190,7 +195,10 @@ COMMA_ParameterDeclaration: 	COMMA ParameterDeclaration COMMA_ParameterDeclarati
 
 Declaration: TypeSpec Declarator COMMA_Declarator SEMI												{
 																										if(DEBUG)printf("Declaration\n");
-																										$$ = insert_node(NODE_Declaration);
+																										$$ = $2;
+																										insert_child($$, $1);
+
+
 																									}
 			| error SEMI 																			{
 																										if(DEBUG)printf("Error on Declaration\n");
@@ -206,23 +214,29 @@ Declaration_Un: Declaration Declaration_Un															{
 
 TypeSpec: 	CHAR 																					{
 																										if(DEBUG)printf("TypeSpec[CHAR]\n");
-																										$$ = insert_term_node(NODE_Char, "oi");
+																										$$ = insert_node(NODE_Char);
+
 																									}
 			| INT 																					{
 																										if(DEBUG)printf("TypeSpec[INT]\n");
+																										$$ = insert_node(NODE_Int);
 																									}
 			| VOID 																					{
 																										if(DEBUG)printf("TypeSpec[VOID]\n");
+																										$$ = insert_node(NODE_Void);
 																									}
 			;
 
 
 Declarator: 	Asterisk ID LSQ INTLIT RSQ  														{
 																										if(DEBUG)printf("Declarator[1]\n");
-																										$$ = insert_term_node(NODE_ArrayDeclaration, "buffer[20]");
+																										$$ = insert_node(NODE_ArrayDeclaration);
+																										nodeAux = insert_term_node(NODE_Id, "buffer");
+																										insert_child($$, nodeAux);
 																									}
 				| Asterisk ID																		{
 																										if(DEBUG)printf("Declarator[2]\n");
+																										$$ = insert_term_node(NODE_Id, "oi");
 																									}
 				;
 
@@ -311,8 +325,12 @@ Expressions_List:  	Expressions_List ASSIGN Expressions_List										{if(DEBUG)
 					| NOT Expressions_List															{if(DEBUG)printf("NOT Expressions_List\n");}
 					| ID LPAR ExprCOMMA_Expr RPAR													{if(DEBUG)printf("ID LPAR ExprCOMMA_Expr RPAR\n");}
 					| LPAR Expr RPAR																{if(DEBUG)printf("LPAR Expr RPAR\n");}
-					| ID																			{if(DEBUG)printf("ID\n");}
-					| INTLIT																		{if(DEBUG)printf("INTLIT\n");}
+					| ID																			{if(DEBUG)printf("ID\n");
+																										$$ = insert_term_node(NODE_Id, "oi");
+																									}
+					| INTLIT																		{if(DEBUG)printf("INTLIT\n");
+																										$$ = insert_term_node(NODE_Intlit, "69");
+																									}
 					| CHRLIT																		{if(DEBUG)printf("CHRLIT\n");}
 					| STRLIT																		{if(DEBUG)printf("STRLIT\n");}
 					| ID LPAR error RPAR 															{if(DEBUG)printf("ID LPAR error RPAR \n");

@@ -7,24 +7,25 @@
 static const char *NODE_NAME[] = {
 	"Program",
 	"Declaration",
+
 	"ArrayDeclaration",
 	"FuncDeclaration",
 	"FuncDefinition",
 	"ParamList",
 	"FuncBody",
 	"ParamDeclaration",
+
 	"StatList",
 	"If",
 	"For",
 	"Return",
+
 	"Or",
 	"And",
 	"Eq",
 	"Ne",
 	"Lt",
 	"Gt",
-	"Le",
-	"Ge",
 	"Le",
 	"Ge",
 	"Add",
@@ -40,14 +41,16 @@ static const char *NODE_NAME[] = {
 	"Store",
 	"Comma",
 	"Call",
+
+	"Int",
 	"Char",
-	"ChrLit",
+	"Pointer",
+	"Void",
 	"Id",
-	"Int"
 	"IntLit"
-	"Pointer"
+	"ChrLit",
 	"StrLit"
-	"Void"
+
 	"Null"
 };
 
