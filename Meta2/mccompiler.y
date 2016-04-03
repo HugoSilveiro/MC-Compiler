@@ -168,15 +168,11 @@ Restart: FunctionDefinition Restart                                             
 FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{
 																										if(DEBUG)printf("FunctionDefinition\n");
 																										$$ = insert_node(NODE_FuncDefinition);
-<<<<<<< HEAD
-																										insert_child($$, $1, 0);
-																										insert_brother($1, $2);
-=======
-																										insert_child($$, $1);
-																										insert_child($$, $2);
-																										insert_child($$, $3);
 
->>>>>>> 3f6ef55358ff6a10d3d58b8f2934b610668b12c4
+																										insert_child($$, $1, 0);
+																										insert_child($$, $2, 0);
+																										insert_child($$, $3, 0);
+
 
 																									}
 					;
@@ -184,28 +180,21 @@ FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{
 FunctionDeclaration: 	TypeSpec FunctionDeclarator SEMI											{
 																										if(DEBUG)printf("FunctionDeclaration\n");
 																										$$ = insert_node(NODE_FuncDeclaration);
-<<<<<<< HEAD
+
 																										insert_child($$, $1, 0);
-=======
-																										insert_child($$, $1);
-																										insert_child($$, $2);
->>>>>>> 3f6ef55358ff6a10d3d58b8f2934b610668b12c4
+																										insert_child($$, $2, 0);
+
 																									}
 						;
 
 
 FunctionDeclarator: Asterisk ID LPAR ParameterList RPAR												{
 																										if(DEBUG)printf("FunctionDeclarator\n");
-<<<<<<< HEAD
-																										$$ = insert_term_node(NODE_Id, "main");
-																										//insert_brother($$, $4);
-=======
+
 																										$$ = insert_term_node(NODE_Id, $2);
 																										insert_brother($$, $1);
 																										insert_brother($$, $4);
 
->>>>>>> 3f6ef55358ff6a10d3d58b8f2934b610668b12c4
-																										//insert_child($$, $1);
 																									}
 					;
 
@@ -232,13 +221,13 @@ ParameterList: 	ParameterDeclaration COMMA_ParameterDeclaration										{
 ParameterDeclaration: 	TypeSpec Asterisk															{
 																										if(DEBUG)printf("ParameterDeclaration[1]\n");
 																										$$ = insert_node(NODE_ParamDeclaration);
-																										insert_child($$, $1);
+																										insert_child($$, $1, 0);
 																										insert_brother($1, $2);
 																									}
 						| TypeSpec Asterisk ID 														{
 																										if(DEBUG)printf("ParameterDeclaration[2]\n");
 																										$$ = insert_node(NODE_ParamDeclaration);
-																										insert_child($$, $1);
+																										insert_child($$, $1, 0);
 																										insert_brother($1, $2);
 
 																									}
