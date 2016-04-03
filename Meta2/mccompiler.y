@@ -77,8 +77,8 @@
 %type <node> Declarator
 %type <node> Expressions_List
 %type <node> Declaration_Un
-%type <node> State_List_UN 
-%type <node> Asterisk 
+%type <node> State_List_UN
+%type <node> Asterisk
 
 %type <node> Empty
 
@@ -111,7 +111,7 @@ Start:  FunctionDefinition  Restart                                             
 																										if(DEBUG)printf("Start1\n");
 																										$$ = insert_node(NODE_Program);
 																										tree=$$;
-																										insert_child($$, $1);
+																										insert_child($$, $1, 0);
 																										$$ = $1;
 																										insert_brother($$, $2);
 
@@ -121,7 +121,7 @@ Start:  FunctionDefinition  Restart                                             
         																								if(DEBUG)printf("Start2\n");
         																								$$ = insert_node(NODE_Program);
 																										tree=$$;
-        																								insert_child($$, $1);
+        																								insert_child($$, $1, 0);
 																										$$ = $1;
 																										insert_brother($$, $2);
 
@@ -131,7 +131,7 @@ Start:  FunctionDefinition  Restart                                             
         																								if(DEBUG)printf("Start3\n");
         																								$$ = insert_node(NODE_Program);
 																										tree=$$;
-																										insert_child($$, $1);
+																										insert_child($$, $1, 0);
 																										$$ = $1;
 																										insert_brother($$, $2);
 
@@ -165,7 +165,7 @@ Restart: FunctionDefinition Restart                                             
 FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{
 																										if(DEBUG)printf("FunctionDefinition\n");
 																										$$ = insert_node(NODE_FuncDefinition);
-																										insert_child($$, $1);
+																										insert_child($$, $1, 0);
 																										insert_brother($1, $2);
 
 																									}
@@ -174,7 +174,7 @@ FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{
 FunctionDeclaration: 	TypeSpec FunctionDeclarator SEMI											{
 																										if(DEBUG)printf("FunctionDeclaration\n");
 																										$$ = insert_node(NODE_FuncDeclaration);
-																										insert_child($$, $1);
+																										insert_child($$, $1, 0);
 																									}
 						;
 
@@ -182,7 +182,7 @@ FunctionDeclaration: 	TypeSpec FunctionDeclarator SEMI											{
 FunctionDeclarator: Asterisk ID LPAR ParameterList RPAR												{
 																										if(DEBUG)printf("FunctionDeclarator\n");
 																										$$ = insert_term_node(NODE_Id, "main");
-																										insert_brother($$, $4);
+																										//insert_brother($$, $4);
 																										//insert_child($$, $1);
 																									}
 					;
@@ -191,9 +191,9 @@ FunctionDeclarator: Asterisk ID LPAR ParameterList RPAR												{
 FunctionBody: 	LBRACE Declaration_Un State_List_UN RBRACE		 									{
 																										if(DEBUG)printf("FunctionBody\n");
 																										$$ = insert_node(NODE_FuncBody);
-																										insert_child($$, $2);
-																										insert_child($$, $3);
-															
+																										insert_child($$, $2, 0);
+																										insert_child($$, $3, 0);
+
 																									}
 				| LBRACE error RBRACE 																{
 																										if(DEBUG)printf("Error on Function Body\n");
@@ -228,7 +228,7 @@ Declaration: TypeSpec Declarator COMMA_Declarator SEMI												{
 																										if(DEBUG)printf("Declaration\n");
 
 																										$$ = $2;
-																										insert_child($$, $1);
+																										insert_child($$, $1, 0);
 
 																									}
 			| error SEMI 																			{
@@ -242,7 +242,7 @@ Declaration_Un: Declaration Declaration_Un															{
 																										$$ = $1;
 																										insert_brother($$, $2);
 																									}
-		| Empty																						
+		| Empty
 		;
 
 TypeSpec: 	CHAR 																					{
@@ -266,17 +266,20 @@ Declarator: 	Asterisk ID LSQ INTLIT RSQ  														{
 																										$$ = insert_node(NODE_ArrayDeclaration);
 
 																										nodeAux = insert_term_node(NODE_Intlit, $4);
-																										insert_child($$, nodeAux);
+																										insert_child($$, nodeAux, 0);
 
 																										nodeAux = insert_term_node(NODE_Id, $2);
-																										insert_child($$, nodeAux);
+																										insert_child($$, nodeAux, 0);
 																									}
 				| Asterisk ID																		{
 																										if(DEBUG)printf("Declarator[2]\n");
 																										$$ = insert_node(NODE_Declaration);
 																										nodeAux = insert_term_node(NODE_Id, $2);
-																										insert_child($$, nodeAux);
-																										insert_brother(nodeAux, $1);
+
+																										insert_child($$, $1, 0);
+																										insert_child($$, nodeAux, 1);
+
+
 																									}
 				;
 
