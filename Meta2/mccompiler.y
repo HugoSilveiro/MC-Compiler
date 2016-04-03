@@ -79,12 +79,16 @@
 %type <node> Declaration_Un
 %type <node> State_List_UN
 %type <node> Asterisk
+%type <node> Statement_List
+%type <node> Statement
 
 
 %type <node> ParameterList
 %type <node> ParameterDeclaration
 %type <node> Empty
 %type <node> COMMA_Declarator
+%type <node> Expr
+%type <node> Expression_Un
 
 
 
@@ -169,10 +173,11 @@ Restart: FunctionDefinition Restart                                             
 FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{
 																										if(DEBUG)printf("FunctionDefinition\n");
 																										$$ = insert_node(NODE_FuncDefinition);
-
-																										insert_child($$, $1, 0);
-																										insert_child($$, $2, 0);
 																										insert_child($$, $3, 0);
+																										insert_child($$, $2, 0);
+																										insert_child($$, $1, 0);
+																										
+																										
 
 
 																									}
@@ -248,7 +253,9 @@ Declaration: TypeSpec Declarator COMMA_Declarator SEMI												{
 
 																										$$ = $2;
 																										//insert_brother($$, $3);
+																										
 																										insert_child($$, $1, 0);
+
 																										//insert_brother($$, $1);
 
 
@@ -321,6 +328,7 @@ Statement: 	error SEMI 																				{
 																									}
 			| Statement_List																		{
 																										if(DEBUG)printf("Statement\n");
+																										$$ = $1;
 																									}
 			;
 
@@ -367,68 +375,128 @@ Statement_Un: 	Empty
 																									}
 			;
 
-Expr: Expressions_List | Expr COMMA Expressions_List												{
+Expr: 	Expressions_List 																			{
+																										$$ = $1;
+																									}
+		| Expr COMMA Expressions_List																{
 																										if(DEBUG)printf("Expr\n");
+																										insert_child($$, $1, 0);
+																										insert_brother($$, $3);
 																									}
 		;
 
 
 Expressions_List:  	Expressions_List ASSIGN Expressions_List										{
 																										if(DEBUG)printf("Expressions_List ASSIGN Expressions_List\n");
+																										$$ = insert_node(NODE_Store);
+																										/*insert_brother($$, $1);
+																										insert_brother($$, $3);*/
 																									}
 					| Expressions_List AND Expressions_List											{
 																										if(DEBUG)printf("Expressions_List AND Expressions_List\n");
+																										$$ = insert_node(NODE_And);
+																										/*insert_brother($$, $1);
+																										insert_brother($$, $3);*/
+																										
 																									}
 					| Expressions_List OR Expressions_List											{
 																										if(DEBUG)printf("Expressions_List OR Expressions_List\n");
+																										$$ = insert_node(NODE_Or);
+																										/*insert_brother($$, $1);
+																										insert_brother($$, $3);*/
+																									
 																									}
 					| Expressions_List EQ Expressions_List											{
 																										if(DEBUG)printf("Expressions_List EQ Expressions_List\n");
+																										$$ = insert_node(NODE_Eq);
+																										/*insert_brother($$, $1);
+																										insert_brother($$, $3);*/
+																										
 																									}
 					| Expressions_List NE Expressions_List											{
 																										if(DEBUG)printf("Expressions_List NE Expressions_List\n");
+																										$$ = insert_node(NODE_Ne);
+																										/*insert_brother($$, $1);
+																										insert_brother($$, $3);*/
 																									}
 					| Expressions_List LT Expressions_List											{
 																										if(DEBUG)printf("Expressions_List LT Expressions_List\n");
+																										$$ = insert_node(NODE_Lt);
+																										/*insert_brother($$, $1);
+																										insert_brother($$, $3);*/
 																									}
 					| Expressions_List GT Expressions_List											{
 																										if(DEBUG)printf("Expressions_List GT Expressions_List\n");
+																										$$ = insert_node(NODE_Gt);
+																										/*insert_brother($$, $1);
+																										insert_brother($$, $3);*/
 																									}
 					| Expressions_List LE Expressions_List											{
 																										if(DEBUG)printf("Expressions_List LE Expressions_List\n");
+																										$$ = insert_node(NODE_Le);
+																										/*insert_brother($$, $1);
+																										insert_brother($$, $3);*/
 																									}
 					| Expressions_List GE Expressions_List											{
 																										if(DEBUG)printf("Expressions_List GE Expressions_List\n");
+																										$$ = insert_node(NODE_Ge);
+																										/*insert_brother($$, $1);
+																										insert_brother($$, $3);*/
 																									}
 					| Expressions_List PLUS Expressions_List										{
 																										if(DEBUG)printf("Expressions_List PLUS Expressions_List\n");
+																										$$ = insert_node(NODE_Add);
+																										/*insert_brother($$, $1);
+																										insert_brother($$, $3);*/
 																									}
 					| Expressions_List MINUS Expressions_List										{
 																										if(DEBUG)printf("Expressions_List MINUS Expressions_List\n");
+																										$$ = insert_node(NODE_Sub);
+																										/*insert_brother($$, $1);
+																										insert_brother($$, $3);*/
 																									}
 					| Expressions_List AST Expressions_List											{
 																										if(DEBUG)printf("Expressions_List AST Expressions_List\n");
+																										$$ = insert_node(NODE_Mul);
+																										/*insert_brother($$, $1);
+																										insert_brother($$, $3);*/
 																									}
 					| Expressions_List DIV Expressions_List											{
 																										if(DEBUG)printf("Expressions_List DIV Expressions_List\n");
+																										$$ = insert_node(NODE_Div);
+																										/*insert_brother($$, $1);
+																										insert_brother($$, $3);*/
 																									}
 					| Expressions_List MOD Expressions_List											{
 																										if(DEBUG)printf("Expressions_List MOD Expressions_List\n");
+																										$$ = insert_node(NODE_Mod);
+																										/*insert_brother($$, $1);
+																										insert_brother($$, $3);*/
 																									}
 					| AMP Expressions_List															{
 																										if(DEBUG)printf("AMP Expressions_List\n");
+																										$$ = insert_node(NODE_Addr);
+																										//insert_brother($$, $2);
 																									}
 					| AST Expressions_List															{
 																										if(DEBUG)printf("AST Expressions_List\n");
+																										$$ = insert_node(NODE_Deref);
+																										//insert_brother($$, $2);
 																									}
 					| PLUS Expressions_List															{
 																										if(DEBUG)printf("PLUS Expressions_List\n");
+																										$$ = insert_node(NODE_Plus);
+																										//insert_brother($$, $2);
 																									}
 					| MINUS Expressions_List														{
 																										if(DEBUG)printf("MINUS Expressions_List\n");
+																										$$ = insert_node(NODE_Minus);
+																										//insert_brother($$, $2);
 																									}
 					| NOT Expressions_List															{
 																										if(DEBUG)printf("NOT Expressions_List\n");
+																										$$ = insert_node(NODE_Not);
+																										//insert_brother($$, $2);
 																									}
 					| ID LPAR ExprCOMMA_Expr RPAR													{
 																										if(DEBUG)printf("ID LPAR ExprCOMMA_Expr RPAR\n");
@@ -446,9 +514,11 @@ Expressions_List:  	Expressions_List ASSIGN Expressions_List										{
 																									}
 					| CHRLIT																		{
 																										if(DEBUG)printf("CHRLIT\n");
+																										$$ = insert_term_node(NODE_Chrlit, $1);
 																									}
 					| STRLIT																		{
 																										if(DEBUG)printf("STRLIT\n");
+																										$$ = insert_term_node(NODE_Strlit, $1);
 																									}
 					| ID LPAR error RPAR 															{
 																										if(DEBUG)printf("ID LPAR error RPAR \n");
@@ -479,6 +549,7 @@ COMMA_Expr: Empty | COMMA_Expr COMMA Expressions_List												{
 
 Expression_Un: 	Expr																				{
 																										if(DEBUG)printf("Expression_Un\n");
+																										$$ = $1;
 																									}
 		| Empty
 		;
