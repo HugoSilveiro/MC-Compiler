@@ -84,6 +84,7 @@
 %type <node> ParameterList
 %type <node> ParameterDeclaration
 %type <node> Empty
+%type <node> COMMA_Declarator
 
 
 
@@ -246,7 +247,10 @@ Declaration: TypeSpec Declarator COMMA_Declarator SEMI												{
 																										if(DEBUG)printf("Declaration\n");
 
 																										$$ = $2;
+																										//insert_brother($$, $3);
 																										insert_child($$, $1, 0);
+																										//insert_brother($$, $1);
+
 
 																									}
 			| error SEMI 																			{
@@ -294,8 +298,10 @@ Declarator: 	Asterisk ID LSQ INTLIT RSQ  														{
 																										$$ = insert_node(NODE_Declaration);
 																										nodeAux = insert_term_node(NODE_Id, $2);
 
-																										insert_child($$, $1, 0);
-																										insert_child($$, nodeAux, 1);
+																										insert_child($$, nodeAux, 0);
+																										insert_brother(nodeAux, $1);
+
+
 
 
 																									}
@@ -303,6 +309,8 @@ Declarator: 	Asterisk ID LSQ INTLIT RSQ  														{
 
 COMMA_Declarator: 	COMMA Declarator COMMA_Declarator												{
 																										if(DEBUG)printf("COMMA_Declarator\n");
+																										/*$$ = $2;
+																										insert_brother($2, $3);*/
 																									}
 					|  Empty
 					;

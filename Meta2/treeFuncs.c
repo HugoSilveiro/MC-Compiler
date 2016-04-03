@@ -58,7 +58,6 @@ void insert_child(Node * father, Node * child, int end)
 void changeOrder(Node * father, Node * child)
 {
 	Node * temp = father->child;
-	Node *aux;
 	father->child = child;
 	child->brother = temp;
 
@@ -67,7 +66,6 @@ void changeOrder(Node * father, Node * child)
 void changeOrder1(Node * node, Node * brother)
 {
 	Node * temp = node->brother;
-	Node *aux;
 	node->brother = brother;
 	brother->brother = temp;
 
@@ -84,7 +82,6 @@ void insert_brother(Node * node, Node * brother)
 	}
 	else
 	{
-		//changeOrder1(node, brother);
 		while(temp->brother!=NULL)
 		{
 			temp = temp->brother;
