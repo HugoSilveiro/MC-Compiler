@@ -76,6 +76,9 @@
 %type <node> FunctionBody
 %type <node> Declarator
 %type <node> Expressions_List
+%type <node> Declaration_Un
+%type <node> State_List_UN 
+%type <node> Asterisk 
 
 %type <node> Empty
 
@@ -187,6 +190,10 @@ FunctionDeclarator: Asterisk ID LPAR ParameterList RPAR												{
 
 FunctionBody: 	LBRACE Declaration_Un State_List_UN RBRACE		 									{
 																										if(DEBUG)printf("FunctionBody\n");
+																										$$ = insert_node(NODE_FuncBody);
+																										insert_child($$, $2);
+																										insert_child($$, $3);
+															
 																									}
 				| LBRACE error RBRACE 																{
 																										if(DEBUG)printf("Error on Function Body\n");
@@ -219,6 +226,7 @@ COMMA_ParameterDeclaration: 	COMMA ParameterDeclaration COMMA_ParameterDeclarati
 
 Declaration: TypeSpec Declarator COMMA_Declarator SEMI												{
 																										if(DEBUG)printf("Declaration\n");
+
 																										$$ = $2;
 																										insert_child($$, $1);
 
@@ -231,8 +239,10 @@ Declaration: TypeSpec Declarator COMMA_Declarator SEMI												{
 
 Declaration_Un: Declaration Declaration_Un															{
 																										if(DEBUG)printf("Declaration_Un\n");
+																										$$ = $1;
+																										insert_brother($$, $2);
 																									}
-		| Empty
+		| Empty																						
 		;
 
 TypeSpec: 	CHAR 																					{
@@ -266,6 +276,7 @@ Declarator: 	Asterisk ID LSQ INTLIT RSQ  														{
 																										$$ = insert_node(NODE_Declaration);
 																										nodeAux = insert_term_node(NODE_Id, $2);
 																										insert_child($$, nodeAux);
+																										insert_brother(nodeAux, $1);
 																									}
 				;
 
@@ -395,12 +406,16 @@ Expression_Un: 	Expr																				{
 
 Asterisk: 	AST Asterisk																			{
 																										if(DEBUG)printf("Asterisk\n");
+																										$$ = insert_node(NODE_Pointer);
+																										insert_brother($$, $2);
+
 																									}
 			| Empty
 			;
 
 Empty: 																								{
 																										if(DEBUG)printf("Empty\n");
+																										$$ = NULL;
 																									}
 	;
 
