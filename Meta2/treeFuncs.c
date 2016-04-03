@@ -51,7 +51,6 @@ void insert_child(Node * father, Node * child, int end)
 			changeOrder(father, child);
 		}
 
-
 	}
 
 }
