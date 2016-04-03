@@ -1,5 +1,5 @@
 %{
-	#define DEBUG 2<1
+	#define DEBUG 0
 	#include <stdio.h>
 	#include <stdlib.h>
 	#include <string.h>
@@ -74,6 +74,7 @@
 %type <node> TypeSpec
 %type <node> FunctionDeclarator
 %type <node> FunctionBody
+%type <node> Declarator
 
 %type <node> Empty
 
@@ -103,32 +104,38 @@
 //Rep -> 0 or more
 
 Start:  FunctionDefinition  Restart                                                					{
-																										if(DEBUG)printf("Start1\n"); 
-																										$$ = insert_node(NODE_Program); 
-																										insert_child($$, $1); 
-																										tree=$$; 
+																										if(DEBUG)printf("Start1\n");
+																										$$ = insert_node(NODE_Program);
+																										insert_child($$, $1);
+																										tree=$$;
 																									}
         | FunctionDeclaration Restart                                              					{
-        																								if(DEBUG)printf("Start2\n"); 
-        																								$$ = insert_node(NODE_Program); 
-        																								insert_child($$, $1); 
-        																								tree=$$; 
+        																								if(DEBUG)printf("Start2\n");
+        																								$$ = insert_node(NODE_Program);
+        																								insert_child($$, $1);
+        																								tree=$$;
         																							}
         | Declaration Restart                                                     					{
-        																								if(DEBUG)printf("Start3\n"); 
-        																								$$ = insert_node(NODE_Program); 
-        																								insert_child($$, $1); 
-        																								tree=$$; 
+        																								if(DEBUG)printf("Start3\n");
+        																								$$ = insert_node(NODE_Program);
+        																								insert_child($$, $1);
+        																								tree=$$;
         																							}
         ;
 
 Restart: FunctionDefinition Restart                                             					{
-																										if(DEBUG)printf("Restart1\n"); 
-																										insert_child($$,$1); 
+																										if(DEBUG)printf("Restart1\n");
+																										insert_child($$,$1);
 																									}
-            | FunctionDeclaration Restart                                          					
-            | Declaration Restart                                             						
-            | Empty                                                                 				
+            | FunctionDeclaration Restart															{
+																										if(DEBUG)printf("Restart2\n");
+																										insert_child($$,$1);
+																									}
+            | Declaration Restart																	{
+																										if(DEBUG)printf("Restart1\n");
+																										insert_child($$,$1);
+																									}
+            | Empty
             ;
 
 FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{
@@ -139,6 +146,7 @@ FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{
 
 FunctionDeclaration: 	TypeSpec FunctionDeclarator SEMI											{
 																										if(DEBUG)printf("FunctionDeclaration\n");
+																										$$ = insert_node(NODE_FuncDeclaration);
 																									}
 						;
 
@@ -182,6 +190,7 @@ COMMA_ParameterDeclaration: 	COMMA ParameterDeclaration COMMA_ParameterDeclarati
 
 Declaration: TypeSpec Declarator COMMA_Declarator SEMI												{
 																										if(DEBUG)printf("Declaration\n");
+																										$$ = insert_node(NODE_Declaration);
 																									}
 			| error SEMI 																			{
 																										if(DEBUG)printf("Error on Declaration\n");
@@ -197,6 +206,7 @@ Declaration_Un: Declaration Declaration_Un															{
 
 TypeSpec: 	CHAR 																					{
 																										if(DEBUG)printf("TypeSpec[CHAR]\n");
+																										$$ = insert_term_node(NODE_Char, "oi");
 																									}
 			| INT 																					{
 																										if(DEBUG)printf("TypeSpec[INT]\n");
@@ -209,6 +219,7 @@ TypeSpec: 	CHAR 																					{
 
 Declarator: 	Asterisk ID LSQ INTLIT RSQ  														{
 																										if(DEBUG)printf("Declarator[1]\n");
+																										$$ = insert_term_node(NODE_ArrayDeclaration, "buffer[20]");
 																									}
 				| Asterisk ID																		{
 																										if(DEBUG)printf("Declarator[2]\n");
