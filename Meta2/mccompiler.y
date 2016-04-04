@@ -214,9 +214,15 @@ FunctionDeclarator: Asterisk ID LPAR ParameterList RPAR												{
 FunctionBody: 	LBRACE Declaration_Un State_List_UN RBRACE		 									{
 																										if(DEBUG)printf("FunctionBody\n");
 																										$$ = insert_node(NODE_FuncBody);
-																										insert_child($$, $2, 0);
 
-																										insert_brother($2, $3);
+																										if($2 == NULL && $3 == NULL){
+
+																										}
+																										else{
+																											insert_child($$, $2, 0);
+
+																											insert_brother($2, $3);
+																										}
 
 																									}
 				| LBRACE error RBRACE 																{
