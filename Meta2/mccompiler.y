@@ -1,5 +1,5 @@
 %{
-	#define DEBUG 0
+	#define DEBUG 1
 	#include <stdio.h>
 	#include <stdlib.h>
 	#include <string.h>
@@ -89,7 +89,9 @@
 %type <node> COMMA_Declarator
 %type <node> Expr
 %type <node> Expression_Un
-
+%type <node> ExprCOMMA_Expr
+%type <node> COMMA_Expr
+%type <node> St
 
 
 %nonassoc "then"
@@ -176,8 +178,8 @@ FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{
 																										insert_child($$, $3, 0);
 																										insert_child($$, $2, 0);
 																										insert_child($$, $1, 0);
-																										
-																										
+
+
 
 
 																									}
@@ -209,7 +211,7 @@ FunctionBody: 	LBRACE Declaration_Un State_List_UN RBRACE		 									{
 																										$$ = insert_node(NODE_FuncBody);
 																										insert_child($$, $3, 0);
 																										insert_child($$, $2, 0);
-																										
+
 
 																									}
 				| LBRACE error RBRACE 																{
@@ -258,7 +260,7 @@ Declaration: TypeSpec Declarator COMMA_Declarator SEMI												{
 																										if($3 != NULL){
 
 																											insert_brother($$, $3);
-																											//printf("inside: %s\n", NODE_NAME[$1->node_type]);
+																											printf("inside: %s\n", NODE_NAME[$1->node_type]);
 																											if(strcmp(NODE_NAME[$1->node_type], "Int") == 0){
 																												nodeAux = insert_node(NODE_Int);
 																											}
@@ -278,7 +280,9 @@ Declaration_Un: Declaration Declaration_Un															{
 																										$$ = $1;
 																										insert_brother($$, $2);
 																									}
-		| Empty
+		| Empty																						{
+																										$$ = NULL;
+																									}
 		;
 
 TypeSpec: 	CHAR 																					{
@@ -341,9 +345,11 @@ Statement: 	error SEMI 																				{
 
 Statement_List: 	 Expression_Un SEMI																{
 																										if(DEBUG)printf("Expression_Un SEMI\n");
+																										$$ = $1;
 																									}
 					| LBRACE St RBRACE																{
 																										if(DEBUG)printf("LBRACE St RBRACE\n");
+																										$$ = $2;
 																									}
 					| LBRACE RBRACE																	{
 																										if(DEBUG)printf("LBRACE RBRACE\n");
@@ -354,25 +360,36 @@ Statement_List: 	 Expression_Un SEMI																{
 																									}
 					| IF LPAR Expr RPAR Statement   %prec "then"									{
 																										if(DEBUG)printf("IF LPAR Expr RPAR Statement");
+																										$$ = insert_node(NODE_If);
+																										insert_child($$, $3, 0);
+																										insert_brother($3, $5);
 																									}
 					| IF LPAR Expr RPAR Statement ELSE Statement 									{
 																										if(DEBUG)printf("IF LPAR Expr RPAR Statement ELSE Statement \n");
+																										$$ = insert_node(NODE_If);
+
 																									}
 					| FOR LPAR Expression_Un SEMI Expression_Un SEMI Expression_Un RPAR Statement	{
 																										if(DEBUG)printf("For Cycle\n");
+																										$$ = insert_node(NODE_For);
 																									}
 					| RETURN Expression_Un SEMI 													{
 																										if(DEBUG)printf("RETURN Expression_Un SEMI \n");
+																										$$ = insert_node(NODE_Return);
+																										insert_child($$, $2, 0);
 																									}
 					;
 
 St: Statement Statement_Un																			{
 																										if(DEBUG)printf("St\n");
+																										$$ = $1;
 																									}
 	;
 
 State_List_UN: Empty | Statement_List State_List_UN													{
 																										if(DEBUG)printf("State_List_UN\n");
+																										$$ = $1;
+																										insert_brother($$,$2);
 																									}
 				;
 
@@ -387,7 +404,8 @@ Expr: 	Expressions_List 																			{
 																									}
 		| Expr COMMA Expressions_List																{
 																										if(DEBUG)printf("Expr\n");
-																										insert_child($$, $1, 0);
+																										$$ = insert_node(NODE_Comma);
+																										insert_brother($$, $1);
 																										insert_brother($$, $3);
 																									}
 		;
@@ -396,29 +414,29 @@ Expr: 	Expressions_List 																			{
 Expressions_List:  	Expressions_List ASSIGN Expressions_List										{
 																										if(DEBUG)printf("Expressions_List ASSIGN Expressions_List\n");
 																										$$ = insert_node(NODE_Store);
-																										/*insert_brother($$, $1);
-																										insert_brother($$, $3);*/
+																										insert_child($$, $1, 0);
+																										insert_brother($1, $3);
 																									}
 					| Expressions_List AND Expressions_List											{
 																										if(DEBUG)printf("Expressions_List AND Expressions_List\n");
 																										$$ = insert_node(NODE_And);
 																										/*insert_brother($$, $1);
 																										insert_brother($$, $3);*/
-																										
+
 																									}
 					| Expressions_List OR Expressions_List											{
 																										if(DEBUG)printf("Expressions_List OR Expressions_List\n");
 																										$$ = insert_node(NODE_Or);
 																										/*insert_brother($$, $1);
 																										insert_brother($$, $3);*/
-																									
+
 																									}
 					| Expressions_List EQ Expressions_List											{
 																										if(DEBUG)printf("Expressions_List EQ Expressions_List\n");
 																										$$ = insert_node(NODE_Eq);
-																										/*insert_brother($$, $1);
-																										insert_brother($$, $3);*/
-																										
+																										insert_child($$, $1, 0);
+																										insert_brother($1, $3);
+
 																									}
 					| Expressions_List NE Expressions_List											{
 																										if(DEBUG)printf("Expressions_List NE Expressions_List\n");
@@ -507,9 +525,13 @@ Expressions_List:  	Expressions_List ASSIGN Expressions_List										{
 																									}
 					| ID LPAR ExprCOMMA_Expr RPAR													{
 																										if(DEBUG)printf("ID LPAR ExprCOMMA_Expr RPAR\n");
+																										$$ = $3;
+																										//$$ = insert_node();
 																									}
 					| LPAR Expr RPAR																{
 																										if(DEBUG)printf("LPAR Expr RPAR\n");
+																										//$$ = insert_node(NODE_Call);
+																										//insert_child($$, $1);
 																									}
 					| ID																			{
 																										if(DEBUG)printf("ID\n");
@@ -537,6 +559,7 @@ Expressions_List:  	Expressions_List ASSIGN Expressions_List										{
 																									}
 					| Expressions_List LSQ Expr RSQ													{
 																										if(DEBUG)printf("Expressions_List LSQ Expr RSQ	\n");
+																										$$ = $1;
 																									}
 					;
 
@@ -544,12 +567,21 @@ Expressions_List:  	Expressions_List ASSIGN Expressions_List										{
 
 ExprCOMMA_Expr: Expressions_List COMMA_Expr															{
 																										if(DEBUG)printf("Expressions_List COMMA_Expr\n");
+																										$$ = $1;
+																										insert_brother($$, $2);
 																									}
 				| Empty
 				;
 
-COMMA_Expr: Empty | COMMA_Expr COMMA Expressions_List												{
+COMMA_Expr: Empty 																					{
+																										$$ = NULL;
+																									}
+			| COMMA_Expr COMMA Expressions_List														{
 																										if(DEBUG)printf("COMMA_Expr\n");
+																										$$ = $3;
+																										insert_brother($$, $1);
+
+
 																									}
 			;
 
@@ -558,7 +590,9 @@ Expression_Un: 	Expr																				{
 																										if(DEBUG)printf("Expression_Un\n");
 																										$$ = $1;
 																									}
-		| Empty
+		| Empty																						{
+																										$$ = NULL;
+																									}
 		;
 
 

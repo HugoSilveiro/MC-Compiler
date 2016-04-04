@@ -1,4 +1,5 @@
 char buffer[20];
+int c;
 int main(int argc, char **argv) {
 	int a,b;
 	a = atoi(argv[1]);
