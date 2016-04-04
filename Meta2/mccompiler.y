@@ -372,6 +372,7 @@ Statement_List: 	 Expression_Un SEMI																{
 																									}
 					| LBRACE RBRACE																	{
 																										if(DEBUG)printf("LBRACE RBRACE\n");
+																										$$ = NULL;
 																									}
 					| LBRACE error RBRACE															{
 																										if(DEBUG)printf("LBRACE error RBRACE\n");
@@ -385,14 +386,19 @@ Statement_List: 	 Expression_Un SEMI																{
 																									}
 					| IF LPAR Expr RPAR Statement ELSE Statement 									{
 																										if(DEBUG)printf("IF LPAR Expr RPAR Statement ELSE Statement \n");
+																										
 																										$$ = insert_node(NODE_If);
 																										insert_child($$, $3, 0);
-																										insert_brother($3, $5);
-																										if($7 != NULL){
-																											nodeAux = insert_node(NODE_StatList);
-																											insert_brother($3, nodeAux);
-																											insert_child(nodeAux, $7, 0);
+																										if($7 != NULL)
+																										{
+																											insert_brother($3, $7);
 																										}
+																										if($5 != NULL)
+																										{
+																											insert_brother($3, $5);
+																										}
+																										
+
 
 
 																									}
