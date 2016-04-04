@@ -169,7 +169,7 @@ Restart: FunctionDefinition Restart                                             
 																										if(DEBUG)printf("Restart1\n");
 
 																										$$ = $1;
-																										if($2 != NULL)
+																										if($1 != NULL)
 																										{
 																											insert_brother($$, $2);
 																										}
@@ -179,7 +179,7 @@ Restart: FunctionDefinition Restart                                             
             | FunctionDeclaration Restart															{
 																										if(DEBUG)printf("Restart2\n");
 																										$$ = $1;
-																										if($2 != NULL)
+																										if($1 != NULL)
 																										{
 																											insert_brother($$, $2);
 																										}
@@ -188,7 +188,7 @@ Restart: FunctionDefinition Restart                                             
             | Declaration Restart																	{
 																										if(DEBUG)printf("Restart1\n");
 																										$$ = $1;
-																										if($2 != NULL)
+																										if($1 != NULL)
 																										{
 																											insert_brother($$, $2);
 																										}
@@ -218,11 +218,15 @@ FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{
 FunctionDeclaration: 	TypeSpec FunctionDeclarator SEMI											{
 																										if(DEBUG)printf("FunctionDeclaration\n");
 																										$$ = insert_node(NODE_FuncDeclaration);
+
 																										if($1 != NULL){
-																											insert_child($$, $2);
 																											insert_child($$, $1);
+																											insert_brother($$->child, $2);
 
 																										}
+
+
+
 
 																									}
 						;
@@ -458,17 +462,23 @@ Statement_List: 	 Expression_Un SEMI																{
 																									}
 					| IF LPAR Expr RPAR Statement   %prec "then"									{
 																										if(DEBUG)printf("IF LPAR Expr RPAR Statement");
-																										$$ = insert_node(NODE_If);
-																										insert_child($$, $3);
-																										if($5 != NULL){
-																												insert_brother($3, $5);
-																										}
-																										else{
+																										if($3 != NULL)
+																										{
+																											$$ = insert_node(NODE_If);
+																											insert_child($$, $3);
+																											if($5 != NULL){
+																													insert_brother($3, $5);
+																											}
+																											else{
+																												nodeAux = insert_node(NODE_NULL);
+																												insert_brother($3, nodeAux);
+																											}
 																											nodeAux = insert_node(NODE_NULL);
 																											insert_brother($3, nodeAux);
+																										}else
+																										{
+																											$$ = NULL;
 																										}
-																										nodeAux = insert_node(NODE_NULL);
-																										insert_brother($3, nodeAux);
 
 																									}
 					| IF LPAR Expr RPAR Statement ELSE Statement 									{
