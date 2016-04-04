@@ -89,6 +89,10 @@
 %type <node> COMMA_Declarator
 %type <node> Expr
 %type <node> Expression_Un
+%type <node> COMMA_ParameterDeclaration	
+%type <node> Statement_Un
+%type <node> St
+
 
 
 
@@ -173,10 +177,9 @@ Restart: FunctionDefinition Restart                                             
 FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{
 																										if(DEBUG)printf("FunctionDefinition\n");
 																										$$ = insert_node(NODE_FuncDefinition);
-																										insert_child($$, $3, 0);
-																										insert_child($$, $2, 0);
 																										insert_child($$, $1, 0);
-																										
+																										insert_brother($1, $2);
+																										insert_brother($1, $3);
 																										
 
 
@@ -186,8 +189,8 @@ FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{
 FunctionDeclaration: 	TypeSpec FunctionDeclarator SEMI											{
 																										if(DEBUG)printf("FunctionDeclaration\n");
 																										$$ = insert_node(NODE_FuncDeclaration);
-																										insert_child($$, $2, 0);
 																										insert_child($$, $1, 0);
+																										insert_brother($1, $2);
 
 																									}
 						;
@@ -195,11 +198,9 @@ FunctionDeclaration: 	TypeSpec FunctionDeclarator SEMI											{
 
 FunctionDeclarator: Asterisk ID LPAR ParameterList RPAR												{
 																										if(DEBUG)printf("FunctionDeclarator\n");
-
 																										$$ = insert_term_node(NODE_Id, $2);
 																										insert_brother($$, $1);
 																										insert_brother($$, $4);
-
 																									}
 					;
 
@@ -207,8 +208,8 @@ FunctionDeclarator: Asterisk ID LPAR ParameterList RPAR												{
 FunctionBody: 	LBRACE Declaration_Un State_List_UN RBRACE		 									{
 																										if(DEBUG)printf("FunctionBody\n");
 																										$$ = insert_node(NODE_FuncBody);
-																										insert_child($$, $3, 0);
 																										insert_child($$, $2, 0);
+																										insert_brother($2, $3);
 																										
 
 																									}
@@ -220,7 +221,11 @@ FunctionBody: 	LBRACE Declaration_Un State_List_UN RBRACE		 									{
 
 ParameterList: 	ParameterDeclaration COMMA_ParameterDeclaration										{
 																										if(DEBUG)printf("ParameterList\n");
+																										$$ = insert_node(NODE_ParamList);
+																										insert_child($$, $1, 0);
+																										insert_brother($1, $2);
 
+																										
 																									}
 				;
 
@@ -229,12 +234,15 @@ ParameterDeclaration: 	TypeSpec Asterisk															{
 																										$$ = insert_node(NODE_ParamDeclaration);
 																										insert_child($$, $1, 0);
 																										insert_brother($1, $2);
+																										
 																									}
 						| TypeSpec Asterisk ID 														{
 																										if(DEBUG)printf("ParameterDeclaration[2]\n");
 																										$$ = insert_node(NODE_ParamDeclaration);
 																										insert_child($$, $1, 0);
 																										insert_brother($1, $2);
+																										nodeAux = insert_term_node(NODE_Id, $3);
+																										insert_brother($1, nodeAux);	
 
 																									}
 						;
@@ -242,6 +250,8 @@ ParameterDeclaration: 	TypeSpec Asterisk															{
 
 COMMA_ParameterDeclaration: 	COMMA ParameterDeclaration COMMA_ParameterDeclaration				{
 																										if(DEBUG)printf("COMMA_ParameterDeclaration\n");
+																										$$ = $2;
+																										insert_brother($$, $3);
 																									}
 								| Empty
 								;
@@ -250,7 +260,7 @@ COMMA_ParameterDeclaration: 	COMMA ParameterDeclaration COMMA_ParameterDeclarati
 
 Declaration: TypeSpec Declarator COMMA_Declarator SEMI												{
 																										if(DEBUG)printf("Declaration\n");
-
+																											
 																										$$ = $2;
 
 
@@ -368,6 +378,8 @@ Statement_List: 	 Expression_Un SEMI																{
 
 St: Statement Statement_Un																			{
 																										if(DEBUG)printf("St\n");
+																										$$ = $1;
+																										insert_brother($$, $2);
 																									}
 	;
 
@@ -396,8 +408,9 @@ Expr: 	Expressions_List 																			{
 Expressions_List:  	Expressions_List ASSIGN Expressions_List										{
 																										if(DEBUG)printf("Expressions_List ASSIGN Expressions_List\n");
 																										$$ = insert_node(NODE_Store);
-																										/*insert_brother($$, $1);
+																										/*insert_child($$, $1, 0);
 																										insert_brother($$, $3);*/
+																										
 																									}
 					| Expressions_List AND Expressions_List											{
 																										if(DEBUG)printf("Expressions_List AND Expressions_List\n");
