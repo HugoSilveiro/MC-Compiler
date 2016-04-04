@@ -131,7 +131,7 @@ Start:  FunctionDefinition  Restart                                             
 																										if(DEBUG)printf("Start1\n");
 																										$$ = insert_node(NODE_Program);
 																										tree=$$;
-																										insert_child($$, $1, 0);
+																										insert_child($$, $1);
 
 																										insert_brother($1, $2);
 
@@ -141,7 +141,7 @@ Start:  FunctionDefinition  Restart                                             
         																								if(DEBUG)printf("Start2\n");
         																								$$ = insert_node(NODE_Program);
 																										tree=$$;
-        																								insert_child($$, $1, 0);
+        																								insert_child($$, $1);
 
 																										insert_brother($1, $2);
 
@@ -151,7 +151,7 @@ Start:  FunctionDefinition  Restart                                             
         																								if(DEBUG)printf("Start3\n");
         																								$$ = insert_node(NODE_Program);
 																										tree=$$;
-																										insert_child($$, $1, 0);
+																										insert_child($$, $1);
 
 																										insert_brother($1, $2);
 
@@ -185,7 +185,7 @@ Restart: FunctionDefinition Restart                                             
 FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{
 																										if(DEBUG)printf("FunctionDefinition\n");
 																										$$ = insert_node(NODE_FuncDefinition);
-																										insert_child($$, $1, 0);
+																										insert_child($$, $1);
 																										insert_brother($1, $2);
 																										insert_brother($1, $3);
 
@@ -198,8 +198,8 @@ FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{
 FunctionDeclaration: 	TypeSpec FunctionDeclarator SEMI											{
 																										if(DEBUG)printf("FunctionDeclaration\n");
 																										$$ = insert_node(NODE_FuncDeclaration);
-																										insert_child($$, $2, 0);
-																										insert_child($$, $1, 0);
+																										insert_child($$, $2);
+																										insert_child($$, $1);
 
 																									}
 						;
@@ -231,12 +231,12 @@ FunctionBody: 	LBRACE Declaration_Un State_List_UN RBRACE		 									{
 																										}
 																										else{
 																											if($2 != NULL){
-																												insert_child($$, $2, 0);
+																												insert_child($$, $2);
 
 																												insert_brother($2, $3);
 																											}
 																											else{
-																												insert_child($$, $3, 0);
+																												insert_child($$, $3);
 																											}
 
 																										}
@@ -252,7 +252,7 @@ FunctionBody: 	LBRACE Declaration_Un State_List_UN RBRACE		 									{
 ParameterList: 	ParameterDeclaration COMMA_ParameterDeclaration										{
 																										if(DEBUG)printf("ParameterList\n");
 																										$$ = insert_node(NODE_ParamList);
-																										insert_child($$, $1, 0);
+																										insert_child($$, $1);
 																										insert_brother($1, $2);
 
 
@@ -262,14 +262,14 @@ ParameterList: 	ParameterDeclaration COMMA_ParameterDeclaration										{
 ParameterDeclaration: 	TypeSpec Asterisk															{
 																										if(DEBUG)printf("ParameterDeclaration[1]\n");
 																										$$ = insert_node(NODE_ParamDeclaration);
-																										insert_child($$, $1, 0);
+																										insert_child($$, $1);
 																										insert_brother($1, $2);
 
 																									}
 						| TypeSpec Asterisk ID 														{
 																										if(DEBUG)printf("ParameterDeclaration[2]\n");
 																										$$ = insert_node(NODE_ParamDeclaration);
-																										insert_child($$, $1, 0);
+																										insert_child($$, $1);
 																										insert_brother($1, $2);
 																										nodeAux = insert_term_node(NODE_Id, $3);
 																										insert_brother($1, nodeAux);
@@ -304,7 +304,7 @@ Declaration: TypeSpec Declarator COMMA_Declarator SEMI												{
 																											nodeAux.brother = aux->child;
 																											nodeAux.father
 																										}*/
-																										insert_child($$, $1, 0);
+																										insert_child($$, $1);
 																										if($3 != NULL){
 
 																											insert_brother($$, $3);
@@ -312,7 +312,7 @@ Declaration: TypeSpec Declarator COMMA_Declarator SEMI												{
 																											if(strcmp(NODE_NAME[$1->node_type], "Int") == 0){
 																												nodeAux = insert_node(NODE_Int);
 																											}
-																											insert_child($3, nodeAux, 0);
+																											insert_child($3, nodeAux);
 
 																										}
 
@@ -362,7 +362,7 @@ Declarator: 	Asterisk ID LSQ INTLIT RSQ  														{
 																												insert_brother($$->child, nodeAux);
 																										}
 																										else{
-																											insert_child($$, nodeAux2, 0);
+																											insert_child($$, nodeAux2);
 																											insert_brother(nodeAux2, nodeAux);
 																										}
 
@@ -379,7 +379,7 @@ Declarator: 	Asterisk ID LSQ INTLIT RSQ  														{
 																											insert_brother($$->child, nodeAux);
 																										}
 																										else{
-																											insert_child($$, nodeAux, 0);
+																											insert_child($$, nodeAux);
 																										}
 
 
@@ -435,7 +435,7 @@ Statement_List: 	 Expression_Un SEMI																{
 					| IF LPAR Expr RPAR Statement   %prec "then"									{
 																										if(DEBUG)printf("IF LPAR Expr RPAR Statement");
 																										$$ = insert_node(NODE_If);
-																										insert_child($$, $3, 0);
+																										insert_child($$, $3);
 																										if($5 != NULL){
 																												insert_brother($3, $5);
 																										}
@@ -450,7 +450,7 @@ Statement_List: 	 Expression_Un SEMI																{
 					| IF LPAR Expr RPAR Statement ELSE Statement 									{
 																										if(DEBUG)printf("IF LPAR Expr RPAR Statement ELSE Statement \n");
 																										$$ = insert_node(NODE_If);
-																										insert_child($$, $3, 0);
+																										insert_child($$, $3);
 																										if($5 != NULL){
 																												insert_brother($3, $5);
 																										}
@@ -473,32 +473,32 @@ Statement_List: 	 Expression_Un SEMI																{
 																										$$ = insert_node(NODE_For);
 
 																										if($3 != NULL){
-																												insert_child($$, $3, 0);
+																												insert_child($$, $3);
 																										}
 																										else{
 																											nodeAux = insert_node(NODE_NULL);
-																											insert_child($$, nodeAux, 0);
+																											insert_child($$, nodeAux);
 																										}
 																										if($5 != NULL){
-																												insert_child($$->child, $5, 0);
+																												insert_child($$->child, $5);
 																										}
 																										else{
 																											nodeAux = insert_node(NODE_NULL);
-																											insert_child($$->child, nodeAux, 0);
+																											insert_child($$->child, nodeAux);
 																										}
 																										if($7 != NULL){
-																												insert_child($$->child, $7, 0);
+																												insert_child($$->child, $7);
 																										}
 																										else{
 																											nodeAux = insert_node(NODE_NULL);
-																											insert_child($$->child, nodeAux, 0);
+																											insert_child($$->child, nodeAux);
 																										}
 																										if($9 != NULL){
 																												insert_brother($$->child, $9);
 																										}
 																										else{
 																											nodeAux = insert_node(NODE_NULL);
-																											insert_child($$->child, nodeAux, 0);
+																											insert_child($$->child, nodeAux);
 																										}
 
 
@@ -515,11 +515,11 @@ Statement_List: 	 Expression_Un SEMI																{
 
 																										if($2 != NULL)
 																										{
-																											insert_child($$, $2, 0);
+																											insert_child($$, $2);
 																										}
 																										else{
 																											nodeAux = insert_node(NODE_NULL);
-																											insert_child($$, nodeAux, 0);
+																											insert_child($$, nodeAux);
 																										}
 
 																									}
@@ -529,7 +529,7 @@ St:  Statement Statement Statement_Un 																			{
 																										if(DEBUG)printf("St\n");
 																										if($1 != NULL && $2 != NULL){
 																											$$ = insert_node(NODE_StatList);
-																											insert_child($$, $1, 0);
+																											insert_child($$, $1);
 																											insert_brother($1, $2);
 																											insert_brother($1, $3);
 																										}
@@ -591,7 +591,7 @@ Expr: 	Expressions_List 																			{
 																										if(DEBUG)printf("Expr\n");
 																										$$ = insert_node(NODE_Comma);
 
-																										insert_child($$, $1, 0);
+																										insert_child($$, $1);
 																										insert_brother($1, $3);
 																									}
 		;
@@ -600,121 +600,121 @@ Expr: 	Expressions_List 																			{
 Expressions_List:  	Expressions_List ASSIGN Expressions_List										{
 																										if(DEBUG)printf("Expressions_List ASSIGN Expressions_List\n");
 																										$$ = insert_node(NODE_Store);
-																										insert_child($$, $1, 0);
+																										insert_child($$, $1);
 																										insert_brother($1, $3);
 
 																									}
 					| Expressions_List AND Expressions_List											{
 																										if(DEBUG)printf("Expressions_List AND Expressions_List\n");
 																										$$ = insert_node(NODE_And);
-																										insert_child($$, $1, 0);
+																										insert_child($$, $1);
 																										insert_brother($1, $3);
 
 																									}
 					| Expressions_List OR Expressions_List											{
 																										if(DEBUG)printf("Expressions_List OR Expressions_List\n");
 																										$$ = insert_node(NODE_Or);
-																										insert_child($$, $1, 0);
+																										insert_child($$, $1);
 																										insert_brother($1, $3);
 
 																									}
 					| Expressions_List EQ Expressions_List											{
 																										if(DEBUG)printf("Expressions_List EQ Expressions_List\n");
 																										$$ = insert_node(NODE_Eq);
-																										insert_child($$, $1, 0);
+																										insert_child($$, $1);
 																										insert_brother($1, $3);
 
 																									}
 					| Expressions_List NE Expressions_List											{
 																										if(DEBUG)printf("Expressions_List NE Expressions_List\n");
 																										$$ = insert_node(NODE_Ne);
-																										insert_child($$, $1, 0);
+																										insert_child($$, $1);
 																										insert_brother($1, $3);
 																									}
 					| Expressions_List LT Expressions_List											{
 																										if(DEBUG)printf("Expressions_List LT Expressions_List\n");
 																										$$ = insert_node(NODE_Lt);
-																										insert_child($$, $1, 0);
+																										insert_child($$, $1);
 																										insert_brother($1, $3);
 																									}
 					| Expressions_List GT Expressions_List											{
 																										if(DEBUG)printf("Expressions_List GT Expressions_List\n");
 																										$$ = insert_node(NODE_Gt);
-																										insert_child($$, $1, 0);
+																										insert_child($$, $1);
 																										insert_brother($1, $3);
 																									}
 					| Expressions_List LE Expressions_List											{
 																										if(DEBUG)printf("Expressions_List LE Expressions_List\n");
 																										$$ = insert_node(NODE_Le);
-																										insert_child($$, $1, 0);
+																										insert_child($$, $1);
 																										insert_brother($1, $3);
 																									}
 					| Expressions_List GE Expressions_List											{
 																										if(DEBUG)printf("Expressions_List GE Expressions_List\n");
 																										$$ = insert_node(NODE_Ge);
-																										insert_child($$, $1, 0);
+																										insert_child($$, $1);
 																										insert_brother($1, $3);
 																									}
 					| Expressions_List PLUS Expressions_List										{
 																										if(DEBUG)printf("Expressions_List PLUS Expressions_List\n");
 																										$$ = insert_node(NODE_Add);
-																										insert_child($$, $1, 0);
+																										insert_child($$, $1);
 																										insert_brother($1, $3);
 																									}
 					| Expressions_List MINUS Expressions_List										{
 																										if(DEBUG)printf("Expressions_List MINUS Expressions_List\n");
 																										$$ = insert_node(NODE_Sub);
-																										insert_child($$, $1, 0);
+																										insert_child($$, $1);
 																										insert_brother($1, $3);
 																									}
 					| Expressions_List AST Expressions_List											{
 																										if(DEBUG)printf("Expressions_List AST Expressions_List\n");
 																										$$ = insert_node(NODE_Mul);
-																										insert_child($$, $1, 0);
+																										insert_child($$, $1);
 																										insert_brother($1, $3);
 																									}
 					| Expressions_List DIV Expressions_List											{
 																										if(DEBUG)printf("Expressions_List DIV Expressions_List\n");
 																										$$ = insert_node(NODE_Div);
-																										insert_child($$, $1, 0);
+																										insert_child($$, $1);
 																										insert_brother($1, $3);
 																									}
 					| Expressions_List MOD Expressions_List											{
 																										if(DEBUG)printf("Expressions_List MOD Expressions_List\n");
 																										$$ = insert_node(NODE_Mod);
-																										insert_child($$, $1, 0);
+																										insert_child($$, $1);
 																										insert_brother($1, $3);
 																									}
 					| AMP Expressions_List															{
 																										if(DEBUG)printf("AMP Expressions_List\n");
 																										$$ = insert_node(NODE_Addr);
-																										insert_child($$, $2, 0);
+																										insert_child($$, $2);
 																									}
 					| AST Expressions_List															{
 																										if(DEBUG)printf("AST Expressions_List\n");
 																										$$ = insert_node(NODE_Deref);
-																										insert_child($$, $2, 0);
+																										insert_child($$, $2);
 																									}
 					| PLUS Expressions_List															{
 																										if(DEBUG)printf("PLUS Expressions_List\n");
 																										$$ = insert_node(NODE_Plus);
-																										insert_child($$, $2, 0);
+																										insert_child($$, $2);
 																									}
 					| MINUS Expressions_List														{
 																										if(DEBUG)printf("MINUS Expressions_List\n");
 																										$$ = insert_node(NODE_Minus);
-																										insert_child($$, $2, 0);
+																										insert_child($$, $2);
 																									}
 					| NOT Expressions_List															{
 																										if(DEBUG)printf("NOT Expressions_List\n");
 																										$$ = insert_node(NODE_Not);
-																										insert_child($$, $2, 0);
+																										insert_child($$, $2);
 																									}
 					| ID LPAR ExprCOMMA_Expr RPAR													{
 																										if(DEBUG)printf("ID LPAR ExprCOMMA_Expr RPAR\n");
 																										$$ = insert_node(NODE_Call);
 																										nodeAux = insert_term_node(NODE_Id, $1);
-																										insert_child($$, nodeAux, 0);
+																										insert_child($$, nodeAux);
 																										insert_brother(nodeAux, $3);
 																										//$$ = insert_node();
 																									}
@@ -755,8 +755,8 @@ Expressions_List:  	Expressions_List ASSIGN Expressions_List										{
 																										$$ = insert_node(NODE_Deref);
 																										nodeAux = insert_node(NODE_Add);
 
-																										insert_child($$, nodeAux, 0);
-																										insert_child(nodeAux, $1, 0);
+																										insert_child($$, nodeAux);
+																										insert_child(nodeAux, $1);
 																										insert_brother($1, $3);
 																									}
 
