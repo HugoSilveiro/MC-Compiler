@@ -103,11 +103,6 @@
 
 
 
-%nonassoc "then"
-%nonassoc ELSE
-
-
-
 %left COMMA
 %right ASSIGN
 %left OR
@@ -116,10 +111,12 @@
 %left GE LE GT LT
 %left PLUS MINUS
 %left AST DIV MOD
+%nonassoc "add" "minus" "pointer"
 %right NOT AMP
 %left LPAR RPAR LSQ RSQ LBRACE RBRACE
 
-
+%nonassoc "then"
+%nonassoc ELSE
 
 
 %%
@@ -131,9 +128,12 @@ Start:  FunctionDefinition  Restart                                             
 																										if(DEBUG)printf("Start1\n");
 																										$$ = insert_node(NODE_Program);
 																										tree=$$;
-																										insert_child($$, $1);
-
-																										insert_brother($1, $2);
+																										if($1 != NULL)
+																										{
+																											insert_child($$, $1);
+																											insert_brother($1, $2);
+																										}
+																										
 
 
 																									}
@@ -141,9 +141,12 @@ Start:  FunctionDefinition  Restart                                             
         																								if(DEBUG)printf("Start2\n");
         																								$$ = insert_node(NODE_Program);
 																										tree=$$;
-        																								insert_child($$, $1);
-
-																										insert_brother($1, $2);
+        																								if($1 != NULL)
+																										{
+																											insert_child($$, $1);
+																											insert_brother($1, $2);
+																										}
+																										
 
 
         																							}
@@ -151,9 +154,12 @@ Start:  FunctionDefinition  Restart                                             
         																								if(DEBUG)printf("Start3\n");
         																								$$ = insert_node(NODE_Program);
 																										tree=$$;
-																										insert_child($$, $1);
-
-																										insert_brother($1, $2);
+																										if($1 != NULL)
+																										{
+																											insert_child($$, $1);
+																											insert_brother($1, $2);
+																										}
+																										
 
 
         																							}
@@ -163,18 +169,30 @@ Restart: FunctionDefinition Restart                                             
 																										if(DEBUG)printf("Restart1\n");
 
 																										$$ = $1;
-																										insert_brother($$, $2);
+																										if($1 != NULL)
+																										{
+																											insert_brother($$, $2);
+																										}
+																										
 
 																									}
             | FunctionDeclaration Restart															{
 																										if(DEBUG)printf("Restart2\n");
 																										$$ = $1;
-																										insert_brother($$, $2);
+																										if($1 != NULL)
+																										{
+																											insert_brother($$, $2);
+																										}
+																										
 																									}
             | Declaration Restart																	{
 																										if(DEBUG)printf("Restart1\n");
 																										$$ = $1;
-																										insert_brother($$, $2);
+																										if($1 != NULL)
+																										{
+																											insert_brother($$, $2);
+																										}
+																										
 
 																									}
             | Empty																					{
@@ -505,11 +523,6 @@ Statement_List: 	 Expression_Un SEMI																{
 																										}
 
 
-
-
-
-
-
 																									}
 					| RETURN Expression_Un SEMI 													{
 																										if(DEBUG)printf("RETURN Expression_Un SEMI \n");
@@ -530,6 +543,15 @@ Statement_List: 	 Expression_Un SEMI																{
 
 St:  Statement Statement Statement_Un 																			{
 																										if(DEBUG)printf("St\n");
+																										int num = 0;
+																										Node * node = $3;
+
+																										while(node!=NULL)
+																										{
+																											num++;
+																											node = node->brother;
+																										}
+
 																										if($1 != NULL && $2 != NULL){
 																											$$ = insert_node(NODE_StatList);
 																											insert_child($$, $1);
@@ -537,16 +559,29 @@ St:  Statement Statement Statement_Un 																			{
 																											insert_brother($1, $3);
 																										}
 																										else{
-																											if($1 != NULL && $2 == NULL){
-																												$$ = $1;
-																												insert_brother($$, $3);
+																											if($1 != NULL && $2 == NULL && num>=1){
+																												$$ = insert_node(NODE_StatList);
+																												insert_child($$, $1);
+																												insert_brother($$->child, $3);
+																											}
+																											else if($2 != NULL && $1 == NULL && num>=1){
+																												$$ = insert_node(NODE_StatList);
+																												insert_child($$, $2);
+																												insert_brother($$->child, $3);
 																											}
 																											else if($2 != NULL && $1 == NULL){
 																												$$ = $2;
 																												insert_brother($$, $3);
 																											}
-																											else if($2 == NULL && $1 == NULL){
-																												$$ = $3;
+																											else if($1!=NULL && $2==NULL)
+																											{
+																												$$ = $1;
+																												insert_brother($$, $3);
+																											}
+																											else if($2==NULL && $1==NULL && num>=2)
+																											{
+																												$$ = insert_node(NODE_StatList);
+																												insert_child($$, $3);
 																											}
 																										}
 
@@ -664,7 +699,7 @@ Expressions_List:  	Expressions_List ASSIGN Expressions_List										{
 																										insert_child($$, $1);
 																										insert_brother($1, $3);
 																									}
-					| Expressions_List MINUS Expressions_List										{
+					| Expressions_List MINUS Expressions_List  										{
 																										if(DEBUG)printf("Expressions_List MINUS Expressions_List\n");
 																										$$ = insert_node(NODE_Sub);
 																										insert_child($$, $1);
@@ -693,17 +728,17 @@ Expressions_List:  	Expressions_List ASSIGN Expressions_List										{
 																										$$ = insert_node(NODE_Addr);
 																										insert_child($$, $2);
 																									}
-					| AST Expressions_List															{
+					| AST Expressions_List			%prec "pointer"												{
 																										if(DEBUG)printf("AST Expressions_List\n");
 																										$$ = insert_node(NODE_Deref);
 																										insert_child($$, $2);
 																									}
-					| PLUS Expressions_List															{
+					| PLUS Expressions_List			%prec "add"												{
 																										if(DEBUG)printf("PLUS Expressions_List\n");
 																										$$ = insert_node(NODE_Plus);
 																										insert_child($$, $2);
 																									}
-					| MINUS Expressions_List														{
+					| MINUS Expressions_List		%prec "minus"  												{
 																										if(DEBUG)printf("MINUS Expressions_List\n");
 																										$$ = insert_node(NODE_Minus);
 																										insert_child($$, $2);

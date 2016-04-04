@@ -12,14 +12,9 @@ void print_tree(Node *node, int level){
 		print_terminal(node);
 	}
 	else{
-		if(node->node_type!=NODE_NULL)
-		{
-			printf("%s\n", NODE_NAME[node->node_type]);	
-		}
-		else
-		{
-			printf("Null\n");
-		}
+		
+		printf("%s\n", NODE_NAME[node->node_type]);	
+		
 		
 	}
 
