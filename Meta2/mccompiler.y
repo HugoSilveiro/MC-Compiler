@@ -425,8 +425,18 @@ Statement_List: 	 Expression_Un SEMI																{
 																									}
 					| RETURN Expression_Un SEMI 													{
 																										if(DEBUG)printf("RETURN Expression_Un SEMI \n");
+
 																										$$ = insert_node(NODE_Return);
-																										insert_child($$, $2, 0);
+
+																										if($2!=NULL)
+																										{
+																											insert_child($$, $2, 0);
+																										}
+																										else{
+																											nodeAux = insert_node(NODE_NULL);
+																											insert_child($$, nodeAux, 0);
+																										}
+
 																									}
 					;
 
@@ -465,8 +475,8 @@ Expr: 	Expressions_List 																			{
 																										if(DEBUG)printf("Expr\n");
 																										$$ = insert_node(NODE_Comma);
 
-																										insert_brother($$, $3);
 																										insert_child($$, $1, 0);
+																										insert_brother($1, $3);
 																									}
 		;
 
@@ -666,6 +676,7 @@ Expression_Un: 	Expr																				{
 		| Empty																						{
 
 																										$$ = NULL;
+
 																									}
 		;
 

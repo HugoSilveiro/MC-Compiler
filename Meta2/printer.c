@@ -6,14 +6,21 @@
 #include "printer.h"
 
 void print_tree(Node *node, int level){
-	//printf("print_tree\n");
 	print_points(level);
 
 	if(node->node_type == NODE_Id || node->node_type == NODE_Intlit || node->node_type == NODE_Chrlit || node->node_type == NODE_Strlit){
 		print_terminal(node);
 	}
 	else{
-		printf("%s\n", NODE_NAME[node->node_type]);
+		if(node->node_type!=NODE_NULL)
+		{
+			printf("%s\n", NODE_NAME[node->node_type]);	
+		}
+		else
+		{
+			printf("Null\n");
+		}
+		
 	}
 
 	Node *child = node->child;
