@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-int main(int argc, char **argv) {
-	return ;
-=======
+
 int main(int a) {
-	int b;
-	return a;
->>>>>>> 40b7c65ec41daa75539c77e36b44c6342dc6fa6b
+	int *a[2];
+	return;
 }

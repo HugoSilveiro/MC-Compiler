@@ -1,5 +1,5 @@
 %{
-	#define DEBUG 1
+	#define DEBUG 0
 	#include <stdio.h>
 	#include <stdlib.h>
 	#include <string.h>
@@ -277,12 +277,11 @@ Declaration: TypeSpec Declarator COMMA_Declarator SEMI												{
 
 																										$$ = $2;
 
-
 																										insert_child($$, $1, 0);
 																										if($3 != NULL){
 
 																											insert_brother($$, $3);
-																											printf("inside: %s\n", NODE_NAME[$1->node_type]);
+																											//printf("inside: %s\n", NODE_NAME[$1->node_type]);
 																											if(strcmp(NODE_NAME[$1->node_type], "Int") == 0){
 																												nodeAux = insert_node(NODE_Int);
 																											}
