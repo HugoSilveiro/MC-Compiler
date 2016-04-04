@@ -405,19 +405,32 @@ Statement_List: 	 Expression_Un SEMI																{
 																										if(DEBUG)printf("For Cycle\n");
 																										$$ = insert_node(NODE_For);
 
-																										if($3 != NULL){
-																												printf("not null\n");
-																												insert_child($$, $9, 0);
+																										insert_child($$, $9, 0);
+
+																										if($7 != NULL){
+																												insert_child($$, $7, 0);
 																										}
 																										else{
-																											printf("null\n");
 																											nodeAux = insert_node(NODE_NULL);
 																											insert_child($$, nodeAux, 0);
 																										}
-																										//insert_child($$, $9, 0);
-																										//insert_child($$, $7, 0);
-																										//insert_child($$, $5, 0);
-																										//insert_child($$, $9, 0);
+
+																										if($5 != NULL){
+																												insert_child($$, $5, 0);
+																										}
+																										else{
+																											nodeAux = insert_node(NODE_NULL);
+																											insert_child($$, nodeAux, 0);
+																										}
+
+																										if($3 != NULL){
+																												insert_child($$, $3, 0);
+																										}
+																										else{
+																											nodeAux = insert_node(NODE_NULL);
+																											insert_child($$, nodeAux, 0);
+																										}
+																										
 
 
 
