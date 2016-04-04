@@ -476,22 +476,31 @@ Statement_List: 	 Expression_Un SEMI																{
 																									}
 					| IF LPAR Expr RPAR Statement ELSE Statement 									{
 																										if(DEBUG)printf("IF LPAR Expr RPAR Statement ELSE Statement \n");
-																										$$ = insert_node(NODE_If);
-																										insert_child($$, $3);
-																										if($5 != NULL){
-																												insert_brother($3, $5);
+																										if($3 != NULL)
+																										{
+																											$$ = insert_node(NODE_If);
+																										
+																											insert_child($$, $3);
+
+																											if($5 != NULL){
+																													insert_brother($3, $5);
+																											}
+																											else{
+																												nodeAux = insert_node(NODE_NULL);
+																												insert_brother($3, nodeAux);
+																											}
+																											if($7 != NULL){
+																													insert_brother($3, $7);
+																											}
+																											else{
+																												nodeAux = insert_node(NODE_NULL);
+																												insert_brother($3, nodeAux);
+																											}
 																										}
 																										else{
-																											nodeAux = insert_node(NODE_NULL);
-																											insert_brother($3, nodeAux);
+																											$$ = NULL;
 																										}
-																										if($7 != NULL){
-																												insert_brother($3, $7);
-																										}
-																										else{
-																											nodeAux = insert_node(NODE_NULL);
-																											insert_brother($3, nodeAux);
-																										}
+																										
 
 
 																									}
@@ -507,7 +516,7 @@ Statement_List: 	 Expression_Un SEMI																{
 																											insert_child($$, nodeAux);
 																										}
 																										if($5 != NULL){
-																												insert_child($$->child, $5);
+																											insert_brother($$->child, $5);
 																										}
 																										else{
 																											nodeAux = insert_node(NODE_NULL);
