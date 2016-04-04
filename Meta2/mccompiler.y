@@ -89,17 +89,16 @@
 %type <node> COMMA_Declarator
 %type <node> Expr
 %type <node> Expression_Un
-<<<<<<< HEAD
+
 %type <node> ExprCOMMA_Expr
 %type <node> COMMA_Expr
-%type <node> St
-=======
+
+
 %type <node> COMMA_ParameterDeclaration
 %type <node> Statement_Un
 %type <node> St
 
 
->>>>>>> b29cf346363872780a586c372bee306513eafecf
 
 
 %nonassoc "then"
@@ -184,14 +183,10 @@ FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{
 																										if(DEBUG)printf("FunctionDefinition\n");
 																										$$ = insert_node(NODE_FuncDefinition);
 																										insert_child($$, $1, 0);
-<<<<<<< HEAD
-
-
-=======
 																										insert_brother($1, $2);
 																										insert_brother($1, $3);
 
->>>>>>> b29cf346363872780a586c372bee306513eafecf
+
 
 
 																									}
@@ -220,12 +215,8 @@ FunctionBody: 	LBRACE Declaration_Un State_List_UN RBRACE		 									{
 																										if(DEBUG)printf("FunctionBody\n");
 																										$$ = insert_node(NODE_FuncBody);
 																										insert_child($$, $2, 0);
-<<<<<<< HEAD
 
-=======
 																										insert_brother($2, $3);
-
->>>>>>> b29cf346363872780a586c372bee306513eafecf
 
 																									}
 				| LBRACE error RBRACE 																{
