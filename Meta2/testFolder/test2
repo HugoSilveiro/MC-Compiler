@@ -1,17 +1,4 @@
-<<<<<<< HEAD
-int main(int a) {
-	int b;
-	if(a = 5){
-		a;
-	}
-	if(x = b){
-		a = 2;
-		b = 3;
-	}
-=======
 
 int main(int a) {
-	int *a[2];
-	return;
->>>>>>> ffd382cecd068ed91b1499878258e95ffbce4fe9
+	for(a=1,b=2cd){}
 }
