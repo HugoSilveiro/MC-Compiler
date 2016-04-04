@@ -399,16 +399,16 @@ Statement_List: 	 Expression_Un SEMI																{
 																										$$ = insert_node(NODE_If);
 
 																										insert_child($$, $3, 0);
-																										//insert_brother($3, $5);
-
-
+																										insert_brother($3, $5);
+																										insert_brother($3, $7);
+																										/*
 																										if($7 != NULL){
 																											insert_brother($3, $7);
-																										}
+																										}/*
 																										if($5 != NULL){
 																											insert_brother($3, $5);
 																										}
-
+																										*/
 
 
 																										/*
@@ -485,7 +485,7 @@ St: Statement 																			{
 StRep: Statement Statement Statement_Un															{
 																										$$ = insert_node(NODE_StatList);
 																										insert_child($$, $1, 0);
-																										insert_child($$, $2, 0);
+																										insert_brother($1, $2);
 																										insert_brother($2, $3);
 																									}
 
