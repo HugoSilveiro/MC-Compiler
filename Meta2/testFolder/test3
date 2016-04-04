@@ -1,5 +1,2 @@
-int main(int argc, char **argv) {
-	{};
-	int a;
-	a;
-}
+int a,b,c;
+char buffer, tua mae,

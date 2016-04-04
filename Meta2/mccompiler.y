@@ -294,17 +294,20 @@ Declaration: TypeSpec Declarator COMMA_Declarator SEMI												{
 																										if(DEBUG)printf("Declaration\n");
 
 																										$$ = $2;
-																										/*
 																										if($3 != NULL){
 																											insert_brother($$, $3);
 																										}
-																										Node * aux = $$;
-																										nodeAux = $1;
-																										while(aux!=NULL){
-																											nodeAux.brother = aux->child;
-																											nodeAux.father
-																										}*/
-																										insert_child($$, $1);
+
+																										Node *auxSS = $$;
+																										Node auxSS2 = *$1;
+																										while(auxSS != NULL){
+																											auxSS2.brother = auxSS->child;
+																											auxSS2.father = auxSS;
+																											auxSS->child = (Node*) malloc(sizeof(Node));
+																											*(auxSS->child) = auxSS2;
+																											auxSS = auxSS->brother;
+																										}
+																										/*insert_child($$, $1);
 																										if($3 != NULL){
 
 																											insert_brother($$, $3);
@@ -314,7 +317,7 @@ Declaration: TypeSpec Declarator COMMA_Declarator SEMI												{
 																											}
 																											insert_child($3, nodeAux);
 
-																										}
+																										}*/
 
 																									}
 			| error SEMI 																			{
