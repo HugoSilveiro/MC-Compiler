@@ -455,18 +455,24 @@ Statement_List: 	 Expression_Un SEMI																{
 																									}
 					| IF LPAR Expr RPAR Statement   %prec "then"									{
 																										if(DEBUG)printf("IF LPAR Expr RPAR Statement");
-																										$$ = insert_node(NODE_If);
-																										insert_child($$, $3);
-																										if($5 != NULL){
-																												insert_brother($3, $5);
-																										}
-																										else{
+																										if($3 != NULL)
+																										{
+																											$$ = insert_node(NODE_If);
+																											insert_child($$, $3);
+																											if($5 != NULL){
+																													insert_brother($3, $5);
+																											}
+																											else{
+																												nodeAux = insert_node(NODE_NULL);
+																												insert_brother($3, nodeAux);
+																											}
 																											nodeAux = insert_node(NODE_NULL);
 																											insert_brother($3, nodeAux);
+																										}else
+																										{
+																											$$ = NULL;
 																										}
-																										nodeAux = insert_node(NODE_NULL);
-																										insert_brother($3, nodeAux);
-
+																										
 																									}
 					| IF LPAR Expr RPAR Statement ELSE Statement 									{
 																										if(DEBUG)printf("IF LPAR Expr RPAR Statement ELSE Statement \n");
