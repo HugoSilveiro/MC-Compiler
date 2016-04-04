@@ -102,7 +102,8 @@
 
 
 
-
+%nonassoc "then"
+%nonassoc ELSE
 
 %left COMMA
 %right ASSIGN
@@ -117,8 +118,7 @@
 %left LPAR RPAR LSQ RSQ LBRACE RBRACE
 
 
-%nonassoc "then"
-%nonassoc ELSE
+
 
 %%
 
@@ -397,10 +397,15 @@ Statement_List: 	 Expression_Un SEMI																{
 					| IF LPAR Expr RPAR Statement ELSE Statement 									{
 																										if(DEBUG)printf("IF LPAR Expr RPAR Statement ELSE Statement \n");
 																										$$ = insert_node(NODE_If);
-																										insert_brother($3, $7);
+
 																										insert_child($$, $3, 0);
 																										insert_brother($3, $5);
-
+																										insert_brother($3, $7);
+/*
+																										if($7 != NULL){
+																											insert_child($$, $7, 0);
+																										}
+*/
 																										/*
 																										if($7 != NULL){
 																											nodeAux = insert_node(NODE_StatList);
