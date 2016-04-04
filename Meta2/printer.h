@@ -20,6 +20,7 @@ static const char *NODE_NAME[] = {
 	"For",
 	"Return",
 
+
 	"Or",
 	"And",
 	"Eq",
@@ -42,6 +43,7 @@ static const char *NODE_NAME[] = {
 	"Comma",
 	"Call",
 
+
 	"Int",
 	"Char",
 	"Pointer",
@@ -50,6 +52,7 @@ static const char *NODE_NAME[] = {
 	"IntLit",
 	"ChrLit",
 	"StrLit"
+
 
 	"Null"
 };
