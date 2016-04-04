@@ -29,29 +29,33 @@ void insert_child(Node * father, Node * child, int end)
 {
 	//printf("end: %d\n", end);
 	//printf("insert_child: %s -> %s\n", NODE_NAME[father->node_type], NODE_NAME[child->node_type]);
-	Node * temp = father->child;
+	if(child!=NULL)
+	{
+		Node * temp = father->child;
 
-	if(temp==NULL)
-	{
-		father->child = child;
-	}
-	else
-	{
-		if(end == 1){
+		if(temp==NULL)
+		{
+			father->child = child;
+		}
+		else
+		{
+			if(end == 1){
 			//printf("end\n");
-			while(temp->brother != NULL)
-			{
-				temp = temp->brother;
+				while(temp->brother != NULL)
+				{
+					temp = temp->brother;
+				}
+				temp->brother = child;
+
 			}
-			temp->brother = child;
-
-		}
-		else if(end == 0){
+			else if(end == 0){
 			//printf("not end\n");
-			changeOrder(father, child);
-		}
+				changeOrder(father, child);
+			}
 
+		}
 	}
+	
 
 }
 
@@ -75,17 +79,21 @@ void changeOrder1(Node * node, Node * brother)
 void insert_brother(Node * node, Node * brother)
 {
 	//printf("insert_brother\n");
-	Node * temp = node->brother;
-	if(temp==NULL)
+	if(brother!=NULL && node!=NULL)
 	{
-		node->brother = brother;
-	}
-	else
-	{
-		while(temp->brother!=NULL)
+		Node * temp = node->brother;
+		if(temp==NULL)
 		{
-			temp = temp->brother;
+			node->brother = brother;
 		}
-		temp->brother=brother;
+		else
+		{
+			while(temp->brother!=NULL)
+			{
+				temp = temp->brother;
+			}
+			temp->brother=brother;
+		}
 	}
+
 }
