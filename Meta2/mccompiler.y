@@ -97,8 +97,6 @@
 %type <node> COMMA_ParameterDeclaration
 %type <node> Statement_Un
 %type <node> St
-%type <node> StRep
-
 
 
 
@@ -110,12 +108,12 @@
 %left OR
 %left AND
 %left EQ NE
-%left GE LE
-%left GT LT
+%left GT LT GE LE
 %left PLUS MINUS
 %left AST DIV MOD
 %right NOT AMP
 %left LPAR RPAR LSQ RSQ LBRACE RBRACE
+
 
 
 
@@ -216,14 +214,11 @@ FunctionBody: 	LBRACE Declaration_Un State_List_UN RBRACE		 									{
 																										if(DEBUG)printf("FunctionBody\n");
 																										$$ = insert_node(NODE_FuncBody);
 
-																										if($2 == NULL && $3 == NULL){
 
-																										}
-																										else{
 																											insert_child($$, $2, 0);
 
 																											insert_brother($2, $3);
-																										}
+
 
 																									}
 				| LBRACE error RBRACE 																{
@@ -371,15 +366,10 @@ Statement_List: 	 Expression_Un SEMI																{
 																										if(DEBUG)printf("Expression_Un SEMI\n");
 																										$$ = $1;
 																									}
-					| LBRACE StRep RBRACE															{
-																										if(DEBUG)printf("LBRACE StRep RBRACE\n");
-																										$$ = $2;
-																									}
 					| LBRACE St RBRACE																{
 																										if(DEBUG)printf("LBRACE St RBRACE\n");
 																										$$ = $2;
 																									}
-
 					| LBRACE RBRACE																	{
 																										if(DEBUG)printf("LBRACE RBRACE\n");
 																										$$ = NULL;
@@ -396,24 +386,35 @@ Statement_List: 	 Expression_Un SEMI																{
 																									}
 					| IF LPAR Expr RPAR Statement ELSE Statement 									{
 																										if(DEBUG)printf("IF LPAR Expr RPAR Statement ELSE Statement \n");
+
 																										$$ = insert_node(NODE_If);
 
 																										insert_child($$, $3, 0);
 																										insert_brother($3, $5);
 																										insert_brother($3, $7);
-/*
+
 																										if($7 != NULL){
 																											insert_child($$, $7, 0);
 																										}
-*/
+
 																										/*
 																										if($7 != NULL){
 																											nodeAux = insert_node(NODE_StatList);
 																											insert_brother($3, nodeAux);
 																											insert_child(nodeAux, $7, 0);
 
+																										insert_child($$, $3, 0);
+																										if($7 != NULL)
+																										{
+																											insert_brother($3, $7);
 																										}
-																										*/
+																										if($5 != NULL)
+																										{
+																											insert_brother($3, $5);
+																										}*/
+
+
+
 
 																									}
 					| FOR LPAR Expression_Un SEMI Expression_Un SEMI Expression_Un RPAR Statement	{
@@ -468,21 +469,13 @@ Statement_List: 	 Expression_Un SEMI																{
 																									}
 					;
 
-St: Statement 																			{
+St: Statement Statement_Un																			{
 																										if(DEBUG)printf("St\n");
-																										//$$ = insert_node(NODE_StatList)
 																										$$ = $1;
-																										//insert_brother($$, $2);
+																										insert_brother($$, $2);
 
 																									}
 	;
-
-StRep: Statement Statement Statement_Un															{
-																										$$ = insert_node(NODE_StatList);
-																										insert_child($$, $1, 0);
-																										insert_child($$, $2, 0);
-																										insert_brother($2, $3);
-																									}
 
 State_List_UN: 	Empty																				{
 																										$$ = NULL;
