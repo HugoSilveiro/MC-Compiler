@@ -101,7 +101,7 @@
 
 
 
-
+%nonassoc "then"
 
 %left COMMA
 %right ASSIGN
@@ -115,7 +115,7 @@
 %right NOT AMP
 %left LPAR RPAR LSQ RSQ LBRACE RBRACE
 
-%nonassoc "then"
+
 %nonassoc ELSE
 
 
@@ -169,7 +169,7 @@ Restart: FunctionDefinition Restart                                             
 																										if(DEBUG)printf("Restart1\n");
 
 																										$$ = $1;
-																										if($1 != NULL)
+																										if($2 != NULL)
 																										{
 																											insert_brother($$, $2);
 																										}
@@ -179,7 +179,7 @@ Restart: FunctionDefinition Restart                                             
             | FunctionDeclaration Restart															{
 																										if(DEBUG)printf("Restart2\n");
 																										$$ = $1;
-																										if($1 != NULL)
+																										if($2 != NULL)
 																										{
 																											insert_brother($$, $2);
 																										}
@@ -188,7 +188,7 @@ Restart: FunctionDefinition Restart                                             
             | Declaration Restart																	{
 																										if(DEBUG)printf("Restart1\n");
 																										$$ = $1;
-																										if($1 != NULL)
+																										if($2 != NULL)
 																										{
 																											insert_brother($$, $2);
 																										}
@@ -505,21 +505,21 @@ Statement_List: 	 Expression_Un SEMI																{
 																										}
 																										else{
 																											nodeAux = insert_node(NODE_NULL);
-																											insert_child($$->child, nodeAux);
+																											insert_brother($$->child, nodeAux);
 																										}
 																										if($7 != NULL){
-																												insert_child($$->child, $7);
+																											insert_brother($$->child, $7);
 																										}
 																										else{
 																											nodeAux = insert_node(NODE_NULL);
-																											insert_child($$->child, nodeAux);
+																											insert_brother($$->child, nodeAux);
 																										}
 																										if($9 != NULL){
-																												insert_brother($$->child, $9);
+																											insert_brother($$->child, $9);
 																										}
 																										else{
 																											nodeAux = insert_node(NODE_NULL);
-																											insert_child($$->child, nodeAux);
+																											insert_brother($$->child, nodeAux);
 																										}
 
 
