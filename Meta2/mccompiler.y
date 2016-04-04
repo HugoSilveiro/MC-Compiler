@@ -259,7 +259,9 @@ COMMA_ParameterDeclaration: 	COMMA ParameterDeclaration COMMA_ParameterDeclarati
 																										$$ = $2;
 																										insert_brother($$, $3);
 																									}
-								| Empty
+								| Empty																{
+																										$$ = NULL;
+																									}
 								;
 
 
@@ -344,7 +346,9 @@ COMMA_Declarator: 	COMMA Declarator COMMA_Declarator												{
 																										$$ = $2;
 																										insert_brother($2, $3);
 																									}
-					|  Empty
+					|  Empty																		{
+																										$$ = NULL;
+																									}
 					;
 
 Statement: 	error SEMI 																				{
@@ -381,11 +385,18 @@ Statement_List: 	 Expression_Un SEMI																{
 					| IF LPAR Expr RPAR Statement ELSE Statement 									{
 																										if(DEBUG)printf("IF LPAR Expr RPAR Statement ELSE Statement \n");
 																										$$ = insert_node(NODE_If);
+																										insert_child($$, $3, 0);
+																										insert_brother($3, $5);
+																										insert_brother($3, $7);
 
 																									}
 					| FOR LPAR Expression_Un SEMI Expression_Un SEMI Expression_Un RPAR Statement	{
 																										if(DEBUG)printf("For Cycle\n");
 																										$$ = insert_node(NODE_For);
+																										insert_child($$, $3, 0);
+																										insert_brother($3, $5);
+																										insert_brother($3, $7);
+																										insert_brother($3, $9);
 																									}
 					| RETURN Expression_Un SEMI 													{
 																										if(DEBUG)printf("RETURN Expression_Un SEMI \n");
@@ -402,14 +413,19 @@ St: Statement Statement_Un																			{
 																									}
 	;
 
-State_List_UN: Empty | Statement_List State_List_UN													{
+State_List_UN: 	Empty																				{
+																										$$ = NULL;
+																									}
+				| Statement_List State_List_UN														{
 																										if(DEBUG)printf("State_List_UN\n");
 																										$$ = $1;
 																										insert_brother($$,$2);
 																									}
 				;
 
-Statement_Un: 	Empty
+Statement_Un: 	Empty																				{
+																										$$ = NULL;
+																									}
 			| Statement Statement_Un																{
 																										if(DEBUG)printf("Statement_Un\n");
 																									}
@@ -523,7 +539,7 @@ Expressions_List:  	Expressions_List ASSIGN Expressions_List										{
 					| AST Expressions_List															{
 																										if(DEBUG)printf("AST Expressions_List\n");
 																										$$ = insert_node(NODE_Deref);
-																										//insert_brother($$, $2);
+																										insert_child($$, $2, 0);
 																									}
 					| PLUS Expressions_List															{
 																										if(DEBUG)printf("PLUS Expressions_List\n");
@@ -542,7 +558,10 @@ Expressions_List:  	Expressions_List ASSIGN Expressions_List										{
 																									}
 					| ID LPAR ExprCOMMA_Expr RPAR													{
 																										if(DEBUG)printf("ID LPAR ExprCOMMA_Expr RPAR\n");
-																										$$ = $3;
+																										$$ = insert_node(NODE_Call);
+																										nodeAux = insert_term_node(NODE_Id, $1);
+																										insert_child($$, nodeAux, 0);
+																										insert_brother(nodeAux, $3);
 																										//$$ = insert_node();
 																									}
 					| LPAR Expr RPAR																{
@@ -576,8 +595,14 @@ Expressions_List:  	Expressions_List ASSIGN Expressions_List										{
 																									}
 					| Expressions_List LSQ Expr RSQ													{
 																										if(DEBUG)printf("Expressions_List LSQ Expr RSQ	\n");
-																										$$ = $1;
+																										$$ = insert_node(NODE_Deref);
+																										nodeAux = insert_node(NODE_Add);
+
+																										insert_child($$, nodeAux, 0);
+																										insert_child(nodeAux, $1, 0);
+																										insert_brother($1, $3);
 																									}
+
 					;
 
 
@@ -587,7 +612,9 @@ ExprCOMMA_Expr: Expressions_List COMMA_Expr															{
 																										$$ = $1;
 																										insert_brother($$, $2);
 																									}
-				| Empty
+				| Empty																				{
+																										$$ = NULL;
+																									}
 				;
 
 COMMA_Expr: Empty 																					{
@@ -608,7 +635,8 @@ Expression_Un: 	Expr																				{
 																										$$ = $1;
 																									}
 		| Empty																						{
-																										$$ = NULL;
+
+																										$$ = insert_node(NODE_NULL);
 																									}
 		;
 
@@ -620,7 +648,9 @@ Asterisk: 	AST Asterisk																			{
 																										insert_brother($$, $2);
 
 																									}
-			| Empty
+			| Empty																					{
+																										$$ = NULL;
+																									}
 			;
 
 Empty: 																								{
