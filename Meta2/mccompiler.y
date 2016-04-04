@@ -203,9 +203,11 @@ Restart: FunctionDefinition Restart                                             
 FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{
 																										if(DEBUG)printf("FunctionDefinition\n");
 																										$$ = insert_node(NODE_FuncDefinition);
-																										insert_child($$, $1);
-																										insert_brother($1, $2);
-																										insert_brother($1, $3);
+																										if($1 != NULL){
+																											insert_child($$, $1);
+																											insert_brother($1, $2);
+																											insert_brother($1, $3);
+																										}
 
 
 
@@ -216,8 +218,11 @@ FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{
 FunctionDeclaration: 	TypeSpec FunctionDeclarator SEMI											{
 																										if(DEBUG)printf("FunctionDeclaration\n");
 																										$$ = insert_node(NODE_FuncDeclaration);
-																										insert_child($$, $2);
-																										insert_child($$, $1);
+																										if($1 != NULL){
+																											insert_child($$, $2);
+																											insert_child($$, $1);
+
+																										}
 
 																									}
 						;
