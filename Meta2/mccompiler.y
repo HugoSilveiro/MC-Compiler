@@ -169,7 +169,7 @@ Restart: FunctionDefinition Restart                                             
 																										if(DEBUG)printf("Restart1\n");
 
 																										$$ = $1;
-																										if($2 != NULL)
+																										if($1 != NULL)
 																										{
 																											insert_brother($$, $2);
 																										}
@@ -179,7 +179,7 @@ Restart: FunctionDefinition Restart                                             
             | FunctionDeclaration Restart															{
 																										if(DEBUG)printf("Restart2\n");
 																										$$ = $1;
-																										if($2 != NULL)
+																										if($1 != NULL)
 																										{
 																											insert_brother($$, $2);
 																										}
@@ -188,7 +188,7 @@ Restart: FunctionDefinition Restart                                             
             | Declaration Restart																	{
 																										if(DEBUG)printf("Restart1\n");
 																										$$ = $1;
-																										if($2 != NULL)
+																										if($1 != NULL)
 																										{
 																											insert_brother($$, $2);
 																										}
@@ -216,8 +216,8 @@ FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{
 FunctionDeclaration: 	TypeSpec FunctionDeclarator SEMI											{
 																										if(DEBUG)printf("FunctionDeclaration\n");
 																										$$ = insert_node(NODE_FuncDeclaration);
-																										insert_child($$, $2);
 																										insert_child($$, $1);
+																										insert_brother($$->child, $2);
 
 																									}
 						;
