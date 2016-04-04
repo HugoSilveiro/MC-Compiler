@@ -133,7 +133,7 @@ Start:  FunctionDefinition  Restart                                             
 																											insert_child($$, $1);
 																											insert_brother($1, $2);
 																										}
-																										
+
 
 
 																									}
@@ -146,7 +146,7 @@ Start:  FunctionDefinition  Restart                                             
 																											insert_child($$, $1);
 																											insert_brother($1, $2);
 																										}
-																										
+
 
 
         																							}
@@ -159,7 +159,7 @@ Start:  FunctionDefinition  Restart                                             
 																											insert_child($$, $1);
 																											insert_brother($1, $2);
 																										}
-																										
+
 
 
         																							}
@@ -173,7 +173,7 @@ Restart: FunctionDefinition Restart                                             
 																										{
 																											insert_brother($$, $2);
 																										}
-																										
+
 
 																									}
             | FunctionDeclaration Restart															{
@@ -183,7 +183,7 @@ Restart: FunctionDefinition Restart                                             
 																										{
 																											insert_brother($$, $2);
 																										}
-																										
+
 																									}
             | Declaration Restart																	{
 																										if(DEBUG)printf("Restart1\n");
@@ -192,7 +192,7 @@ Restart: FunctionDefinition Restart                                             
 																										{
 																											insert_brother($$, $2);
 																										}
-																										
+
 
 																									}
             | Empty																					{
@@ -203,9 +203,11 @@ Restart: FunctionDefinition Restart                                             
 FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{
 																										if(DEBUG)printf("FunctionDefinition\n");
 																										$$ = insert_node(NODE_FuncDefinition);
-																										insert_child($$, $1);
-																										insert_brother($1, $2);
-																										insert_brother($1, $3);
+																										if($1 != NULL){
+																											insert_child($$, $1);
+																											insert_brother($1, $2);
+																											insert_brother($1, $3);
+																										}
 
 
 
@@ -216,8 +218,15 @@ FunctionDefinition: TypeSpec FunctionDeclarator FunctionBody										{
 FunctionDeclaration: 	TypeSpec FunctionDeclarator SEMI											{
 																										if(DEBUG)printf("FunctionDeclaration\n");
 																										$$ = insert_node(NODE_FuncDeclaration);
-																										insert_child($$, $1);
-																										insert_brother($$->child, $2);
+
+																										if($1 != NULL){
+																											insert_child($$, $1);
+																											insert_brother($$->child, $2);
+
+																										}
+
+
+
 
 																									}
 						;
@@ -244,10 +253,7 @@ FunctionBody: 	LBRACE Declaration_Un State_List_UN RBRACE		 									{
 																										if(DEBUG)printf("FunctionBody\n");
 																										$$ = insert_node(NODE_FuncBody);
 
-																										if($2 == NULL && $3 == NULL){
-
-																										}
-																										else{
+																										if($2 != NULL && $3 != NULL){
 																											if($2 != NULL){
 																												insert_child($$, $2);
 
@@ -258,6 +264,7 @@ FunctionBody: 	LBRACE Declaration_Un State_List_UN RBRACE		 									{
 																											}
 
 																										}
+
 
 																									}
 				| LBRACE error RBRACE 																{
@@ -472,7 +479,7 @@ Statement_List: 	 Expression_Un SEMI																{
 																										{
 																											$$ = NULL;
 																										}
-																										
+
 																									}
 					| IF LPAR Expr RPAR Statement ELSE Statement 									{
 																										if(DEBUG)printf("IF LPAR Expr RPAR Statement ELSE Statement \n");
