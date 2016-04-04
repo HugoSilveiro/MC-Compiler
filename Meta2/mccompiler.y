@@ -116,7 +116,7 @@
 %left AST DIV MOD
 %right NOT AMP
 %left LPAR RPAR LSQ RSQ LBRACE RBRACE
- 
+
 
 
 %%
@@ -393,20 +393,35 @@ Statement_List: 	 Expression_Un SEMI																{
 																										$$ = insert_node(NODE_If);
 																										insert_child($$, $3, 0);
 																										insert_brother($3, $5);
-																										insert_brother($3, $7);
+																										if($7 != NULL){
+																											nodeAux = insert_node(NODE_StatList);
+																											insert_brother($3, nodeAux);
+																											insert_child(nodeAux, $7, 0);
+																										}
+
 
 																									}
 					| FOR LPAR Expression_Un SEMI Expression_Un SEMI Expression_Un RPAR Statement	{
 																										if(DEBUG)printf("For Cycle\n");
 																										$$ = insert_node(NODE_For);
+
+																										if($3 != NULL){
+																												printf("not null\n");
+																												insert_child($$, $9, 0);
+																										}
+																										else{
+																											printf("null\n");
+																											nodeAux = insert_node(NODE_NULL);
+																											insert_child($$, nodeAux, 0);
+																										}
 																										//insert_child($$, $9, 0);
 																										//insert_child($$, $7, 0);
 																										//insert_child($$, $5, 0);
-																										insert_child($$, $9, 0);
-																										
-																										
-																										
-																										
+																										//insert_child($$, $9, 0);
+
+
+
+
 																									}
 					| RETURN Expression_Un SEMI 													{
 																										if(DEBUG)printf("RETURN Expression_Un SEMI \n");
@@ -449,7 +464,7 @@ Expr: 	Expressions_List 																			{
 		| Expr COMMA Expressions_List																{
 																										if(DEBUG)printf("Expr\n");
 																										$$ = insert_node(NODE_Comma);
-																										
+
 																										insert_brother($$, $3);
 																										insert_child($$, $1, 0);
 																									}
@@ -649,8 +664,8 @@ Expression_Un: 	Expr																				{
 																										$$ = $1;
 																									}
 		| Empty																						{
-																										
-																										$$ = insert_node(NODE_NULL);
+
+																										$$ = NULL;
 																									}
 		;
 
