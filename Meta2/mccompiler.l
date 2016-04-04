@@ -22,7 +22,7 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 	#include <stdbool.h>
 	#include "y.tab.h"
 	#include "structs.h"
-
+	#include "printer.h"
 	int lineNumber = 1;
 	int columnNumber = 0;
 	int colComment;
@@ -30,7 +30,6 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 	int treeFlag = 0;
 	extern int yacc_errors;
 	extern Node *tree;
-	//int printTree();
 	int flag = 0;
 %}
 
