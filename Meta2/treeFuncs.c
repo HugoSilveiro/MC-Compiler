@@ -10,10 +10,12 @@ Node * insert_node(Node_Type node_type)
 	//printf("insert_node\n");
 	//printf("insert_node:%s\n", NODE_NAME[node_type]);
 	Node * node = (Node *) malloc(sizeof(Node));
-	node->node_type = node_type;
-	node->brother=NULL;
-	node->child=NULL;
-
+	if(node!=NULL)
+	{
+		node->node_type = node_type;
+		node->brother=NULL;
+		node->child=NULL;	
+	}
 	return node;
 }
 
@@ -25,40 +27,29 @@ Node * insert_term_node(Node_Type node_type, char* value)
 	return node;
 }
 
-void insert_child(Node * father, Node * child, int end)
+void insert_child(Node * father, Node * child)
 {
 	//printf("end: %d\n", end);
 	//printf("insert_child: %s -> %s\n", NODE_NAME[father->node_type], NODE_NAME[child->node_type]);
-	if(child!=NULL)
+
+	Node * temp = father->child;
+
+	if(temp==NULL)
 	{
-		Node * temp = father->child;
-
-		if(temp==NULL)
-		{
-			father->child = child;
-		}
-		else
-		{
-			if(end == 1){
-			//printf("end\n");
-				while(temp->brother != NULL)
-				{
-					temp = temp->brother;
-				}
-				temp->brother = child;
-
-			}
-			else if(end == 0){
-			//printf("not end\n");
-				changeOrder(father, child);
-			}
-
-		}
+		child->father = father;
+		father->child = child;
 	}
+	else
+	{
+		child->brother = father->child;
+		child->father = father;
+		father->child = child;
+	}
+	
 	
 
 }
-
+/*
 void changeOrder(Node * father, Node * child)
 {
 	Node * temp = father->child;
@@ -75,25 +66,21 @@ void changeOrder1(Node * node, Node * brother)
 
 
 }
+*/
 
-void insert_brother(Node * node, Node * brother)
+void insert_brother(Node * brother, Node * node)
 {
 	//printf("insert_brother\n");
-	if(brother!=NULL && node!=NULL)
-	{
-		Node * temp = node->brother;
-		if(temp==NULL)
-		{
-			node->brother = brother;
-		}
-		else
-		{
-			while(temp->brother!=NULL)
-			{
-				temp = temp->brother;
-			}
-			temp->brother=brother;
-		}
-	}
 
+	Node * aux = brother;
+
+	if(aux!=NULL && node!=NULL)
+	{
+		while(aux->brother != NULL)
+		{
+			aux = aux->brother;
+		}
+		aux->brother = node;
+		node->father = brother->father;
+	}
 }
