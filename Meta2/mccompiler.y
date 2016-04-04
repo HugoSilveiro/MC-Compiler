@@ -110,8 +110,7 @@
 %left OR
 %left AND
 %left EQ NE
-%left GE LE
-%left GT LT
+%left GT LT GE LE
 %left PLUS MINUS
 %left AST DIV MOD
 %right NOT AMP
@@ -215,14 +214,11 @@ FunctionBody: 	LBRACE Declaration_Un State_List_UN RBRACE		 									{
 																										if(DEBUG)printf("FunctionBody\n");
 																										$$ = insert_node(NODE_FuncBody);
 
-																										if($2 == NULL && $3 == NULL){
-
-																										}
-																										else{
+																										
 																											insert_child($$, $2, 0);
 
 																											insert_brother($2, $3);
-																										}
+																										
 
 																									}
 				| LBRACE error RBRACE 																{
