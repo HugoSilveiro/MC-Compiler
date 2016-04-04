@@ -708,9 +708,9 @@ char *yytext;
 	#include <stdlib.h>
 	#include <string.h>
 	#include <stdbool.h>
+
+	#include "headFile.h"
 	#include "y.tab.h"
-	#include "structs.h"
-	#include "printer.h"
 	
 	int lineNumber = 1;
 	int columnNumber = 0;

@@ -126,7 +126,7 @@ extern int yydebug;
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 27 "mccompiler.y" /* yacc.c:1909  */
+#line 26 "mccompiler.y" /* yacc.c:1909  */
 
     char *string;
 	struct Node_elem* node;
