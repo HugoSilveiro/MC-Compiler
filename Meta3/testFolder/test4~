@@ -1,0 +1,9 @@
+int ola;
+void main()
+{
+	ola = 3;
+	
+	return ola;
+
+}
+
