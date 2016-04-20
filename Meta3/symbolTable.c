@@ -11,26 +11,27 @@ extern Table * symbol_table;
 void start_symbol_table()
 {
 	Symbol *symbol ;
+	Table * aux;
 	//Tabela Global
-	insert_table(0);
+	aux = insert_table(0, NULL);
 	//iniciar a funçao atoi
 	symbol = create_symbol("atoi", "int(char*)", 0);
-	insert_symbol(symbol_table, symbol);
+	insert_symbol(aux, symbol);
 
 	//iniciar itoa
 	symbol = create_symbol("itoa", "char*(int, char*)", 0);
-	insert_symbol(symbol_table, symbol);
+	insert_symbol(aux, symbol);
 
 	//iniciar puts
 	symbol = create_symbol("puts", "int(char*)", 0);
-	insert_symbol(symbol_table, symbol);
+	insert_symbol(aux, symbol);
 
 
 }
 
 //type==0 -> Global | type==1 -> Function
 //insert table on symbol_table
-void insert_table(int type)
+Table * insert_table(int type, char * name)
 {
 	if(DEBUG)
 	{
@@ -39,6 +40,7 @@ void insert_table(int type)
 
 	Table * table = (Table *) malloc(sizeof(Table));
 	table->type = type;
+	table->name = name;
 	table->next = NULL;
 	table->child= NULL;
 
@@ -58,6 +60,7 @@ void insert_table(int type)
 	{
 		symbol_table = table;
 	}
+	return table;
 }
 
 //function to create symbol without attaching it to any table
@@ -84,19 +87,20 @@ void insert_symbol(Table * table, Symbol * symbol)
 	{
 		printf("[insert_symbol]\n");
 	}
+	Symbol * aux ;
+	Symbol * aux_before;
 
-	Symbol * aux = table->child;
-	if(aux==NULL)
+	if(table->child)
 	{
-		aux->next = symbol;
+		for(aux = table->child;aux;aux = aux->next)
+		{
+			aux_before = aux;
+		}
+		aux_before->next = symbol;
 	}
 	else
 	{
-		while(aux!=NULL)
-		{
-			aux=aux->next;
-		}
-		aux->next = symbol;
+		table->child = symbol;
 	}
 }
 
