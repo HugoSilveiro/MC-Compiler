@@ -44,3 +44,36 @@ void print_terminal(Node *node){
 
 	printf("%s(%s)\n", NODE_NAME[node->node_type], node->value);
 }
+
+
+void print_symbol_table(Table * table)
+{
+	Symbol * symbol;
+	if(table->type == 0)
+	{
+		printf("==== Global Symbol Table ====\n");
+	}
+	else
+	{
+		printf("==== Function %s Symbol Table ====\n", table->name);
+	}
+
+	for(symbol = table->child;symbol=symbol->next)
+	{
+		print_symbol(symbol);
+	}
+}
+
+void print_symbol(Symbol * symbol)
+{
+	if(symbol->param==0)
+	{
+		printf("%s\t%s\n", symbol->name, symbol->type);
+	}
+	else
+	{
+		printf("%s\t%s\t%s\n", symbol->name, symbol->type, "param");
+	}
+
+	
+}
