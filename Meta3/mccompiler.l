@@ -23,6 +23,7 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 	#include "y.tab.h"
 	#include "structs.h"
 	#include "printer.h"
+	#include "semantics.h"
 	
 	int lineNumber = 1;
 	int columnNumber = 0;
@@ -196,13 +197,40 @@ int main(int argc, char* argv[])
 		{
 			treeFlag = 1;
 		}
+		else if(strcmp(argv[1], "-2") == 0)
+		{
+			yylex();
+		}
+		else if(strcmp(argv[1], "-s") == 0)
+		{
+			yyparse();
+			if(yacc_errors == 0)
+			{
+				//print_tables();
+				//print_tree(tree, 0);
+			}
+			
+		}
+
 
 
 
 	}
+	if(argv == 0)
+	{
+		flag = 1;
+		yylex();
+
+		if(yacc_errors == 0){
+			//function for semantics;
+			build_table(tree);
+
+		}
+	}
 	if(flag==0)
 	{
 		yyparse();
+
 		if(yacc_errors == 0 && treeFlag == 1)
 		{
 			print_tree(tree, 0);

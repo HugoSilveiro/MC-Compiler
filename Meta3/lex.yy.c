@@ -8,7 +8,7 @@
 #define FLEX_SCANNER
 #define YY_FLEX_MAJOR_VERSION 2
 #define YY_FLEX_MINOR_VERSION 5
-#define YY_FLEX_SUBMINOR_VERSION 35
+#define YY_FLEX_SUBMINOR_VERSION 39
 #if YY_FLEX_SUBMINOR_VERSION > 0
 #define FLEX_BETA
 #endif
@@ -161,7 +161,12 @@ typedef unsigned int flex_uint32_t;
 typedef struct yy_buffer_state *YY_BUFFER_STATE;
 #endif
 
-extern int yyleng;
+#ifndef YY_TYPEDEF_YY_SIZE_T
+#define YY_TYPEDEF_YY_SIZE_T
+typedef size_t yy_size_t;
+#endif
+
+extern yy_size_t yyleng;
 
 extern FILE *yyin, *yyout;
 
@@ -183,6 +188,13 @@ extern FILE *yyin, *yyout;
                     if ( yytext[yyl] == '\n' )\
                         --yylineno;\
             }while(0)
+    #define YY_LINENO_REWIND_TO(dst) \
+            do {\
+                const char *p;\
+                for ( p = yy_cp-1; p >= (dst); --p)\
+                    if ( *p == '\n' )\
+                        --yylineno;\
+            }while(0)
     
 /* Return all but the first "n" matched characters back to the input stream. */
 #define yyless(n) \
@@ -199,11 +211,6 @@ extern FILE *yyin, *yyout;
 	while ( 0 )
 
 #define unput(c) yyunput( c, (yytext_ptr)  )
-
-#ifndef YY_TYPEDEF_YY_SIZE_T
-#define YY_TYPEDEF_YY_SIZE_T
-typedef size_t yy_size_t;
-#endif
 
 #ifndef YY_STRUCT_YY_BUFFER_STATE
 #define YY_STRUCT_YY_BUFFER_STATE
@@ -222,7 +229,7 @@ struct yy_buffer_state
 	/* Number of characters read into yy_ch_buf, not including EOB
 	 * characters.
 	 */
-	int yy_n_chars;
+	yy_size_t yy_n_chars;
 
 	/* Whether we "own" the buffer - i.e., we know we created it,
 	 * and can realloc() it to grow it, and should free() it to
@@ -292,8 +299,8 @@ static YY_BUFFER_STATE * yy_buffer_stack = 0; /**< Stack as an array. */
 
 /* yy_hold_char holds the character lost when yytext is formed. */
 static char yy_hold_char;
-static int yy_n_chars;		/* number of characters read into yy_ch_buf */
-int yyleng;
+static yy_size_t yy_n_chars;		/* number of characters read into yy_ch_buf */
+yy_size_t yyleng;
 
 /* Points to current character in buffer. */
 static char *yy_c_buf_p = (char *) 0;
@@ -321,7 +328,7 @@ static void yy_init_buffer (YY_BUFFER_STATE b,FILE *file  );
 
 YY_BUFFER_STATE yy_scan_buffer (char *base,yy_size_t size  );
 YY_BUFFER_STATE yy_scan_string (yyconst char *yy_str  );
-YY_BUFFER_STATE yy_scan_bytes (yyconst char *bytes,int len  );
+YY_BUFFER_STATE yy_scan_bytes (yyconst char *bytes,yy_size_t len  );
 
 void *yyalloc (yy_size_t  );
 void *yyrealloc (void *,yy_size_t  );
@@ -711,6 +718,7 @@ char *yytext;
 	#include "y.tab.h"
 	#include "structs.h"
 	#include "printer.h"
+	#include "semantics.h"
 	
 	int lineNumber = 1;
 	int columnNumber = 0;
@@ -721,7 +729,7 @@ char *yytext;
 	extern Node *tree;
 	int flag = 0;
 
-#line 725 "lex.yy.c"
+#line 733 "lex.yy.c"
 
 #define INITIAL 0
 #define COMMENT 1
@@ -761,7 +769,7 @@ FILE *yyget_out (void );
 
 void yyset_out  (FILE * out_str  );
 
-int yyget_leng (void );
+yy_size_t yyget_leng (void );
 
 char *yyget_text (void );
 
@@ -909,11 +917,6 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 40 "mccompiler.l"
-
-
-#line 916 "lex.yy.c"
-
 	if ( !(yy_init) )
 		{
 		(yy_init) = 1;
@@ -940,6 +943,12 @@ YY_DECL
 		yy_load_buffer_state( );
 		}
 
+	{
+#line 41 "mccompiler.l"
+
+
+#line 951 "lex.yy.c"
+
 	while ( 1 )		/* loops until end-of-file is reached */
 		{
 		yy_cp = (yy_c_buf_p);
@@ -956,7 +965,7 @@ YY_DECL
 yy_match:
 		do
 			{
-			register YY_CHAR yy_c = yy_ec[YY_SC_TO_UI(*yy_cp)];
+			register YY_CHAR yy_c = yy_ec[YY_SC_TO_UI(*yy_cp)] ;
 			if ( yy_accept[yy_current_state] )
 				{
 				(yy_last_accepting_state) = yy_current_state;
@@ -986,7 +995,7 @@ yy_find_action:
 
 		if ( yy_act != YY_END_OF_BUFFER && yy_rule_can_match_eol[yy_act] )
 			{
-			int yyl;
+			yy_size_t yyl;
 			for ( yyl = 0; yyl < yyleng; ++yyl )
 				if ( yytext[yyl] == '\n' )
 					   
@@ -1007,321 +1016,321 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 42 "mccompiler.l"
+#line 43 "mccompiler.l"
 {
 									if(flag == 1)printf("AMP\n");
 									if(flag == 0)return AMP;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 45 "mccompiler.l"
+#line 46 "mccompiler.l"
 {
 									if(flag == 1)printf("AND\n");
 									if(flag == 0)return AND;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 48 "mccompiler.l"
+#line 49 "mccompiler.l"
 {
 									if(flag == 1)printf("ASSIGN\n");
 									if(flag == 0)return ASSIGN;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 51 "mccompiler.l"
+#line 52 "mccompiler.l"
 {
 									if(flag == 1)printf("AST\n");
 									if(flag == 0)return AST;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 54 "mccompiler.l"
+#line 55 "mccompiler.l"
 {
 									if(flag == 1)printf("CHAR\n");
 									if(flag == 0)return CHAR;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 57 "mccompiler.l"
+#line 58 "mccompiler.l"
 {
 									if(flag == 1)printf("COMMA\n");
 									if(flag == 0)return COMMA;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 60 "mccompiler.l"
+#line 61 "mccompiler.l"
 {
 									if(flag == 1)printf("DIV\n");
 									if(flag == 0)return DIV;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 63 "mccompiler.l"
+#line 64 "mccompiler.l"
 {
 									if(flag == 1)printf("ELSE\n");
 									if(flag == 0)return ELSE;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 66 "mccompiler.l"
+#line 67 "mccompiler.l"
 {
 									if(flag == 1)printf("EQ\n");
 									if(flag == 0)return EQ;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 70 "mccompiler.l"
+#line 71 "mccompiler.l"
 {	if(flag == 1)printf("FOR\n");
 									if(flag == 0)return FOR;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 72 "mccompiler.l"
+#line 73 "mccompiler.l"
 {
 									if(flag == 1)printf("GE\n");
 									if(flag == 0)return GE;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 76 "mccompiler.l"
+#line 77 "mccompiler.l"
 {	if(flag == 1)printf("GT\n");
 									if(flag == 0)return GT;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 78 "mccompiler.l"
+#line 79 "mccompiler.l"
 {
 									if(flag == 1)printf("IF\n");
 									if(flag == 0)return IF;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 81 "mccompiler.l"
+#line 82 "mccompiler.l"
 {
 									if(flag == 1)printf("INT\n");
 									if(flag == 0)return INT;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 84 "mccompiler.l"
+#line 85 "mccompiler.l"
 {
 									if(flag == 1)printf("LBRACE\n");
 									if(flag == 0)return LBRACE;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 87 "mccompiler.l"
+#line 88 "mccompiler.l"
 {
 									if(flag == 1)printf("LE\n");
 									if(flag == 0)return LE;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 90 "mccompiler.l"
+#line 91 "mccompiler.l"
 {
 									if(flag == 1)printf("LPAR\n");
 									if(flag == 0)return LPAR;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 93 "mccompiler.l"
+#line 94 "mccompiler.l"
 {
 									if(flag == 1)printf("LSQ\n");
 									if(flag == 0)return LSQ;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 96 "mccompiler.l"
+#line 97 "mccompiler.l"
 {
 									if(flag == 1)printf("LT\n");
 									if(flag == 0)return LT;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 99 "mccompiler.l"
+#line 100 "mccompiler.l"
 {
 									if(flag == 1)printf("MINUS\n");
 									if(flag == 0)return MINUS;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 102 "mccompiler.l"
+#line 103 "mccompiler.l"
 {
 									if(flag == 1)printf("MOD\n");
 									if(flag == 0)return MOD;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 105 "mccompiler.l"
+#line 106 "mccompiler.l"
 {
 									if(flag == 1)printf("NE\n");
 									if(flag == 0)return NE;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 108 "mccompiler.l"
+#line 109 "mccompiler.l"
 {
 									if(flag == 1)printf("NOT\n");
 									if(flag == 0)return NOT;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 111 "mccompiler.l"
+#line 112 "mccompiler.l"
 {
 									if(flag == 1)printf("OR\n");
 									if(flag == 0)return OR;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 114 "mccompiler.l"
+#line 115 "mccompiler.l"
 {
 									if(flag == 1)printf("PLUS\n");
 									if(flag == 0)return PLUS;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 117 "mccompiler.l"
+#line 118 "mccompiler.l"
 {
 									if(flag == 1)printf("RBRACE\n");
 									if(flag == 0)return RBRACE;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 120 "mccompiler.l"
+#line 121 "mccompiler.l"
 {
 									if(flag == 1)printf("RETURN\n");
 									if(flag == 0)return RETURN;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 123 "mccompiler.l"
+#line 124 "mccompiler.l"
 {
 									if(flag == 1)printf("RPAR\n");
 									if(flag == 0)return RPAR;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 126 "mccompiler.l"
+#line 127 "mccompiler.l"
 {
 									if(flag == 1)printf("RSQ\n");
 									if(flag == 0)return RSQ;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 129 "mccompiler.l"
+#line 130 "mccompiler.l"
 {
 									if(flag == 1)printf("SEMI\n");
 									if(flag == 0)return SEMI;}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 132 "mccompiler.l"
+#line 133 "mccompiler.l"
 {	if(flag == 1)printf("VOID\n");
 									if(flag == 0)return VOID;}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 134 "mccompiler.l"
+#line 135 "mccompiler.l"
 {
 																																																																if(flag == 1)printf("RESERVED(%s)\n", yytext);
 																																																																if(flag == 0){yylval.string = strdup(yytext);return RESERVED;}}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 139 "mccompiler.l"
+#line 140 "mccompiler.l"
 {	if(flag == 1)printf("ID(%s)\n", yytext);
 									if(flag == 0){yylval.string = strdup(yytext); return ID;}}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 142 "mccompiler.l"
+#line 143 "mccompiler.l"
 {	if(flag == 1)printf("INTLIT(%s)\n", yytext);
 									if(flag == 0){yylval.string = strdup(yytext); return INTLIT;}}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 145 "mccompiler.l"
+#line 146 "mccompiler.l"
 {	if(flag == 1)printf("STRLIT(%s)\n", yytext);
 									if(flag == 0){yylval.string = strdup(yytext); return STRLIT;}}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 148 "mccompiler.l"
+#line 149 "mccompiler.l"
 {	printf("Line %d, col %d: unterminated string constant\n", yylineno, (int)(columnNumber-yyleng+1));}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 150 "mccompiler.l"
+#line 151 "mccompiler.l"
 {	printf("Line %d, col %d: unterminated char constant\n", yylineno, (int)(columnNumber-yyleng+1));}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 152 "mccompiler.l"
+#line 153 "mccompiler.l"
 {	if(flag == 1)printf("CHRLIT(%s)\n", yytext);
 									if(flag == 0){yylval.string=strdup(yytext); return CHRLIT;}}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 155 "mccompiler.l"
+#line 156 "mccompiler.l"
 {	printf("Line %d, col %d: invalid string constant (%s)\n", yylineno, (int)(columnNumber-yyleng+1), yytext);}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 157 "mccompiler.l"
+#line 158 "mccompiler.l"
 {	printf("Line %d, col %d: invalid char constant (%s)\n", yylineno, (int)(columnNumber-yyleng+1), yytext);}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 159 "mccompiler.l"
+#line 160 "mccompiler.l"
 {	BEGIN (COMMENT); {	colComment = columnNumber-1;	}lineComment=yylineno;}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 160 "mccompiler.l"
+#line 161 "mccompiler.l"
 {	BEGIN (0);}
 	YY_BREAK
 case 43:
 /* rule 43 can match eol */
 YY_RULE_SETUP
-#line 161 "mccompiler.l"
+#line 162 "mccompiler.l"
 {	columnNumber = 0;}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 162 "mccompiler.l"
+#line 163 "mccompiler.l"
 {	;}
 	YY_BREAK
 case YY_STATE_EOF(COMMENT):
-#line 163 "mccompiler.l"
+#line 164 "mccompiler.l"
 {	printf("Line %d, col %d: unterminated comment\n", lineComment,  colComment); yyterminate();}
 	YY_BREAK
 case 45:
 /* rule 45 can match eol */
 YY_RULE_SETUP
-#line 165 "mccompiler.l"
+#line 166 "mccompiler.l"
 {	columnNumber= 0;}
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 167 "mccompiler.l"
+#line 168 "mccompiler.l"
 {	;}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 169 "mccompiler.l"
+#line 170 "mccompiler.l"
 {	;}
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 171 "mccompiler.l"
+#line 172 "mccompiler.l"
 {	printf("Line %d, col %d: illegal character (%s)\n", yylineno, columnNumber, yytext);}
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 174 "mccompiler.l"
+#line 175 "mccompiler.l"
 ECHO;
 	YY_BREAK
-#line 1325 "lex.yy.c"
+#line 1334 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1452,6 +1461,7 @@ case YY_STATE_EOF(INITIAL):
 			"fatal flex scanner internal error--no action found" );
 	} /* end of action switch */
 		} /* end of scanning one token */
+	} /* end of user's declarations */
 } /* end of yylex */
 
 /* yy_get_next_buffer - try to read in a new buffer
@@ -1507,21 +1517,21 @@ static int yy_get_next_buffer (void)
 
 	else
 		{
-			int num_to_read =
+			yy_size_t num_to_read =
 			YY_CURRENT_BUFFER_LVALUE->yy_buf_size - number_to_move - 1;
 
 		while ( num_to_read <= 0 )
 			{ /* Not enough room in the buffer - grow it. */
 
 			/* just a shorter name for the current buffer */
-			YY_BUFFER_STATE b = YY_CURRENT_BUFFER;
+			YY_BUFFER_STATE b = YY_CURRENT_BUFFER_LVALUE;
 
 			int yy_c_buf_p_offset =
 				(int) ((yy_c_buf_p) - b->yy_ch_buf);
 
 			if ( b->yy_is_our_buffer )
 				{
-				int new_size = b->yy_buf_size * 2;
+				yy_size_t new_size = b->yy_buf_size * 2;
 
 				if ( new_size <= 0 )
 					b->yy_buf_size += b->yy_buf_size / 8;
@@ -1552,7 +1562,7 @@ static int yy_get_next_buffer (void)
 
 		/* Read in more data. */
 		YY_INPUT( (&YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[number_to_move]),
-			(yy_n_chars), (size_t) num_to_read );
+			(yy_n_chars), num_to_read );
 
 		YY_CURRENT_BUFFER_LVALUE->yy_n_chars = (yy_n_chars);
 		}
@@ -1647,7 +1657,7 @@ static int yy_get_next_buffer (void)
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
 	yy_is_jam = (yy_current_state == 211);
 
-	return yy_is_jam ? 0 : yy_current_state;
+		return yy_is_jam ? 0 : yy_current_state;
 }
 
     static void yyunput (int c, register char * yy_bp )
@@ -1662,7 +1672,7 @@ static int yy_get_next_buffer (void)
 	if ( yy_cp < YY_CURRENT_BUFFER_LVALUE->yy_ch_buf + 2 )
 		{ /* need to shift things up to make room */
 		/* +2 for EOB chars. */
-		register int number_to_move = (yy_n_chars) + 2;
+		register yy_size_t number_to_move = (yy_n_chars) + 2;
 		register char *dest = &YY_CURRENT_BUFFER_LVALUE->yy_ch_buf[
 					YY_CURRENT_BUFFER_LVALUE->yy_buf_size + 2];
 		register char *source =
@@ -1715,7 +1725,7 @@ static int yy_get_next_buffer (void)
 
 		else
 			{ /* need more input */
-			int offset = (yy_c_buf_p) - (yytext_ptr);
+			yy_size_t offset = (yy_c_buf_p) - (yytext_ptr);
 			++(yy_c_buf_p);
 
 			switch ( yy_get_next_buffer(  ) )
@@ -1880,10 +1890,6 @@ static void yy_load_buffer_state  (void)
 	yyfree((void *) b  );
 }
 
-#ifndef __cplusplus
-extern int isatty (int );
-#endif /* __cplusplus */
-    
 /* Initializes or reinitializes a buffer.
  * This function is sometimes called more than once on the same buffer,
  * such as during a yyrestart() or at EOF.
@@ -1996,7 +2002,7 @@ void yypop_buffer_state (void)
  */
 static void yyensure_buffer_stack (void)
 {
-	int num_to_alloc;
+	yy_size_t num_to_alloc;
     
 	if (!(yy_buffer_stack)) {
 
@@ -2093,12 +2099,12 @@ YY_BUFFER_STATE yy_scan_string (yyconst char * yystr )
  * 
  * @return the newly allocated buffer state object.
  */
-YY_BUFFER_STATE yy_scan_bytes  (yyconst char * yybytes, int  _yybytes_len )
+YY_BUFFER_STATE yy_scan_bytes  (yyconst char * yybytes, yy_size_t  _yybytes_len )
 {
 	YY_BUFFER_STATE b;
 	char *buf;
 	yy_size_t n;
-	int i;
+	yy_size_t i;
     
 	/* Get memory for full buffer, including space for trailing EOB's. */
 	n = _yybytes_len + 2;
@@ -2180,7 +2186,7 @@ FILE *yyget_out  (void)
 /** Get the length of the current token.
  * 
  */
-int yyget_leng  (void)
+yy_size_t yyget_leng  (void)
 {
         return yyleng;
 }
@@ -2358,13 +2364,40 @@ int main(int argc, char* argv[])
 		{
 			treeFlag = 1;
 		}
+		else if(strcmp(argv[1], "-2") == 0)
+		{
+			yylex();
+		}
+		else if(strcmp(argv[1], "-s") == 0)
+		{
+			yyparse();
+			if(yacc_errors == 0)
+			{
+				//print_tables();
+				//print_tree(tree, 0);
+			}
+			
+		}
+
 
 
 
 	}
+	if(argv == 0)
+	{
+		flag = 1;
+		yylex();
+
+		if(yacc_errors == 0){
+			//function for semantics;
+			build_table(tree);
+
+		}
+	}
 	if(flag==0)
 	{
 		yyparse();
+
 		if(yacc_errors == 0 && treeFlag == 1)
 		{
 			print_tree(tree, 0);
