@@ -23,11 +23,8 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 	#include "y.tab.h"
 	#include "structs.h"
 	#include "printer.h"
-<<<<<<< HEAD
 	#include "semantics.h"
 	
-=======
->>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 	int lineNumber = 1;
 	int columnNumber = 0;
 	int colComment;
