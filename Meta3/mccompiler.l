@@ -23,7 +23,6 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 	#include "y.tab.h"
 	#include "structs.h"
 	#include "printer.h"
-	
 	int lineNumber = 1;
 	int columnNumber = 0;
 	int colComment;
@@ -32,6 +31,9 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 	extern int yacc_errors;
 	extern Node *tree;
 	int flag = 0;
+
+
+	Table *symbol_table = NULL;
 %}
 
 
@@ -198,11 +200,16 @@ int main(int argc, char* argv[])
 		}
 
 
-
 	}
 	if(flag==0)
 	{
 		yyparse();
+		
+
+		start_symbol_table();
+		print_symbol_table(symbol_table);
+
+
 		if(yacc_errors == 0 && treeFlag == 1)
 		{
 			print_tree(tree, 0);

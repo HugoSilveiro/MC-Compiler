@@ -3,10 +3,6 @@
 
 
 #include "structs.h"
-#include "printer.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
 
 
 Node * insert_node(Node_Type node_type);

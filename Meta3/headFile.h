@@ -117,7 +117,6 @@ void print_tree(Node *node, int level);
 void print_points(int n);
 void print_terminal(Node *node);
 
-
 Node * insert_node(Node_Type node_type);
 Node * insert_term_node(Node_Type node_type, char* value);
 void insert_child(Node * father, Node * child, int end);

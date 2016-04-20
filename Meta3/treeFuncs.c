@@ -1,9 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "printer.h"
+
 #include "treeFuncs.h"
-#include "structs.h"
 
 Node * insert_node(Node_Type node_type)
 {

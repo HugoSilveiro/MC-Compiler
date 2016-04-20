@@ -1,9 +1,7 @@
 
-
-#include "struct.h"
-
 typedef struct _Table{
 	int type;
+	char * name;
 	struct _Symbol *child;
 	struct _Table *next;
 } Table;

@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "structs.h"
 #include "printer.h"
 
 void print_tree(Node *node, int level){
@@ -58,7 +57,7 @@ void print_symbol_table(Table * table)
 		printf("==== Function %s Symbol Table ====\n", table->name);
 	}
 
-	for(symbol = table->child;symbol=symbol->next)
+	for(symbol = table->child;symbol; symbol=symbol->next)
 	{
 		print_symbol(symbol);
 	}
