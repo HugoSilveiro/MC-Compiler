@@ -2,6 +2,7 @@
 #define _PRINTER_H
 
 #include "structs.h"
+#include "symbolTable.h"
 
 /* list of names for the nodes of the abstract syntax tree */
 static const char *NODE_NAME[] = {
@@ -61,5 +62,6 @@ void print_tree(Node *node, int level);
 void print_points(int n);
 void print_terminal(Node *node);
 
-
+void print_symbol_table(Table * table);
+void print_symbol(Symbol * symbol);
 #endif

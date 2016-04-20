@@ -718,8 +718,11 @@ char *yytext;
 	#include "y.tab.h"
 	#include "structs.h"
 	#include "printer.h"
+<<<<<<< HEAD
 	#include "semantics.h"
 	
+=======
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 	int lineNumber = 1;
 	int columnNumber = 0;
 	int colComment;
@@ -729,7 +732,14 @@ char *yytext;
 	extern Node *tree;
 	int flag = 0;
 
+<<<<<<< HEAD
 #line 733 "lex.yy.c"
+=======
+
+	Table *symbol_table = NULL;
+
+#line 727 "lex.yy.c"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 
 #define INITIAL 0
 #define COMMENT 1
@@ -917,6 +927,14 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
+<<<<<<< HEAD
+=======
+#line 42 "mccompiler.l"
+
+
+#line 918 "lex.yy.c"
+
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 	if ( !(yy_init) )
 		{
 		(yy_init) = 1;
@@ -1016,321 +1034,524 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 43 "mccompiler.l"
+=======
+#line 44 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {
 									if(flag == 1)printf("AMP\n");
 									if(flag == 0)return AMP;}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 46 "mccompiler.l"
+=======
+#line 47 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {
 									if(flag == 1)printf("AND\n");
 									if(flag == 0)return AND;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 49 "mccompiler.l"
+=======
+#line 50 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {
 									if(flag == 1)printf("ASSIGN\n");
 									if(flag == 0)return ASSIGN;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 52 "mccompiler.l"
+=======
+#line 53 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {
 									if(flag == 1)printf("AST\n");
 									if(flag == 0)return AST;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 55 "mccompiler.l"
+=======
+#line 56 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {
 									if(flag == 1)printf("CHAR\n");
 									if(flag == 0)return CHAR;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 58 "mccompiler.l"
+=======
+#line 59 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {
 									if(flag == 1)printf("COMMA\n");
 									if(flag == 0)return COMMA;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 61 "mccompiler.l"
+=======
+#line 62 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {
 									if(flag == 1)printf("DIV\n");
 									if(flag == 0)return DIV;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 64 "mccompiler.l"
+=======
+#line 65 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {
 									if(flag == 1)printf("ELSE\n");
 									if(flag == 0)return ELSE;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 67 "mccompiler.l"
+=======
+#line 68 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {
 									if(flag == 1)printf("EQ\n");
 									if(flag == 0)return EQ;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 71 "mccompiler.l"
+=======
+#line 72 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {	if(flag == 1)printf("FOR\n");
 									if(flag == 0)return FOR;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 73 "mccompiler.l"
+=======
+#line 74 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {
 									if(flag == 1)printf("GE\n");
 									if(flag == 0)return GE;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 77 "mccompiler.l"
+=======
+#line 78 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {	if(flag == 1)printf("GT\n");
 									if(flag == 0)return GT;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 79 "mccompiler.l"
+=======
+#line 80 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {
 									if(flag == 1)printf("IF\n");
 									if(flag == 0)return IF;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 82 "mccompiler.l"
+=======
+#line 83 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {
 									if(flag == 1)printf("INT\n");
 									if(flag == 0)return INT;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 85 "mccompiler.l"
+=======
+#line 86 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {
 									if(flag == 1)printf("LBRACE\n");
 									if(flag == 0)return LBRACE;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 88 "mccompiler.l"
+=======
+#line 89 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {
 									if(flag == 1)printf("LE\n");
 									if(flag == 0)return LE;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 91 "mccompiler.l"
+=======
+#line 92 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {
 									if(flag == 1)printf("LPAR\n");
 									if(flag == 0)return LPAR;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 94 "mccompiler.l"
+=======
+#line 95 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {
 									if(flag == 1)printf("LSQ\n");
 									if(flag == 0)return LSQ;}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 97 "mccompiler.l"
+=======
+#line 98 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {
 									if(flag == 1)printf("LT\n");
 									if(flag == 0)return LT;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 100 "mccompiler.l"
+=======
+#line 101 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {
 									if(flag == 1)printf("MINUS\n");
 									if(flag == 0)return MINUS;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 103 "mccompiler.l"
+=======
+#line 104 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {
 									if(flag == 1)printf("MOD\n");
 									if(flag == 0)return MOD;}
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 106 "mccompiler.l"
+=======
+#line 107 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {
 									if(flag == 1)printf("NE\n");
 									if(flag == 0)return NE;}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 109 "mccompiler.l"
+=======
+#line 110 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {
 									if(flag == 1)printf("NOT\n");
 									if(flag == 0)return NOT;}
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 112 "mccompiler.l"
+=======
+#line 113 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {
 									if(flag == 1)printf("OR\n");
 									if(flag == 0)return OR;}
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 115 "mccompiler.l"
+=======
+#line 116 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {
 									if(flag == 1)printf("PLUS\n");
 									if(flag == 0)return PLUS;}
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 118 "mccompiler.l"
+=======
+#line 119 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {
 									if(flag == 1)printf("RBRACE\n");
 									if(flag == 0)return RBRACE;}
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 121 "mccompiler.l"
+=======
+#line 122 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {
 									if(flag == 1)printf("RETURN\n");
 									if(flag == 0)return RETURN;}
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 124 "mccompiler.l"
+=======
+#line 125 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {
 									if(flag == 1)printf("RPAR\n");
 									if(flag == 0)return RPAR;}
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 127 "mccompiler.l"
+=======
+#line 128 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {
 									if(flag == 1)printf("RSQ\n");
 									if(flag == 0)return RSQ;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 130 "mccompiler.l"
+=======
+#line 131 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {
 									if(flag == 1)printf("SEMI\n");
 									if(flag == 0)return SEMI;}
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 133 "mccompiler.l"
+=======
+#line 134 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {	if(flag == 1)printf("VOID\n");
 									if(flag == 0)return VOID;}
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 135 "mccompiler.l"
+=======
+#line 136 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {
 																																																																if(flag == 1)printf("RESERVED(%s)\n", yytext);
 																																																																if(flag == 0){yylval.string = strdup(yytext);return RESERVED;}}
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 140 "mccompiler.l"
+=======
+#line 141 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {	if(flag == 1)printf("ID(%s)\n", yytext);
 									if(flag == 0){yylval.string = strdup(yytext); return ID;}}
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 143 "mccompiler.l"
+=======
+#line 144 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {	if(flag == 1)printf("INTLIT(%s)\n", yytext);
 									if(flag == 0){yylval.string = strdup(yytext); return INTLIT;}}
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 146 "mccompiler.l"
+=======
+#line 147 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {	if(flag == 1)printf("STRLIT(%s)\n", yytext);
 									if(flag == 0){yylval.string = strdup(yytext); return STRLIT;}}
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 149 "mccompiler.l"
+=======
+#line 150 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {	printf("Line %d, col %d: unterminated string constant\n", yylineno, (int)(columnNumber-yyleng+1));}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 151 "mccompiler.l"
+=======
+#line 152 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {	printf("Line %d, col %d: unterminated char constant\n", yylineno, (int)(columnNumber-yyleng+1));}
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 153 "mccompiler.l"
+=======
+#line 154 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {	if(flag == 1)printf("CHRLIT(%s)\n", yytext);
 									if(flag == 0){yylval.string=strdup(yytext); return CHRLIT;}}
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 156 "mccompiler.l"
+=======
+#line 157 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {	printf("Line %d, col %d: invalid string constant (%s)\n", yylineno, (int)(columnNumber-yyleng+1), yytext);}
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 158 "mccompiler.l"
+=======
+#line 159 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {	printf("Line %d, col %d: invalid char constant (%s)\n", yylineno, (int)(columnNumber-yyleng+1), yytext);}
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 160 "mccompiler.l"
+=======
+#line 161 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {	BEGIN (COMMENT); {	colComment = columnNumber-1;	}lineComment=yylineno;}
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 161 "mccompiler.l"
+=======
+#line 162 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {	BEGIN (0);}
 	YY_BREAK
 case 43:
 /* rule 43 can match eol */
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 162 "mccompiler.l"
+=======
+#line 163 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {	columnNumber = 0;}
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 163 "mccompiler.l"
 {	;}
 	YY_BREAK
 case YY_STATE_EOF(COMMENT):
 #line 164 "mccompiler.l"
+=======
+#line 164 "mccompiler.l"
+{	;}
+	YY_BREAK
+case YY_STATE_EOF(COMMENT):
+#line 165 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {	printf("Line %d, col %d: unterminated comment\n", lineComment,  colComment); yyterminate();}
 	YY_BREAK
 case 45:
 /* rule 45 can match eol */
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 166 "mccompiler.l"
+=======
+#line 167 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {	columnNumber= 0;}
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 168 "mccompiler.l"
+=======
+#line 169 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {	;}
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 170 "mccompiler.l"
+=======
+#line 171 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {	;}
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 172 "mccompiler.l"
+=======
+#line 173 "mccompiler.l"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 {	printf("Line %d, col %d: illegal character (%s)\n", yylineno, columnNumber, yytext);}
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
+<<<<<<< HEAD
 #line 175 "mccompiler.l"
 ECHO;
 	YY_BREAK
 #line 1334 "lex.yy.c"
+=======
+#line 176 "mccompiler.l"
+ECHO;
+	YY_BREAK
+#line 1327 "lex.yy.c"
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2337,7 +2558,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 174 "mccompiler.l"
+#line 176 "mccompiler.l"
 
 
 
@@ -2382,6 +2603,7 @@ int main(int argc, char* argv[])
 
 
 
+<<<<<<< HEAD
 	}
 	if(argv == 0)
 	{
@@ -2393,10 +2615,20 @@ int main(int argc, char* argv[])
 			build_table(tree);
 
 		}
+=======
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 	}
 	if(flag==0)
 	{
 		yyparse();
+<<<<<<< HEAD
+=======
+		
+
+		start_symbol_table();
+		print_symbol_table(symbol_table);
+
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 
 		if(yacc_errors == 0 && treeFlag == 1)
 		{

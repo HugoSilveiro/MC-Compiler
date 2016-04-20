@@ -1,10 +1,12 @@
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
-#include "struct.h"
-
+#include "printer.h"
 #define DEBUG 1
+
+extern Table * symbol_table;
 
 void start_symbol_table()
 {
@@ -56,7 +58,6 @@ void insert_table(int type)
 	{
 		symbol_table = table;
 	}
-	return table;
 }
 
 //function to create symbol without attaching it to any table
@@ -64,7 +65,7 @@ Symbol * create_symbol(char *name, char * type, int param)
 {
 	if(DEBUG)
 	{
-		printf("[create symbol] name: %s | type: %s | param: %s\n", name, type, param);
+		printf("[create symbol] name: %s | type: %s | param: %d\n", name, type, param);
 	}
 	Symbol * symbol = (Symbol *) malloc(sizeof(Symbol));
 
@@ -72,7 +73,7 @@ Symbol * create_symbol(char *name, char * type, int param)
 	symbol->type = type;
 	symbol->param = param;
 
-	symbol->next = NULL,
+	symbol->next = NULL;
 	return symbol;
 }
 
@@ -117,7 +118,7 @@ Symbol * search_symbol(char *name, Table * table)
 		}
 	}
 
-	return NULL,
+	return NULL;
 }
 
 //function to search for a specific table

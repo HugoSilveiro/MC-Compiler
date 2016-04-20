@@ -23,8 +23,11 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 	#include "y.tab.h"
 	#include "structs.h"
 	#include "printer.h"
+<<<<<<< HEAD
 	#include "semantics.h"
 	
+=======
+>>>>>>> 8fcee36bac3b1e5135fd1342aa4c4b2bf3b58b43
 	int lineNumber = 1;
 	int columnNumber = 0;
 	int colComment;
@@ -33,6 +36,9 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 	extern int yacc_errors;
 	extern Node *tree;
 	int flag = 0;
+
+
+	Table *symbol_table = NULL;
 %}
 
 
@@ -206,12 +212,12 @@ int main(int argc, char* argv[])
 			yyparse();
 			if(yacc_errors == 0)
 			{
+				start_symbol_table();
 				//print_tables();
 				//print_tree(tree, 0);
 			}
 			
 		}
-
 
 
 
@@ -223,13 +229,19 @@ int main(int argc, char* argv[])
 
 		if(yacc_errors == 0){
 			//function for semantics;
+			start_symbol_table();
 			build_table(tree);
 
 		}
 	}
 	if(flag==0)
 	{
-		yyparse();
+		yyparse();		
+
+		start_symbol_table();
+		print_symbol_table(symbol_table);
+
+
 
 		if(yacc_errors == 0 && treeFlag == 1)
 		{
