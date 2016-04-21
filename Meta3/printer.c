@@ -45,8 +45,20 @@ void print_terminal(Node *node){
 }
 
 
-void print_symbol_table(Table * table)
+void print_symbol_table(Table * symbol_table)
 {
+
+	Table * table;
+
+	for(table = symbol_table;table;table = table->next)
+	{
+		print_table(table);
+	}
+}
+
+void print_table(Table * table)
+{
+
 	Symbol * symbol;
 	if(table->type == 0)
 	{
@@ -61,6 +73,7 @@ void print_symbol_table(Table * table)
 	{
 		print_symbol(symbol);
 	}
+	printf("\n");
 }
 
 void print_symbol(Symbol * symbol)

@@ -16,7 +16,7 @@ typedef struct _Symbol{
 
 
 void start_symbol_table();
-void insert_table(int type);
+Table * insert_table(int type, char * name);
 Symbol * create_symbol(char *name, char * type, int param);
 void insert_symbol(Table * table, Symbol * symbol);
 Symbol * search_symbol(char *name, Table * table);

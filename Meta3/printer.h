@@ -63,5 +63,6 @@ void print_points(int n);
 void print_terminal(Node *node);
 
 void print_symbol_table(Table * table);
+void print_table(Table * table);
 void print_symbol(Symbol * symbol);
 #endif
