@@ -240,8 +240,6 @@ int main(int argc, char* argv[])
 		build_table(tree);
 		print_symbol_table(symbol_table);
 
-
-
 		if(yacc_errors == 0 && treeFlag == 1)
 		{
 			print_tree(tree, 0);

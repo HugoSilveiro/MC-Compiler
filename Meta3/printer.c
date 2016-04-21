@@ -60,6 +60,7 @@ void print_table(Table * table)
 {
 
 	Symbol * symbol;
+	printf("TYPE: %d \n", table->type);
 	if(table->type == 0)
 	{
 		printf("==== Global Symbol Table ====\n");

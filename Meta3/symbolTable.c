@@ -133,7 +133,7 @@ Table * search_table(char * name)
 
 	Table * aux;
 	
-	for(aux = symbol_table->next;aux;aux->next)
+	for(aux = symbol_table;aux; aux= aux->next)
 	{
 		if(strcmp(aux->name, name)==0)
 		{

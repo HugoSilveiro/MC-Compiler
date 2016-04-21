@@ -8,9 +8,6 @@
 extern Table * symbol_table;
 Table * current_trable;
 
-void check_node(Node* tree);
-char * get_name(Node* tree);
-char * get_type(Node* tree);
 #define DEBUG 1
 
 int build_table(Node* tree)
@@ -18,15 +15,12 @@ int build_table(Node* tree)
 	if(DEBUG){
 		printf("build_table\n");
 	}
-	Node* temp = tree;
+
+	Node* temp = tree->child;
 	while(temp != NULL)
 	{
 		check_node(temp);
-		if(temp->brother != NULL)
-		{
-			temp = temp->brother;
-		}
-		
+		temp = temp->brother;
 	}
 	
 }
@@ -112,23 +106,34 @@ char * get_type(Node* tree)
 }
 
 
-void insert_function_declaration(Node * tree)
+void insert_function_declaration(Node * node)
 {
+
 	if(DEBUG)
 	{
-		printf("[insert_function_declaration] Node_value: %s \n", tree->value);
+		printf("[insert_function_declaration]\n");
 	}
+	//get_param_list(node);
+	
+
+	Symbol * symbol; 
 
 	//inserir o symbolo na tabela global
+	Table * global = search_table("global");
+
+
+	symbol = create_symbol(get_function_name(node), get_function_typespec(node), 0);
+	insert_symbol(global, symbol);
 
 	//criar uma tabela nova
-	//Table * aux;
-
+	Table * aux;
+	
 	//inserir essa tabela `a tabela de simbolos
-	//aux = insert_table(1, tree->value);
+	aux = insert_table( 1, get_function_name(node));
 
 	//inserir o simbolo de return
-
+	symbol = create_symbol("return", get_function_typespec(node), 0);
+	insert_symbol(aux, symbol);
 	//inserir os simbolos da lista de parametros
 
 	/*
@@ -136,4 +141,75 @@ void insert_function_declaration(Node * tree)
 	
 	*/
 
+}
+
+void get_param_list(Node * node)
+{
+	Node* temp = node->child;
+	Node* found= NULL;
+	while(temp != NULL){
+		if(strcmp(NODE_NAME[temp->node_type], "ParamList") == 0){
+			found = temp;
+		}
+		temp = temp->brother;
+	}
+
+	if(found!=NULL)
+	{
+		
+	}
+
+
+}
+
+//get function name on function declaration
+char * get_function_name(Node * node)
+{
+	Node* temp = node->child;
+	while(temp != NULL){
+		if(strcmp(NODE_NAME[temp->node_type], "Id") == 0){
+			return temp->value;
+		}
+		temp = temp->brother;
+	}
+	return NULL;
+}
+
+//get typespec-> falta tratar dos deref
+char * get_function_typespec(Node * node)
+{
+
+	if(DEBUG)
+	{
+		printf("[get_function_typespec]\n");
+	}
+
+	char * value;
+	Node * temp = node->child;
+
+	while(temp != NULL){
+		if(strcmp(NODE_NAME[temp->node_type], "IntLit") == 0)
+		{
+			strcpy(value, "int");
+		}
+		else if(strcmp(NODE_NAME[temp->node_type], "Char") == 0)
+		{
+			strcpy(value, "char");
+		}
+		else if(strcmp(NODE_NAME[temp->node_type], "Int") == 0)
+		{
+			strcpy(value, "int");
+		}
+		else
+		{
+			//TODO ASTERISK...
+			if(DEBUG)
+			{
+				printf("[élse on typespec] Node_type: %s \n", NODE_NAME[temp->node_type]);
+			}
+		}
+		temp = temp->brother;
+	}
+
+	return value;
 }
