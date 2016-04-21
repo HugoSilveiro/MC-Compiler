@@ -54,7 +54,7 @@ Table * insert_table(int type, char * name)
 		{
 			aux_before = aux;
 		}
-		aux_before = table;
+		aux_before->next = table;
 	}
 	else
 	{
