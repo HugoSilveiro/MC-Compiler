@@ -13,7 +13,7 @@ void start_symbol_table()
 	Symbol *symbol ;
 	Table * aux;
 	//Tabela Global
-	aux = insert_table(0, NULL);
+	aux = insert_table(0, "global");
 	//iniciar a funçao atoi
 	symbol = create_symbol("atoi", "int(char*)", 0);
 	insert_symbol(aux, symbol);
@@ -132,5 +132,18 @@ Table * search_table(char * name)
 		printf("[search_table] name: %s\n", name);
 
 	Table * aux;
-	//TODO
+	
+	for(aux = symbol_table->next;aux;aux->next)
+	{
+		if(strcmp(aux->name, name)==0)
+		{
+			if(DEBUG)
+			{
+				printf("[Table Found] name: %s\n", name);
+			}
+
+			return aux;
+		}
+	}
+
 }
