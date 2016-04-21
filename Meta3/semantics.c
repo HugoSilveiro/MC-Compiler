@@ -15,6 +15,9 @@ char * get_type(Node* tree);
 
 int build_table(Node* tree)
 {
+	if(DEBUG){
+		printf("build_table\n");
+	}
 	Node* temp = tree->child;
 	while(temp != NULL)
 	{

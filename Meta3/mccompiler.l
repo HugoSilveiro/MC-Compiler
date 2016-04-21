@@ -226,6 +226,7 @@ int main(int argc, char* argv[])
 
 		if(yacc_errors == 0){
 			//function for semantics;
+
 			start_symbol_table();
 			build_table(tree);
 
