@@ -121,29 +121,28 @@ void insert_function_declaration(Node * node)
 	//inserir o symbolo na tabela global
 	Table * global = search_table("global");
 
-
+	//inserir o typespec concatenado com os parametros...
 	symbol = create_symbol(get_function_name(node), get_function_typespec(node), 0);
 	insert_symbol(global, symbol);
 
 	//criar uma tabela nova
 	Table * aux;
 	
-	//inserir essa tabela `a tabela de simbolos
-	aux = insert_table( 1, get_function_name(node));
+	//inserir essa tabela à tabela de simbolos
+	aux = insert_table(1, get_function_name(node));
 
 	//inserir o simbolo de return
 	symbol = create_symbol("return", get_function_typespec(node), 0);
 	insert_symbol(aux, symbol);
-	//inserir os simbolos da lista de parametros
 
-	/*
+	get_param_list_global(node, global, get_function_name(node));
+	//inserir os simbolos da lista de parametros
+	//inserir os parametros como symbolos
 	
-	
-	*/
 
 }
 
-void get_param_list(Node * node)
+void get_param_list_global(Node * node, Table* global, char * return_value)
 {
 	Node* temp = node->child;
 	Node* found= NULL;
@@ -154,11 +153,15 @@ void get_param_list(Node * node)
 		temp = temp->brother;
 	}
 
-	if(found!=NULL)
-	{
-		
-	}
 
+	temp = found->child;
+	while(temp!=NULL)
+	{
+		if(strcmp(NODE_NAME[temp->node_type], "ParamDeclaration") == 0){
+			//printf("param type:%s \n", get_function_typespec(temp));
+		}
+		temp = temp->brother;
+	} 
 
 }
 
@@ -179,12 +182,8 @@ char * get_function_name(Node * node)
 char * get_function_typespec(Node * node)
 {
 
-	if(DEBUG)
-	{
-		printf("[get_function_typespec]\n");
-	}
 
-	char * value;
+	char * value ;
 	Node * temp = node->child;
 
 	while(temp != NULL){
@@ -206,6 +205,7 @@ char * get_function_typespec(Node * node)
 			if(DEBUG)
 			{
 				printf("[élse on typespec] Node_type: %s \n", NODE_NAME[temp->node_type]);
+				
 			}
 		}
 		temp = temp->brother;
