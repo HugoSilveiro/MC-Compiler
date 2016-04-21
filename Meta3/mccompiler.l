@@ -24,7 +24,6 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 	#include "structs.h"
 	#include "printer.h"
 	#include "semantics.h"
-	#include "semantics.c"
 	
 	int lineNumber = 1;
 	int columnNumber = 0;
@@ -237,6 +236,7 @@ int main(int argc, char* argv[])
 		yyparse();		
 
 		start_symbol_table();
+		build_table(tree);
 		print_symbol_table(symbol_table);
 
 
