@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include "semantics.h"
 #include "printer.h"
@@ -167,8 +168,8 @@ void get_param_list_function(Node * node, Table* function)
 
 void get_param_declaration(Node * node, Table *function)
 {
-	char * type;
-	char * id;
+	char * type ;
+	char * id ;
 	Node * temp;
 	Symbol * symbol = NULL;
 	temp = node->child;
@@ -179,21 +180,25 @@ void get_param_declaration(Node * node, Table *function)
 		if(strcmp(NODE_NAME[temp->node_type], "IntLit") == 0)
 		{
 			//memset(value, '\0', sizeof("int"));
+			type = (char*)malloc(sizeof(char)*4);
 			strcpy(type, "int");
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Char") == 0)
 		{
 			//memset(value, '\0', sizeof("char"));
+			type = (char*)malloc(sizeof(char)*5);
 			strcpy(type, "char");
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Int") == 0)
 		{
+			type = (char*)malloc(sizeof(char)*3);
 			//memset(value, '\0', sizeof("int"));
 			strcpy(type, "int");
 		}
 		//falta tratar o asterisco
 		else
 		{
+			id = (char*)malloc(sizeof(temp->value));
 			strcpy(id, temp->value);
 		}
 		temp = temp->brother;

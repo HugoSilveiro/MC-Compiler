@@ -69,7 +69,7 @@ void print_table(Table * table)
 		printf("==== Function %s Symbol Table ====\n", table->name);
 	}
 
-	for(symbol = table->child;symbol; symbol=symbol->next)
+	for(symbol = table->child; symbol; symbol=symbol->next)
 	{
 		print_symbol(symbol);
 	}
