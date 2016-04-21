@@ -37,6 +37,10 @@ void check_node(Node* tree)
 		param = 0;
 		insert_symbol(symbol_table, symbol);
 	}
+	else if(strcmp("FunctionDeclaration", NODE_NAME[tree->node_type]))
+	{
+		insert_function_declaration(tree);
+	}
 }
 
 char * get_name(Node* tree)
@@ -56,4 +60,31 @@ char * get_type(Node* tree)
 		}
 		else if()
 	}
+}
+
+
+void insert_function_declaration(Node * tree)
+{
+	if(DEBUG)
+	{
+		printf("[insert_function_declaration] Node_value: %s \n", tree->value);
+	}
+
+	//inserir o symbolo na tabela global
+
+	//criar uma tabela nova
+	//Table * aux;
+
+	//inserir essa tabela `a tabela de simbolos
+	//aux = insert_table(1, tree->value);
+
+	//inserir o simbolo de return
+
+	//inserir os simbolos da lista de parametros
+
+	/*
+	
+	
+	*/
+
 }
