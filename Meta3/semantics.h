@@ -13,3 +13,6 @@ void get_param_list_global(Node * node, Table* global, char * return_value);
 
 void get_param_list_function(Node * node, Table* function);
 void get_param_declaration(Node * node, Table *function);
+
+char * get_param_decl(Node * node);
+char * get_param_list_concatenated_function(Node * node);
