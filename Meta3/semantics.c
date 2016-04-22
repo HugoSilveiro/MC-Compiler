@@ -123,26 +123,33 @@ void insert_function_declaration(Node * node)
 	Table * global = search_table("global");
 
 	//inserir o typespec concatenado com os parametros...
-	char params_concat[300];
-	char temp1[100];
-	char temp2[100];
-	strcpy(temp1, get_function_typespec(node));
-	strcpy(temp2, get_param_list_concatenated_function(node));
-	
-	snprintf(params_concat, 300,"%s%s" , temp1, temp2);
-	printf("params_concat: %s\n", params_concat);
+	char *params_concat;
+	char *func_type;
+	func_type = strdup(get_function_typespec(node)); 
 
-	symbol = create_symbol(get_function_name(node), params_concat, 0);
+	char *param_lists;
+	param_lists = strdup(get_param_list_concatenated_function(node));
+
+	params_concat = (char*) malloc(sizeof(func_type)+sizeof(param_lists));
+	sprintf(params_concat,"%s%s" , func_type, param_lists);
+
+	//printf("params_concat: %s\n", params_concat);
+
+	//function name:
+	char * func_name;
+	func_name = strdup(get_function_name(node));
+
+	symbol = create_symbol(func_name, params_concat, 0);
 	insert_symbol(global, symbol);
 
 	//criar uma tabela nova
 	Table * aux;
 	
 	//inserir essa tabela à tabela de simbolos
-	aux = insert_table(1, get_function_name(node));
+	aux = insert_table(1, func_name);
 
 	//inserir o simbolo de return
-	symbol = create_symbol("return", get_function_typespec(node), 0);
+	symbol = create_symbol("return", func_type, 0);
 	insert_symbol(aux, symbol);
 
 
