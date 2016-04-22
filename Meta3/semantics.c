@@ -114,8 +114,7 @@ void insert_function_declaration(Node * node)
 	{
 		printf("[insert_function_declaration]\n");
 	}
-	//get_param_list(node);
-	
+
 
 	Symbol * symbol; 
 
@@ -123,22 +122,26 @@ void insert_function_declaration(Node * node)
 	Table * global = search_table("global");
 
 	//inserir o typespec concatenado com os parametros...
-	char *params_concat;
+
+	//variavel para guardar o tipo de retorno da função
 	char *func_type;
 	func_type = strdup(get_function_typespec(node)); 
 
+	//variavel para guardar a lista de parametros no formato (%s,...,)
 	char *param_lists;
 	param_lists = strdup(get_param_list_concatenated_function(node));
 
+	//variavel para guardar os parametros no formato return(%s,...,);
+	char *params_concat;
 	params_concat = (char*) malloc(sizeof(func_type)+sizeof(param_lists));
 	sprintf(params_concat,"%s%s" , func_type, param_lists);
 
-	//printf("params_concat: %s\n", params_concat);
 
 	//function name:
 	char * func_name;
 	func_name = strdup(get_function_name(node));
 
+	//criação do simbolo para a tabela global
 	symbol = create_symbol(func_name, params_concat, 0);
 	insert_symbol(global, symbol);
 
