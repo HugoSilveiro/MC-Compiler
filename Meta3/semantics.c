@@ -218,12 +218,12 @@ void insert_function_definition(Node * node)
 	else
 	{
 		////////
-
+		printf("[Insertion on function definition]\n");
 		
-	Symbol * symbol;
+		Symbol * symbol;
 
-	//inserir o symbolo na tabela global
-	Table * global = search_table("global");
+		//inserir o symbolo na tabela global
+		Table * global = search_table("global");
 
 
 		//inserir o typespec concatenado com os parametros...
@@ -267,8 +267,9 @@ void insert_function_definition(Node * node)
 		//inserir os parametros como symbolos
 		get_param_list_function(node, aux1);
 
-		current_table = aux;
+		current_table = aux1;
 		insert_function_funcBody(node);
+		
 		current_table = NULL;
 	}
 	
