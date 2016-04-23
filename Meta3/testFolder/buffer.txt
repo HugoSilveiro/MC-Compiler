@@ -1,5 +1,5 @@
 
 int main(int argc, char **argv){
-  int *a;
-char *buffer[20];
+  int a,b;
+char buffer[20];
 }
