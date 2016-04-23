@@ -66,6 +66,7 @@ Table * insert_table(int type, char * name)
 //function to create symbol without attaching it to any table
 Symbol * create_symbol(char *name, char * type, int param)
 {
+
 	if(DEBUG)
 	{
 		printf("[create symbol] name: %s | type: %s | param: %d\n", name, type, param);
@@ -110,7 +111,7 @@ Symbol * search_symbol(char *name, Table * table)
 
 	if(DEBUG)
 		printf("[search_symbol] name: %s\n", name);
-	
+
 	Symbol *aux;
 	for(aux = table->child; aux; aux = aux->next)
 	{
@@ -118,7 +119,7 @@ Symbol * search_symbol(char *name, Table * table)
 		{
 			if(DEBUG)
 				printf("[Symbol found] name: %s\n", name);
-			return aux;	
+			return aux;
 		}
 	}
 
@@ -132,7 +133,7 @@ Table * search_table(char * name)
 		printf("[search_table] name: %s\n", name);
 
 	Table * aux;
-	
+
 	for(aux = symbol_table;aux; aux= aux->next)
 	{
 		if(strcmp(aux->name, name)==0)

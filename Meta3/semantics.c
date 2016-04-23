@@ -23,7 +23,7 @@ int build_table(Node* tree)
 		check_node(temp);
 		temp = temp->brother;
 	}
-	
+
 }
 
 
@@ -35,7 +35,9 @@ void check_node(Node* tree)
 	if(strcmp("ArrayDeclaration", NODE_NAME[tree->node_type]) == 0)
 	{
 		strcpy(name, get_name(tree));
+		printf("name: %s\n", name);
 		strcpy(type, get_type(tree));
+		printf("type: %s\n", type);
 		param = 0;
 		symbol = create_symbol(name, type, param);
 		insert_symbol(symbol_table, symbol);
@@ -66,10 +68,13 @@ void check_node(Node* tree)
 
 char * get_name(Node* tree)
 {
+	printf("get_name\n");
 	Node* temp = tree->child;
 	while(temp != NULL){
-		if(strcmp(NODE_NAME[tree->child->node_type], "Id") == 0){
-			return tree->child->value;
+		printf("%s\n", NODE_NAME[temp->node_type]);
+		if(strcmp(NODE_NAME[temp->node_type], "Id") == 0){
+			printf("%s\n", temp->value);
+			return temp->value;
 		}
 		if(temp->brother != NULL)
 		{
@@ -80,27 +85,26 @@ char * get_name(Node* tree)
 }
 char * get_type(Node* tree)
 {
+	printf("get_type\n");
 	Node* temp = tree->child;
 	char value[10];
 	char type[10];
 	char* finalType;
 	while(temp != NULL){
-		if(strcmp(NODE_NAME[tree->child->node_type], "IntLit") == 0)
+		printf("%s\n", NODE_NAME[temp->node_type]);
+		if(strcmp(NODE_NAME[temp->node_type], "IntLit") == 0)
 		{
-			strcpy(value, tree->child->value);
+			strcpy(value, temp->value);
 		}
-		else if(strcmp(NODE_NAME[tree->child->node_type], "Char") == 0)
+		else if(strcmp(NODE_NAME[temp->node_type], "Char") == 0)
 		{
-			strcpy(type, NODE_NAME[tree->child->node_type]);
+			strcpy(type, NODE_NAME[temp->node_type]);
 		}
-		else if(strcmp(NODE_NAME[tree->child->node_type], "Int") == 0)
+		else if(strcmp(NODE_NAME[temp->node_type], "Int") == 0)
 		{
-			strcpy(type, NODE_NAME[tree->child->node_type]);
+			strcpy(type, NODE_NAME[temp->node_type]);
 		}
-		if(temp->brother != NULL)
-		{
-			temp = temp->brother;
-		}
+		temp = temp->brother;
 	}
 	sprintf(finalType, "%s[%s]", type, value);
 	return finalType;
@@ -116,7 +120,7 @@ void insert_function_declaration(Node * node)
 	}
 
 
-	Symbol * symbol; 
+	Symbol * symbol;
 
 	//inserir o symbolo na tabela global
 	Table * global = search_table("global");
@@ -125,7 +129,7 @@ void insert_function_declaration(Node * node)
 
 	//variavel para guardar o tipo de retorno da função
 	char *func_type;
-	func_type = strdup(get_function_typespec(node)); 
+	func_type = strdup(get_function_typespec(node));
 
 	//variavel para guardar a lista de parametros no formato (%s,...,)
 	char *param_lists;
@@ -147,7 +151,7 @@ void insert_function_declaration(Node * node)
 
 	//criar uma tabela nova
 	Table * aux;
-	
+
 	//inserir essa tabela à tabela de simbolos
 	aux = insert_table(1, func_name);
 
@@ -159,7 +163,7 @@ void insert_function_declaration(Node * node)
 	//inserir os simbolos da lista de parametros
 	//inserir os parametros como symbolos
 	get_param_list_function(node, aux);
-	
+
 
 }
 
@@ -184,7 +188,7 @@ char * get_param_list_concatenated_function(Node * node)
 	while(temp!=NULL)
 	{
 		if(strcmp(NODE_NAME[temp->node_type], "ParamDeclaration") == 0){
-			
+
 			if(i == 0)
 			{
 				cx = snprintf(aux, 300,"(%s", get_param_decl(temp));
@@ -197,7 +201,7 @@ char * get_param_list_concatenated_function(Node * node)
 		}
 
 		temp = temp->brother;
-	} 
+	}
 	snprintf(aux + cx,300, ")");
 	return aux;
 }
@@ -210,7 +214,7 @@ char * get_param_decl(Node * node)
 	temp = node->child;
 	while(temp!=NULL)
 	{
-		
+
 		if(strcmp(NODE_NAME[temp->node_type], "IntLit") == 0)
 		{
 			//memset(value, '\0', sizeof("int"));
@@ -257,7 +261,7 @@ void get_param_list_function(Node * node, Table* function)
 			get_param_declaration(temp, function);
 		}
 		temp = temp->brother;
-	} 
+	}
 
 }
 
@@ -271,7 +275,7 @@ void get_param_declaration(Node * node, Table *function)
 	while(temp!=NULL)
 	{
 		printf("[param_declaration] %s\n", NODE_NAME[temp->node_type]);
-		
+
 		if(strcmp(NODE_NAME[temp->node_type], "IntLit") == 0)
 		{
 			//memset(value, '\0', sizeof("int"));
@@ -347,7 +351,7 @@ char * get_function_typespec(Node * node)
 			if(DEBUG)
 			{
 				printf("[élse on typespec] Node_type: %s \n", NODE_NAME[temp->node_type]);
-				
+
 			}
 		}
 		temp = temp->brother;
