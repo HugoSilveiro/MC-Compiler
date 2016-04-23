@@ -7,7 +7,7 @@
 #include "printer.h"
 
 extern Table * symbol_table;
-Table * current_table;
+Table * current_table = NULL;
 
 #define DEBUG 1
 
@@ -49,7 +49,6 @@ void check_node(Node* tree)
 
 	else if(strcmp("FuncDeclaration", NODE_NAME[tree->node_type]) == 0)
 	{
-		Table * aux;
 		insert_function_declaration(tree);
 	}
 	else if(strcmp("TypeSpec", NODE_NAME[tree->node_type]) == 0)
@@ -205,18 +204,27 @@ void insert_function_definition(Node * node)
 		printf("[insert_function_definition]\n");	
 	}	
 
-	Symbol * symbol;
+	//function name:
+	char * func_name;
+	func_name = strdup(get_function_name(node));
 
-	printf("%s\n", NODE_NAME[node->node_type]);
+	Table *aux;
+	aux = search_table(func_name);
 
-	Node * temp= node->child;
-	
-	
+	aux->defined = 1;
+
+	current_table = aux;
+
 	insert_function_declaration(node);
 	insert_function_funcBody(node);
 	
+	current_table = NULL;
 
 
+
+
+	
+	
 }
 
 void insert_function_funcBody(Node * node)
@@ -275,25 +283,28 @@ void insert_function_declaration(Node * node)
 	symbol = create_symbol(func_name, params_concat, 0);
 	insert_symbol(global, symbol);
 
-	//criar uma tabela nova
-	Table * aux;
+	Table * find = search_table(func_name);
+	if(find==NULL)
+	{
+		//criar uma tabela nova
+		Table * aux;
 
-	//inserir essa tabela à tabela de simbolos
-	aux = insert_table(1, func_name);
-	current_table = aux;
+		//inserir essa tabela à tabela de simbolos
+		aux = insert_table(1, func_name);
 
-	//function declarated
-	printf("aux declaration\n");
-	aux->declared = 1;
+		//function declarated
+		printf("aux declaration\n");
+		aux->declared = 1;
 
-	//inserir o simbolo de return
-	symbol = create_symbol("return", func_type, 0);
-	insert_symbol(aux, symbol);
+		//inserir o simbolo de return
+		symbol = create_symbol("return", func_type, 0);
+		insert_symbol(aux, symbol);
 
 
-	//inserir os simbolos da lista de parametros
-	//inserir os parametros como symbolos
-	get_param_list_function(node, aux);
+		//inserir os simbolos da lista de parametros
+		//inserir os parametros como symbolos
+		get_param_list_function(node, aux);
+	}
 
 
 }

@@ -1,1 +1,3 @@
 int a,b,c;
+char d,e,f;
+char *buffer[20];
