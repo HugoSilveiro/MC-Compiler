@@ -8,10 +8,11 @@ char * get_type(Node* tree);
 char * get_type_declaration(Node* tree);
 
 void insert_function_definition(Node * node);
-void check_func_body(Node * node, Table * auxTable);
+
+void insert_function_funcBody(Node * node);
 
 
-void insert_function_declaration(Node * node, Table * aux);
+void insert_function_declaration(Node * node);
 char * get_function_typespec(Node * node);
 char * get_function_name(Node * node);
 void get_param_list_global(Node * node, Table* global, char * return_value);
