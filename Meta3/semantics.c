@@ -45,7 +45,9 @@ void check_node(Node* tree)
 	else if(strcmp("Declaration", NODE_NAME[tree->node_type]) == 0)
 	{
 		strcpy(name, get_name(tree));
-		strcpy(type, get_type(tree));
+		printf("name: %s\n", name);
+		strcpy(type, get_type_declaration(tree));
+		printf("type: %s\n", type);
 		param = 0;
 		symbol = create_symbol(name, type, param);
 		insert_symbol(symbol_table, symbol);
@@ -107,6 +109,33 @@ char * get_type(Node* tree)
 		temp = temp->brother;
 	}
 	sprintf(finalType, "%s[%s]", type, value);
+	return finalType;
+}
+
+char * get_type_declaration(Node* tree)
+{
+	printf("get_type_declaration\n");
+	Node* temp = tree->child;
+	char value[10];
+	char type[10];
+	char* finalType;
+	while(temp != NULL){
+		printf("%s\n", NODE_NAME[temp->node_type]);
+
+		if(strcmp(NODE_NAME[temp->node_type], "Char") == 0)
+		{
+			printf("->Char\n");
+			strcpy(type, NODE_NAME[temp->node_type]);
+		}
+		else if(strcmp(NODE_NAME[temp->node_type], "Int") == 0)
+		{
+			printf("->Int\n");
+			strcpy(type, NODE_NAME[temp->node_type]);
+		}
+		temp = temp->brother;
+	}
+	strcpy(finalType, type);
+	printf("finalType: %s\n", finalType);
 	return finalType;
 }
 
