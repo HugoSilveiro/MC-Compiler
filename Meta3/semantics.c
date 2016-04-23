@@ -7,7 +7,7 @@
 #include "printer.h"
 
 extern Table * symbol_table;
-Table * current_trable;
+Table * current_table;
 
 #define DEBUG 1
 
@@ -76,8 +76,15 @@ void insert_declaration(Node * tree)
 	int param = 0;
 	Symbol * symbol = create_symbol(name, type, param);
 
-	Table * global = search_table("global");
-	insert_symbol(symbol_table, symbol);
+	if(current_table != NULL){
+		insert_symbol(current_table, symbol);	
+	}
+	else{
+		Table * global = search_table("global");
+		insert_symbol(global, symbol);	
+	}
+	
+	
 }
 
 void insert_array_declaration(Node * tree)
@@ -91,8 +98,13 @@ void insert_array_declaration(Node * tree)
 	int param = 0;
 	Symbol * symbol = create_symbol(name, type, param);
 
-	Table * global = search_table("global");
-	insert_symbol(global, symbol);
+	if(current_table != NULL){
+		insert_symbol(current_table, symbol);	
+	}
+	else{
+		Table * global = search_table("global");
+		insert_symbol(global, symbol);	
+	}
 
 }
 
@@ -151,8 +163,8 @@ char * get_type_declaration(Node* tree)
 {
 	printf("get_type_declaration\n");
 	Node* temp = tree->child;
-	char value[10];
-	char type[10];
+	//char value[10];
+	char* type;
 	char* finalType;
 	while(temp != NULL){
 		printf("while: %s\n", NODE_NAME[temp->node_type]);
@@ -160,21 +172,30 @@ char * get_type_declaration(Node* tree)
 		if(strcmp(NODE_NAME[temp->node_type], "Char") == 0)
 		{
 			printf("->Char\n");
+			type = (char*) malloc(sizeof(char)*5);			
 			strcpy(type, "char");
-			strcpy(finalType, type);
+			//strcpy(finalType, type);
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Int") == 0)
 		{
 			printf("->Int\n");
+			type = (char*) malloc(sizeof(int)*4);
 			strcpy(type, "int");
-			strcpy(finalType, type);
+			//strcpy(finalType, type);
 		}
 		//printf("next_temp:%s\n", NODE_NAME[temp->brother->node_type]);
+		else if(strcmp(NODE_NAME[temp->node_type], "Pointer") == 0)
+		{
+			printf(">Pointer\n");
+			strcat(type, "*");
+		}
 		temp = temp->brother;
 	}
 
+	//finalType = (char*) malloc(sizeof(type);
+	//strcpy()
 	printf("finalType: %s\n", finalType);
-	return finalType;
+	return type;
 }
 
 void insert_function_definition(Node * node)
@@ -190,9 +211,6 @@ void insert_function_definition(Node * node)
 
 	Node * temp= node->child;
 	
-	//Table * auxTable;
-	//get_param_list_concatenated_function(node);
-	//printf("%s\n", NODE_NAME[node->child->node_type]);
 	
 	insert_function_declaration(node);
 	insert_function_funcBody(node);
@@ -262,7 +280,7 @@ void insert_function_declaration(Node * node)
 
 	//inserir essa tabela à tabela de simbolos
 	aux = insert_table(1, func_name);
-	current_trable = aux;
+	current_table = aux;
 
 	//function declarated
 	printf("aux declaration\n");
