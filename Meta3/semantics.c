@@ -262,6 +262,7 @@ char * get_param_decl(Node * node)
 	Node * temp;
 	Symbol * symbol = NULL;
 	temp = node->child;
+
 	while(temp!=NULL)
 	{
 
@@ -279,9 +280,14 @@ char * get_param_decl(Node * node)
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Int") == 0)
 		{
-			type = (char*)malloc(sizeof(char)*3);
+			type = (char*)malloc(sizeof(char)*4);
 			//memset(value, '\0', sizeof("int"));
 			strcpy(type, "int");
+		}
+		else if(strcmp(NODE_NAME[temp->node_type], "Pointer") == 0)
+		{
+			strcat(type, "*");
+		
 		}
 		//falta tratar o asterisco
 
@@ -340,11 +346,15 @@ void get_param_declaration(Node * node, Table *function)
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Int") == 0)
 		{
-			type = (char*)malloc(sizeof(char)*3);
+			type = (char*)malloc(sizeof(char)*4);
 			//memset(value, '\0', sizeof("int"));
 			strcpy(type, "int");
 		}
 		//falta tratar o asterisco
+		else if(strcmp(NODE_NAME[temp->node_type], "Pointer")==0)
+		{
+			strcat(type, "*");
+		}
 		else
 		{
 			id = (char*)malloc(sizeof(temp->value));
@@ -394,6 +404,10 @@ char * get_function_typespec(Node * node)
 		{
 			//memset(value, '\0', sizeof("int"));
 			strcpy(value, "int");
+		}
+		else if(strcmp(NODE_NAME[temp->node_type], "Pointer")== 0)
+		{
+			strcat(value, "*");
 		}
 		else
 		{
