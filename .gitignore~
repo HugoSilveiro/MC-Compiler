@@ -5,3 +5,4 @@ Meta1/mccompiler
 Meta2/mccompiler.zip
 y.output
 y.tab.c
+lex.yy.c
