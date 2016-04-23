@@ -249,7 +249,7 @@ void insert_function_definition(Node * node)
 		params_concat = (char*) malloc(sizeof(func_type)+sizeof(param_lists));
 		sprintf(params_concat,"%s%s" , func_type, param_lists);
 
-
+		printf("Type: %s | param_lists: %s\n", func_type, param_lists);
 
 
 		//criação do simbolo para a tabela global
@@ -513,16 +513,13 @@ void get_param_declaration(Node * node, Table *function)
 
 		temp = temp->brother;
 	}
-	if(id!=NULL)
+	if(strcmp(type, "void")!=0)
 	{
 		symbol = create_symbol(id, type, 1);
-	}
-	else
-	{
-		symbol = create_symbol("", type, 1);
+		insert_symbol(function, symbol);
 	}
 	
-	insert_symbol(function, symbol);
+
 }
 
 //get function name on function declaration
