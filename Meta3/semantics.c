@@ -55,9 +55,10 @@ void check_node(Node* tree)
 		insert_symbol(symbol_table, symbol);
 	}
 
-	else if(strcmp("FunctionDeclaration", NODE_NAME[tree->node_type]))
+	else if(strcmp("FuncDeclaration", NODE_NAME[tree->node_type]) == 0)
 	{
-		insert_function_declaration(tree);
+		Table * aux;
+		insert_function_declaration(tree, aux);
 	}
 	else if(strcmp("TypeSpec", NODE_NAME[tree->node_type]) == 0)
 	{
@@ -162,29 +163,28 @@ void insert_function_definition(Node * node)
 	printf("%s\n", NODE_NAME[node->node_type]);
 
 	Node * temp= node->child;
+	
+	Table * auxTable;
 	//get_param_list_concatenated_function(node);
-
+	//printf("%s\n", NODE_NAME[node->child->node_type]);
 	//Function to check if the node is a ParamList
-	check_func_body(node);
+	printf("before calling check_func_body\n");
+	check_func_body(node, auxTable);
 
 
 }
 
-void check_func_body(Node * node)
+void check_func_body(Node * node, Table * auxTable)
 {
+	printf("check_func_body\n");
 	Node * temp = node->child;
-	while(temp != NULL)
-	{
-		if(strcmp(NODE_NAME[temp->node_type], "FuncBody") == 0)
-		{
-			check_node(temp);
-		}
-		temp = temp->brother;
-	}
+	printf("check_func_body: %s\n",NODE_NAME[node->child->node_type]);
+	insert_function_declaration(node, auxTable);
+
 }
 
 
-void insert_function_declaration(Node * node)
+void insert_function_declaration(Node * node, Table * aux)
 {
 
 	if(DEBUG)
@@ -223,13 +223,13 @@ void insert_function_declaration(Node * node)
 	insert_symbol(global, symbol);
 
 	//criar uma tabela nova
-	Table * aux;
+	//Table * aux;
 
 
 
 	//inserir essa tabela à tabela de simbolos
 	aux = insert_table(1, func_name);
-	current_trable = aux;
+	//current_trable = aux;
 
 	//function declarated
 	printf("aux declaration\n");
