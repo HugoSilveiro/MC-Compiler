@@ -52,6 +52,12 @@ void print_symbol_table(Table * symbol_table)
 
 	for(table = symbol_table;table;table = table->next)
 	{
+		/*
+		if(!(table->declared == 1 && table->defined==0) || table->type == 0)
+		{
+			print_table(table);
+		}
+		*/
 		print_table(table);
 	}
 }
@@ -68,7 +74,6 @@ void print_table(Table * table)
 	{
 		printf("==== Function %s Symbol Table ====\n", table->name);
 	}
-
 	for(symbol = table->child; symbol; symbol=symbol->next)
 	{
 		print_symbol(symbol);

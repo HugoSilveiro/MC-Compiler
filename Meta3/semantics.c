@@ -181,8 +181,14 @@ void insert_function_declaration(Node * node)
 	//criar uma tabela nova
 	Table * aux;
 
+
+
 	//inserir essa tabela à tabela de simbolos
 	aux = insert_table(1, func_name);
+
+	//function declarated
+	printf("aux declaration\n");
+	aux->declared = 1;
 
 	//inserir o simbolo de return
 	symbol = create_symbol("return", func_type, 0);
@@ -372,11 +378,13 @@ char * get_function_typespec(Node * node)
 		if(strcmp(NODE_NAME[temp->node_type], "IntLit") == 0)
 		{
 			//memset(value, '\0', sizeof("int"));
+			
 			strcpy(value, "int");
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Char") == 0)
 		{
 			//memset(value, '\0', sizeof("char"));
+
 			strcpy(value, "char");
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Int") == 0)

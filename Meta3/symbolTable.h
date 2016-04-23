@@ -2,6 +2,8 @@
 typedef struct _Table{
 	int type;
 	char * name;
+	int declared;
+	int defined;
 	struct _Symbol *child;
 	struct _Table *next;
 } Table;

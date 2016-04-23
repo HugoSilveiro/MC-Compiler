@@ -44,6 +44,9 @@ Table * insert_table(int type, char * name)
 	table->next = NULL;
 	table->child= NULL;
 
+	//declared and defined
+	table->declared = 0;
+	table->defined = 0;
 
 	Table * aux;
 	Table * aux_before;
