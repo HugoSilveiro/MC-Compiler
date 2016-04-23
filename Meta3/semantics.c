@@ -44,14 +44,8 @@ void check_node(Node* tree)
 	}
 	else if(strcmp("Declaration", NODE_NAME[tree->node_type]) == 0)
 	{
-		strcpy(name, get_name(tree));
-		printf("name: %s\n", name);
-		strcpy(type, get_type_declaration(tree));
-		printf("type: %s\n", type);
-		param = 0;
-		symbol = create_symbol(name, type, param);
-		insert_symbol(symbol_table, symbol);
-	}
+		insert_declaration(tree);
+	}	
 
 	else if(strcmp("FuncDeclaration", NODE_NAME[tree->node_type]) == 0)
 	{
@@ -72,6 +66,20 @@ void check_node(Node* tree)
 
 }
 
+void insert_declaration(Node * tree)
+{
+	char * name;
+	char * type;
+	name = strdup(get_name(tree));
+	type = strdup(get_type_declaration(tree));
+
+	int param = 0;
+	Symbol * symbol = create_symbol(name, type, param);
+
+	Table * global = search_table("global");
+	insert_symbol(symbol_table, symbol);
+}
+
 void insert_array_declaration(Node * tree)
 {
 	char * name;
@@ -80,7 +88,8 @@ void insert_array_declaration(Node * tree)
 	char * type;
 	type = strdup(get_type(tree));
 
-	Symbol * symbol = create_symbol(name, type, 0);
+	int param = 0;
+	Symbol * symbol = create_symbol(name, type, param);
 
 	Table * global = search_table("global");
 	insert_symbol(global, symbol);
@@ -151,13 +160,13 @@ char * get_type_declaration(Node* tree)
 		if(strcmp(NODE_NAME[temp->node_type], "Char") == 0)
 		{
 			printf("->Char\n");
-			strcpy(type, NODE_NAME[temp->node_type]);
+			strcpy(type, "char");
 			strcpy(finalType, type);
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Int") == 0)
 		{
 			printf("->Int\n");
-			strcpy(type, NODE_NAME[temp->node_type]);
+			strcpy(type, "int");
 			strcpy(finalType, type);
 		}
 		//printf("next_temp:%s\n", NODE_NAME[temp->brother->node_type]);

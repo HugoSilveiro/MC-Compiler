@@ -24,3 +24,4 @@ void insert_symbol(Table * table, Symbol * symbol);
 Symbol * search_symbol(char *name, Table * table);
 Table * search_table(char * name);
 void insert_array_declaration(Node * tree);
+void insert_declaration(Node * tree);
