@@ -294,7 +294,7 @@ void insert_function_funcBody(Node * node)
 
 		if(strcmp(NODE_NAME[temp->node_type], "FuncBody") == 0)
 		{
-			printf("%s\n", NODE_NAME[temp->child->node_type]);
+			
 			build_table(temp);
 		}
 		temp = temp->brother;
