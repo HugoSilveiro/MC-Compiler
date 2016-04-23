@@ -54,6 +54,7 @@ void check_node(Node* tree)
 		symbol = create_symbol(name, type, param);
 		insert_symbol(symbol_table, symbol);
 	}
+
 	else if(strcmp("FunctionDeclaration", NODE_NAME[tree->node_type]))
 	{
 		insert_function_declaration(tree);
@@ -67,6 +68,7 @@ void check_node(Node* tree)
 		printf("FuncDefinition\n");
 		insert_function_definition(tree);
 	}
+
 
 
 }
@@ -159,6 +161,26 @@ void insert_function_definition(Node * node)
 
 	printf("%s\n", NODE_NAME[node->node_type]);
 
+	Node * temp= node->child;
+	//get_param_list_concatenated_function(node);
+
+	//Function to check if the node is a ParamList
+	check_func_body(node);
+
+
+}
+
+void check_func_body(Node * node)
+{
+	Node * temp = node->child;
+	while(temp != NULL)
+	{
+		if(strcmp(NODE_NAME[temp->node_type], "FuncBody") == 0)
+		{
+			check_node(temp);
+		}
+		temp = temp->brother;
+	}
 }
 
 
@@ -207,6 +229,7 @@ void insert_function_declaration(Node * node)
 
 	//inserir essa tabela à tabela de simbolos
 	aux = insert_table(1, func_name);
+	current_trable = aux;
 
 	//function declarated
 	printf("aux declaration\n");

@@ -8,6 +8,7 @@ char * get_type(Node* tree);
 char * get_type_declaration(Node* tree);
 
 void insert_function_definition(Node * node);
+void check_func_body(Node * node);
 
 
 void insert_function_declaration(Node * node);
