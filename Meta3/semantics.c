@@ -31,11 +31,6 @@ int build_table(Node* tree)
 void check_node(Node* tree)
 {
 	printf("check_node-> %s\n",  NODE_NAME[tree->node_type]);
-	Symbol *symbol;
-	char name[100], type[100];
-	int param;
-
-	printf("NODE_NAME: %s\n", NODE_NAME[tree->node_type]);
 
 	if(strcmp("ArrayDeclaration", NODE_NAME[tree->node_type]) == 0)
 	{
@@ -130,9 +125,17 @@ char * get_type(Node* tree)
 	char* finalType;
 	while(temp != NULL){
 		printf("while: %s\n", NODE_NAME[temp->node_type]);
+
+
 		if(strcmp(NODE_NAME[temp->node_type], "IntLit") == 0)
 		{
+			//memset(value, '\0', sizeof("int"));
 			strcpy(value, temp->value);
+		}
+		else if(strcmp(NODE_NAME[temp->node_type], "Void") == 0)
+		{
+			//memset(value, '\0', sizeof("int"));
+			strcpy(type, "void");
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Char") == 0)
 		{
@@ -163,8 +166,13 @@ char * get_type_declaration(Node* tree)
 	char* finalType;
 	while(temp != NULL){
 		printf("while: %s\n", NODE_NAME[temp->node_type]);
-
-		if(strcmp(NODE_NAME[temp->node_type], "Char") == 0)
+		if(strcmp(NODE_NAME[temp->node_type], "Void") == 0)
+		{
+			//memset(value, '\0', sizeof("int"));
+			type = (char*)malloc(sizeof(char)*5);
+			strcpy(type, "void");
+		}
+		else if(strcmp(NODE_NAME[temp->node_type], "Char") == 0)
 		{
 			printf("->Char\n");
 			type = (char*) malloc(sizeof(char)*5);			
@@ -315,6 +323,7 @@ void insert_function_declaration(Node * node)
 	
 	if(find==NULL)
 	{
+		printf("FIND NULL\n");
 		//inserir o typespec concatenado com os parametros...
 
 		//variavel para guardar o tipo de retorno da função
@@ -343,9 +352,7 @@ void insert_function_declaration(Node * node)
 		//inserir essa tabela à tabela de simbolos
 		aux = insert_table(1, func_name);
 
-		//function declarated
-		printf("aux declaration\n");
-		aux->declared = 1;
+
 
 		//inserir o simbolo de return
 		symbol = create_symbol("return", func_type, 0);
@@ -375,7 +382,7 @@ char * get_param_list_concatenated_function(Node * node)
 
 	temp = found->child;
 	char * aux;
-	aux = (char*)malloc(sizeof(char)*200);
+	aux = (char*)malloc(sizeof(char)*300);
 	int i = 0;
 	int cx;
 	while(temp!=NULL)
@@ -409,11 +416,11 @@ char * get_param_decl(Node * node)
 	while(temp!=NULL)
 	{
 
-		if(strcmp(NODE_NAME[temp->node_type], "IntLit") == 0)
+		if(strcmp(NODE_NAME[temp->node_type], "Void") == 0)
 		{
 			//memset(value, '\0', sizeof("int"));
-			type = (char*)malloc(sizeof(char)*4);
-			strcpy(type, "int");
+			type = (char*)malloc(sizeof(char)*5);
+			strcpy(type, "void");
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Char") == 0)
 		{
@@ -467,7 +474,7 @@ void get_param_list_function(Node * node, Table* function)
 void get_param_declaration(Node * node, Table *function)
 {
 	char * type ;
-	char * id ;
+	char * id = NULL;
 	Node * temp;
 	Symbol * symbol = NULL;
 	temp = node->child;
@@ -475,11 +482,11 @@ void get_param_declaration(Node * node, Table *function)
 	{
 		printf("[param_declaration] %s\n", NODE_NAME[temp->node_type]);
 
-		if(strcmp(NODE_NAME[temp->node_type], "IntLit") == 0)
+		if(strcmp(NODE_NAME[temp->node_type], "Void") == 0)
 		{
 			//memset(value, '\0', sizeof("int"));
-			type = (char*)malloc(sizeof(char)*4);
-			strcpy(type, "int");
+			type = (char*)malloc(sizeof(char)*5);
+			strcpy(type, "void");
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Char") == 0)
 		{
@@ -498,16 +505,23 @@ void get_param_declaration(Node * node, Table *function)
 		{
 			strcat(type, "*");
 		}
-		else
+		else if (strcmp(NODE_NAME[temp->node_type], "Id")== 0)
 		{
 			id = (char*)malloc(sizeof(temp->value));
-			strcpy(id, temp->value);
+			strcpy(id, temp->value);	
 		}
+
 		temp = temp->brother;
 	}
-
-	printf("id: %s | type: %s\n", id, type);
-	symbol = create_symbol(id, type, 1);
+	if(id!=NULL)
+	{
+		symbol = create_symbol(id, type, 1);
+	}
+	else
+	{
+		symbol = create_symbol("", type, 1);
+	}
+	
 	insert_symbol(function, symbol);
 }
 
@@ -533,21 +547,23 @@ char * get_function_typespec(Node * node)
 	Node * temp = node->child;
 
 	while(temp != NULL){
-		if(strcmp(NODE_NAME[temp->node_type], "IntLit") == 0)
-		{
-			//memset(value, '\0', sizeof("int"));
-			
-			strcpy(value, "int");
-		}
-		else if(strcmp(NODE_NAME[temp->node_type], "Char") == 0)
+
+		if(strcmp(NODE_NAME[temp->node_type], "Char") == 0)
 		{
 			//memset(value, '\0', sizeof("char"));
-
+			value = (char* )malloc(sizeof(char)* 5);
 			strcpy(value, "char");
+		}
+		else if(strcmp(NODE_NAME[temp->node_type], "Void") == 0)
+		{
+			//memset(value, '\0', sizeof("int"));
+			value = (char*)malloc(sizeof(char)*5);
+			strcpy(value, "void");
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Int") == 0)
 		{
 			//memset(value, '\0', sizeof("int"));
+			value = (char* )malloc(sizeof(char)* 4);
 			strcpy(value, "int");
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Pointer")== 0)
