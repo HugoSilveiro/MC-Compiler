@@ -20,6 +20,7 @@ int build_table(Node* tree)
 	Node* temp = tree->child;
 	while(temp != NULL)
 	{
+		printf("%s\n", NODE_NAME[temp->node_type]);
 		check_node(temp);
 		temp = temp->brother;
 	}
@@ -29,6 +30,7 @@ int build_table(Node* tree)
 
 void check_node(Node* tree)
 {
+	printf("check_node-> %s\n",  NODE_NAME[tree->node_type]);
 	Symbol *symbol;
 	char name[100], type[100];
 	int param;
@@ -62,7 +64,8 @@ void check_node(Node* tree)
 	}
 	else if(strcmp("FuncDefinition", NODE_NAME[tree->node_type]) == 0)
 	{
-
+		printf("FuncDefinition\n");
+		insert_function_definition(tree);
 	}
 
 
@@ -85,6 +88,7 @@ char * get_name(Node* tree)
 	}
 	return NULL;
 }
+
 char * get_type(Node* tree)
 {
 	printf("get_type\n");
@@ -93,7 +97,7 @@ char * get_type(Node* tree)
 	char type[10];
 	char* finalType;
 	while(temp != NULL){
-		printf("%s\n", NODE_NAME[temp->node_type]);
+		printf("while: %s\n", NODE_NAME[temp->node_type]);
 		if(strcmp(NODE_NAME[temp->node_type], "IntLit") == 0)
 		{
 			strcpy(value, temp->value);
@@ -112,6 +116,7 @@ char * get_type(Node* tree)
 	return finalType;
 }
 
+
 char * get_type_declaration(Node* tree)
 {
 	printf("get_type_declaration\n");
@@ -120,23 +125,39 @@ char * get_type_declaration(Node* tree)
 	char type[10];
 	char* finalType;
 	while(temp != NULL){
-		printf("%s\n", NODE_NAME[temp->node_type]);
+		printf("while: %s\n", NODE_NAME[temp->node_type]);
 
 		if(strcmp(NODE_NAME[temp->node_type], "Char") == 0)
 		{
 			printf("->Char\n");
 			strcpy(type, NODE_NAME[temp->node_type]);
+			strcpy(finalType, type);
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Int") == 0)
 		{
 			printf("->Int\n");
 			strcpy(type, NODE_NAME[temp->node_type]);
+			strcpy(finalType, type);
 		}
+		//printf("next_temp:%s\n", NODE_NAME[temp->brother->node_type]);
 		temp = temp->brother;
 	}
-	strcpy(finalType, type);
+
 	printf("finalType: %s\n", finalType);
 	return finalType;
+}
+
+void insert_function_definition(Node * node)
+{
+	if(DEBUG)
+	{
+		printf("[insert_function_definition]\n");	
+	}	
+
+	Symbol * symbol;
+
+	printf("%s\n", NODE_NAME[node->node_type]);
+
 }
 
 
