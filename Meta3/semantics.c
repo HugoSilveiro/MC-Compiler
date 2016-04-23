@@ -112,6 +112,7 @@ char * get_type(Node* tree)
 		}
 		temp = temp->brother;
 	}
+	finalType = (char*) malloc(sizeof(type)+sizeof(value)+2);
 	sprintf(finalType, "%s[%s]", type, value);
 	return finalType;
 }
