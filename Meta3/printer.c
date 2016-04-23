@@ -52,13 +52,12 @@ void print_symbol_table(Table * symbol_table)
 
 	for(table = symbol_table;table;table = table->next)
 	{
-		/*
-		if(!(table->declared == 1 && table->defined==0) || table->type == 0)
+		
+		if((table->defined == 1) || table->type == 0)
 		{
 			print_table(table);
 		}
-		*/
-		print_table(table);
+		
 	}
 }
 
