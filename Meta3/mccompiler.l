@@ -245,7 +245,7 @@ int main(int argc, char* argv[])
 
 		start_symbol_table();
 		build_table(tree);
-		//print_symbol_table(symbol_table);
+		print_symbol_table(symbol_table);
 		get_anoted_Tree(tree);
 		print_tree(tree, 0);
 

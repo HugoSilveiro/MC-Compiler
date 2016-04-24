@@ -260,7 +260,7 @@ void get_inside_operator(Node * node)
 			temp->type = "char";
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "StrLit") == 0){
-			temp->type = "string";
+			get_inside_strlit(temp);
 		}	
 
 		temp = temp->brother;
@@ -281,16 +281,19 @@ void get_inside_id(Node * node)
 
 void get_inside_strlit(Node * node)
 {
+	int length = strlen(node->value)-1;
 
-	if(DEBUG)printf("node->value: %s size: %lu\n", node->value, sizeof(node->value));
+	char * aux;
+	aux = (char*) malloc(sizeof(char)*(length+6));
+
+	sprintf(aux, "char[%d]", length);
+
+	node->type = aux;
+
 	
 }
 	
 
 
-void get_inside_chrlit(Node * node)
-{
-	if(DEBUG)node->type = "char";
-}
 
 
