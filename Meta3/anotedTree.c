@@ -78,7 +78,7 @@ void check_inside_funcBody(Node * node)
 	}
 	Node * temp = node->child;
 	while(temp != NULL){
-
+		printf("%s\n", NODE_NAME[temp->node_type]);
 		if(strcmp(NODE_NAME[temp->node_type], "If") == 0)
 		{
 			
@@ -88,6 +88,9 @@ void check_inside_funcBody(Node * node)
 		{
 			
 			get_inside_funcBody(temp);
+		}
+		else if(strcmp(NODE_NAME[temp->node_type], "Return") == 0){
+			get_inside_operator(temp);
 		}
 		temp = temp->brother;
 	}	
@@ -227,6 +230,10 @@ void get_inside_funcBody(Node * node)
 			get_inside_operator(temp);
 
 		}
+		else if(strcmp(NODE_NAME[temp->node_type], "Return") == 0)
+		{
+			get_inside_operator(temp);
+		}
 
 		temp = temp->brother;
 	}
@@ -238,9 +245,19 @@ void get_inside_operator(Node * node)
 	Node * temp = node->child;
 	while(temp != NULL)
 	{
+		printf("%s\n", NODE_NAME[temp->node_type]);
 		if(strcmp(NODE_NAME[temp->node_type], "Id") == 0){
 			get_inside_id(temp);
 		}
+		else if(strcmp(NODE_NAME[temp->node_type], "IntLit") == 0){
+			temp->type = "int";
+		}
+		else if(strcmp(NODE_NAME[temp->node_type], "ChrLit") == 0){
+			temp->type = "char";
+		}
+		else if(strcmp(NODE_NAME[temp->node_type], "StrLit") == 0){
+			temp->type = "string";
+		}	
 
 		temp = temp->brother;
 	}
