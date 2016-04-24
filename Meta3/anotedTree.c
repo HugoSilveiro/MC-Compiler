@@ -65,10 +65,32 @@ void insert_funcBody(Node * node)
 		if(strcmp(NODE_NAME[temp->node_type], "FuncBody") == 0)
 		{
 			
-			get_inside_funcBody(temp);
+			check_inside_funcBody(temp);
 		}
 		temp = temp->brother;
 	}
+}
+
+void check_inside_funcBody(Node * node)
+{
+	if(DEBUG){
+		printf("check_inside_funcBody\n");
+	}
+	Node * temp = node->child;
+	while(temp != NULL){
+
+		if(strcmp(NODE_NAME[temp->node_type], "If") == 0)
+		{
+			
+			get_inside_funcBody(temp);
+		}
+		else if(strcmp(NODE_NAME[temp->node_type], "For") == 0)
+		{
+			
+			get_inside_funcBody(temp);
+		}
+		temp = temp->brother;
+	}	
 }
 
 void get_inside_funcBody(Node * node)
@@ -80,148 +102,128 @@ void get_inside_funcBody(Node * node)
 		printf("[get_inside_funcBody] %s\n",NODE_NAME[temp->node_type] );
 		if(strcmp(NODE_NAME[temp->node_type], "Eq") == 0)
 		{
-			//TODO	
-			strcpy(temp->type, "Int"); 
+			
+			temp->type = "int"; 
 			get_inside_operator(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Ne") == 0)
 		{
-			//TODO	
-			strcpy(temp->type, "Int"); 
+			temp->type = "int"; 
 			get_inside_operator(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Lt") == 0)
 		{
-			//TODO	
-			strcpy(temp->type, "Int"); 
+			temp->type = "int"; 
 			get_inside_operator(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Gt") == 0)
 		{
-			//TODO	
-			strcpy(temp->type, "Int"); 
+			temp->type = "int"; 
 			get_inside_operator(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Le") == 0)
 		{
-			//TODO	
-			strcpy(temp->type, "Int"); 
+			temp->type = "int"; 
 			get_inside_operator(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Ge") == 0)
 		{
-			//TODO	
-			strcpy(temp->type, "Int"); 
+			temp->type = "int"; 
 			get_inside_operator(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "And") == 0)
-		{
-			//TODO	
-			strcpy(temp->type, "Int"); 
+		{	
+			temp->type = "int"; 
 			get_inside_operator(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Or") == 0)
-		{
-			//TODO	
-			strcpy(temp->type, "Int"); 
+		{	
+			temp->type = "int"; 
 			get_inside_operator(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Add") == 0)
-		{
-			//TODO	
-			strcpy(temp->type, "Int"); 
+		{	
+			temp->type =  "int";
 			get_inside_operator(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Sub") == 0)
 		{
-			//TODO	
-			strcpy(temp->type, "Int"); 
+			temp->type = "int";
 			get_inside_operator(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Mul") == 0)
 		{
-			//TODO	
-			strcpy(temp->type, "Int"); 
+			temp->type = "int"; 
 			get_inside_operator(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Div") == 0)
 		{
-			//TODO	
-			strcpy(temp->type, "Int"); 
+			temp->type = "int"; 
 			get_inside_operator(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Mod") == 0)
 		{
-			//TODO	
-			strcpy(temp->type, "Int"); 
+			temp->type = "int"; 
 			get_inside_operator(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Not") == 0)
 		{
-			//TODO	
-			strcpy(temp->type, "Int"); 
+			temp->type = "int"; 
 			get_inside_operator(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Minus") == 0)
 		{
-			//TODO	
-			strcpy(temp->type, "Int"); 
+			temp->type = "int"; 
 			get_inside_operator(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Plus") == 0)
 		{
-			//TODO	
-			strcpy(temp->type, "Int"); 
+			temp->type = "int"; 
 			get_inside_operator(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Addr") == 0)
 		{
-			//TODO	
-			strcpy(temp->type, "Int"); 
+			temp->type = "int"; 
 			get_inside_operator(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Deref") == 0)
-		{
-			//TODO	
-			strcpy(temp->type, "Int"); 
+		{	
+			temp->type = "int"; 
 			get_inside_operator(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Store") == 0)
 		{
-			//TODO	
-			strcpy(temp->type, "Int"); 
+			temp->type = "int"; 
 			get_inside_operator(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Comma") == 0)
 		{
-			//TODO	
-			strcpy(temp->type, "Int"); 
+			temp->type = "int"; 
 			get_inside_operator(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Call") == 0)
 		{
-			//TODO	
-			strcpy(temp->type, "Int"); 
+			temp->type = "int"; 
 			get_inside_operator(temp);
 
 		}
