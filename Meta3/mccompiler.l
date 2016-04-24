@@ -211,7 +211,7 @@ int main(int argc, char* argv[])
 			{
 				start_symbol_table();
 				//print_tables();
-				//print_tree(tree, 0);
+				//print_anoted_tree(tree, 0);
 			}
 			
 		}
