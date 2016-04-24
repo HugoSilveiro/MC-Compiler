@@ -6,6 +6,11 @@
 #include "anotedTree.h"
 #include "printer.h"
 
+#define DEBUG 1
+
+extern Table * symbol_table;
+Table * current_table2 = NULL;
+
 void get_anoted_Tree(Node* tree)
 {
 	Node* temp = tree->child;
@@ -20,7 +25,7 @@ void get_anoted_Tree(Node* tree)
 	}
 }
 
-void insert_funct_definition(tree)
+void insert_funct_definition(Node * node)
 {
 
 	if(DEBUG)
@@ -38,9 +43,9 @@ void insert_funct_definition(tree)
 	if(aux!=NULL)
 	{
 		aux->defined = 1;
-		current_table = aux;
+		current_table2 = aux;
 		insert_function_funcBody(node);
-		current_table = NULL;
+		current_table2 = NULL;
 
 	}
 	
@@ -57,7 +62,7 @@ void insert_funcBody(Node * node)
 		if(strcmp(NODE_NAME[temp->node_type], "FuncBody") == 0)
 		{
 			
-			get_operators(temp);
+			//get_operators(temp);
 		}
 		temp = temp->brother;
 	}
@@ -73,7 +78,7 @@ void get_inside_funcBody(Node * node)
 		{
 			//TODO	
 			Symbol * symbol;
-			symbol = search_symbol(, current_table);
+			//symbol = search_symbol(, current_table2);
 		}
 
 	}
@@ -84,7 +89,7 @@ void get_inside_funcBody(Node * node)
 void get_inside_id(Node * node)
 {
 
-	Symbol * symbol = search_symbol(node->value, current_table);
+	Symbol * symbol = search_symbol(node->value, current_table2);
 	if(symbol!=NULL)
 	{
 		node->type = symbol->type;
