@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 #include "anotedTree.h"
+#include "printer.h"
 
 void get_anoted_Tree(Node* tree)
 {
@@ -14,12 +15,12 @@ void get_anoted_Tree(Node* tree)
 		if(strcmp("FuncDefinition", NODE_NAME[tree->node_type]) == 0)
 		{
 			printf("FuncDefinition\n");
-			insert_function_definition(tree);
+			insert_funct_definition(tree);
 		}
 	}
 }
 
-void insert_function_definition(tree)
+void insert_funct_definition(tree)
 {
 
 	if(DEBUG)
@@ -45,7 +46,7 @@ void insert_function_definition(tree)
 	
 }
 
-void insert_function_funcBody(Node * node)
+void insert_funcBody(Node * node)
 {
 	if(DEBUG){
 		printf("insert_function_funcBody\n");
@@ -62,7 +63,7 @@ void insert_function_funcBody(Node * node)
 	}
 }
 
-void get_operators(Node * node)
+void get_inside_funcBody(Node * node)
 {
 	Node * temp = node->child;
 
@@ -71,6 +72,8 @@ void get_operators(Node * node)
 		if(strcmp(NODE_NAME[temp->node_type], "EQ") == 0)
 		{
 			//TODO	
+			Symbol * symbol;
+			symbol = search_symbol(, current_table);
 		}
 
 	}
