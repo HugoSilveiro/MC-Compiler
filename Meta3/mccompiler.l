@@ -24,7 +24,6 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 	#include "structs.h"
 	#include "printer.h"
 	#include "semantics.h"
-	#include "anotedTree.h"
 	
 	int lineNumber = 1;
 	int columnNumber = 0;
@@ -211,10 +210,15 @@ int main(int argc, char* argv[])
 			if(yacc_errors == 0)
 			{
 				start_symbol_table();
+
 				
 				build_table(tree);
 				get_anoted_Tree(tree);
 				print_tree(tree, 0);
+
+				//print_tables();
+				//print_tree(tree, 0);
+
 			}
 			
 		}
@@ -242,8 +246,8 @@ int main(int argc, char* argv[])
 		start_symbol_table();
 		build_table(tree);
 		print_symbol_table(symbol_table);
-
-
+		get_anoted_Tree(tree);
+		print_tree(tree, 0);
 
 		if(yacc_errors == 0 && treeFlag == 1)
 		{
