@@ -211,10 +211,7 @@ int main(int argc, char* argv[])
 			{
 				start_symbol_table();
 				//print_tables();
-				//print_anoted_tree(tree, 0);
-				build_table(tree);
-				get_anoted_Tree(tree);
-				print_tree(tree, 0);
+				//print_tree(tree, 0);
 			}
 			
 		}
@@ -242,8 +239,8 @@ int main(int argc, char* argv[])
 		start_symbol_table();
 		build_table(tree);
 		print_symbol_table(symbol_table);
-
-
+		get_anoted_tree(tree);
+		print_annotated_tree(tree);
 
 		if(yacc_errors == 0 && treeFlag == 1)
 		{
