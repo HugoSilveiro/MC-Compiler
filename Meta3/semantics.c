@@ -513,11 +513,13 @@ void get_param_declaration(Node * node, Table *function)
 
 		temp = temp->brother;
 	}
-	if(strcmp(type, "void")!=0)
+
+	if(id!=NULL)
 	{
 		symbol = create_symbol(id, type, 1);
 		insert_symbol(function, symbol);
 	}
+
 	
 
 }
