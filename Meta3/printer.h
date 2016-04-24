@@ -4,6 +4,7 @@
 #include "structs.h"
 #include "symbolTable.h"
 #include "semantics.h"
+#include "anotedTree.h"
 
 /* list of names for the nodes of the abstract syntax tree */
 static const char *NODE_NAME[] = {
