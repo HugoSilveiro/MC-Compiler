@@ -9,7 +9,7 @@
 extern Table * symbol_table;
 Table * current_table = NULL;
 
-#define DEBUG 1
+#define DEBUG 0
 
 int build_table(Node* tree)
 {
@@ -20,7 +20,7 @@ int build_table(Node* tree)
 	Node* temp = tree->child;
 	while(temp != NULL)
 	{
-		printf("%s\n", NODE_NAME[temp->node_type]);
+		if(DEBUG)printf("%s\n", NODE_NAME[temp->node_type]);
 		check_node(temp);
 		temp = temp->brother;
 	}
@@ -30,7 +30,7 @@ int build_table(Node* tree)
 
 void check_node(Node* tree)
 {
-	printf("check_node-> %s\n",  NODE_NAME[tree->node_type]);
+	if(DEBUG)printf("check_node-> %s\n",  NODE_NAME[tree->node_type]);
 
 	if(strcmp("ArrayDeclaration", NODE_NAME[tree->node_type]) == 0)
 	{
@@ -48,7 +48,7 @@ void check_node(Node* tree)
 	}
 	else if(strcmp("FuncDefinition", NODE_NAME[tree->node_type]) == 0)
 	{
-		printf("FuncDefinition\n");
+		if(DEBUG)printf("FuncDefinition\n");
 		insert_function_definition(tree);
 	}
 
@@ -100,12 +100,12 @@ void insert_array_declaration(Node * tree)
 
 char * get_name(Node* tree)
 {
-	printf("get_name\n");
+	if(DEBUG)printf("get_name\n");
 	Node* temp = tree->child;
 	while(temp != NULL){
-		printf("%s\n", NODE_NAME[temp->node_type]);
+		if(DEBUG)printf("%s\n", NODE_NAME[temp->node_type]);
 		if(strcmp(NODE_NAME[temp->node_type], "Id") == 0){
-			printf("%s\n", temp->value);
+			if(DEBUG)printf("%s\n", temp->value);
 			return temp->value;
 		}
 		if(temp->brother != NULL)
@@ -118,13 +118,13 @@ char * get_name(Node* tree)
 
 char * get_type(Node* tree)
 {
-	printf("get_type\n");
+	if(DEBUG)printf("get_type\n");
 	Node* temp = tree->child;
 	char value[10];
 	char type[10];
 	char* finalType;
 	while(temp != NULL){
-		printf("while: %s\n", NODE_NAME[temp->node_type]);
+		if(DEBUG)printf("while: %s\n", NODE_NAME[temp->node_type]);
 
 
 		if(strcmp(NODE_NAME[temp->node_type], "IntLit") == 0)
@@ -159,13 +159,13 @@ char * get_type(Node* tree)
 
 char * get_type_declaration(Node* tree)
 {
-	printf("get_type_declaration\n");
+	if(DEBUG)printf("get_type_declaration\n");
 	Node* temp = tree->child;
 	//char value[10];
 	char* type;
 	char* finalType;
 	while(temp != NULL){
-		printf("while: %s\n", NODE_NAME[temp->node_type]);
+		if(DEBUG)printf("while: %s\n", NODE_NAME[temp->node_type]);
 		if(strcmp(NODE_NAME[temp->node_type], "Void") == 0)
 		{
 			//memset(value, '\0', sizeof("int"));
@@ -174,14 +174,14 @@ char * get_type_declaration(Node* tree)
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Char") == 0)
 		{
-			printf("->Char\n");
+			if(DEBUG)printf("->Char\n");
 			type = (char*) malloc(sizeof(char)*5);			
 			strcpy(type, "char");
 			//strcpy(finalType, type);
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Int") == 0)
 		{
-			printf("->Int\n");
+			if(DEBUG)printf("->Int\n");
 			type = (char*) malloc(sizeof(int)*4);
 			strcpy(type, "int");
 			//strcpy(finalType, type);
@@ -189,7 +189,7 @@ char * get_type_declaration(Node* tree)
 		//printf("next_temp:%s\n", NODE_NAME[temp->brother->node_type]);
 		else if(strcmp(NODE_NAME[temp->node_type], "Pointer") == 0)
 		{
-			printf(">Pointer\n");
+			if(DEBUG)printf(">Pointer\n");
 			strcat(type, "*");
 		}
 		temp = temp->brother;
@@ -197,7 +197,7 @@ char * get_type_declaration(Node* tree)
 
 	//finalType = (char*) malloc(sizeof(type);
 	//strcpy()
-	printf("finalType: %s\n", finalType);
+	if(DEBUG)printf("finalType: %s\n", finalType);
 	return type;
 }
 
@@ -226,7 +226,7 @@ void insert_function_definition(Node * node)
 	else
 	{
 		////////
-		printf("[Insertion on function definition]\n");
+		if(DEBUG)printf("[Insertion on function definition]\n");
 		
 		Symbol * symbol;
 
@@ -249,7 +249,7 @@ void insert_function_definition(Node * node)
 		params_concat = (char*) malloc(sizeof(func_type)+sizeof(param_lists));
 		sprintf(params_concat,"%s%s" , func_type, param_lists);
 
-		printf("Type: %s | param_lists: %s\n", func_type, param_lists);
+		if(DEBUG)printf("Type: %s | param_lists: %s\n", func_type, param_lists);
 
 
 		//criação do simbolo para a tabela global
@@ -323,7 +323,7 @@ void insert_function_declaration(Node * node)
 	
 	if(find==NULL)
 	{
-		printf("FIND NULL\n");
+		
 		//inserir o typespec concatenado com os parametros...
 
 		//variavel para guardar o tipo de retorno da função
@@ -480,7 +480,7 @@ void get_param_declaration(Node * node, Table *function)
 	temp = node->child;
 	while(temp!=NULL)
 	{
-		printf("[param_declaration] %s\n", NODE_NAME[temp->node_type]);
+		if(DEBUG)printf("[param_declaration] %s\n", NODE_NAME[temp->node_type]);
 
 		if(strcmp(NODE_NAME[temp->node_type], "Void") == 0)
 		{

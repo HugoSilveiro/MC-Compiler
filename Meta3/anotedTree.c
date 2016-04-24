@@ -6,7 +6,7 @@
 #include "anotedTree.h"
 #include "printer.h"
 
-#define DEBUG 1
+#define DEBUG 0
 
 extern Table * symbol_table;
 Table * current_table2 = NULL;
@@ -21,7 +21,7 @@ void get_anoted_Tree(Node* tree)
 		
 		if(strcmp("FuncDefinition", NODE_NAME[temp->node_type]) == 0)
 		{
-			printf("FuncDefinition\n");
+			if(DEBUG)printf("FuncDefinition\n");
 			insert_funct_definition(temp);
 		}
 		
@@ -99,7 +99,7 @@ void get_inside_funcBody(Node * node)
 
 	while(temp!= NULL)
 	{
-		printf("[get_inside_funcBody] %s\n",NODE_NAME[temp->node_type] );
+		if(DEBUG)printf("[get_inside_funcBody] %s\n",NODE_NAME[temp->node_type] );
 		if(strcmp(NODE_NAME[temp->node_type], "Eq") == 0)
 		{
 			
@@ -261,7 +261,7 @@ void get_inside_id(Node * node)
 void get_inside_strlit(Node * node)
 {
 
-	printf("node->value: %s size: %lu\n", node->value, sizeof(node->value));
+	if(DEBUG)printf("node->value: %s size: %lu\n", node->value, sizeof(node->value));
 	
 }
 	
@@ -269,7 +269,7 @@ void get_inside_strlit(Node * node)
 
 void get_inside_chrlit(Node * node)
 {
-	node->type = "char";
+	if(DEBUG)node->type = "char";
 }
 
 
