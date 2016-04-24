@@ -99,6 +99,13 @@ void check_inside_funcBody(Node * node)
 			get_inside_funcBody(temp);
 
 		}
+		else if(strcmp(NODE_NAME[temp->node_type], "Call") == 0)
+		{
+			temp->type = "int"; 
+			get_inside_operator(temp);
+
+		}
+
 		temp = temp->brother;
 	}	
 }
@@ -231,12 +238,7 @@ void get_inside_funcBody(Node * node)
 			get_inside_operator(temp);
 
 		}
-		else if(strcmp(NODE_NAME[temp->node_type], "Call") == 0)
-		{
-			temp->type = "int"; 
-			get_inside_operator(temp);
-
-		}
+		
 
 
 		temp = temp->brother;
