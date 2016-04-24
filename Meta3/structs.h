@@ -62,6 +62,7 @@ typedef struct Node_elem{
 	struct Node_elem *father;
 	//char * node_type;
 	char * value;
+	char * type;
 
 } Node;
 

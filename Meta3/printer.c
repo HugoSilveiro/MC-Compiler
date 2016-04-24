@@ -11,8 +11,14 @@ void print_tree(Node *node, int level){
 		print_terminal(node);
 	}
 	else{
-		
-		printf("%s\n", NODE_NAME[node->node_type]);	
+		if(node->type!=NULL)
+		{
+			printf("%s - %s\n", NODE_NAME[node->node_type], node->type);		
+		}
+		else
+		{
+			printf("%s\n", NODE_NAME[node->node_type]);	
+		}
 		
 		
 	}
@@ -41,7 +47,15 @@ void print_points(int n){
 
 void print_terminal(Node *node){
 
-	printf("%s(%s)\n", NODE_NAME[node->node_type], node->value);
+	if(node->type!=NULL)
+	{
+		printf("%s(%s) - %s\n", NODE_NAME[node->node_type], node->value, node->type);	
+	}
+	else
+	{
+		printf("%s(%s)\n", NODE_NAME[node->node_type], node->value);
+	}
+	
 }
 
 
