@@ -72,10 +72,22 @@ void get_inside_funcBody(Node * node)
 		if(strcmp(NODE_NAME[temp->node_type], "EQ") == 0)
 		{
 			//TODO	
-			Symbol * symbol;
-			symbol = search_symbol(, current_table);
+			strcpy(temp->type, "Int"); 
+			get_inside_operator(temp);
+			
 		}
 
 	}
 
+}
+
+void get_inside_operator(Node * node)
+{
+	Node * temp = node->child;
+	while(temp != NULL)
+	{
+		if(strcmp(NODE_NAME[temp->node_type], "Id") == 0){
+			get_inside_id(temp);
+		}
+	}
 }
