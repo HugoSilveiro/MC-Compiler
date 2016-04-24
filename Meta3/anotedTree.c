@@ -79,3 +79,14 @@ void get_inside_funcBody(Node * node)
 	}
 
 }
+
+
+void get_inside_id(Node * node)
+{
+
+	Symbol * symbol = search_symbol(node->value, current_table);
+	if(symbol!=NULL)
+	{
+		node->type = symbol->type;
+	}
+}
