@@ -273,6 +273,10 @@ void get_inside_funcBody(Node * node)
 			get_inside_operator(temp);
 		}
 
+		else{
+			check_inside_funcBody(temp);
+		}
+
 		temp = temp->brother;
 	}
 }
