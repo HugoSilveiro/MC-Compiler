@@ -24,6 +24,7 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 	#include "structs.h"
 	#include "printer.h"
 	#include "semantics.h"
+	#include "anotedTree.h"
 	
 	int lineNumber = 1;
 	int columnNumber = 0;
