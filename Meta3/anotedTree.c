@@ -230,10 +230,7 @@ void get_inside_funcBody(Node * node)
 			get_inside_operator(temp);
 
 		}
-		else if(strcmp(NODE_NAME[temp->node_type], "Return") == 0)
-		{
-			get_inside_operator(temp);
-		}
+
 
 		temp = temp->brother;
 	}
