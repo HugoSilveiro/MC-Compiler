@@ -77,6 +77,7 @@ void get_inside_funcBody(Node * node)
 
 	while(temp!= NULL)
 	{
+		printf("[get_inside_funcBody] %s\n",NODE_NAME[temp->node_type] );
 		if(strcmp(NODE_NAME[temp->node_type], "Eq") == 0)
 		{
 			//TODO	
@@ -224,6 +225,7 @@ void get_inside_funcBody(Node * node)
 			get_inside_operator(temp);
 
 		}
+
 		temp = temp->brother;
 	}
 
@@ -255,3 +257,4 @@ void get_inside_id(Node * node)
 
 	}
 }
+
