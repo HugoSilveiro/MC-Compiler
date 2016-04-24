@@ -228,7 +228,6 @@ void get_inside_funcBody(Node * node)
 
 		temp = temp->brother;
 	}
-
 }
 
 
@@ -248,7 +247,6 @@ void get_inside_operator(Node * node)
 void get_inside_id(Node * node)
 {
 
-	printf("-------------NODE_VALUE: %s\n", node->value);
 	Symbol * symbol = search_symbol(node->value, current_table2);
 
 	if(symbol!=NULL)
@@ -257,4 +255,19 @@ void get_inside_id(Node * node)
 
 	}
 }
+
+void get_inside_strlit(Node * node)
+{
+
+	printf("node->value: %s size: %lu\n", node->value, sizeof(node->value));
+	
+}
+	
+
+
+void get_inside_chrlit(Node * node)
+{
+	node->type = "char";
+}
+
 
