@@ -210,8 +210,15 @@ int main(int argc, char* argv[])
 			if(yacc_errors == 0)
 			{
 				start_symbol_table();
+
+				
+				build_table(tree);
+				get_anoted_Tree(tree);
+				print_tree(tree, 0);
+
 				//print_tables();
 				//print_tree(tree, 0);
+
 			}
 			
 		}
