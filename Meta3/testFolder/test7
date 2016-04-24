@@ -1,10 +1,6 @@
 int a;
 int main(void){
-
-a = 2 + 2;
-
-a =5;
-return 0;
+puts(a);
 
 }
 
