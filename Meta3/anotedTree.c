@@ -6,7 +6,7 @@
 #include "anotedTree.h"
 #include "printer.h"
 
-#define DEBUG 0
+#define DEBUG 1
 
 extern Table * symbol_table;
 Table * current_table2 = NULL;
@@ -91,6 +91,13 @@ void check_inside_funcBody(Node * node)
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Return") == 0){
 			get_inside_operator(temp);
+		}
+		else if(strcmp(NODE_NAME[temp->node_type], "Store") == 0){
+			//Ver o tipo dos filhos
+			temp->type = "int";
+			//get_inside_operator(temp);
+			get_inside_funcBody(temp);
+
 		}
 		temp = temp->brother;
 	}	
