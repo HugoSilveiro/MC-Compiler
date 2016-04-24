@@ -18,3 +18,7 @@ void get_inside_id(Node * node);
 void get_inside_operator(Node * node);
 
 void get_inside_strlit(Node * node);
+
+char * check_call_type(Node * node);
+
+char * get_type_Call(Node * node);

@@ -101,7 +101,8 @@ void check_inside_funcBody(Node * node)
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Call") == 0)
 		{
-			temp->type = "int"; 
+			printf("call\n");
+			temp->type = check_call_type(temp); 
 			get_inside_operator(temp);
 
 		}
@@ -110,14 +111,19 @@ void check_inside_funcBody(Node * node)
 	}	
 }
 
-void check_call_type(Node * node)
+char * check_call_type(Node * node)
 {
+	printf("check_call_type\n");
+	char * auxType;
 	Node * temp = node->child;
 	while(temp != NULL)
 	{
 		printf("%s\n", NODE_NAME[temp->node_type]);
 		if(strcmp(NODE_NAME[temp->node_type], "Id") == 0){
-			get_inside_id(temp);
+			auxType = (char*)malloc(sizeof("Id"));
+			strcpy(auxType, get_type_Call(temp));
+			printf("auxType: %s\n", auxType);
+			return auxType;
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "IntLit") == 0){
 			temp->type = "int";
@@ -131,8 +137,38 @@ void check_call_type(Node * node)
 
 		temp = temp->brother;
 	}
+	return NULL;
 
 }
+
+char * get_type_Call(Node * node)
+{	
+	printf("get_type_Call\n");
+	Symbol * symbol = search_symbol(node->value, current_table2);
+	char * auxType, aux;
+	if(symbol!=NULL)
+	{
+		node->type = symbol->type;
+		auxType = (char*)malloc(sizeof(node->type));
+		scanf(node->type, "%s(%s)", auxType, aux);
+		printf("node->type: %s\n", node->type);
+		return auxType;
+	}
+	else
+	{
+		Table * table = search_table("global");
+		Symbol * symbol2 = search_symbol(node->value, table);
+		if(symbol2!=NULL)
+		{
+			node->type = symbol2->type;
+			auxType = (char*)malloc(sizeof(node->type));
+			scanf(node->type, "%s(%s)", auxType, aux);
+			return auxType;	
+		}	
+	}
+	return NULL;
+}
+
 
 void get_inside_funcBody(Node * node)
 {
@@ -265,7 +301,8 @@ void get_inside_funcBody(Node * node)
 		
 		else if(strcmp(NODE_NAME[temp->node_type], "Call") == 0)
 		{
-			temp->type = "int"; 
+			
+			temp->type = check_call_type(temp); 
 			get_inside_operator(temp);
 
 		}
