@@ -276,14 +276,27 @@ void get_inside_operator(Node * node)
 
 void get_inside_id(Node * node)
 {
-
-	Symbol * symbol = search_symbol(node->value, current_table2);
-
-	if(symbol!=NULL)
+	printf("[get_inside_id] node->value: %s\n", node->value);
+	if(current_table2!=NULL)
 	{
-		node->type = symbol->type;
-
+		Symbol * symbol = search_symbol(node->value, current_table2);
+		if(symbol!=NULL)
+		{
+			node->type = symbol->type;
+		}
+		else
+		{
+			Table * table = search_table("global");
+			Symbol * symbol2 = search_symbol(node->value, table);
+			if(symbol2!=NULL)
+			{
+				node->type = symbol2->type;	
+			}
+			
+		}
 	}
+	
+
 }
 
 void get_inside_strlit(Node * node)
