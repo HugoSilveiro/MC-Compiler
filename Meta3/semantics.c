@@ -11,6 +11,18 @@ Table * current_table = NULL;
 
 #define DEBUG 0
 
+
+char * errors_list[] = {"Conflicting types (got %s, expected %s)\n",
+						"Invalid use of void type in declaration\n",
+						"Lvalue required\n",
+						"Operator %s cannot be applied to type %s\n",
+						"Operator %s cannot be applied to types %s, %s\n",
+						"Symbol %s already defined\n",
+						"Symbol %s is not a function\n",
+						"Unknown symbol %s\n",
+						"Wrong number of arguments to function %s (got %d, required %d)\n"};  
+
+
 int build_table(Node* tree)
 {
 	if(DEBUG){
@@ -89,11 +101,29 @@ void insert_array_declaration(Node * tree)
 	Symbol * symbol = create_symbol(name, type, param);
 
 	if(current_table != NULL){
-		insert_symbol(current_table, symbol);	
+		if(search_symbol(name, current_table)==NULL)
+		{
+			insert_symbol(current_table, symbol);		
+		}
+		else
+		{
+			//error
+			printf(errors_list[5], name);
+		}
+		
 	}
 	else{
 		Table * global = search_table("global");
-		insert_symbol(global, symbol);	
+		if(search_symbol(name, global)==NULL)
+		{
+			insert_symbol(global, symbol);		
+		}
+		else
+		{
+			//error
+			printf(errors_list[5], name);
+		}
+		
 	}
 
 }
