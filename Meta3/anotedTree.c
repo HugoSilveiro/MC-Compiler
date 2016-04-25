@@ -154,6 +154,7 @@ char * get_type_Call(Node * node)
 		aux = (char*)malloc(sizeof(node->type));
 		scanf(node->type, "%s(%s)", auxType, aux);
 		printf("node->type: %s\n", node->type);
+		printf("auxType:%s\n", auxType);
 		return auxType;
 	}
 	else
@@ -173,6 +174,9 @@ char * get_type_Call(Node * node)
 	}
 	return NULL;
 }
+
+
+
 
 
 void get_inside_funcBody(Node * node)
