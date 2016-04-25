@@ -22,3 +22,5 @@ void get_inside_strlit(Node * node);
 char * check_call_type(Node * node);
 
 char * get_type_Call(Node * node);
+
+char * type_call(char * type);

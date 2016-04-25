@@ -152,10 +152,10 @@ char * get_type_Call(Node * node)
 		printf("%s\n", node->type);
 		auxType = (char*)malloc(sizeof(node->type));
 		aux = (char*)malloc(sizeof(node->type));
-		scanf(node->type, "%s(%s)", auxType, aux);
+		//scanf(node->type, "%s(%s)", auxType, aux);
 		printf("node->type: %s\n", node->type);
 		printf("auxType:%s\n", auxType);
-		return auxType;
+		return type_call(node->type);
 	}
 	else
 	{
@@ -166,17 +166,31 @@ char * get_type_Call(Node * node)
 			node->type = symbol2->type;
 			auxType = (char*)malloc(sizeof(node->type));
 			aux = (char*)malloc(sizeof(node->type));
-			scanf(node->type, "%s(%s)", auxType, aux);
+			//scanf(node->type, "%s(%s)", auxType, aux);
 			printf("node->type: %s\n", node->type);
 			printf("auxType:%s\n", auxType);
-			return auxType;	
+			return type_call(node->type);	
 		}	
 	}
 	return NULL;
 }
 
 
-
+char * type_call(char * type)
+{
+	int aux = strlen(type);
+	char * new_aux = (char*)malloc(sizeof(type));
+	int i;
+	for(int i = 0; i < aux; i++){
+		if(type[i] != '('){
+			new_aux[i] = type[i];
+		}
+		else if(type[i] == '('){
+			return new_aux;
+		}
+	}
+	return NULL;
+}
 
 
 void get_inside_funcBody(Node * node)
