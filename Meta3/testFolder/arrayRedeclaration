@@ -1,4 +1,10 @@
 
 char buffer[20];
 
-int buffer[20];
+
+
+char main(int a)
+{
+	int buffer;
+	
+}
