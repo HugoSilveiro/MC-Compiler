@@ -6,7 +6,7 @@
 #include "anotedTree.h"
 #include "printer.h"
 
-#define DEBUG 0
+#define DEBUG 1
 
 extern Table * symbol_table;
 Table * current_table2 = NULL;
@@ -149,6 +149,7 @@ char * get_type_Call(Node * node)
 	if(symbol!=NULL)
 	{
 		node->type = symbol->type;
+		printf("get_type_call: %s\n", node->type);
 		return type_call(node->type);
 	}
 	else
@@ -157,7 +158,9 @@ char * get_type_Call(Node * node)
 		Symbol * symbol2 = search_symbol(node->value, table);
 		if(symbol2!=NULL)
 		{
+			
 			node->type = symbol2->type;
+			printf("get_type_call: %s\n", node->type);
 			return type_call(node->type);	
 		}	
 	}
@@ -171,7 +174,7 @@ char * type_call(char * type)
 	char * new_aux = (char*)malloc(sizeof(type));
 	int i;
 	for(int i = 0; i < aux; i++){
-		if(type[i] != '(' && type[i] != '*'){
+		if(type[i] != '('){
 			new_aux[i] = type[i];
 		}
 		else if(type[i] == '('){
@@ -315,8 +318,13 @@ void get_inside_funcBody(Node * node)
 		else if(strcmp(NODE_NAME[temp->node_type], "Call") == 0)
 		{
 			
+			//temp->type = check_call_type(temp); 
+			//get_inside_operator(temp);
+
+			printf("call\n");
 			temp->type = check_call_type(temp); 
-			get_inside_operator(temp);
+			get_inside_funcBody(temp);
+
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Return") == 0){
@@ -334,6 +342,7 @@ void get_inside_funcBody(Node * node)
 
 void get_inside_operator(Node * node)
 {
+	printf("get_inside_operator\n");
 	Node * temp = node->child;
 	while(temp != NULL)
 	{
@@ -349,6 +358,22 @@ void get_inside_operator(Node * node)
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "StrLit") == 0){
 			get_inside_strlit(temp);
+		}
+		else if(strcmp(NODE_NAME[temp->node_type], "Call") == 0)
+		{
+			
+			//temp->type = check_call_type(temp); 
+			//get_inside_operator(temp);
+
+			printf("call\n");
+			temp->type = check_call_type(temp); 
+			get_inside_funcBody(temp);
+
+
+		}
+		else{
+			printf("else: %s\n", NODE_NAME[temp->node_type]);
+			check_inside_funcBody(temp);
 		}	
 
 		temp = temp->brother;
