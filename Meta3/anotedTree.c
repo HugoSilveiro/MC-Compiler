@@ -154,7 +154,7 @@ char * get_type_Call(Node * node)
 		aux = (char*)malloc(sizeof(node->type));
 		//scanf(node->type, "%s(%s)", auxType, aux);
 		printf("node->type: %s\n", node->type);
-		printf("auxType:%s\n", auxType);
+		//printf("auxType:%s\n", auxType);
 		return type_call(node->type);
 	}
 	else
@@ -168,7 +168,7 @@ char * get_type_Call(Node * node)
 			aux = (char*)malloc(sizeof(node->type));
 			//scanf(node->type, "%s(%s)", auxType, aux);
 			printf("node->type: %s\n", node->type);
-			printf("auxType:%s\n", auxType);
+			//printf("auxType:%s\n", auxType);
 			return type_call(node->type);	
 		}	
 	}
@@ -182,10 +182,11 @@ char * type_call(char * type)
 	char * new_aux = (char*)malloc(sizeof(type));
 	int i;
 	for(int i = 0; i < aux; i++){
-		if(type[i] != '('){
+		if(type[i] != '(' && type[i] != '*'){
 			new_aux[i] = type[i];
 		}
 		else if(type[i] == '('){
+			printf("type_call: %s\n", new_aux);
 			return new_aux;
 		}
 	}
