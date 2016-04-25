@@ -6,7 +6,7 @@
 #include "anotedTree.h"
 #include "printer.h"
 
-#define DEBUG 1
+#define DEBUG 0
 
 extern Table * symbol_table;
 Table * current_table2 = NULL;
@@ -95,15 +95,15 @@ void check_inside_funcBody(Node * node)
 		else if(strcmp(NODE_NAME[temp->node_type], "Store") == 0){
 			//Ver o tipo dos filhos
 			temp->type = "int";
-			//get_inside_operator(temp);
-			get_inside_funcBody(temp);
+			get_inside_operator(temp);
+			//get_inside_funcBody(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Call") == 0)
 		{
 			printf("call\n");
 			temp->type = check_call_type(temp); 
-			get_inside_operator(temp);
+			get_inside_funcBody(temp);
 
 		}
 
@@ -145,16 +145,10 @@ char * get_type_Call(Node * node)
 {	
 	printf("get_type_Call\n");
 	Symbol * symbol = search_symbol(node->value, current_table2);
-	char * auxType, * aux;
+	
 	if(symbol!=NULL)
 	{
 		node->type = symbol->type;
-		printf("%s\n", node->type);
-		auxType = (char*)malloc(sizeof(node->type));
-		aux = (char*)malloc(sizeof(node->type));
-		//scanf(node->type, "%s(%s)", auxType, aux);
-		printf("node->type: %s\n", node->type);
-		//printf("auxType:%s\n", auxType);
 		return type_call(node->type);
 	}
 	else
@@ -164,11 +158,6 @@ char * get_type_Call(Node * node)
 		if(symbol2!=NULL)
 		{
 			node->type = symbol2->type;
-			auxType = (char*)malloc(sizeof(node->type));
-			aux = (char*)malloc(sizeof(node->type));
-			//scanf(node->type, "%s(%s)", auxType, aux);
-			printf("node->type: %s\n", node->type);
-			//printf("auxType:%s\n", auxType);
 			return type_call(node->type);	
 		}	
 	}
@@ -373,6 +362,7 @@ void get_inside_id(Node * node)
 	Symbol * symbol = search_symbol(node->value, current_table2);
 	if(symbol!=NULL)
 	{
+		//printf("[get_inside_id] type: %s\n", symbol->type);
 		node->type = symbol->type;
 	}
 	else
@@ -381,6 +371,7 @@ void get_inside_id(Node * node)
 		Symbol * symbol2 = search_symbol(node->value, table);
 		if(symbol2!=NULL)
 		{
+			//printf("[get_inside_id] type: %s\n", symbol2->type);
 			node->type = symbol2->type;	
 		}
 		
