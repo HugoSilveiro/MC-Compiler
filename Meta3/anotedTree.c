@@ -120,7 +120,7 @@ char * check_call_type(Node * node)
 	{
 		printf("%s\n", NODE_NAME[temp->node_type]);
 		if(strcmp(NODE_NAME[temp->node_type], "Id") == 0){
-			auxType = (char*)malloc(sizeof("Id"));
+			auxType = (char*)malloc(sizeof(get_type_Call(temp)));
 			strcpy(auxType, get_type_Call(temp));
 			printf("auxType: %s\n", auxType);
 			return auxType;
@@ -145,11 +145,13 @@ char * get_type_Call(Node * node)
 {	
 	printf("get_type_Call\n");
 	Symbol * symbol = search_symbol(node->value, current_table2);
-	char * auxType, aux;
+	char * auxType, * aux;
 	if(symbol!=NULL)
 	{
 		node->type = symbol->type;
+		printf("%s\n", node->type);
 		auxType = (char*)malloc(sizeof(node->type));
+		aux = (char*)malloc(sizeof(node->type));
 		scanf(node->type, "%s(%s)", auxType, aux);
 		printf("node->type: %s\n", node->type);
 		return auxType;
@@ -162,7 +164,10 @@ char * get_type_Call(Node * node)
 		{
 			node->type = symbol2->type;
 			auxType = (char*)malloc(sizeof(node->type));
+			aux = (char*)malloc(sizeof(node->type));
 			scanf(node->type, "%s(%s)", auxType, aux);
+			printf("node->type: %s\n", node->type);
+			printf("auxType:%s\n", auxType);
 			return auxType;	
 		}	
 	}
