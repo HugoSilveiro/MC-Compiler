@@ -1,8 +1,12 @@
-int a;
-int main(void){
-puts(a);
+char buffer[20];
 
+int main(int argc, char **argv){
+	int a,b;
+	if (argc > 2)
+	{
+		a = atoi(argv[1]);
+		b = atoi(argv[2]);
+		puts(itoa(gcd(a,b), buffer));
+	}
+	return 0;
 }
-
-
-
