@@ -6,7 +6,7 @@
 #include "anotedTree.h"
 #include "printer.h"
 
-#define DEBUG 1
+#define DEBUG 0
 
 extern Table * symbol_table;
 Table * current_table2 = NULL;
@@ -95,15 +95,15 @@ void check_inside_funcBody(Node * node)
 		else if(strcmp(NODE_NAME[temp->node_type], "Store") == 0){
 			//Ver o tipo dos filhos
 			temp->type = "int";
-			//get_inside_operator(temp);
-			get_inside_funcBody(temp);
+			get_inside_operator(temp);
+			//get_inside_funcBody(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Call") == 0)
 		{
 			printf("call\n");
 			temp->type = check_call_type(temp); 
-			get_inside_operator(temp);
+			get_inside_funcBody(temp);
 
 		}
 
