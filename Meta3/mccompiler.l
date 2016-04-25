@@ -30,6 +30,7 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 	int colComment;
 	int lineComment;
 	int treeFlag = 0;
+	int anoted_flag = 0;
 	extern int yacc_errors;
 	extern Node *tree;
 	int flag = 0;
@@ -206,20 +207,7 @@ int main(int argc, char* argv[])
 		}
 		else if(strcmp(argv[1], "-s") == 0)
 		{
-			yyparse();
-			if(yacc_errors == 0)
-			{
-				start_symbol_table();
-
-				
-				build_table(tree);
-				get_anoted_Tree(tree);
-				print_tree(tree, 0);
-
-				//print_tables();
-				//print_tree(tree, 0);
-
-			}
+			anoted_flag = 1;
 			
 		}
 
@@ -236,6 +224,7 @@ int main(int argc, char* argv[])
 
 			start_symbol_table();
 			build_table(tree);
+			get_anoted_Tree(tree);
 
 		}
 	}
@@ -245,12 +234,16 @@ int main(int argc, char* argv[])
 
 		start_symbol_table();
 		build_table(tree);
-		print_symbol_table(symbol_table);
 		get_anoted_Tree(tree);
-		print_tree(tree, 0);
+
 
 		if(yacc_errors == 0 && treeFlag == 1)
 		{
+			print_tree(tree, 0);
+		}
+		else if(yacc_errors == 0 && anoted_flag ==1)
+		{
+			print_symbol_table(symbol_table);
 			print_tree(tree, 0);
 		}
 

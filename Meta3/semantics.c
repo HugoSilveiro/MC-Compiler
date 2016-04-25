@@ -124,7 +124,7 @@ void insert_array_declaration(Node * tree)
 		else
 		{
 			//error
-
+			printf(errors_list[5], name);
 		}
 		
 	}
@@ -483,7 +483,7 @@ char * get_param_decl(Node * node)
 		else if(strcmp(NODE_NAME[temp->node_type], "Pointer") == 0)
 		{
 			strcat(type, "*");
-			
+
 		}
 		//falta tratar o asterisco
 
