@@ -370,7 +370,7 @@ void get_inside_id(Node * node)
 		Symbol * symbol2 = search_symbol(node->value, table);
 		if(symbol2!=NULL)
 		{
-			//printf("[get_inside_id] type: %s\n", symbol->type);
+			//printf("[get_inside_id] type: %s\n", symbol2->type);
 			node->type = symbol2->type;	
 		}
 		
