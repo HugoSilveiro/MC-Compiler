@@ -323,11 +323,10 @@ void insert_function_definition(Node * node)
 	Table *aux;
 	aux = search_table(func_name);
 
-	Table * global = search_table("global");
-	if(search_symbol(func_name, global)==NULL)
+	if(strcmp(func_name,"atoi")!=0 && strcmp(func_name,"itoa")!=0 && strcmp(func_name,"puts")!=0)
 	{
 
-		if(aux!=NULL )
+		if(aux!=NULL)
 		{
 			aux->defined = 1;
 			current_table = aux;
@@ -433,7 +432,7 @@ void insert_function_declaration(Node * node)
 	char * func_name;
 	func_name = strdup(get_function_name(node));
 	Table * find = search_table(func_name);
-	if(search_symbol(func_name, global)==NULL)
+	if(strcmp(func_name,"atoi")!=0 && strcmp(func_name,"itoa")!=0 && strcmp(func_name,"puts")!=0)
 	{
 		if(find==NULL)
 		{
