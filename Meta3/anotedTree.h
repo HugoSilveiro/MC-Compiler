@@ -24,3 +24,5 @@ char * check_call_type(Node * node);
 char * get_type_Call(Node * node);
 
 char * type_call(char * type);
+
+char * get_expr_type(Node * node);

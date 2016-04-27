@@ -149,5 +149,6 @@ Table * search_table(char * name)
 			return aux;
 		}
 	}
+	return NULL;
 
 }

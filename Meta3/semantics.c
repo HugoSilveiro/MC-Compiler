@@ -23,7 +23,7 @@ char * errors_list[] = {"Conflicting types (got %s, expected %s)\n",
 "Wrong number of arguments to function %s (got %d, required %d)\n"};  
 
 
-int build_table(Node* tree)
+void build_table(Node* tree)
 {
 	if(DEBUG){
 		printf("build_table\n");
@@ -456,7 +456,6 @@ char * get_param_decl(Node * node)
 {
 	char * type ;
 	Node * temp;
-	Symbol * symbol = NULL;
 	temp = node->child;
 
 	while(temp!=NULL)
