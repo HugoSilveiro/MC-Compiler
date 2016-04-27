@@ -235,6 +235,7 @@ char * get_type(Node* tree)
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Pointer")==0)
 		{
+			type = (char*)realloc(type, sizeof("*"));
 			strcat(type, "*");
 		}
 		temp = temp->brother;
