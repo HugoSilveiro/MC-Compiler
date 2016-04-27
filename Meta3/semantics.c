@@ -9,7 +9,7 @@
 extern Table * symbol_table;
 Table * current_table = NULL;
 
-#define S_DEBUG 1
+#define S_DEBUG 0
 
 
 char * errors_list[] = {"Conflicting types (got %s, expected %s)\n",
@@ -93,11 +93,7 @@ void insert_declaration(Node * tree)
 		{
 			insert_symbol(global, symbol);		
 		}
-		else
-		{
-			//error
-			printf(errors_list[5], name);
-		}
+
 	}
 	
 	
@@ -132,11 +128,7 @@ void insert_array_declaration(Node * tree)
 		{
 			insert_symbol(global, symbol);		
 		}
-		else
-		{
-			//error
-			printf(errors_list[5], name);
-		}
+		
 		
 	}
 
@@ -162,7 +154,6 @@ char * get_name(Node* tree)
 
 char * octal_function(int value)
 {
-	printf("Value: %d\n", value);
 	int decimal= 0;
 	int i = 0;
 	while(value!=0)
@@ -170,7 +161,6 @@ char * octal_function(int value)
 		decimal = decimal + (value % 10) * pow_f(8,i++);
 		value = value/10;
 	}
-    printf("Decimal: %d\n", decimal);
     char * aux;
     aux = (char*) malloc(sizeof(char)* i);
     sprintf(aux, "%d", decimal);
@@ -212,7 +202,7 @@ char * get_type(Node* tree)
 		if(strcmp(NODE_NAME[temp->node_type], "IntLit") == 0)
 		{
 			//memset(value, '\0', sizeof("int"));
-			printf("get_type: %c\n", temp->value[0]);
+			if(S_DEBUG)printf("get_type: %c\n", temp->value[0]);
 			if(temp->value[0] == '0')
 			{
 				strcpy(value, octal_function(atoi(temp->value)));	
