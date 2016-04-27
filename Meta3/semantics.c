@@ -192,8 +192,8 @@ char * get_type(Node* tree)
 {
 	if(S_DEBUG)printf("get_type\n");
 	Node* temp = tree->child;
-	char value[10];
-	char type[10];
+	char * value;
+	char * type;
 	char* finalType;
 	while(temp != NULL){
 		if(S_DEBUG)printf("while: %s\n", NODE_NAME[temp->node_type]);
@@ -205,10 +205,12 @@ char * get_type(Node* tree)
 			if(S_DEBUG)printf("get_type: %c\n", temp->value[0]);
 			if(temp->value[0] == '0')
 			{
+				value = (char*) malloc(sizeof(octal_function(atoi(temp->value))));
 				strcpy(value, octal_function(atoi(temp->value)));	
 			}
 			else
 			{
+				value = (char*)malloc(sizeof(temp->value));
 				strcpy(value, temp->value);
 			}
 
@@ -218,14 +220,17 @@ char * get_type(Node* tree)
 		else if(strcmp(NODE_NAME[temp->node_type], "Void") == 0)
 		{
 			//memset(value, '\0', sizeof("int"));
+			type = (char*)malloc(sizeof("void"));
 			strcpy(type, "void");
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Char") == 0)
 		{
+			type = (char*)malloc(sizeof("char"));
 			strcpy(type, "char");
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Int") == 0)
 		{
+			type = (char*)malloc(sizeof("int"));
 			strcpy(type, "int");
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Pointer")==0)

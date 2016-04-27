@@ -10,3 +10,7 @@ int e[012];
 char f[1];
 char * g[012];
 
+void  * h;
+void i[020];
+
+char ***************** x;

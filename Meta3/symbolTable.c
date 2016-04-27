@@ -19,7 +19,7 @@ void start_symbol_table()
 	insert_symbol(aux, symbol);
 
 	//iniciar itoa
-	symbol = create_symbol("itoa", "char*(int, char*)", 0);
+	symbol = create_symbol("itoa", "char*(int,char*)", 0);
 	insert_symbol(aux, symbol);
 
 	//iniciar puts
