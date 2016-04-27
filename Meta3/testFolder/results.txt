@@ -92,19 +92,43 @@ get_inside_operator
 Id
 [get_inside_id] node->value: a
 Call
-else: Call
+call
+check_call_type
+Id
+get_type_Call
+get_type_call: int(char*)
+type_call: int
+auxType: int
+[get_inside_funcBody] Id
+check_inside_funcBody
+[get_inside_funcBody] Deref
+get_inside_operator
+Add
+else: Add
 check_inside_funcBody
 Id
-Deref
+IntLit
 Store
 get_inside_operator
 Id
 [get_inside_id] node->value: b
 Call
-else: Call
+call
+check_call_type
+Id
+get_type_Call
+get_type_call: int(char*)
+type_call: int
+auxType: int
+[get_inside_funcBody] Id
+check_inside_funcBody
+[get_inside_funcBody] Deref
+get_inside_operator
+Add
+else: Add
 check_inside_funcBody
 Id
-Deref
+IntLit
 Call
 call
 check_call_type
@@ -227,17 +251,17 @@ Program
 ........StatList
 ..........Store - int
 ............Id(a) - int
-............Call
-..............Id(atoi)
-..............Deref
+............Call - int
+..............Id(atoi) - int(char*)
+..............Deref - int
 ................Add
 ..................Id(argv)
 ..................IntLit(1)
 ..........Store - int
 ............Id(b) - int
-............Call
-..............Id(atoi)
-..............Deref
+............Call - int
+..............Id(atoi) - int(char*)
+..............Deref - int
 ................Add
 ..................Id(argv)
 ..................IntLit(2)
