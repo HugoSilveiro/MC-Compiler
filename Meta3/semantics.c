@@ -195,7 +195,7 @@ char * get_type(Node* tree)
 	if(S_DEBUG)printf("get_type\n");
 	Node* temp = tree->child;
 	char * value;
-	char* type, *auxType;
+	char* type;
 	char* finalType;
 	int i;
 	int numberPointers = 0;
@@ -211,11 +211,13 @@ char * get_type(Node* tree)
 			{
 				value = (char*) malloc(sizeof(octal_function(atoi(temp->value))));
 				strcpy(value, octal_function(atoi(temp->value)));	
+				//printf("VALUE0: %s\n", value);
 			}
 			else
 			{
 				value = (char*)malloc(sizeof(temp->value));
 				strcpy(value, temp->value);
+				//printf("VALUE1: %s\n", value);
 			}
 
 			
@@ -244,16 +246,24 @@ char * get_type(Node* tree)
 		}
 		temp = temp->brother;
 	}
-	auxType = (char*)malloc(sizeof(numberPointers)+1);
-	strcat(auxType, type);
 	for(i = 0; i < numberPointers; i++){
-		strcat(type, "*");
+		type = concat(type, "*");
 	}
-	finalType = (char*) malloc(sizeof(type)+sizeof(value)+2);
+	//printf("type:%s | value: %s\n", type, value);
+	finalType = (char*) malloc(strlen(type)+strlen(value)+1);
+	
 	sprintf(finalType, "%s[%s]", type, value);
 	return finalType;
 }
 
+char* concat(char *s1, char *s2)
+{
+    char *result = malloc(strlen(s1)+strlen(s2)+1);//+1 for the zero-terminator
+    //in real code you would check for errors in malloc here
+    strcpy(result, s1);
+    strcat(result, s2);
+    return result;
+}
 
 char * get_type_declaration(Node* tree)
 {
@@ -357,7 +367,7 @@ void insert_function_definition(Node * node)
 
 			//variavel para guardar os parametros no formato return(%s,...,);
 			char *params_concat;
-			params_concat = (char*) malloc(sizeof(func_type)+sizeof(param_lists));
+			params_concat = (char*) malloc(strlen(func_type)+strlen(param_lists)+1);
 			sprintf(params_concat,"%s%s" , func_type, param_lists);
 
 			if(S_DEBUG)printf("Type: %s | param_lists: %s\n", func_type, param_lists);
@@ -456,7 +466,6 @@ void insert_function_declaration(Node * node)
 
 
 
-
 			//criação do simbolo para a tabela global
 			symbol = create_symbol(func_name, params_concat, 0);
 			insert_symbol(global, symbol);
@@ -499,7 +508,7 @@ char * get_param_list_concatenated_function(Node * node)
 
 	temp = found->child;
 	char * aux;
-	aux = (char*)malloc(sizeof(char)*300);
+	aux = (char*)malloc(sizeof(char)*1000);
 	int i = 0;
 	int cx;
 	while(temp!=NULL)
@@ -508,18 +517,18 @@ char * get_param_list_concatenated_function(Node * node)
 
 			if(i == 0)
 			{
-				cx = snprintf(aux, 300,"(%s", get_param_decl(temp));
+				cx = sprintf(aux,"(%s", get_param_decl(temp));
 			}
 			else
 			{
-				cx = cx + snprintf(aux + cx ,300, ",%s", get_param_decl(temp));
+				cx = cx + sprintf(aux + cx , ",%s", get_param_decl(temp));
 			}
 			i = i+1;
 		}
 
 		temp = temp->brother;
 	}
-	snprintf(aux + cx,300, ")");
+	sprintf(aux + cx, ")");
 	return aux;
 }
 
