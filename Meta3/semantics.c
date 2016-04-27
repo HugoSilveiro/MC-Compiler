@@ -9,7 +9,7 @@
 extern Table * symbol_table;
 Table * current_table = NULL;
 
-#define S_DEBUG 1
+#define S_DEBUG 0
 
 
 char * errors_list[] = {"Conflicting types (got %s, expected %s)\n",
@@ -97,6 +97,7 @@ void insert_declaration(Node * tree)
 	}
 	
 	
+	
 }
 
 void insert_array_declaration(Node * tree)
@@ -131,6 +132,7 @@ void insert_array_declaration(Node * tree)
 		
 		
 	}
+
 
 }
 
@@ -193,8 +195,10 @@ char * get_type(Node* tree)
 	if(S_DEBUG)printf("get_type\n");
 	Node* temp = tree->child;
 	char * value;
-	char * type;
+	char* type, *auxType;
 	char* finalType;
+	int i;
+	int numberPointers = 0;
 	while(temp != NULL){
 		if(S_DEBUG)printf("while: %s\n", NODE_NAME[temp->node_type]);
 
@@ -235,10 +239,15 @@ char * get_type(Node* tree)
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Pointer")==0)
 		{
-			
-			strcat(type, "*");
+			numberPointers++;
+			//strcat(type, "*");
 		}
 		temp = temp->brother;
+	}
+	auxType = (char*)malloc(sizeof(numberPointers)+1);
+	strcat(auxType, type);
+	for(i = 0; i < numberPointers; i++){
+		strcat(type, "*");
 	}
 	finalType = (char*) malloc(sizeof(type)+sizeof(value)+2);
 	sprintf(finalType, "%s[%s]", type, value);
@@ -251,7 +260,9 @@ char * get_type_declaration(Node* tree)
 	if(S_DEBUG)printf("get_type_declaration\n");
 	Node* temp = tree->child;
 	//char value[10];
-	char* type;
+	char* type, *auxType;
+	int numberPointers = 0;
+	int i;
 	
 	while(temp != NULL){
 		if(S_DEBUG)printf("while: %s\n", NODE_NAME[temp->node_type]);
@@ -279,12 +290,18 @@ char * get_type_declaration(Node* tree)
 		else if(strcmp(NODE_NAME[temp->node_type], "Pointer") == 0)
 		{
 			if(S_DEBUG)printf(">Pointer\n");
-
-			type = (char*)realloc(type, sizeof(type)+ sizeof("*"));
-			strcat(type, "*");
+			numberPointers++;
+			//type = (char*)realloc(type, sizeof(type)+1*sizeof("*"));
+			//strcat(type, "*");
 		}
 		temp = temp->brother;
 	}
+	auxType = (char*)malloc(sizeof(numberPointers)+1);
+	strcat(auxType, type);
+	for(i = 0; i < numberPointers; i++){
+		strcat(type, "*");
+	}
+	
 
 	//finalType = (char*) malloc(sizeof(type);
 	//strcpy()
@@ -499,10 +516,11 @@ char * get_param_list_concatenated_function(Node * node)
 
 char * get_param_decl(Node * node)
 {
-	char * type ;
+	char * type, *auxType;
 	Node * temp;
 	temp = node->child;
-
+	int numberPointers = 0;
+	int i;
 	while(temp!=NULL)
 	{
 
@@ -526,14 +544,22 @@ char * get_param_decl(Node * node)
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Pointer") == 0)
 		{
-			type = (char*)realloc(type, sizeof(type)+ sizeof("*"));
-			strcat(type, "*");
-
+			//type = (char*)realloc(type, sizeof(type)+ sizeof("*"));
+			//strcat(type, "*");
+			numberPointers++;
 		}
+
+
 		//falta tratar o asterisco
 
 		temp = temp->brother;
 	}
+	auxType = (char*)malloc(sizeof(numberPointers)+1);
+	strcat(auxType, type);
+	for(i = 0; i < numberPointers; i++){
+		strcat(type, "*");
+	}
+
 	if(S_DEBUG)printf("get_param_decl: %s\n", type);
 	return type;
 }
@@ -564,11 +590,13 @@ void get_param_list_function(Node * node, Table* function)
 
 void get_param_declaration(Node * node, Table *function)
 {
-	char * type ;
+	char * type, * auxType;
 	char * id = NULL;
 	Node * temp;
 	Symbol * symbol = NULL;
 	temp = node->child;
+	int numberPointers = 0;
+	int i;
 	while(temp!=NULL)
 	{
 		if(S_DEBUG)printf("[param_declaration] %s\n", NODE_NAME[temp->node_type]);
@@ -594,8 +622,9 @@ void get_param_declaration(Node * node, Table *function)
 		//falta tratar o asterisco
 		else if(strcmp(NODE_NAME[temp->node_type], "Pointer")==0)
 		{
-			type = (char*)realloc(type, sizeof(type)+sizeof("*"));
-			strcat(type, "*");
+			//type = (char*)realloc(type, sizeof(type)+sizeof("*"));
+			//strcat(type, "*");
+			numberPointers++;
 		}
 		else if (strcmp(NODE_NAME[temp->node_type], "Id")== 0)
 		{
@@ -605,6 +634,12 @@ void get_param_declaration(Node * node, Table *function)
 
 		temp = temp->brother;
 	}
+	auxType = (char*)malloc(sizeof(numberPointers)+1);
+	strcat(auxType, type);
+	for(i = 0; i < numberPointers; i++){
+		strcat(type, "*");
+	}
+
 
 	if(id!=NULL)
 	{
@@ -634,9 +669,10 @@ char * get_function_typespec(Node * node)
 {
 
 
-	char * value;
+	char * value, *auxType;
 	Node * temp = node->child;
-
+	int numberPointers = 0;
+	int i;
 	while(temp != NULL){
 
 		if(strcmp(NODE_NAME[temp->node_type], "Char") == 0)
@@ -659,8 +695,9 @@ char * get_function_typespec(Node * node)
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Pointer")== 0)
 		{
-			value = (char*)realloc(value, sizeof("*")+sizeof(value));
-			strcat(value, "*");
+			//value = (char*)realloc(value, sizeof("*")+sizeof(value));
+			//strcat(value, "*");
+			numberPointers++;
 		}
 		else
 		{
@@ -673,6 +710,12 @@ char * get_function_typespec(Node * node)
 		}
 		temp = temp->brother;
 	}
+	auxType = (char*)malloc(sizeof(numberPointers)+1);
+	strcat(auxType, value);
+	for(i = 0; i < numberPointers; i++){
+		strcat(value, "*");
+	}
+
 
 	return value;
 }
