@@ -608,7 +608,7 @@ void get_param_list_function(Node * node, Table* function)
 
 void get_param_declaration(Node * node, Table *function)
 {
-	char * type, * auxType;
+	char * type;
 	char * id = NULL;
 	Node * temp;
 	Symbol * symbol = NULL;
@@ -652,10 +652,9 @@ void get_param_declaration(Node * node, Table *function)
 
 		temp = temp->brother;
 	}
-	auxType = (char*)malloc(sizeof(numberPointers)+1);
-	strcat(auxType, type);
+
 	for(i = 0; i < numberPointers; i++){
-		strcat(type, "*");
+		type = concat(type, "*");
 	}
 
 

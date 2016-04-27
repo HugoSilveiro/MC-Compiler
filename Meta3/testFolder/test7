@@ -21,3 +21,13 @@ int gets(void)
 }
 
 int main(void);
+
+int b(void);
+
+int c(void);
+
+int h(char *********************************** a, char *********************************** b){}
+
+int d(void);
+
+int e(void){}
