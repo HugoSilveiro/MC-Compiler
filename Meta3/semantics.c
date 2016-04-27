@@ -256,7 +256,7 @@ char * get_type_declaration(Node* tree)
 	Node* temp = tree->child;
 	//char value[10];
 	char* type;
-	char* finalType;
+	
 	while(temp != NULL){
 		if(S_DEBUG)printf("while: %s\n", NODE_NAME[temp->node_type]);
 		if(strcmp(NODE_NAME[temp->node_type], "Void") == 0)
@@ -290,7 +290,7 @@ char * get_type_declaration(Node* tree)
 
 	//finalType = (char*) malloc(sizeof(type);
 	//strcpy()
-	if(S_DEBUG)printf("finalType: %s\n", finalType);
+	//if(S_DEBUG)printf("finalType: %s\n", finalType);
 	return type;
 }
 
