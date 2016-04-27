@@ -1,5 +1,13 @@
 
 
-char ********* x;
+int atoi(void){}
 
-void main(char ********* x, int ********* x1);
+
+int puts(void);
+
+int main(void)
+{
+	
+}
+
+int gets(void);
