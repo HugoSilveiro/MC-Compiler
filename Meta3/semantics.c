@@ -9,7 +9,7 @@
 extern Table * symbol_table;
 Table * current_table = NULL;
 
-#define S_DEBUG 0
+#define S_DEBUG 1
 
 
 char * errors_list[] = {"Conflicting types (got %s, expected %s)\n",
@@ -235,7 +235,7 @@ char * get_type(Node* tree)
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Pointer")==0)
 		{
-			type = (char*)realloc(type, sizeof("*"));
+			
 			strcat(type, "*");
 		}
 		temp = temp->brother;
@@ -279,6 +279,8 @@ char * get_type_declaration(Node* tree)
 		else if(strcmp(NODE_NAME[temp->node_type], "Pointer") == 0)
 		{
 			if(S_DEBUG)printf(">Pointer\n");
+			type = (char*)realloc(type, sizeof("*")+sizeof(type));
+			printf("type: %s\n", type);
 			strcat(type, "*");
 		}
 		temp = temp->brother;
