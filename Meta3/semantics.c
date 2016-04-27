@@ -442,9 +442,11 @@ void insert_function_declaration(Node * node)
 		char *param_lists;
 		param_lists = strdup(get_param_list_concatenated_function(node));
 
+		//printf("param_list: %s\n", param_lists);
+
 		//variavel para guardar os parametros no formato return(%s,...,);
 		char *params_concat;
-		params_concat = (char*) malloc(sizeof(func_type)+sizeof(param_lists));
+		params_concat = (char*) malloc(strlen(func_type)+strlen(param_lists)+1);
 		sprintf(params_concat,"%s%s" , func_type, param_lists);
 
 
@@ -470,6 +472,8 @@ void insert_function_declaration(Node * node)
 		//inserir os simbolos da lista de parametros
 		//inserir os parametros como symbolos
 		get_param_list_function(node, aux);
+
+
 	}
 
 
