@@ -22,3 +22,6 @@ void get_param_declaration(Node * node, Table *function);
 
 char * get_param_decl(Node * node);
 char * get_param_list_concatenated_function(Node * node);
+
+char * octal_function(int value);
+int pow_f(int base, int exponent);
