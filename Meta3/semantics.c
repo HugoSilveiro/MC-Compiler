@@ -257,20 +257,20 @@ char * get_type_declaration(Node* tree)
 		if(strcmp(NODE_NAME[temp->node_type], "Void") == 0)
 		{
 			//memset(value, '\0', sizeof("int"));
-			type = (char*)malloc(sizeof(char)*5);
+			type = (char*)malloc(sizeof("void"));
 			strcpy(type, "void");
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Char") == 0)
 		{
 			if(S_DEBUG)printf("->Char\n");
-			type = (char*) malloc(sizeof(char)*5);			
+			type = (char*) malloc(sizeof("char"));			
 			strcpy(type, "char");
 			//strcpy(finalType, type);
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Int") == 0)
 		{
 			if(S_DEBUG)printf("->Int\n");
-			type = (char*) malloc(sizeof(int)*4);
+			type = (char*) malloc(sizeof("int"));
 			strcpy(type, "int");
 			//strcpy(finalType, type);
 		}
@@ -278,6 +278,7 @@ char * get_type_declaration(Node* tree)
 		else if(strcmp(NODE_NAME[temp->node_type], "Pointer") == 0)
 		{
 			if(S_DEBUG)printf(">Pointer\n");
+			type = (char*)realloc(type, sizeof(type)+ sizeof("*"));
 			strcat(type, "*");
 		}
 		temp = temp->brother;
@@ -506,23 +507,24 @@ char * get_param_decl(Node * node)
 		if(strcmp(NODE_NAME[temp->node_type], "Void") == 0)
 		{
 			//memset(value, '\0', sizeof("int"));
-			type = (char*)malloc(sizeof(char)*5);
+			type = (char*)malloc(sizeof("void"));
 			strcpy(type, "void");
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Char") == 0)
 		{
 			//memset(value, '\0', sizeof("char"));
-			type = (char*)malloc(sizeof(char)*5);
+			type = (char*)malloc(sizeof("char"));
 			strcpy(type, "char");
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Int") == 0)
 		{
-			type = (char*)malloc(sizeof(char)*4);
+			type = (char*)malloc(sizeof("int"));
 			//memset(value, '\0', sizeof("int"));
 			strcpy(type, "int");
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Pointer") == 0)
 		{
+			type = (char*)realloc(type, sizeof(type)+ sizeof("*"));
 			strcat(type, "*");
 
 		}
@@ -572,24 +574,25 @@ void get_param_declaration(Node * node, Table *function)
 		if(strcmp(NODE_NAME[temp->node_type], "Void") == 0)
 		{
 			//memset(value, '\0', sizeof("int"));
-			type = (char*)malloc(sizeof(char)*5);
+			type = (char*)malloc(sizeof("void"));
 			strcpy(type, "void");
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Char") == 0)
 		{
 			//memset(value, '\0', sizeof("char"));
-			type = (char*)malloc(sizeof(char)*5);
+			type = (char*)malloc(sizeof("char"));
 			strcpy(type, "char");
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Int") == 0)
 		{
-			type = (char*)malloc(sizeof(char)*4);
+			type = (char*)malloc(sizeof("int"));
 			//memset(value, '\0', sizeof("int"));
 			strcpy(type, "int");
 		}
 		//falta tratar o asterisco
 		else if(strcmp(NODE_NAME[temp->node_type], "Pointer")==0)
 		{
+			type = (char*)realloc(type, sizeof(type)+sizeof("*"));
 			strcat(type, "*");
 		}
 		else if (strcmp(NODE_NAME[temp->node_type], "Id")== 0)
@@ -637,23 +640,24 @@ char * get_function_typespec(Node * node)
 		if(strcmp(NODE_NAME[temp->node_type], "Char") == 0)
 		{
 			//memset(value, '\0', sizeof("char"));
-			value = (char* )malloc(sizeof(char)* 5);
+			value = (char* )malloc(sizeof("char"));
 			strcpy(value, "char");
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Void") == 0)
 		{
 			//memset(value, '\0', sizeof("int"));
-			value = (char*)malloc(sizeof(char)*5);
+			value = (char*)malloc(sizeof("void"));
 			strcpy(value, "void");
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Int") == 0)
 		{
 			//memset(value, '\0', sizeof("int"));
-			value = (char* )malloc(sizeof(char)* 4);
+			value = (char* )malloc(sizeof("int"));
 			strcpy(value, "int");
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Pointer")== 0)
 		{
+			value = (char*)realloc(value, sizeof("*")+sizeof(value));
 			strcat(value, "*");
 		}
 		else
