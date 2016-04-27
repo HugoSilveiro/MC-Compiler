@@ -81,11 +81,11 @@ void print_table(Table * table)
 	Symbol * symbol;
 	if(table->type == 0)
 	{
-		printf("==== Global Symbol Table ====\n");
+		printf("===== Global Symbol Table =====\n");
 	}
 	else
 	{
-		printf("==== Function %s Symbol Table ====\n", table->name);
+		printf("===== Function %s Symbol Table =====\n", table->name);
 	}
 	for(symbol = table->child; symbol; symbol=symbol->next)
 	{

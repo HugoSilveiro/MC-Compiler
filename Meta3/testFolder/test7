@@ -1,2 +1,12 @@
-char a;
-char a;
+int a;
+int b;
+int b;
+char b;
+
+int c[10];
+int d[010];
+int e[012];
+
+char f[1];
+char * g[012];
+
