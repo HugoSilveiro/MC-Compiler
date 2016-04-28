@@ -529,8 +529,9 @@ char * get_param_list_concatenated_function(Node * node)
 
 		temp = temp->brother;
 	}
+
 	sprintf(aux + cx, ")");
-	
+
 	return aux;
 }
 
