@@ -245,7 +245,16 @@ void get_inside_funcBody(Node * node)
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Add") == 0)
 		{	
-			temp->type =  get_expr_type(temp);
+			//printf("Add\n");
+			temp->type = get_add_type(temp);
+			/*Node * temp2 = temp->child;
+			while(temp2!= NULL){
+				printf("child->node_type: %s\n", NODE_NAME[temp2->node_type]);
+				printf("child->value: %s\n", temp2->value);
+				printf("child->type: %s\n", temp2->type);
+				temp2 = temp2->child;
+			}*/
+			//temp->type =  get_expr_type(temp);
 			get_inside_operator(temp);
 
 		}
@@ -299,7 +308,9 @@ void get_inside_funcBody(Node * node)
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Deref") == 0)
 		{	
-			temp->type = "int"; 
+			//printf("Deref\nchild:%s\n", NODE_NAME[temp->child->node_type]);
+			temp->type = get_deref_type(temp);
+			//get_deref_type(temp); 
 			get_inside_funcBody(temp);
 
 		}
@@ -340,6 +351,81 @@ void get_inside_funcBody(Node * node)
 	}
 }
 
+char * return_symbol_name(Symbol * symbol)
+{
+	//printf("return_symbol_name\n");
+	if(symbol->param==0)
+	{
+		//printf("%s\t%s\n", symbol->name, symbol->type);
+		return symbol->type;
+	}
+	else
+	{
+		//printf("%s\t%s\t%s\n", symbol->name, symbol->type, "param");
+		return symbol->type;
+	}
+
+	
+}
+char * get_add_type(Node * temp)
+{
+	//printf("get_add_type\n");
+	Node * temp2 = temp->child;
+	char * addType;
+	while(temp2!= NULL){
+		//printf("child->node_type: %s\n", NODE_NAME[temp2->node_type]);
+		//printf("child->value: %s\n", temp2->value);
+		//printf("child->type: %s\n", temp2->type);
+
+		Symbol * symbol = (Symbol *) malloc(sizeof(Symbol));
+		symbol = search_symbol(temp2->value, current_table2);;
+		addType = (char*)malloc(sizeof(char)*10);
+		strcpy(addType,return_symbol_name(symbol));
+		//printf("addType: %s\n", addType);
+		return addType;
+		temp2 = temp2->child;
+	}
+	return NULL;
+
+}
+
+char * get_deref_type(Node * node)
+{
+	//printf("get_deref_type\n");
+	Node * temp = node->child;
+	Node * temp2;
+	char * addType;
+	while(temp!=NULL)
+	{
+		//printf("deref->node_type:%s\n", NODE_NAME[temp->node_type]);
+		if(strcmp(NODE_NAME[temp->node_type], "Add") == 0){
+			//printf("deref_ADD\n");
+			temp2 = temp->child;
+			while(temp2!=NULL){
+				//printf("while2: %s\n", NODE_NAME[temp2->node_type]);
+				//printf("temp2->node_type: %s\n", NODE_NAME[temp2->node_type]);
+				//printf("temp2->value: %s\n", temp2->value);
+				
+				Symbol * symbol = (Symbol *) malloc(sizeof(Symbol));
+				symbol = search_symbol(temp2->value, current_table2);
+				addType = (char*)malloc(sizeof(char)*10);
+				strcpy(addType,return_symbol_name(symbol));
+				addType[strlen(addType)-1] = '\0';
+				return addType;					
+				
+				temp2 = temp2->child;
+			}
+		}
+		temp=temp->brother;
+	}
+	return NULL;
+	
+
+	//Symbol * symbol = (Symbol *) malloc(sizeof(Symbol));
+	//symbol = search_symbol(NODE_NAME[node->node_type], current_table2);
+	//print_symbol(symbol);
+
+}
 
 char * get_expr_type(Node * node)
 {

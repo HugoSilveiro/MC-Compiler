@@ -96,6 +96,7 @@ void print_table(Table * table)
 
 void print_symbol(Symbol * symbol)
 {
+	//printf("print_symbol\n");
 	if(symbol->param==0)
 	{
 		printf("%s\t%s\n", symbol->name, symbol->type);

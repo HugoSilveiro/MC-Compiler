@@ -1,27 +1,7 @@
-int repeat;
-int repeat;
+int main(int argc, char ** argv){
+	int a,b;
+	a = atoi(argv[1]);
+	b = atoi(argv[2]);
 
-int atoi(char* str) { }
-
-int atoi(char*);
-
-char* itoa(int, char*);
-
-void ola(void);
-
-int main(int a, char* b) {
-    int repeat;
-}
-
-void ola(void) { }
-
-int puts(char* str) {
-
-}
-
-
-int func(void);
-
-int func(void) {
-
+	return 0;
 }
