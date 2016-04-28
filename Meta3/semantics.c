@@ -309,7 +309,7 @@ char * get_type_declaration(Node* tree)
 	auxType = (char*)malloc(sizeof(numberPointers)+1);
 	strcat(auxType, type);
 	for(i = 0; i < numberPointers; i++){
-		strcat(type, "*");
+		type = concat(type, "*");
 	}
 	
 
@@ -338,6 +338,9 @@ void insert_function_definition(Node * node)
 
 		if(aux!=NULL)
 		{
+			//inserir os simbolos da lista de parametros
+			//inserir os parametros como symbolos
+			get_param_list_function(node, aux);
 			aux->defined = 1;
 			current_table = aux;
 			insert_function_funcBody(node);
@@ -483,9 +486,7 @@ void insert_function_declaration(Node * node)
 			insert_symbol(aux, symbol);
 
 
-			//inserir os simbolos da lista de parametros
-			//inserir os parametros como symbolos
-			get_param_list_function(node, aux);
+
 
 
 		}
@@ -529,6 +530,7 @@ char * get_param_list_concatenated_function(Node * node)
 		temp = temp->brother;
 	}
 	sprintf(aux + cx, ")");
+	
 	return aux;
 }
 
@@ -575,7 +577,7 @@ char * get_param_decl(Node * node)
 	auxType = (char*)malloc(sizeof(numberPointers)+1);
 	strcat(auxType, type);
 	for(i = 0; i < numberPointers; i++){
-		strcat(type, "*");
+		type = concat(type, "*");
 	}
 
 	if(S_DEBUG)printf("get_param_decl: %s\n", type);
@@ -730,7 +732,7 @@ char * get_function_typespec(Node * node)
 	auxType = (char*)malloc(sizeof(numberPointers)+1);
 	strcat(auxType, value);
 	for(i = 0; i < numberPointers; i++){
-		strcat(value, "*");
+		value = concat(value, "*");
 	}
 
 
