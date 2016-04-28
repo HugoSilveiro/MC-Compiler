@@ -195,7 +195,7 @@ char * get_type(Node* tree)
 	if(S_DEBUG)printf("get_type\n");
 	Node* temp = tree->child;
 	char * value;
-	char* type, *auxType;
+	char* type;
 	char* finalType;
 	int i;
 	int numberPointers = 0;
@@ -211,11 +211,13 @@ char * get_type(Node* tree)
 			{
 				value = (char*) malloc(sizeof(octal_function(atoi(temp->value))));
 				strcpy(value, octal_function(atoi(temp->value)));	
+				//printf("VALUE0: %s\n", value);
 			}
 			else
 			{
 				value = (char*)malloc(sizeof(temp->value));
 				strcpy(value, temp->value);
+				//printf("VALUE1: %s\n", value);
 			}
 
 			
@@ -244,16 +246,24 @@ char * get_type(Node* tree)
 		}
 		temp = temp->brother;
 	}
-	auxType = (char*)malloc(sizeof(numberPointers)+1);
-	strcat(auxType, type);
 	for(i = 0; i < numberPointers; i++){
-		strcat(type, "*");
+		type = concat(type, "*");
 	}
-	finalType = (char*) malloc(sizeof(type)+sizeof(value)+2);
+	//printf("type:%s | value: %s\n", type, value);
+	finalType = (char*) malloc(strlen(type)+strlen(value)+1);
+	
 	sprintf(finalType, "%s[%s]", type, value);
 	return finalType;
 }
 
+char* concat(char *s1, char *s2)
+{
+    char *result = malloc(strlen(s1)+strlen(s2)+1);//+1 for the zero-terminator
+    //in real code you would check for errors in malloc here
+    strcpy(result, s1);
+    strcat(result, s2);
+    return result;
+}
 
 char * get_type_declaration(Node* tree)
 {
@@ -323,70 +333,74 @@ void insert_function_definition(Node * node)
 	Table *aux;
 	aux = search_table(func_name);
 
-	if(aux!=NULL)
+	if(strcmp(func_name,"atoi")!=0 && strcmp(func_name,"itoa")!=0 && strcmp(func_name,"puts")!=0)
 	{
-		aux->defined = 1;
-		current_table = aux;
-		insert_function_funcBody(node);
-		current_table = NULL;
 
-	}
-	else
-	{
-		////////
-		if(S_DEBUG)printf("[Insertion on function definition]\n");
-		
-		Symbol * symbol;
+		if(aux!=NULL)
+		{
+			aux->defined = 1;
+			current_table = aux;
+			insert_function_funcBody(node);
+			current_table = NULL;
 
-		//inserir o symbolo na tabela global
-		Table * global = search_table("global");
+		}
+		else
+		{
+			////////
+			if(S_DEBUG)printf("[Insertion on function definition]\n");
+			
+			Symbol * symbol;
 
-
-		//inserir o typespec concatenado com os parametros...
-
-		//variavel para guardar o tipo de retorno da função
-		char *func_type;
-		func_type = strdup(get_function_typespec(node));
-
-		//variavel para guardar a lista de parametros no formato (%s,...,)
-		char *param_lists;
-		param_lists = strdup(get_param_list_concatenated_function(node));
-
-		//variavel para guardar os parametros no formato return(%s,...,);
-		char *params_concat;
-		params_concat = (char*) malloc(sizeof(func_type)+sizeof(param_lists));
-		sprintf(params_concat,"%s%s" , func_type, param_lists);
-
-		if(S_DEBUG)printf("Type: %s | param_lists: %s\n", func_type, param_lists);
+			//inserir o symbolo na tabela global
+			Table * global = search_table("global");
 
 
-		//criação do simbolo para a tabela global
-		symbol = create_symbol(func_name, params_concat, 0);
-		insert_symbol(global, symbol);
+			//inserir o typespec concatenado com os parametros...
 
-		//criar uma tabela nova
-		Table * aux1;
+			//variavel para guardar o tipo de retorno da função
+			char *func_type;
+			func_type = strdup(get_function_typespec(node));
+
+			//variavel para guardar a lista de parametros no formato (%s,...,)
+			char *param_lists;
+			param_lists = strdup(get_param_list_concatenated_function(node));
+
+			//variavel para guardar os parametros no formato return(%s,...,);
+			char *params_concat;
+			params_concat = (char*) malloc(strlen(func_type)+strlen(param_lists)+1);
+			sprintf(params_concat,"%s%s" , func_type, param_lists);
+
+			if(S_DEBUG)printf("Type: %s | param_lists: %s\n", func_type, param_lists);
 
 
-		//inserir essa tabela à tabela de simbolos
-		aux1 = insert_table(1, func_name);
-		aux1->defined = 1;
+			//criação do simbolo para a tabela global
+			symbol = create_symbol(func_name, params_concat, 0);
+			insert_symbol(global, symbol);
+
+			//criar uma tabela nova
+			Table * aux1;
+
+
+			//inserir essa tabela à tabela de simbolos
+			aux1 = insert_table(1, func_name);
+			aux1->defined = 1;
 
 
 
-		//inserir o simbolo de return
-		symbol = create_symbol("return", func_type, 0);
-		insert_symbol(aux1, symbol);
+			//inserir o simbolo de return
+			symbol = create_symbol("return", func_type, 0);
+			insert_symbol(aux1, symbol);
 
 
-		//inserir os simbolos da lista de parametros
-		//inserir os parametros como symbolos
-		get_param_list_function(node, aux1);
+			//inserir os simbolos da lista de parametros
+			//inserir os parametros como symbolos
+			get_param_list_function(node, aux1);
 
-		current_table = aux1;
-		insert_function_funcBody(node);
-		
-		current_table = NULL;
+			current_table = aux1;
+			insert_function_funcBody(node);
+			
+			current_table = NULL;
+		}
 	}
 	
 	
@@ -428,51 +442,55 @@ void insert_function_declaration(Node * node)
 	char * func_name;
 	func_name = strdup(get_function_name(node));
 	Table * find = search_table(func_name);
-	
-	if(find==NULL)
+	if(strcmp(func_name,"atoi")!=0 && strcmp(func_name,"itoa")!=0 && strcmp(func_name,"puts")!=0)
 	{
-		
-		//inserir o typespec concatenado com os parametros...
+		if(find==NULL)
+		{
+			
+			//inserir o typespec concatenado com os parametros...
 
-		//variavel para guardar o tipo de retorno da função
-		char *func_type;
-		func_type = strdup(get_function_typespec(node));
+			//variavel para guardar o tipo de retorno da função
+			char *func_type;
+			func_type = strdup(get_function_typespec(node));
 
-		//variavel para guardar a lista de parametros no formato (%s,...,)
-		char *param_lists;
-		param_lists = strdup(get_param_list_concatenated_function(node));
+			//variavel para guardar a lista de parametros no formato (%s,...,)
+			char *param_lists;
+			param_lists = strdup(get_param_list_concatenated_function(node));
 
-		//variavel para guardar os parametros no formato return(%s,...,);
-		char *params_concat;
-		params_concat = (char*) malloc(sizeof(func_type)+sizeof(param_lists));
-		sprintf(params_concat,"%s%s" , func_type, param_lists);
+			//printf("param_list: %s\n", param_lists);
 
-
-
-
-		//criação do simbolo para a tabela global
-		symbol = create_symbol(func_name, params_concat, 0);
-		insert_symbol(global, symbol);
-
-		//criar uma tabela nova
-		Table * aux;
-
-		//inserir essa tabela à tabela de simbolos
-		aux = insert_table(1, func_name);
+			//variavel para guardar os parametros no formato return(%s,...,);
+			char *params_concat;
+			params_concat = (char*) malloc(strlen(func_type)+strlen(param_lists)+1);
+			sprintf(params_concat,"%s%s" , func_type, param_lists);
 
 
 
-		//inserir o simbolo de return
-		symbol = create_symbol("return", func_type, 0);
-		insert_symbol(aux, symbol);
+			//criação do simbolo para a tabela global
+			symbol = create_symbol(func_name, params_concat, 0);
+			insert_symbol(global, symbol);
+
+			//criar uma tabela nova
+			Table * aux;
+
+			//inserir essa tabela à tabela de simbolos
+			aux = insert_table(1, func_name);
 
 
-		//inserir os simbolos da lista de parametros
-		//inserir os parametros como symbolos
-		get_param_list_function(node, aux);
+
+			//inserir o simbolo de return
+			symbol = create_symbol("return", func_type, 0);
+			insert_symbol(aux, symbol);
+
+
+			//inserir os simbolos da lista de parametros
+			//inserir os parametros como symbolos
+			get_param_list_function(node, aux);
+
+
+		}
+
 	}
-
-
 }
 
 
@@ -490,7 +508,7 @@ char * get_param_list_concatenated_function(Node * node)
 
 	temp = found->child;
 	char * aux;
-	aux = (char*)malloc(sizeof(char)*300);
+	aux = (char*)malloc(sizeof(char)*1000);
 	int i = 0;
 	int cx;
 	while(temp!=NULL)
@@ -499,19 +517,20 @@ char * get_param_list_concatenated_function(Node * node)
 
 			if(i == 0)
 			{
-				cx = snprintf(aux, 300,"(%s", get_param_decl(temp));
+				cx = sprintf(aux,"(%s", get_param_decl(temp));
 			}
 			else
 			{
-				cx = cx + snprintf(aux + cx ,300, ",%s", get_param_decl(temp));
+				cx = cx + sprintf(aux + cx , ",%s", get_param_decl(temp));
 			}
 			i = i+1;
 		}
 
 		temp = temp->brother;
 	}
-	snprintf(aux + cx,300, ")");
-	
+
+	sprintf(aux + cx, ")");
+
 	return aux;
 }
 

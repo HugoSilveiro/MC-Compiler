@@ -25,3 +25,5 @@ char * get_param_list_concatenated_function(Node * node);
 
 char * octal_function(int value);
 int pow_f(int base, int exponent);
+
+char* concat(char *s1, char *s2);

@@ -1,16 +1,23 @@
-int a;
-int b;
-int b;
-char b;
 
-int c[10];
-int d[010];
-int e[012];
 
-char f[1];
-char * g[012];
+int atoi(void){}
 
-void  * h;
-void i[020];
 
-char ********* x;
+int puts(void);
+
+int main(void)
+{
+	
+}
+
+int gets(void);
+
+int f(void){}
+
+
+int gets(void)
+{
+	int a;
+}
+
+int main(void);

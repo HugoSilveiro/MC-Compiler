@@ -173,7 +173,8 @@ char * type_call(char * type)
 {
 	int aux = strlen(type);
 	char * new_aux = (char*)malloc(sizeof(type));
-	for(int i = 0; i < aux; i++){
+	int i;
+	for(i = 0; i < aux; i++){
 		if(type[i] != '('){
 			new_aux[i] = type[i];
 		}
