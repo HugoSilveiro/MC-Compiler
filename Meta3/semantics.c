@@ -511,6 +511,7 @@ char * get_param_list_concatenated_function(Node * node)
 		temp = temp->brother;
 	}
 	snprintf(aux + cx,300, ")");
+	
 	return aux;
 }
 
