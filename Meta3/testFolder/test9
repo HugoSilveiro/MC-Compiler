@@ -1,27 +1,8 @@
-int repeat;
-int repeat;
+int atoi(int a);
 
-int atoi(char* str) { }
-
-int atoi(char*);
-
-char* itoa(int, char*);
-
-void ola(void);
-
-int main(int a, char* b) {
-    int repeat;
-}
-
-void ola(void) { }
-
-int puts(char* str) {
-
-}
+int puts(int d){}
 
 
-int func(void);
+int puts(int c){}
 
-int func(void) {
-
-}
+int puts(int b);

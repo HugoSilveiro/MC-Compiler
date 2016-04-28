@@ -218,10 +218,7 @@ char * get_type(Node* tree)
 				value = (char*)malloc(sizeof(temp->value));
 				strcpy(value, temp->value);
 				//printf("VALUE1: %s\n", value);
-			}
-
-			
-			
+			}			
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Void") == 0)
 		{
@@ -333,9 +330,46 @@ void insert_function_definition(Node * node)
 	Table *aux;
 	aux = search_table(func_name);
 
-	if(strcmp(func_name,"atoi")!=0 && strcmp(func_name,"itoa")!=0 && strcmp(func_name,"puts")!=0)
+	if((strcmp(func_name, "atoi")==0 || strcmp(func_name, "itoa")==0 || strcmp(func_name, "puts")==0))
 	{
 
+		Symbol * symbol;
+
+		
+		char *func_type;
+		func_type = strdup(get_function_typespec(node));
+		
+		//criar uma tabela nova
+		Table * aux1;
+
+
+		//inserir essa tabela à tabela de simbolos
+		aux1 = search_table( func_name);
+		if(aux1->defined==0)
+		{
+			aux1->defined = 1;
+
+
+
+			//inserir o simbolo de return
+			symbol = create_symbol("return", func_type, 0);
+			insert_symbol(aux1, symbol);
+
+
+			//inserir os simbolos da lista de parametros
+			//inserir os parametros como symbolos
+			get_param_list_function(node, aux1);
+
+			current_table = aux1;
+			insert_function_funcBody(node);
+			
+			current_table = NULL;
+				
+		}
+		
+	}
+	else
+	{
 		if(aux!=NULL)
 		{
 			//inserir os simbolos da lista de parametros
@@ -349,6 +383,7 @@ void insert_function_definition(Node * node)
 		}
 		else
 		{
+
 			////////
 			if(S_DEBUG)printf("[Insertion on function definition]\n");
 			
@@ -404,8 +439,8 @@ void insert_function_definition(Node * node)
 			
 			current_table = NULL;
 		}
-	}
-	
+
+	}			
 	
 }
 
@@ -445,6 +480,8 @@ void insert_function_declaration(Node * node)
 	char * func_name;
 	func_name = strdup(get_function_name(node));
 	Table * find = search_table(func_name);
+
+
 	if(strcmp(func_name,"atoi")!=0 && strcmp(func_name,"itoa")!=0 && strcmp(func_name,"puts")!=0)
 	{
 		if(find==NULL)
@@ -492,6 +529,7 @@ void insert_function_declaration(Node * node)
 		}
 
 	}
+	
 }
 
 

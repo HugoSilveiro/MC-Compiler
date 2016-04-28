@@ -18,13 +18,20 @@ void start_symbol_table()
 	symbol = create_symbol("atoi", "int(char*)", 0);
 	insert_symbol(aux, symbol);
 
+	Table * table = insert_table(1, "atoi");
+
+
 	//iniciar itoa
 	symbol = create_symbol("itoa", "char*(int,char*)", 0);
 	insert_symbol(aux, symbol);
 
+	table = insert_table(1, "itoa");
+
 	//iniciar puts
 	symbol = create_symbol("puts", "int(char*)", 0);
 	insert_symbol(aux, symbol);
+
+	table = insert_table(1, "puts");
 
 
 }
