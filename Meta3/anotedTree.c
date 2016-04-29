@@ -94,6 +94,8 @@ void check_inside_funcBody(Node * node)
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Store") == 0){
 			//Ver o tipo dos filhos
+			//printf("gotr: %s\n",);
+			//temp->type = get_operator_type_result(temp);
 			temp->type = "int";
 			get_inside_operator(temp);
 			//get_inside_funcBody(temp);
@@ -211,13 +213,13 @@ void get_inside_funcBody(Node * node)
 		else if(strcmp(NODE_NAME[temp->node_type], "Eq") == 0)
 		{
 			
-			temp->type = "int"; 
+			temp->type = get_operator_type_result(temp); 
 			get_inside_operator(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Ne") == 0)
 		{
-			temp->type = "int"; 
+			temp->type = get_operator_type_result(temp);; 
 			get_inside_operator(temp);
 
 		}
@@ -330,7 +332,9 @@ void get_inside_funcBody(Node * node)
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Store") == 0)
 		{
-			temp->type = "int"; 
+			//printf("gotr: %s\n",get_operator_type_result(temp));
+			//temp->type = get_operator_type_result(temp); 
+			temp->type = "int";
 			get_inside_operator(temp);
 
 		}
@@ -374,7 +378,87 @@ void get_inside_funcBody(Node * node)
 		temp = temp->brother;
 	}
 }
+char * get_operator_type_result(Node * node)
+{
+	Node * child1 = node->child;
+	Node * child2 = child1->brother;
+	char * childType1 = NULL;
+	char * childTypeAux1 = NULL;
+	char * childType2 = NULL;
+	char * childTypeAux2 = NULL;
+	char intType[4] = "int";
+	//OPERADORES TEM SEMPRE FILHO1 e FILHO2
+	//IR BUSCAR OS TIPOS DE CADA FILHO A TABELA
+	if(child1->value != NULL){
+		printf("%s\n", NODE_NAME[child1->node_type]);
+		if(strcmp(NODE_NAME[child1->node_type], "Id") == 0){
+			
+			Symbol * symbol1 = (Symbol *) malloc(sizeof(Symbol));
+			symbol1 = search_symbol(child1->value, current_table2);
+			childType1 = (char*)malloc(sizeof(return_symbol_name(symbol1)));
+			strcpy(childType1,return_symbol_name(symbol1));
+			printf("child1 type: %s\n", childType1);	
+		}
+		else if(strcmp(NODE_NAME[child1->node_type], "IntLit") == 0){
+			childType2 = (char*)malloc(sizeof(intType));
+			strcpy(childType1, intType);
+			printf("Int\n");
+		}
+		
+	}
+	// SAME
+	if(child2->value != NULL){
+		printf("%s\n", NODE_NAME[child2->node_type]);
+		if(strcmp(NODE_NAME[child2->node_type], "Id") == 0){
+			
+			Symbol * symbol2 = (Symbol *) malloc(sizeof(Symbol));
+			symbol2 = search_symbol(child2->value, current_table2);
+			childType2 = (char*)malloc(sizeof(return_symbol_name(symbol2)));
+			strcpy(childType2,return_symbol_name(symbol2));
+			//printf("child2 type: %s\n", childType2);	
+		}
+		else if(strcmp(NODE_NAME[child2->node_type], "IntLit") == 0){
+			childType2 = (char*)malloc(sizeof(intType));
+			strcpy(childType2, intType);
+			//printf("child2 type: %s\n", childType2);
+			//printf("Int\n");
+		}
+		
+	}
+	// CASOS EM QUE SEJA CHAR*, CHAR** CHAR****** ETC... PASSAR SO A CHAR PARA COMPARAÇAO
+	if(childType1[0] == 'c'){
+		//printf("char inicio\n");
+		childTypeAux1 = (char*)malloc(sizeof("char"));
+		strcpy(childTypeAux1, "char");
+		//printf("char fim\n");
+	}
+	if(childType2[0] == 'c'){
+		childTypeAux2 = (char*)malloc(sizeof("char"));
+		strcpy(childTypeAux2, "char");
+	}
 
+
+	//COMPARAÇAO
+	if(strcmp(childType1, childType2) == 0){
+		//printf("iguais\n");
+		return childType1;
+	}
+
+	else if(strcmp(childType1, "int") == 0 && (strcmp(childTypeAux2, "char")) == 0)
+	{
+		return childType2;
+	}
+	else if(strcmp(childType2, "int") == 0 && strcmp(childTypeAux1, "char") == 0)
+	{
+		return childType1;
+	}
+	
+	else{
+		return NULL;
+	}
+	
+	
+}
 char * return_symbol_name(Symbol * symbol)
 {
 	//printf("return_symbol_name\n");
