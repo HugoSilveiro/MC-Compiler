@@ -194,8 +194,18 @@ void get_inside_funcBody(Node * node)
 	while(temp!= NULL)
 	{
 		if(DEBUG)printf("[get_inside_funcBody] %s\n",NODE_NAME[temp->node_type] );
+
 		if(strcmp(NODE_NAME[temp->node_type], "Id") == 0){
 			get_inside_id(temp);
+		}
+		else if(strcmp(NODE_NAME[temp->node_type], "IntLit") == 0){
+			temp->type = "int";
+		}
+		else if(strcmp(NODE_NAME[temp->node_type], "ChrLit") == 0){
+			temp->type = "char";
+		}
+		else if(strcmp(NODE_NAME[temp->node_type], "StrLit") == 0){
+			get_inside_strlit(temp);
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Eq") == 0)
 		{
@@ -525,10 +535,13 @@ void get_inside_id(Node * node)
 
 void get_inside_strlit(Node * node)
 {
-	int length = strlen(node->value)-1;
 
+	int length = strlen(node->value)-1;;
+
+	
 	char * aux;
 	aux = (char*) malloc(sizeof(char)*(length+6));
+
 
 	sprintf(aux, "char[%d]", length);
 

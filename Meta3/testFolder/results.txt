@@ -141,7 +141,7 @@ auxType: int
 [get_inside_funcBody] Id
 [get_inside_id] node->value: puts
 [get_inside_funcBody] StrLit
-check_inside_funcBody
+get_inside_strlit: char[32]
 Return
 get_inside_operator
 ===== Global Symbol Table =====
@@ -260,6 +260,6 @@ Program
 ..............Id(buffer) - char[20]
 ........Call - int
 ..........Id(puts) - int(char*)
-..........StrLit("Error: two parameters required.")
+..........StrLit("Error: two parameters required.") - char[32]
 ......Return
 ........IntLit(0) - int
