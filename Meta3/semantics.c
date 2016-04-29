@@ -267,7 +267,7 @@ char * get_type_declaration(Node* tree)
 	if(S_DEBUG)printf("get_type_declaration\n");
 	Node* temp = tree->child;
 	//char value[10];
-	char* type, *auxType;
+	char* type;
 	int numberPointers = 0;
 	int i;
 	
@@ -303,8 +303,7 @@ char * get_type_declaration(Node* tree)
 		}
 		temp = temp->brother;
 	}
-	auxType = (char*)malloc(sizeof(numberPointers)+1);
-	strcat(auxType, type);
+
 	for(i = 0; i < numberPointers; i++){
 		type = concat(type, "*");
 	}
@@ -575,7 +574,7 @@ char * get_param_list_concatenated_function(Node * node)
 
 char * get_param_decl(Node * node)
 {
-	char * type, *auxType;
+	char * type;
 	Node * temp;
 	temp = node->child;
 	int numberPointers = 0;
@@ -613,8 +612,6 @@ char * get_param_decl(Node * node)
 
 		temp = temp->brother;
 	}
-	auxType = (char*)malloc(sizeof(numberPointers)+1);
-	strcat(auxType, type);
 	for(i = 0; i < numberPointers; i++){
 		type = concat(type, "*");
 	}
@@ -727,7 +724,7 @@ char * get_function_typespec(Node * node)
 {
 
 
-	char * value, *auxType;
+	char * value;
 	Node * temp = node->child;
 	int numberPointers = 0;
 	int i;
@@ -768,8 +765,7 @@ char * get_function_typespec(Node * node)
 		}
 		temp = temp->brother;
 	}
-	auxType = (char*)malloc(sizeof(numberPointers)+1);
-	strcat(auxType, value);
+
 	for(i = 0; i < numberPointers; i++){
 		value = concat(value, "*");
 	}

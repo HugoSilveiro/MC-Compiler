@@ -82,7 +82,6 @@ Symbol * create_symbol(char *name, char * type, int param)
 		printf("[create symbol] name: %s | type: %s | param: %d\n", name, type, param);
 	}
 	Symbol * symbol = (Symbol *) malloc(sizeof(Symbol));
-
 	symbol->name = name;
 	symbol->type = type;
 	symbol->param = param;
