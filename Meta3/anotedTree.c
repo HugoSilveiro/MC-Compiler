@@ -6,7 +6,7 @@
 #include "anotedTree.h"
 #include "printer.h"
 
-#define DEBUG 1
+#define DEBUG 0
 
 extern Table * symbol_table;
 Table * current_table2 = NULL;
@@ -545,7 +545,7 @@ void get_inside_strlit(Node * node)
 
 	sprintf(aux, "char[%d]", length);
 
-	printf("get_inside_strlit: %s\n", aux);
+	//printf("get_inside_strlit: %s\n", aux);
 	node->type = aux;
 
 	
