@@ -400,16 +400,18 @@ char * get_add_type(Node * temp)
 		//printf("child->node_type: %s\n", NODE_NAME[temp2->node_type]);
 		//printf("child->value: %s\n", temp2->value);
 		//printf("child->type: %s\n", temp2->type);
-
-		Symbol * symbol = (Symbol *) malloc(sizeof(Symbol));
-		symbol = search_symbol(temp2->value, current_table2);
-		if(symbol!=NULL)
-		{
-			addType = (char*)malloc(sizeof(return_symbol_name(symbol)));
-			strcpy(addType,return_symbol_name(symbol));
-			//printf("addType: %s\n", addType);
+		if(temp2->value != NULL){
+			Symbol * symbol = (Symbol *) malloc(sizeof(Symbol));
+			symbol = search_symbol(temp2->value, current_table2);
+			if(symbol!=NULL)
+			{
+				addType = (char*)malloc(sizeof(return_symbol_name(symbol)));
+				strcpy(addType,return_symbol_name(symbol));
+				//printf("addType: %s\n", addType);
 			
+			}	
 		}
+		
 		temp2 = temp2->child;
 		return addType;
 	}
@@ -426,24 +428,28 @@ char * get_deref_type(Node * node)
 	while(temp!=NULL)
 	{
 		//printf("deref->node_type:%s\n", NODE_NAME[temp->node_type]);
+		//printf("while1: %s\n", temp->value);
 		if(strcmp(NODE_NAME[temp->node_type], "Add") == 0){
 			//printf("deref_ADD\n");
 			char * addType = NULL;
 			temp2 = temp->child;
 			while(temp2!=NULL){
+
 				//printf("while2: %s\n", NODE_NAME[temp2->node_type]);
 				//printf("temp2->node_type: %s\n", NODE_NAME[temp2->node_type]);
 				//printf("temp2->value: %s\n", temp2->value);
-				
-				Symbol * symbol = (Symbol *) malloc(sizeof(Symbol));
-				symbol = search_symbol(temp2->value, current_table2);
-				if(symbol!=NULL)
-				{
-					addType = (char*)malloc(sizeof(return_symbol_name(symbol)));
-					strcpy(addType,return_symbol_name(symbol));
-					addType[strlen(addType)-1] = '\0';
-					
+				if(temp2->value != NULL){
+					Symbol * symbol = (Symbol *) malloc(sizeof(Symbol));
+					symbol = search_symbol(temp2->value, current_table2);
+					if(symbol!=NULL)
+					{
+						addType = (char*)malloc(sizeof(return_symbol_name(symbol)));
+						strcpy(addType,return_symbol_name(symbol));
+						addType[strlen(addType)-1] = '\0';
+						
+					}	
 				}
+				
 				
 				temp2 = temp2->child;
 				return addType;					
