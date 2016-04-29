@@ -2,7 +2,6 @@ char*** gcd(char* a, char** b);
 
 int main(void)
 {
-	
 	int a;
 	a = 2+2;
 }

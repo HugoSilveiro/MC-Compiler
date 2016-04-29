@@ -114,7 +114,7 @@ void check_inside_funcBody(Node * node)
 char * check_call_type(Node * node)
 {
 	if (DEBUG) printf("check_call_type\n");
-	char * auxType;
+	char * auxType = NULL;
 	Node * temp = node->child;
 	while(temp != NULL)
 	{
@@ -395,19 +395,23 @@ char * get_add_type(Node * temp)
 {
 	//printf("get_add_type\n");
 	Node * temp2 = temp->child;
-	char * addType;
 	while(temp2!= NULL){
+		char * addType = NULL;
 		//printf("child->node_type: %s\n", NODE_NAME[temp2->node_type]);
 		//printf("child->value: %s\n", temp2->value);
 		//printf("child->type: %s\n", temp2->type);
 
 		Symbol * symbol = (Symbol *) malloc(sizeof(Symbol));
-		symbol = search_symbol(temp2->value, current_table2);;
-		addType = (char*)malloc(sizeof(return_symbol_name(symbol)));
-		strcpy(addType,return_symbol_name(symbol));
-		//printf("addType: %s\n", addType);
-		return addType;
+		symbol = search_symbol(temp2->value, current_table2);
+		if(symbol!=NULL)
+		{
+			addType = (char*)malloc(sizeof(return_symbol_name(symbol)));
+			strcpy(addType,return_symbol_name(symbol));
+			//printf("addType: %s\n", addType);
+			
+		}
 		temp2 = temp2->child;
+		return addType;
 	}
 	return NULL;
 
@@ -418,12 +422,13 @@ char * get_deref_type(Node * node)
 	//printf("get_deref_type\n");
 	Node * temp = node->child;
 	Node * temp2;
-	char * addType;
+	
 	while(temp!=NULL)
 	{
 		//printf("deref->node_type:%s\n", NODE_NAME[temp->node_type]);
 		if(strcmp(NODE_NAME[temp->node_type], "Add") == 0){
 			//printf("deref_ADD\n");
+			char * addType = NULL;
 			temp2 = temp->child;
 			while(temp2!=NULL){
 				//printf("while2: %s\n", NODE_NAME[temp2->node_type]);
@@ -432,12 +437,16 @@ char * get_deref_type(Node * node)
 				
 				Symbol * symbol = (Symbol *) malloc(sizeof(Symbol));
 				symbol = search_symbol(temp2->value, current_table2);
-				addType = (char*)malloc(sizeof(return_symbol_name(symbol)));
-				strcpy(addType,return_symbol_name(symbol));
-				addType[strlen(addType)-1] = '\0';
-				return addType;					
+				if(symbol!=NULL)
+				{
+					addType = (char*)malloc(sizeof(return_symbol_name(symbol)));
+					strcpy(addType,return_symbol_name(symbol));
+					addType[strlen(addType)-1] = '\0';
+					
+				}
 				
 				temp2 = temp2->child;
+				return addType;					
 			}
 		}
 		temp=temp->brother;
