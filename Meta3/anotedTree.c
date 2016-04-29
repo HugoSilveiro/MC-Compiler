@@ -6,7 +6,7 @@
 #include "anotedTree.h"
 #include "printer.h"
 
-#define DEBUG 0
+#define DEBUG 1
 
 extern Table * symbol_table;
 Table * current_table2 = NULL;
@@ -194,7 +194,10 @@ void get_inside_funcBody(Node * node)
 	while(temp!= NULL)
 	{
 		if(DEBUG)printf("[get_inside_funcBody] %s\n",NODE_NAME[temp->node_type] );
-		if(strcmp(NODE_NAME[temp->node_type], "Eq") == 0)
+		if(strcmp(NODE_NAME[temp->node_type], "Id") == 0){
+			get_inside_id(temp);
+		}
+		else if(strcmp(NODE_NAME[temp->node_type], "Eq") == 0)
 		{
 			
 			temp->type = "int"; 
@@ -341,6 +344,16 @@ void get_inside_funcBody(Node * node)
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Return") == 0){
 			get_inside_operator(temp);
+		}
+		else if(strcmp(NODE_NAME[temp->node_type], "If") == 0)
+		{
+			
+			get_inside_funcBody(temp);
+		}
+		else if(strcmp(NODE_NAME[temp->node_type], "For") == 0)
+		{
+			
+			get_inside_funcBody(temp);
 		}	
 
 		else{
@@ -477,7 +490,7 @@ void get_inside_operator(Node * node)
 		}
 		else{
 			if (DEBUG) printf("else: %s\n", NODE_NAME[temp->node_type]);
-			check_inside_funcBody(temp);
+			get_inside_funcBody(temp->father);
 		}	
 
 		temp = temp->brother;

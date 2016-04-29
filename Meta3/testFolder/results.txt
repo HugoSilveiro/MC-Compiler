@@ -1,23 +1,3 @@
-==== Global Symbol Table ====
-atoi	int(char*)
-itoa	char*(int, char*)
-puts	int(char*)
-buffer	char[20]
-gcd	int(int,int)
-main	int(int,char**)
-
-==== Function gcd Symbol Table ====
-return	int
-a	int	param
-b	int	param
-
-==== Function main Symbol Table ====
-return	int
-argc	int	param
-argv	char**	param
-a	int
-b	int
-
 [get_anoted_tree]
 ArrayDeclaration
 FuncDefinition
@@ -28,12 +8,9 @@ check_inside_funcBody
 If
 [get_inside_funcBody] Eq
 get_inside_operator
-Id
 [get_inside_id] node->value: a
-IntLit
 [get_inside_funcBody] Return
 get_inside_operator
-Id
 [get_inside_id] node->value: b
 [get_inside_funcBody] StatList
 check_inside_funcBody
@@ -42,35 +19,36 @@ For
 check_inside_funcBody
 [get_inside_funcBody] Gt
 get_inside_operator
-Id
 [get_inside_id] node->value: b
-IntLit
 [get_inside_funcBody] Null
 check_inside_funcBody
 [get_inside_funcBody] If
-check_inside_funcBody
-Gt
-Store
+[get_inside_funcBody] Gt
 get_inside_operator
-Id
 [get_inside_id] node->value: a
-Sub
-else: Sub
-check_inside_funcBody
-Id
-Id
-Store
-get_inside_operator
-Id
 [get_inside_id] node->value: b
-Sub
+[get_inside_funcBody] Store
+get_inside_operator
+[get_inside_id] node->value: a
 else: Sub
-check_inside_funcBody
-Id
-Id
+[get_inside_funcBody] Id
+[get_inside_id] node->value: a
+[get_inside_funcBody] Sub
+get_inside_operator
+[get_inside_id] node->value: a
+[get_inside_id] node->value: b
+[get_inside_funcBody] Store
+get_inside_operator
+[get_inside_id] node->value: b
+else: Sub
+[get_inside_funcBody] Id
+[get_inside_id] node->value: b
+[get_inside_funcBody] Sub
+get_inside_operator
+[get_inside_id] node->value: b
+[get_inside_id] node->value: a
 Return
 get_inside_operator
-Id
 [get_inside_id] node->value: a
 FuncDefinition
 FuncDefinition
@@ -82,16 +60,12 @@ Declaration
 If
 [get_inside_funcBody] Gt
 get_inside_operator
-Id
 [get_inside_id] node->value: argc
-IntLit
 [get_inside_funcBody] StatList
 check_inside_funcBody
 Store
 get_inside_operator
-Id
 [get_inside_id] node->value: a
-Call
 call
 check_call_type
 Id
@@ -100,19 +74,14 @@ get_type_call: int(char*)
 type_call: int
 auxType: int
 [get_inside_funcBody] Id
-check_inside_funcBody
+[get_inside_id] node->value: atoi
 [get_inside_funcBody] Deref
+[get_inside_funcBody] Add
 get_inside_operator
-Add
-else: Add
-check_inside_funcBody
-Id
-IntLit
+[get_inside_id] node->value: argv
 Store
 get_inside_operator
-Id
 [get_inside_id] node->value: b
-Call
 call
 check_call_type
 Id
@@ -121,16 +90,12 @@ get_type_call: int(char*)
 type_call: int
 auxType: int
 [get_inside_funcBody] Id
-check_inside_funcBody
+[get_inside_id] node->value: atoi
 [get_inside_funcBody] Deref
+[get_inside_funcBody] Add
 get_inside_operator
-Add
-else: Add
-check_inside_funcBody
-Id
-IntLit
+[get_inside_id] node->value: argv
 Call
-call
 check_call_type
 Id
 get_type_Call
@@ -138,17 +103,17 @@ get_type_call: int(char*)
 type_call: int
 auxType: int
 [get_inside_funcBody] Id
-check_inside_funcBody
+[get_inside_id] node->value: puts
 [get_inside_funcBody] Call
 call
 check_call_type
 Id
 get_type_Call
-get_type_call: char*(int, char*)
+get_type_call: char*(int,char*)
 type_call: char*
 auxType: char*
 [get_inside_funcBody] Id
-check_inside_funcBody
+[get_inside_id] node->value: itoa
 [get_inside_funcBody] Call
 call
 check_call_type
@@ -158,13 +123,13 @@ get_type_call: int(int,int)
 type_call: int
 auxType: int
 [get_inside_funcBody] Id
-check_inside_funcBody
+[get_inside_id] node->value: gcd
 [get_inside_funcBody] Id
-check_inside_funcBody
+[get_inside_id] node->value: a
 [get_inside_funcBody] Id
-check_inside_funcBody
+[get_inside_id] node->value: b
 [get_inside_funcBody] Id
-check_inside_funcBody
+[get_inside_id] node->value: buffer
 [get_inside_funcBody] Call
 call
 check_call_type
@@ -174,12 +139,31 @@ get_type_call: int(char*)
 type_call: int
 auxType: int
 [get_inside_funcBody] Id
-check_inside_funcBody
+[get_inside_id] node->value: puts
 [get_inside_funcBody] StrLit
 check_inside_funcBody
 Return
 get_inside_operator
-IntLit
+===== Global Symbol Table =====
+atoi	int(char*)
+itoa	char*(int,char*)
+puts	int(char*)
+buffer	char[20]
+gcd	int(int,int)
+main	int(int,char**)
+
+===== Function gcd Symbol Table =====
+return	int
+a	int	param
+b	int	param
+
+===== Function main Symbol Table =====
+return	int
+argc	int	param
+argv	char**	param
+a	int
+b	int
+
 Program
 ..ArrayDeclaration
 ....Char
@@ -210,19 +194,19 @@ Program
 ..............IntLit(0) - int
 ............Null
 ............If
-..............Gt
-................Id(a)
-................Id(b)
+..............Gt - int
+................Id(a) - int
+................Id(b) - int
 ..............Store - int
 ................Id(a) - int
-................Sub
-..................Id(a)
-..................Id(b)
+................Sub - int
+..................Id(a) - int
+..................Id(b) - int
 ..............Store - int
 ................Id(b) - int
-................Sub
-..................Id(b)
-..................Id(a)
+................Sub - int
+..................Id(b) - int
+..................Id(a) - int
 ..........Return
 ............Id(a) - int
 ..FuncDefinition
@@ -253,27 +237,27 @@ Program
 ............Id(a) - int
 ............Call - int
 ..............Id(atoi) - int(char*)
-..............Deref - int
-................Add
-..................Id(argv)
-..................IntLit(1)
+..............Deref - char*
+................Add - char**
+..................Id(argv) - char**
+..................IntLit(1) - int
 ..........Store - int
 ............Id(b) - int
 ............Call - int
 ..............Id(atoi) - int(char*)
-..............Deref - int
-................Add
-..................Id(argv)
-..................IntLit(2)
+..............Deref - char*
+................Add - char**
+..................Id(argv) - char**
+..................IntLit(2) - int
 ..........Call - int
 ............Id(puts) - int(char*)
 ............Call - char*
-..............Id(itoa) - char*(int, char*)
+..............Id(itoa) - char*(int,char*)
 ..............Call - int
 ................Id(gcd) - int(int,int)
-................Id(a)
-................Id(b)
-..............Id(buffer)
+................Id(a) - int
+................Id(b) - int
+..............Id(buffer) - char[20]
 ........Call - int
 ..........Id(puts) - int(char*)
 ..........StrLit("Error: two parameters required.")
