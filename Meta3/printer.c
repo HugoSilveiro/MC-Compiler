@@ -35,7 +35,7 @@ void print_tree(Node *node, int level){
 
 	}
 
-	free(node);
+	//free(node);
 }
 
 void print_points(int n){
@@ -91,6 +91,7 @@ void print_table(Table * table)
 	{
 		print_symbol(symbol);
 	}
+
 	printf("\n");
 }
 
@@ -105,6 +106,7 @@ void print_symbol(Symbol * symbol)
 	{
 		printf("%s\t%s\t%s\n", symbol->name, symbol->type, "param");
 	}
+
 
 	
 }

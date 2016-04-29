@@ -6,7 +6,7 @@
 #include "anotedTree.h"
 #include "printer.h"
 
-#define DEBUG 1
+#define DEBUG 0
 
 extern Table * symbol_table;
 Table * current_table2 = NULL;
@@ -172,7 +172,7 @@ char * get_type_Call(Node * node)
 char * type_call(char * type)
 {
 	int aux = strlen(type);
-	char * new_aux = (char*)malloc(sizeof(type));
+	char * new_aux = (char*)malloc(aux+1);
 	int i;
 	for(i = 0; i < aux; i++){
 		if(type[i] != '('){
@@ -180,6 +180,7 @@ char * type_call(char * type)
 		}
 		else if(type[i] == '('){
 			if (DEBUG) printf("type_call: %s\n", new_aux);
+			new_aux[i] = '\0';
 			return new_aux;
 		}
 	}
@@ -402,7 +403,7 @@ char * get_add_type(Node * temp)
 
 		Symbol * symbol = (Symbol *) malloc(sizeof(Symbol));
 		symbol = search_symbol(temp2->value, current_table2);;
-		addType = (char*)malloc(sizeof(char)*10);
+		addType = (char*)malloc(sizeof(return_symbol_name(symbol)));
 		strcpy(addType,return_symbol_name(symbol));
 		//printf("addType: %s\n", addType);
 		return addType;
@@ -431,7 +432,7 @@ char * get_deref_type(Node * node)
 				
 				Symbol * symbol = (Symbol *) malloc(sizeof(Symbol));
 				symbol = search_symbol(temp2->value, current_table2);
-				addType = (char*)malloc(sizeof(char)*10);
+				addType = (char*)malloc(sizeof(return_symbol_name(symbol)));
 				strcpy(addType,return_symbol_name(symbol));
 				addType[strlen(addType)-1] = '\0';
 				return addType;					
@@ -545,7 +546,7 @@ void get_inside_strlit(Node * node)
 
 	sprintf(aux, "char[%d]", length);
 
-	printf("get_inside_strlit: %s\n", aux);
+	//printf("get_inside_strlit: %s\n", aux);
 	node->type = aux;
 
 	
