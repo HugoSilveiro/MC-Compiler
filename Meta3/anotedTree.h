@@ -34,3 +34,5 @@ char * get_add_type(Node * node);
 char * return_symbol_name(Symbol * symbol);
 
 char * get_operator_type_result(Node * node);
+
+void get_inside_addr(Node * node);

@@ -108,6 +108,10 @@ void check_inside_funcBody(Node * node)
 			get_inside_funcBody(temp);
 
 		}
+		else if(strcmp(NODE_NAME[temp->node_type], "Addr") ==0)
+		{
+			get_inside_addr(temp);
+		}
 
 		temp = temp->brother;
 	}	
@@ -318,8 +322,10 @@ void get_inside_funcBody(Node * node)
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Addr") == 0)
 		{
-			temp->type = "int"; 
-			get_inside_operator(temp);
+			get_inside_addr(temp); 
+			//temp->type = "int"; 
+
+			//get_inside_operator(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Deref") == 0)
@@ -378,6 +384,33 @@ void get_inside_funcBody(Node * node)
 		temp = temp->brother;
 	}
 }
+
+void get_inside_addr(Node * node)
+{
+	Node * temp;
+	temp = node->child;
+
+
+	while(temp!=NULL)
+	{
+		if(strcmp(NODE_NAME[temp->node_type], "Id")==0 )
+		{
+			get_inside_id(temp);
+			node->type = temp->type;
+			node->type = concat(node->type, "*");
+			return;
+		}
+		else if(strcmp(NODE_NAME[temp->node_type], "Addr") == 0)
+		{
+			get_inside_addr(temp);
+			node->type = temp->type;
+			node->type = concat(node->type, "*");
+		}
+
+		temp = temp->brother;
+	}
+}
+
 char * get_operator_type_result(Node * node)
 {
 	Node * child1 = node->child;
