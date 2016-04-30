@@ -36,3 +36,6 @@ char * return_symbol_name(Symbol * symbol);
 char * get_operator_type_result(Node * node);
 
 void get_inside_addr(Node * node);
+
+//ERRORS
+void check_num_args(Node * temp);
