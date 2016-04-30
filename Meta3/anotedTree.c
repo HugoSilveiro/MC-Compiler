@@ -7,7 +7,7 @@
 #include "printer.h"
 
 #define DEBUG 1
-#define ERRORS 1
+#define ERRORS 0
 
 extern Table * symbol_table;
 Table * current_table2 = NULL;
