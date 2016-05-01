@@ -6,7 +6,7 @@
 #include "anotedTree.h"
 #include "printer.h"
 
-#define DEBUG 0
+#define DEBUG_A 0
 #define ERRORS 0
 
 extern Table * symbol_table;
@@ -14,15 +14,15 @@ Table * current_table2 = NULL;
 
 void get_anoted_Tree(Node* tree)
 {
-	if (DEBUG) printf("[get_anoted_tree]\n");
+	if (DEBUG_A) printf("[get_anoted_tree]\n");
 	Node* temp = tree->child;
 	while(temp!=NULL)
 	{
-		if (DEBUG) printf("%s\n", NODE_NAME[temp->node_type]);
+		if (DEBUG_A) printf("%s\n", NODE_NAME[temp->node_type]);
 		
 		if(strcmp("FuncDefinition", NODE_NAME[temp->node_type]) == 0)
 		{
-			if(DEBUG)printf("FuncDefinition\n");
+			if(DEBUG_A)printf("FuncDefinition\n");
 			insert_funct_definition(temp);
 		}
 		
@@ -33,7 +33,7 @@ void get_anoted_Tree(Node* tree)
 void insert_funct_definition(Node * node)
 {
 
-	if(DEBUG)
+	if(DEBUG_A)
 	{
 		printf("[insert_function_definition]\n");	
 	}	
@@ -57,7 +57,7 @@ void insert_funct_definition(Node * node)
 
 void insert_funcBody(Node * node)
 {
-	if(DEBUG){
+	if(DEBUG_A){
 		printf("insert_function_funcBody\n");
 	}
 	Node * temp = node->child;
@@ -74,12 +74,12 @@ void insert_funcBody(Node * node)
 
 void check_inside_funcBody(Node * node)
 {
-	if(DEBUG){
+	if(DEBUG_A){
 		printf("check_inside_funcBody\n");
 	}
 	Node * temp = node->child;
 	while(temp != NULL){
-		if (DEBUG) printf("%s\n", NODE_NAME[temp->node_type]);
+		if (DEBUG_A) printf("%s\n", NODE_NAME[temp->node_type]);
 		if(strcmp(NODE_NAME[temp->node_type], "If") == 0)
 		{
 			
@@ -120,16 +120,16 @@ void check_inside_funcBody(Node * node)
 
 char * check_call_type(Node * node)
 {
-	if (DEBUG) printf("check_call_type\n");
+	if (DEBUG_A) printf("check_call_type\n");
 	char * auxType = NULL;
 	Node * temp = node->child;
 	while(temp != NULL)
 	{
-		if (DEBUG) printf("%s\n", NODE_NAME[temp->node_type]);
+		if (DEBUG_A) printf("%s\n", NODE_NAME[temp->node_type]);
 		if(strcmp(NODE_NAME[temp->node_type], "Id") == 0){
 			auxType = (char*)malloc(sizeof(get_type_Call(temp)));
 			strcpy(auxType, get_type_Call(temp));
-			if (DEBUG) printf("auxType: %s\n", auxType);
+			if (DEBUG_A) printf("auxType: %s\n", auxType);
 
 			if(ERRORS) check_num_args(temp);
 			return auxType;
@@ -189,13 +189,13 @@ int num_args(char * string)
 */
 char * get_type_Call(Node * node)
 {	
-	if (DEBUG) printf("get_type_Call\n");
+	if (DEBUG_A) printf("get_type_Call\n");
 	Symbol * symbol = search_symbol(node->value, current_table2);
 	
 	if(symbol!=NULL)
 	{
 		node->type = symbol->type;
-		if (DEBUG) printf("get_type_call: %s\n", node->type);
+		if (DEBUG_A) printf("get_type_call: %s\n", node->type);
 		return type_call(node->type);
 	}
 	else
@@ -206,7 +206,7 @@ char * get_type_Call(Node * node)
 		{
 			
 			node->type = symbol2->type;
-			if (DEBUG) printf("get_type_call: %s\n", node->type);
+			if (DEBUG_A) printf("get_type_call: %s\n", node->type);
 			return type_call(node->type);	
 		}	
 	}
@@ -224,7 +224,7 @@ char * type_call(char * type)
 			new_aux[i] = type[i];
 		}
 		else if(type[i] == '('){
-			if (DEBUG) printf("type_call: %s\n", new_aux);
+			if (DEBUG_A) printf("type_call: %s\n", new_aux);
 			new_aux[i] = '\0';
 			return new_aux;
 		}
@@ -239,7 +239,7 @@ void get_inside_funcBody(Node * node)
 
 	while(temp!= NULL)
 	{
-		if(DEBUG)printf("[get_inside_funcBody] %s\n",NODE_NAME[temp->node_type] );
+		if(DEBUG_A)printf("[get_inside_funcBody] %s\n",NODE_NAME[temp->node_type] );
 
 		if(strcmp(NODE_NAME[temp->node_type], "Id") == 0){
 			get_inside_id(temp);
@@ -396,7 +396,7 @@ void get_inside_funcBody(Node * node)
 			//temp->type = check_call_type(temp); 
 			//get_inside_operator(temp);
 
-			if (DEBUG) printf("call\n");
+			if (DEBUG_A) printf("call\n");
 			temp->type = check_call_type(temp); 
 			get_inside_funcBody(temp);
 
@@ -462,7 +462,7 @@ char * get_operator_type_result(Node * node)
 	//OPERADORES TEM SEMPRE FILHO1 e FILHO2
 	//IR BUSCAR OS TIPOS DE CADA FILHO A TABELA
 	if(child1->value != NULL){
-		if (DEBUG) printf("%s\n", NODE_NAME[child1->node_type]);
+		if (DEBUG_A) printf("%s\n", NODE_NAME[child1->node_type]);
 		//printf("%s\n", NODE_NAME[child2->node_type]);
 		if(strcmp(NODE_NAME[child1->node_type], "Id") == 0){
 			
@@ -470,61 +470,61 @@ char * get_operator_type_result(Node * node)
 			symbol1 = search_symbol(child1->value, current_table2);
 			childType1 = (char*)malloc(sizeof(return_symbol_name(symbol1)));
 			strcpy(childType1,return_symbol_name(symbol1));
-			if (DEBUG) printf("child1 type: %s\n", childType1);	
+			if (DEBUG_A) printf("child1 type: %s\n", childType1);	
 		}
 		else if(strcmp(NODE_NAME[child1->node_type], "IntLit") == 0){
 			childType1 = (char*)malloc(sizeof(intType));
 			strcpy(childType1, intType);
-			if (DEBUG) printf("child1 type: %s\n", childType1);
+			if (DEBUG_A) printf("child1 type: %s\n", childType1);
 		}
 		else{
-			if (DEBUG) printf("%s\n",NODE_NAME[child1->node_type]);
+			if (DEBUG_A) printf("%s\n",NODE_NAME[child1->node_type]);
 			get_inside_funcBody(child1);
 		}
 		
 	}
 	else if(child1->value == NULL){
-		if (DEBUG) printf("null\n");
+		if (DEBUG_A) printf("null\n");
 		childType1 = (char*)malloc(sizeof(get_operator_type_result(child1)));
 		strcpy(childType1, get_operator_type_result(child1));
-		if (DEBUG) printf("child2 type: %s\n", childType1);
+		if (DEBUG_A) printf("child2 type: %s\n", childType1);
 	}
 
 
 	// SAME
-	if (DEBUG) printf("%s\n", NODE_NAME[child2->node_type]);
+	if (DEBUG_A) printf("%s\n", NODE_NAME[child2->node_type]);
 
 
 	if(child2->value != NULL){
-		if (DEBUG) printf("%s\n", NODE_NAME[child2->node_type]);
+		if (DEBUG_A) printf("%s\n", NODE_NAME[child2->node_type]);
 		if(strcmp(NODE_NAME[child2->node_type], "Id") == 0){
 			
 			Symbol * symbol2 = (Symbol *) malloc(sizeof(Symbol));
 			symbol2 = search_symbol(child2->value, current_table2);
 			childType2 = (char*)malloc(sizeof(return_symbol_name(symbol2)));
 			strcpy(childType2,return_symbol_name(symbol2));
-			if (DEBUG) printf("child2 type: %s\n", childType2);	
+			if (DEBUG_A) printf("child2 type: %s\n", childType2);	
 		}
 		else if(strcmp(NODE_NAME[child2->node_type], "IntLit") == 0){
 			childType2 = (char*)malloc(sizeof(intType));
 			strcpy(childType2, intType);
-			if (DEBUG) printf("child2 type: %s\n", childType2);
+			if (DEBUG_A) printf("child2 type: %s\n", childType2);
 			//printf("Int\n");
 		}
 		
 	}
 	else if(child2->value == NULL){
-		if (DEBUG) printf("null\n");
+		if (DEBUG_A) printf("null\n");
 		if(strcmp(NODE_NAME[child2->node_type], "Call")){
-			if (DEBUG) printf("Call\n");
+			if (DEBUG_A) printf("Call\n");
 			childType2 = (char*)malloc(sizeof(check_call_type(child2)));
 			strcpy(childType2, check_call_type(child2));
-			if (DEBUG) printf("child2 type: %s\n", childType2);
+			if (DEBUG_A) printf("child2 type: %s\n", childType2);
 		}
 		else{
 			childType2 = (char*)malloc(sizeof(get_operator_type_result(child2)));
 			strcpy(childType2, get_operator_type_result(child2));
-			if (DEBUG) printf("child2 type: %s\n", childType2);
+			if (DEBUG_A) printf("child2 type: %s\n", childType2);
 		}
 	}
 
@@ -572,13 +572,13 @@ char * return_symbol_name(Symbol * symbol)
 
 char * get_add_type(Node * temp)
 {
-	if (DEBUG) printf("get_add_type\n");
+	if (DEBUG_A) printf("get_add_type\n");
 	Node * temp2 = temp->child;
 	while(temp2!= NULL){
 		char * addType = NULL;
-		if (DEBUG) printf("child->node_type: %s\n", NODE_NAME[temp2->node_type]);
-		if (DEBUG) printf("child->value: %s\n", temp2->value);
-		if (DEBUG) printf("child->type: %s\n", temp2->type);
+		if (DEBUG_A) printf("child->node_type: %s\n", NODE_NAME[temp2->node_type]);
+		if (DEBUG_A) printf("child->value: %s\n", temp2->value);
+		if (DEBUG_A) printf("child->type: %s\n", temp2->type);
 		if(temp2->value != NULL){
 			Symbol * symbol = (Symbol *) malloc(sizeof(Symbol));
 			symbol = search_symbol(temp2->value, current_table2);
@@ -591,15 +591,15 @@ char * get_add_type(Node * temp)
 			
 			}
 			else{
-				if (DEBUG) printf("global table\n");
+				if (DEBUG_A) printf("global table\n");
 				Table * table = search_table("global");
 				Symbol * symbol = (Symbol *) malloc(sizeof(Symbol));
 				symbol = search_symbol(temp2->value, table);
 				if(symbol!=NULL){
-					if (DEBUG) printf("symbol global != NULL\n");
+					if (DEBUG_A) printf("symbol global != NULL\n");
 					addType = (char*)malloc(sizeof(return_symbol_name(symbol)));
 					strcpy(addType,return_symbol_name(symbol));
-					if (DEBUG) printf("addType: %s\n", addType);
+					if (DEBUG_A) printf("addType: %s\n", addType);
 					addType[strlen(addType)-1] = '\0';
 					return addType;	
 				}
@@ -616,55 +616,55 @@ char * get_add_type(Node * temp)
 
 char * get_deref_type(Node * node)
 {
-	if (DEBUG) printf("get_deref_type\n");
+	if (DEBUG_A) printf("get_deref_type\n");
 	Node * temp = node->child;
 	Node * temp2;
 	Symbol * symbol = (Symbol *) malloc(sizeof(Symbol));
 	while(temp!=NULL)
 	{
-		if (DEBUG) printf("deref->node_type:%s\n", NODE_NAME[temp->node_type]);
+		if (DEBUG_A) printf("deref->node_type:%s\n", NODE_NAME[temp->node_type]);
 		//printf("while1: %s\n", temp->value);
 		if(strcmp(NODE_NAME[temp->node_type], "Add") == 0){
-			if (DEBUG) printf("deref_ADD\n");
+			if (DEBUG_A) printf("deref_ADD\n");
 			char * addType = NULL;
 			temp2 = temp->child;
 			while(temp2!=NULL){
 
-				if (DEBUG) printf("while2: %s\n", NODE_NAME[temp2->node_type]);
-				if (DEBUG) printf("temp2->node_type: %s\n", NODE_NAME[temp2->node_type]);
-				if (DEBUG) printf("temp2->value: %s\n", temp2->value);
-				if (DEBUG) printf("temp2->type: %s\n", temp2->type);
+				if (DEBUG_A) printf("while2: %s\n", NODE_NAME[temp2->node_type]);
+				if (DEBUG_A) printf("temp2->node_type: %s\n", NODE_NAME[temp2->node_type]);
+				if (DEBUG_A) printf("temp2->value: %s\n", temp2->value);
+				if (DEBUG_A) printf("temp2->type: %s\n", temp2->type);
 
 				if(temp2->value != NULL){
-					if (DEBUG) printf("temp2 != NULL\n");
+					if (DEBUG_A) printf("temp2 != NULL\n");
 					
 					symbol = search_symbol(temp2->value, current_table2);
 
 					if(symbol!=NULL)
 					{
-						if (DEBUG) printf("symbol != NULL");
+						if (DEBUG_A) printf("symbol != NULL");
 						addType = (char*)malloc(sizeof(return_symbol_name(symbol)));
 						strcpy(addType,return_symbol_name(symbol));
-						if (DEBUG) printf("addType: %s\n", addType);
+						if (DEBUG_A) printf("addType: %s\n", addType);
 						addType[strlen(addType)-1] = '\0';
 						return addType;	
 						
 					}
 					else{
-						if (DEBUG) printf("global table\n");
+						if (DEBUG_A) printf("global table\n");
 						Table * table = search_table("global");
 						
 						symbol = search_symbol(temp2->value, table);
 						if(symbol!=NULL){
-							if (DEBUG) printf("symbol global != NULL\n");
+							if (DEBUG_A) printf("symbol global != NULL\n");
 							addType = (char*)malloc(sizeof(return_symbol_name(symbol)));
 							strcpy(addType,return_symbol_name(symbol));
-							if (DEBUG) printf("addType: %s\n", addType);
+							if (DEBUG_A) printf("addType: %s\n", addType);
 							addType[strlen(addType)-1] = '\0';
 							return addType;	
 						}
 						else{
-							if (DEBUG) printf("boi não encontrou na global\n");
+							if (DEBUG_A) printf("boi não encontrou na global\n");
 						}
 
 
@@ -710,7 +710,7 @@ char * get_expr_type(Node * node)
 
 void get_inside_operator(Node * node)
 {
-	if (DEBUG) printf("get_inside_operator\n");
+	if (DEBUG_A) printf("get_inside_operator\n");
 	Node * temp = node->child;
 	while(temp != NULL)
 	{
@@ -733,14 +733,14 @@ void get_inside_operator(Node * node)
 			//temp->type = check_call_type(temp); 
 			//get_inside_operator(temp);
 
-			if (DEBUG) printf("call\n");
+			if (DEBUG_A) printf("call\n");
 			temp->type = check_call_type(temp); 
 			get_inside_funcBody(temp);
 
 
 		}
 		else{
-			if (DEBUG) printf("else: %s\n", NODE_NAME[temp->node_type]);
+			if (DEBUG_A) printf("else: %s\n", NODE_NAME[temp->node_type]);
 			get_inside_funcBody(temp->father);
 		}	
 
@@ -750,7 +750,7 @@ void get_inside_operator(Node * node)
 
 void get_inside_id(Node * node)
 {
-	if (DEBUG) printf("[get_inside_id] node->value: %s\n", node->value);
+	if (DEBUG_A) printf("[get_inside_id] node->value: %s\n", node->value);
 
 	Symbol * symbol = search_symbol(node->value, current_table2);
 	if(symbol!=NULL)
