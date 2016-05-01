@@ -1,214 +1,42 @@
 [get_anoted_tree]
-Declaration
-Declaration
 FuncDefinition
 FuncDefinition
 [insert_function_definition]
 insert_function_funcBody
 check_inside_funcBody
+Declaration
 Store
 get_inside_operator
-else: Deref
-[get_inside_funcBody] Deref
-get_deref_type
-deref->node_type:Add
-deref_ADD
-while2: Id
-temp2->node_type: Id
-temp2->value: Z3
-temp2->type: (null)
-temp2 != NULL
-global table
-symbol global != NULL
-addType: char*
-[get_inside_funcBody] Add
-get_add_type
-child->node_type: Id
-child->value: Z3
-child->type: (null)
-global table
-symbol global != NULL
-addType: char*
+[get_inside_id] node->value: a
+else: Sub
+[get_inside_funcBody] Id
+[get_inside_id] node->value: a
+[get_inside_funcBody] Sub
 get_inside_operator
-[get_inside_id] node->value: Z3
-[get_inside_funcBody] Deref
-get_deref_type
-deref->node_type:Add
-deref_ADD
-while2: Deref
-temp2->node_type: Deref
-temp2->value: (null)
-temp2->type: (null)
-while2: Add
-temp2->node_type: Add
-temp2->value: (null)
-temp2->type: (null)
-while2: Id
-temp2->node_type: Id
-temp2->value: Z4
-temp2->type: (null)
-temp2 != NULL
-global table
-symbol global != NULL
-addType: char**
-[get_inside_funcBody] Add
-get_add_type
-child->node_type: Deref
-child->value: (null)
-child->type: (null)
-child->node_type: Add
-child->value: (null)
-child->type: (null)
-child->node_type: Id
-child->value: Z4
-child->type: (null)
-global table
-symbol global != NULL
-addType: char**
-get_inside_operator
-else: Deref
-[get_inside_funcBody] Deref
-get_deref_type
-deref->node_type:Add
-deref_ADD
-while2: Id
-temp2->node_type: Id
-temp2->value: Z4
-temp2->type: (null)
-temp2 != NULL
-global table
-symbol global != NULL
-addType: char**
-[get_inside_funcBody] Add
-get_add_type
-child->node_type: Id
-child->value: Z4
-child->type: (null)
-global table
-symbol global != NULL
-addType: char**
-get_inside_operator
-[get_inside_id] node->value: Z4
-[get_inside_funcBody] IntLit
-else: Deref
-[get_inside_funcBody] Deref
-get_deref_type
-deref->node_type:Add
-deref_ADD
-while2: Id
-temp2->node_type: Id
-temp2->value: Z3
-temp2->type: char*
-temp2 != NULL
-global table
-symbol global != NULL
-addType: char*
-[get_inside_funcBody] Add
-get_add_type
-child->node_type: Id
-child->value: Z3
-child->type: char*
-global table
-symbol global != NULL
-addType: char*
-get_inside_operator
-[get_inside_id] node->value: Z3
-[get_inside_funcBody] Deref
-get_deref_type
-deref->node_type:Add
-deref_ADD
-while2: Deref
-temp2->node_type: Deref
-temp2->value: (null)
-temp2->type: char*
-while2: Add
-temp2->node_type: Add
-temp2->value: (null)
-temp2->type: char*
-while2: Id
-temp2->node_type: Id
-temp2->value: Z4
-temp2->type: char**
-temp2 != NULL
-global table
-symbol global != NULL
-addType: char**
-[get_inside_funcBody] Add
-get_add_type
-child->node_type: Deref
-child->value: (null)
-child->type: char*
-child->node_type: Add
-child->value: (null)
-child->type: char*
-child->node_type: Id
-child->value: Z4
-child->type: char**
-global table
-symbol global != NULL
-addType: char**
-get_inside_operator
-else: Deref
-[get_inside_funcBody] Deref
-get_deref_type
-deref->node_type:Add
-deref_ADD
-while2: Id
-temp2->node_type: Id
-temp2->value: Z4
-temp2->type: char**
-temp2 != NULL
-global table
-symbol global != NULL
-addType: char**
-[get_inside_funcBody] Add
-get_add_type
-child->node_type: Id
-child->value: Z4
-child->type: char**
-global table
-symbol global != NULL
-addType: char**
-get_inside_operator
-[get_inside_id] node->value: Z4
-[get_inside_funcBody] IntLit
 ===== Global Symbol Table =====
 atoi	int(char*)
 itoa	char*(int,char*)
 puts	int(char*)
-Z3	char*
-Z4	char**
-a	int(void)
+test	int(void)
 
-===== Function a Symbol Table =====
+===== Function test Symbol Table =====
 return	int
+a	char*
 
 Program
-..Declaration
-....Char
-....Pointer
-....Id(Z3)
-..Declaration
-....Char
-....Pointer
-....Pointer
-....Id(Z4)
 ..FuncDefinition
 ....Int
-....Id(a)
+....Id(test)
 ....ParamList
 ......ParamDeclaration
 ........Void
 ....FuncBody
+......Declaration
+........Char
+........Pointer
+........Id(a)
 ......Store - int
-........Deref - char
-..........Add - char
-............Id(Z3) - char*
-............IntLit(0) - int
-........Deref - char*
-..........Add - char*
-............Deref - char*
-..............Add - char*
-................Id(Z4) - char**
-................IntLit(0) - int
-............IntLit(0) - int
+........Id(a) - char*
+........Sub - int
+..........IntLit(5) - int
+..........IntLit(1) - int

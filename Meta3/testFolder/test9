@@ -1,6 +1,5 @@
 
 int main(void){
-	char **a;
-	a[0][0] = 0;	
+	puts("");	
 }
 
