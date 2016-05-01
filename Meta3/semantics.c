@@ -247,7 +247,7 @@ char * get_type(Node* tree)
 		type = concat(type, "*");
 	}
 	//printf("type:%s | value: %s\n", type, value);
-	finalType = (char*) malloc(strlen(type)+strlen(value)+1);
+	finalType = (char*) malloc(strlen(type)+strlen(value)+3);
 	
 	sprintf(finalType, "%s[%s]", type, value);
 	return finalType;

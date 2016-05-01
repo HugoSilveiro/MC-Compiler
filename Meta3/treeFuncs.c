@@ -8,7 +8,7 @@ Node * insert_node(Node_Type node_type)
 {
 	//printf("insert_node\n");
 	//printf("insert_node:%s\n", NODE_NAME[node_type]);
-	Node * node = (Node *) malloc(sizeof(Node));
+	Node * node = (Node *) calloc(sizeof(Node), 1);
 	if(node!=NULL)
 	{
 		node->node_type = node_type;
