@@ -61,7 +61,7 @@ void print_terminal(Node *node){
 void print_symbol_table(Table * symbol_table)
 {
 
-	Table * table;
+	Table * table = NULL;
 
 	for(table = symbol_table;table;table = table->next)
 	{
@@ -77,7 +77,7 @@ void print_symbol_table(Table * symbol_table)
 void print_table(Table * table)
 {
 
-	Symbol * symbol;
+	Symbol * symbol = NULL;
 	if(table->type == 0)
 	{
 		printf("===== Global Symbol Table =====\n");

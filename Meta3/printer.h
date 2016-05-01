@@ -60,6 +60,7 @@ static const char *NODE_NAME[] = {
 	"Null"
 };
 
+
 void print_tree(Node *node, int level);
 void print_points(int n);
 void print_terminal(Node *node);

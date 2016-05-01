@@ -7,6 +7,7 @@
 #include "printer.h"
 
 #define DEBUG 1
+#define ERRORS 0
 
 extern Table * symbol_table;
 Table * current_table2 = NULL;
@@ -129,6 +130,8 @@ char * check_call_type(Node * node)
 			auxType = (char*)malloc(sizeof(get_type_Call(temp)));
 			strcpy(auxType, get_type_Call(temp));
 			if (DEBUG) printf("auxType: %s\n", auxType);
+
+			if(ERRORS) check_num_args(temp);
 			return auxType;
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "IntLit") == 0){
@@ -138,16 +141,52 @@ char * check_call_type(Node * node)
 			temp->type = "char";
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "StrLit") == 0){
-			
+
 			get_inside_strlit(temp);
 		}	
 
 		temp = temp->brother;
 	}
 	return NULL;
-
 }
 
+/*
+//erros check num arguments
+void check_num_args(Node * temp)
+{
+	Table * table;
+	Symbol * symbol;
+	table = search_table("global");
+	symbol = search_symbol(temp->value, table);
+	int caller, called;
+	if(symbol!=NULL)
+	{
+		called = num_args(temp->type);	
+	}
+	if(temp->type!=NULL)
+	{
+		caller = num_args(temp->type);
+	}
+
+	if(called != caller)
+	{
+	 	printf(errors_list[8], temp->value, caller, called);
+	}
+}
+
+int num_args(char * string)
+{
+	int comma = 0;
+	int i;
+	for(i = 0;i<strlen(string)-1;i++)
+	{
+		if(string[i] == ','){
+			comma++;
+		}
+	}
+	return comma+1;
+}
+*/
 char * get_type_Call(Node * node)
 {	
 	if (DEBUG) printf("get_type_Call\n");

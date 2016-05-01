@@ -32,7 +32,7 @@ INVALIDSTRLIT	\"([^"\n\\]|{NOTESCAPE})*\"
 	int treeFlag = 0;
 	int anoted_flag = 0;
 	extern int yacc_errors;
-	extern Node *tree;
+	extern Node *tree ;
 	int flag = 0;
 
 
