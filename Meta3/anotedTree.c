@@ -275,13 +275,13 @@ void get_inside_funcBody(Node * node)
 		{	
 
 			get_inside_funcBody(temp);
-			get_add_type(temp);
+			is_Add(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Sub") == 0)
 		{
 			temp->type = "int";
-			get_inside_funcBody(temp);
+			is_Sub(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Mul") == 0)
@@ -387,19 +387,55 @@ void get_inside_funcBody(Node * node)
 }
 
 
-char * is_Add(Node * node)
-{
-	Node * child1 = node->child;
-	Node * child2 = child1->brother;	
-}
-
-char * is_sub(Node * node)
+void is_Add(Node * node)
 {
 	Node * child1 = node->child;
 	Node * child2 = child1->brother;
 
+	if(child1 != NULL && child2 != NULL){
+		if(strcmp(child1->type, "int") == 0 && strcmp(child1->type, "char") == 0){
+			node->type = child1->type;
+		}
+		else if(strcmp(child1->type, "char") == 0 && strcmp(child2->type, "int") == 0){
+			node->type = child1->type;
+		}
+		else if(strcmp(child1->type, "int") == 0 && strcmp(child2->type, "int") == 0){
+			node->type = child1->type;
+		}
+		else if(strcmp(child1->type, "int") == 0  && strcmp(child2->type, "int") != 0){
+			 node->type = child2->type;
+		}
+		else if(strcmp(child2->type, "int") == 0  && strcmp(child1->type, "int") != 0){
+			node->type =  child1->type;
+		}
+		
+		else{
+			// ERRO 
+		}
+	}	
 }
 
+void is_Sub(Node * node)
+{
+	Node * child1 = node->child;
+	Node * child2 = child1->brother;
+
+	if(child1 != NULL && child2 != NULL){
+		if(strcmp(child1->type, "int") == 0 && strcmp(child1->type, "char") == 0){
+			node->type = child1->type;
+		}
+		else if(strcmp(child1->type, "char") == 0 && strcmp(child2->type, "int") == 0){
+			node->type = child1->type;
+		}
+		else if(strcmp(child1->type, "int") == 0 && strcmp(child2->type, "int") == 0){
+			node->type = child1->type;
+		}
+		
+	}
+
+}
+
+/*
 char is_Mul(Node * node)
 {
 	Node * child1 = node->child;
@@ -435,7 +471,7 @@ char is_Plus(Node * node)
 	Node * child1 = node->child;
 	Node * child2 = child1->brother;
 }
-
+*/
 void get_inside_comma(Node * node)
 {
 	Node * temp1;

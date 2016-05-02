@@ -1,4 +1,4 @@
 int test(char* argv){
-	int a;
-	a = atoi(argv[1]);
+	char * a;
+	a + 5;
 }

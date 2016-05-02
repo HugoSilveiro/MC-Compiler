@@ -43,3 +43,9 @@ void get_inside_comma(Node * node);
 
 //ERRORS
 void check_num_args(Node * temp);
+
+//OPERATORS
+
+void is_Add(Node * node);
+
+void is_Sub(Node * node);
