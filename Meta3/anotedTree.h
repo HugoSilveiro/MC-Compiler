@@ -19,9 +19,7 @@ void get_inside_operator(Node * node);
 
 void get_inside_strlit(Node * node);
 
-char * check_call_type(Node * node);
-
-char * get_type_Call(Node * node);
+void check_call_type(Node * node);
 
 char * type_call(char * type);
 
@@ -40,6 +38,8 @@ void get_inside_addr(Node * node);
 int is_escape3(char a, char b, char c);
 
 int parse_strlit(char * string);
+
+void get_inside_comma(Node * node);
 
 //ERRORS
 void check_num_args(Node * temp);
