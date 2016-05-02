@@ -412,7 +412,17 @@ void is_Sub(Node * node)
 		}
 	}
 }
-
+int aux_Arrray_Declarations(char * value)
+{
+	int n_pointers;
+	int i;
+	for(i =0; i < strlen(value); i++){
+		if(value[i] == '['){
+			n_pointers++;
+		}
+	}
+	return n_pointers;
+}
 void is_Mul_Div_Mod(Node * node)
 {
 	Node * child1 = node->child;
