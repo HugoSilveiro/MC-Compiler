@@ -238,7 +238,7 @@ void get_inside_funcBody(Node * node)
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Sub") == 0)
 		{
-			temp->type = "int";
+			get_inside_funcBody(temp);
 			is_Sub(temp);
 
 		}
@@ -382,10 +382,14 @@ void is_Sub(Node * node)
 {
 	Node * child1 = node->child;
 	Node * child2 = child1->brother;
-
+	if(DEBUG_A) printf("child1->type: %s\n", child1->value);
+	if(DEBUG_A) printf("child2->type: %s\n", child2->value);
 	if(child1 != NULL && child2 != NULL){
 		if(strcmp(child1->type, "int") == 0 && strcmp(child1->type, "char") == 0){
 			node->type = child1->type;
+		}
+		else if(strcmp(child1->type, child2->type) == 0){
+			node->type = "int";
 		}
 		else if(strcmp(child1->type, "char") == 0 && strcmp(child2->type, "int") == 0){
 			node->type = child1->type;
@@ -393,10 +397,32 @@ void is_Sub(Node * node)
 		else if(strcmp(child1->type, "int") == 0 && strcmp(child2->type, "int") == 0){
 			node->type = child1->type;
 		}
+		else if(return_pointers(child1->type) > 0){
+			node->type = child1->type;
+		}
+		else{
+			// ERRO !!!!!!!!!!!!!!!! CORRIGIR
+			node->type = "int";
+		}
 		
 	}
 
 }
+
+int return_pointers(char * value)
+{
+	if(DEBUG_A) printf("value: %s\n", value);
+	int i;
+	int n_pointers = 0;
+	for(i = 0; i < strlen(value)-1; i++){
+		if(value[i] == '*'){
+			n_pointers++;
+		}
+	}
+	return n_pointers;
+}
+
+
 
 /*
 char is_Mul(Node * node)

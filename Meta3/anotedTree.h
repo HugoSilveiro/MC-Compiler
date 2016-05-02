@@ -51,3 +51,7 @@ void check_num_args(Node * temp);
 void is_Add(Node * node);
 
 void is_Sub(Node * node);
+
+//NUMBER OF POINTERS
+
+int return_pointers(char * value);
