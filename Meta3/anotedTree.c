@@ -311,7 +311,7 @@ void get_inside_funcBody(Node * node)
 		else if(strcmp(NODE_NAME[temp->node_type], "Add") == 0)
 		{	
 			//printf("Add\n");
-			temp->type = get_add_type(temp);
+			//temp->type = get_add_type(temp);
 			//temp->type = "int*";
 			/*Node * temp2 = temp->child;
 			while(temp2!= NULL){
@@ -322,6 +322,7 @@ void get_inside_funcBody(Node * node)
 			}*/
 			//temp->type =  get_expr_type(temp);
 			get_inside_operator(temp);
+			get_add_type(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Sub") == 0)
@@ -563,10 +564,26 @@ char * get_operator_type_result(Node * node)
 char * return_symbol_name(Symbol * symbol)
 {
 
-		return symbol->type;
+	return symbol->type;
 
 }
 
+void get_add_type(Node * node)
+{
+	Node * temp1;
+	Node * temp2;
+	temp1 = node->child;
+	if(temp1!=NULL)
+	{
+		temp2 = temp1->brother;
+		if(temp2!=NULL)
+		{
+			node->type = "int*";
+		}	
+	}
+}
+
+/*
 char * get_add_type(Node * temp)
 {
 	if (DEBUG_A) printf("get_add_type\n");
@@ -610,6 +627,8 @@ char * get_add_type(Node * temp)
 	return NULL;
 
 }
+
+*/
 
 void get_deref_type(Node * node)
 {

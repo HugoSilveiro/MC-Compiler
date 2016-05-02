@@ -1,3 +1,4 @@
-
-
-char atoi(int b, char * c ){}
+int test(int argv){
+	int a;
+	a = atoi(argv[1]);
+}

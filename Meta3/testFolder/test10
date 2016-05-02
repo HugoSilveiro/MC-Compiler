@@ -1,4 +1,4 @@
-int test(void){
+int test(char* argv){
 	int a;
 	a = atoi(argv[1]);
 }

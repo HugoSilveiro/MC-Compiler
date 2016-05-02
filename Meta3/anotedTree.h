@@ -29,7 +29,7 @@ char * get_expr_type(Node * node);
 
 void get_deref_type(Node * node);
 
-char * get_add_type(Node * node);
+void get_add_type(Node * node);
 
 char * return_symbol_name(Symbol * symbol);
 
