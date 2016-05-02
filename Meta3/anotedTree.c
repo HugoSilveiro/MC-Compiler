@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 #include "anotedTree.h"
 #include "printer.h"
@@ -65,8 +66,8 @@ void insert_funcBody(Node * node)
 
 		if(strcmp(NODE_NAME[temp->node_type], "FuncBody") == 0)
 		{
-			
-			check_inside_funcBody(temp);
+			get_inside_funcBody(temp);
+			//check_inside_funcBody(temp);
 		}
 		temp = temp->brother;
 	}
@@ -112,6 +113,11 @@ void check_inside_funcBody(Node * node)
 		else if(strcmp(NODE_NAME[temp->node_type], "Addr") ==0)
 		{
 			get_inside_addr(temp);
+		}
+		else if(strcmp(NODE_NAME[temp->node_type], "StrLit") ==0)
+		{
+			if(DEBUG_A) printf("Strlit node_type: %s\n", NODE_NAME[temp->node_type]);
+			get_inside_funcBody(node);
 		}
 
 		temp = temp->brother;
@@ -423,6 +429,8 @@ void get_inside_funcBody(Node * node)
 		temp = temp->brother;
 	}
 }
+
+
 
 void get_inside_addr(Node * node)
 {
