@@ -92,14 +92,14 @@ void check_inside_funcBody(Node * node)
 			get_inside_funcBody(temp);
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Return") == 0){
-			get_inside_operator(temp);
+			get_inside_funcBody(temp);
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Store") == 0){
 			//Ver o tipo dos filhos
 			//printf("gotr: %s\n",);
 			//temp->type = get_operator_type_result(temp);
 			temp->type = "int";
-			get_inside_operator(temp);
+			get_inside_funcBody(temp);
 			//get_inside_funcBody(temp);
 
 		}
@@ -281,49 +281,49 @@ void get_inside_funcBody(Node * node)
 		{
 			
 			temp->type = get_operator_type_result(temp); 
-			get_inside_operator(temp);
+			get_inside_funcBody(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Ne") == 0)
 		{
 			temp->type = get_operator_type_result(temp);; 
-			get_inside_operator(temp);
+			get_inside_funcBody(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Lt") == 0)
 		{
 			temp->type = "int"; 
-			get_inside_operator(temp);
+			get_inside_funcBody(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Gt") == 0)
 		{
 			temp->type = "int"; 
-			get_inside_operator(temp);
+			get_inside_funcBody(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Le") == 0)
 		{
 			temp->type = "int"; 
-			get_inside_operator(temp);
+			get_inside_funcBody(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Ge") == 0)
 		{
 			temp->type = "int"; 
-			get_inside_operator(temp);
+			get_inside_funcBody(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "And") == 0)
 		{	
 			temp->type = "int"; 
-			get_inside_operator(temp);
+			get_inside_funcBody(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Or") == 0)
 		{	
 			temp->type = "int"; 
-			get_inside_operator(temp);
+			get_inside_funcBody(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Add") == 0)
@@ -339,50 +339,50 @@ void get_inside_funcBody(Node * node)
 				temp2 = temp2->child;
 			}*/
 			//temp->type =  get_expr_type(temp);
-			get_inside_operator(temp);
+			get_inside_funcBody(temp);
 			get_add_type(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Sub") == 0)
 		{
 			temp->type = "int";
-			get_inside_operator(temp);
+			get_inside_funcBody(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Mul") == 0)
 		{
 			temp->type = "int"; 
-			get_inside_operator(temp);
+			get_inside_funcBody(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Div") == 0)
 		{
 			temp->type = "int"; 
-			get_inside_operator(temp);
+			get_inside_funcBody(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Mod") == 0)
 		{
 			temp->type = "int"; 
-			get_inside_operator(temp);
+			get_inside_funcBody(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Not") == 0)
 		{
 			temp->type = "int"; 
-			get_inside_operator(temp);
+			get_inside_funcBody(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Minus") == 0)
 		{
 			temp->type = "int"; 
-			get_inside_operator(temp);
+			get_inside_funcBody(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Plus") == 0)
 		{
 			temp->type = "int"; 
-			get_inside_operator(temp);
+			get_inside_funcBody(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Addr") == 0)
@@ -391,7 +391,7 @@ void get_inside_funcBody(Node * node)
 			get_inside_addr(temp); 
 			//temp->type = "int"; 
 
-			//get_inside_operator(temp);
+			//get_inside_funcBody(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Deref") == 0)
@@ -408,12 +408,12 @@ void get_inside_funcBody(Node * node)
 			//printf("gotr: %s\n",get_operator_type_result(temp));
 			//temp->type = get_operator_type_result(temp); 
 			temp->type = "int";
-			get_inside_operator(temp);
+			get_inside_funcBody(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Comma") == 0)
 		{
-			get_inside_operator(temp);
+			get_inside_funcBody(temp);
 			get_inside_comma(temp);
 
 		}
@@ -422,7 +422,7 @@ void get_inside_funcBody(Node * node)
 		{
 			
 			//temp->type = check_call_type(temp); 
-			//get_inside_operator(temp);
+			//get_inside_funcBody(temp);
 
 			if (DEBUG_A) printf("call\n");
 			get_inside_funcBody(temp);
@@ -431,7 +431,7 @@ void get_inside_funcBody(Node * node)
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Return") == 0){
-			get_inside_operator(temp);
+			get_inside_funcBody(temp);
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "If") == 0)
 		{
@@ -546,7 +546,7 @@ char * get_expr_type(Node * node)
 
 void get_inside_operator(Node * node)
 {
-	if (DEBUG_A) printf("get_inside_operator\n");
+	if (DEBUG_A) printf("get_inside_funcBody\n");
 	Node * temp = node->child;
 	while(temp != NULL)
 	{
@@ -567,7 +567,7 @@ void get_inside_operator(Node * node)
 		{
 			
 			//temp->type = check_call_type(temp); 
-			//get_inside_operator(temp);
+			//get_inside_funcBody(temp);
 
 			if (DEBUG_A) printf("call\n");
 			//temp->type = check_call_type(temp); 
