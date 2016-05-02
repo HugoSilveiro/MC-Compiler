@@ -74,50 +74,6 @@ void insert_funcBody(Node * node)
 }
 
 
-
-void check_inside_funcBody(Node * node)
-{
-	if(DEBUG_A){
-		printf("check_inside_funcBody\n");
-	}
-	Node * temp = node->child;
-	while(temp != NULL){
-		if (DEBUG_A) printf("%s\n", NODE_NAME[temp->node_type]);
-		if(strcmp(NODE_NAME[temp->node_type], "If") == 0)
-		{
-			
-			get_inside_funcBody(temp);
-		}
-		else if(strcmp(NODE_NAME[temp->node_type], "For") == 0)
-		{
-			
-			get_inside_funcBody(temp);
-		}
-		else if(strcmp(NODE_NAME[temp->node_type], "Return") == 0){
-			get_inside_funcBody(temp);
-		}
-		else if(strcmp(NODE_NAME[temp->node_type], "Store") == 0){
-			//Ver o tipo dos filhos
-			//printf("gotr: %s\n",);
-			//temp->type = get_operator_type_result(temp);
-
-			get_inside_funcBody(temp);
-			get_inside_store(temp);
-			//get_inside_funcBody(temp);
-
-		}
-		else if(strcmp(NODE_NAME[temp->node_type], "Call") == 0)
-		{
-			//printf("call\n");
-			get_inside_funcBody(temp);
-			check_call_type(temp); 
-
-		}
-
-		temp = temp->brother;
-	}	
-}
-
 void get_inside_store(Node * node)
 {
 	Node * temp;
@@ -379,11 +335,12 @@ void get_inside_funcBody(Node * node)
 		{
 			
 			get_inside_funcBody(temp);
-		}	
-		else{
-			check_inside_funcBody(temp);
 		}
-
+		else if(strcmp(NODE_NAME[temp->node_type], "StatList")==0)
+		{
+			get_inside_funcBody(temp);
+		}	
+		
 		temp = temp->brother;
 	}
 }
