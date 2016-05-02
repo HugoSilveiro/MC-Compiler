@@ -238,6 +238,10 @@ void get_inside_funcBody(Node * node)
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Sub") == 0)
 		{
+<<<<<<< HEAD
+=======
+
+>>>>>>> 939e976aec8cf6da6c8d4477894c4e15f877f83b
 			get_inside_funcBody(temp);
 			is_Sub(temp);
 
@@ -371,9 +375,8 @@ void is_Add(Node * node)
 		else if(strcmp(child2->type, "int") == 0  && strcmp(child1->type, "int") != 0){
 			node->type =  child1->type;
 		}
-		
 		else{
-			// ERRO 
+			node->type = "int";
 		}
 	}	
 }
@@ -397,6 +400,7 @@ void is_Sub(Node * node)
 		else if(strcmp(child1->type, "int") == 0 && strcmp(child2->type, "int") == 0){
 			node->type = child1->type;
 		}
+
 		else if(return_pointers(child1->type) > 0){
 			node->type = child1->type;
 		}
@@ -404,8 +408,6 @@ void is_Sub(Node * node)
 			// ERRO !!!!!!!!!!!!!!!! CORRIGIR
 			node->type = "int";
 		}
-		
-	}
 
 }
 
