@@ -238,10 +238,7 @@ void get_inside_funcBody(Node * node)
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Sub") == 0)
 		{
-<<<<<<< HEAD
-=======
 
->>>>>>> 939e976aec8cf6da6c8d4477894c4e15f877f83b
 			get_inside_funcBody(temp);
 			is_Sub(temp);
 
@@ -408,7 +405,7 @@ void is_Sub(Node * node)
 			// ERRO !!!!!!!!!!!!!!!! CORRIGIR
 			node->type = "int";
 		}
-
+	}
 }
 
 int return_pointers(char * value)
