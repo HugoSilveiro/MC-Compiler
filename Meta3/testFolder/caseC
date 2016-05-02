@@ -1,0 +1,45 @@
+void main(void){
+    int a, b;
+    char c, d;
+    int* e, f;
+    char* g, h;
+    void* i, j;
+    
+    a = a + c, a = c + a;
+    
+    a = e + d, f = e + a;
+   
+    f = a + e, b = f + h;
+    
+    f = h + f;
+    
+    a = i + j, a = i + b;
+    a = i + d, a = i + h;
+
+    a = g + c, a = a + g;
+    a = i + g, a = g + h;
+   
+    
+    a = a * c, a = c * a;
+    
+    a = e * d, f = e * a;
+   
+    f = a * e, b = f * h;
+    
+    f = h * f;
+    
+    a = i * j, a = i * b;
+    a = i * d, a = i * h;
+    
+    
+    a = a % c, a = c % a;
+    
+    a = e % d, f = e % a;
+   
+    f = a % e, b = f % h;
+    
+    f = h % f;
+    
+    a = i % j, a = i % b;
+    a = i % d, a = i % h;
+}

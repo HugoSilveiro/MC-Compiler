@@ -1,0 +1,64 @@
+===== Global Symbol Table =====
+atoi int(char*)
+itoa char*(int,char*)
+puts int(char*)
+main void(void)
+
+===== Function main Symbol Table =====
+return void
+a int
+b int
+c char
+d char
+e char*
+
+Program
+..FuncDefinition
+....Void
+....Id(main)
+....ParamList
+......ParamDeclaration
+........Void
+....FuncBody
+......Declaration
+........Int
+........Id(a)
+......Declaration
+........Int
+........Id(b)
+......Declaration
+........Char
+........Id(c)
+......Declaration
+........Char
+........Id(d)
+......Declaration
+........Char
+........Pointer
+........Id(e)
+......StrLit("a\n") - char[3]
+......StrLit("\\") - char[2]
+......StrLit("~") - char[2]
+......StrLit("abc") - char[4]
+......StrLit("\000\000\000\09") - char[6]
+......Store - int
+........Id(a) - int
+........Id(c) - char
+......Store - char
+........Id(d) - char
+........Id(b) - int
+......Store - char*
+........Id(e) - char*
+........Id(a) - int
+......Store - int
+........Id(a) - int
+........Id(e) - char*
+......Comma - int
+........Comma - char
+..........Comma - char
+............Id(a) - int
+............Id(c) - char
+..........Comma - char
+............Id(e) - char*
+............Id(d) - char
+........Id(b) - int

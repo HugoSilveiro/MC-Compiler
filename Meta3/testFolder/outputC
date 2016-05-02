@@ -1,0 +1,262 @@
+===== Global Symbol Table =====
+atoi int(char*)
+itoa char*(int,char*)
+puts int(char*)
+main void(void)
+
+===== Function main Symbol Table =====
+return void
+a int
+b int
+c char
+d char
+e int*
+f int
+g char*
+h char
+i void*
+j void
+
+Program
+..FuncDefinition
+....Void
+....Id(main)
+....ParamList
+......ParamDeclaration
+........Void
+....FuncBody
+......Declaration
+........Int
+........Id(a)
+......Declaration
+........Int
+........Id(b)
+......Declaration
+........Char
+........Id(c)
+......Declaration
+........Char
+........Id(d)
+......Declaration
+........Int
+........Pointer
+........Id(e)
+......Declaration
+........Int
+........Id(f)
+......Declaration
+........Char
+........Pointer
+........Id(g)
+......Declaration
+........Char
+........Id(h)
+......Declaration
+........Void
+........Pointer
+........Id(i)
+......Declaration
+........Void
+........Id(j)
+......Comma - int
+........Store - int
+..........Id(a) - int
+..........Add - int
+............Id(a) - int
+............Id(c) - char
+........Store - int
+..........Id(a) - int
+..........Add - int
+............Id(c) - char
+............Id(a) - int
+......Comma - int
+........Store - int
+..........Id(a) - int
+..........Add - int*
+............Id(e) - int*
+............Id(d) - char
+........Store - int
+..........Id(f) - int
+..........Add - int*
+............Id(e) - int*
+............Id(a) - int
+......Comma - int
+........Store - int
+..........Id(f) - int
+..........Add - int*
+............Id(a) - int
+............Id(e) - int*
+........Store - int
+..........Id(b) - int
+..........Add - int
+............Id(f) - int
+............Id(h) - char
+......Store - int
+........Id(f) - int
+........Add - int
+..........Id(h) - char
+..........Id(f) - int
+......Comma - int
+........Store - int
+..........Id(a) - int
+..........Add - undef
+............Id(i) - void*
+............Id(j) - void
+........Store - int
+..........Id(a) - int
+..........Add - void*
+............Id(i) - void*
+............Id(b) - int
+......Comma - int
+........Store - int
+..........Id(a) - int
+..........Add - void*
+............Id(i) - void*
+............Id(d) - char
+........Store - int
+..........Id(a) - int
+..........Add - void*
+............Id(i) - void*
+............Id(h) - char
+......Comma - int
+........Store - int
+..........Id(a) - int
+..........Add - char*
+............Id(g) - char*
+............Id(c) - char
+........Store - int
+..........Id(a) - int
+..........Add - char*
+............Id(a) - int
+............Id(g) - char*
+......Comma - int
+........Store - int
+..........Id(a) - int
+..........Add - undef
+............Id(i) - void*
+............Id(g) - char*
+........Store - int
+..........Id(a) - int
+..........Add - char*
+............Id(g) - char*
+............Id(h) - char
+......Comma - int
+........Store - int
+..........Id(a) - int
+..........Mul - int
+............Id(a) - int
+............Id(c) - char
+........Store - int
+..........Id(a) - int
+..........Mul - int
+............Id(c) - char
+............Id(a) - int
+......Comma - int
+........Store - int
+..........Id(a) - int
+..........Mul - undef
+............Id(e) - int*
+............Id(d) - char
+........Store - int
+..........Id(f) - int
+..........Mul - undef
+............Id(e) - int*
+............Id(a) - int
+......Comma - int
+........Store - int
+..........Id(f) - int
+..........Mul - undef
+............Id(a) - int
+............Id(e) - int*
+........Store - int
+..........Id(b) - int
+..........Mul - int
+............Id(f) - int
+............Id(h) - char
+......Store - int
+........Id(f) - int
+........Mul - int
+..........Id(h) - char
+..........Id(f) - int
+......Comma - int
+........Store - int
+..........Id(a) - int
+..........Mul - undef
+............Id(i) - void*
+............Id(j) - void
+........Store - int
+..........Id(a) - int
+..........Mul - undef
+............Id(i) - void*
+............Id(b) - int
+......Comma - int
+........Store - int
+..........Id(a) - int
+..........Mul - undef
+............Id(i) - void*
+............Id(d) - char
+........Store - int
+..........Id(a) - int
+..........Mul - undef
+............Id(i) - void*
+............Id(h) - char
+......Comma - int
+........Store - int
+..........Id(a) - int
+..........Mod - int
+............Id(a) - int
+............Id(c) - char
+........Store - int
+..........Id(a) - int
+..........Mod - int
+............Id(c) - char
+............Id(a) - int
+......Comma - int
+........Store - int
+..........Id(a) - int
+..........Mod - undef
+............Id(e) - int*
+............Id(d) - char
+........Store - int
+..........Id(f) - int
+..........Mod - undef
+............Id(e) - int*
+............Id(a) - int
+......Comma - int
+........Store - int
+..........Id(f) - int
+..........Mod - undef
+............Id(a) - int
+............Id(e) - int*
+........Store - int
+..........Id(b) - int
+..........Mod - int
+............Id(f) - int
+............Id(h) - char
+......Store - int
+........Id(f) - int
+........Mod - int
+..........Id(h) - char
+..........Id(f) - int
+......Comma - int
+........Store - int
+..........Id(a) - int
+..........Mod - undef
+............Id(i) - void*
+............Id(j) - void
+........Store - int
+..........Id(a) - int
+..........Mod - undef
+............Id(i) - void*
+............Id(b) - int
+......Comma - int
+........Store - int
+..........Id(a) - int
+..........Mod - undef
+............Id(i) - void*
+............Id(d) - char
+........Store - int
+..........Id(a) - int
+..........Mod - undef
+............Id(i) - void*
+............Id(h) - char

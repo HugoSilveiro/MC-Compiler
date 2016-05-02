@@ -777,8 +777,9 @@ void get_inside_id(Node * node)
 void get_inside_strlit(Node * node)
 {
 
-	int length = strlen(node->value)-1;;
+	//int length = strlen(node->value)-1;;
 
+	int length = parse_strlit(node->value);
 	
 	char * aux;
 	aux = (char*) malloc(sizeof(char)*(length+6));
@@ -792,6 +793,58 @@ void get_inside_strlit(Node * node)
 	
 }
 	
+
+int is_escape3(char a, char b, char c)
+{
+	int value = 0;
+	if(isdigit(a)&& a-'0'<=7 )
+	{
+		value++;
+		if(isdigit(b)&& b-'0'<=7)
+		{
+			value++;
+			if(isdigit(c) && c-'0' <=7)
+			{
+				value++;
+			}
+		}
+	}
+	return value;
+}
+
+int parse_strlit(char * string)
+{
+	int scape2 = 0;
+	int scape3 = 0;
+
+	int length = strlen(string)-1;
+	int i;
+	for(i = 0;i<length-1;i++)
+	{
+		if(string[i]=='\\')
+		{
+			if(string[i+1] == 'n' || string[i+1] == 't' || string[i+1] == '\'' || string[i+1] == '"' || string[i+1] == '\\')
+			{
+				scape2++;
+			}
+		}
+	}
+
+	for(i = 0;i<length-2;i++)
+	{
+		if(string[i]=='\\')
+		{
+			int value =is_escape3(string[i+1], string[i+2], string[i+3]); 
+			if(value!=0)
+			{
+				scape3=scape3+value;
+			}
+		}
+	}
+
+	length = length -scape2-scape3;
+	return length;
+}
 
 
 
