@@ -17,7 +17,15 @@ long long int: "long long int", unsigned long long int: "unsigned long long int"
 int main()
 {
 	int a;
-	char b;
-	printf("%s", typename(b+a));
+    char b;
+    char* c;
+    int* d;
+    void* e;
+
+       printf("%s\n", typename(!e) );
+    //printf("%s\n", typename(+e) );
+    //printf("%s\n", typename(-e) );
+
+    
 	return 0;
 }

@@ -262,13 +262,13 @@ void get_inside_funcBody(Node * node)
 		else if(strcmp(NODE_NAME[temp->node_type], "Eq") == 0)
 		{
 			
-			temp->type = get_operator_type_result(temp); 
+			temp->type = "int"; 
 			get_inside_operator(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Ne") == 0)
 		{
-			temp->type = get_operator_type_result(temp);; 
+			temp->type = "int"; 
 			get_inside_operator(temp);
 
 		}
@@ -434,7 +434,54 @@ void get_inside_funcBody(Node * node)
 	}
 }
 
+char * is_Add(Node * node)
+{
+	Node * child1 = node->child;
+	Node * child2 = child1->brother;	
+}
 
+char * is_sub(Node * node)
+{
+	Node * child1 = node->child;
+	Node * child2 = child1->brother;
+
+}
+
+char is_Mul(Node * node)
+{
+	Node * child1 = node->child;
+	Node * child2 = child1->brother;
+}
+
+char is_Div(Node * node)
+{
+	Node * child1 = node->child;
+	Node * child2 = child1->brother;
+}
+
+char is_Mod(Node * node)
+{
+	Node * child1 = node->child;
+	Node * child2 = child1->brother;
+}
+
+char is_Not(Node * node)
+{
+	Node * child1 = node->child;
+	Node * child2 = child1->brother;
+}
+
+char is_Minus(Node * node)
+{
+	Node * child1 = node->child;
+	Node * child2 = child1->brother;
+}
+
+char is_Plus(Node * node)
+{
+	Node * child1 = node->child;
+	Node * child2 = child1->brother;
+}
 
 void get_inside_addr(Node * node)
 {
