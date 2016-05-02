@@ -73,6 +73,16 @@ void insert_funcBody(Node * node)
 	}
 }
 
+void get_inside_store(Node * node)
+{
+	Node * temp;
+	temp = node->child;
+	if(temp!=NULL)
+	{
+		node->type = temp->type;
+	}
+}
+
 void check_inside_funcBody(Node * node)
 {
 	if(DEBUG_A){
@@ -98,8 +108,9 @@ void check_inside_funcBody(Node * node)
 			//Ver o tipo dos filhos
 			//printf("gotr: %s\n",);
 			//temp->type = get_operator_type_result(temp);
-			temp->type = "int";
+
 			get_inside_funcBody(temp);
+			get_inside_store(temp);
 			//get_inside_funcBody(temp);
 
 		}
@@ -109,15 +120,6 @@ void check_inside_funcBody(Node * node)
 			get_inside_funcBody(temp);
 			check_call_type(temp); 
 
-		}
-		else if(strcmp(NODE_NAME[temp->node_type], "Addr") ==0)
-		{
-			get_inside_addr(temp);
-		}
-		else if(strcmp(NODE_NAME[temp->node_type], "StrLit") ==0)
-		{
-			if(DEBUG_A) printf("Strlit node_type: %s\n", NODE_NAME[temp->node_type]);
-			get_inside_funcBody(node);
 		}
 
 		temp = temp->brother;
@@ -154,41 +156,6 @@ char * type_call(char * type)
 	return NULL;
 }
 
-/*
-
-char * check_call_type(Node * node)
-{
-	if (DEBUG_A) printf("check_call_type\n");
-	char * auxType = NULL;
-	Node * temp = node->child;
-	while(temp != NULL)
-	{
-		if (DEBUG_A) printf("%s\n", NODE_NAME[temp->node_type]);
-		if(strcmp(NODE_NAME[temp->node_type], "Id") == 0){
-			auxType = (char*)malloc(sizeof(get_type_Call(temp)));
-			strcpy(auxType, get_type_Call(temp));
-			if (DEBUG_A) printf("auxType: %s\n", auxType);
-
-			if(ERRORS) check_num_args(temp);
-			return auxType;
-		}
-		else if(strcmp(NODE_NAME[temp->node_type], "IntLit") == 0){
-			temp->type = "int";
-		}
-		else if(strcmp(NODE_NAME[temp->node_type], "ChrLit") == 0){
-			temp->type = "char";
-		}
-		else if(strcmp(NODE_NAME[temp->node_type], "StrLit") == 0){
-
-			get_inside_strlit(temp);
-		}	
-
-		temp = temp->brother;
-	}
-	return NULL;
-}
-
-*/
 
 /*
 //erros check num arguments
@@ -228,35 +195,6 @@ int num_args(char * string)
 }
 */
 
-/*
-char * get_type_Call(Node * node)
-{	
-	if (DEBUG_A) printf("get_type_Call\n");
-	Symbol * symbol = search_symbol(node->value, current_table2);
-	
-	if(symbol!=NULL)
-	{
-		node->type = symbol->type;
-		if (DEBUG_A) printf("get_type_call: %s\n", node->type);
-		return type_call(node->type);
-	}
-	else
-	{
-		Table * table = search_table("global");
-		Symbol * symbol2 = search_symbol(node->value, table);
-		if(symbol2!=NULL)
-		{
-			
-			node->type = symbol2->type;
-			if (DEBUG_A) printf("get_type_call: %s\n", node->type);
-			return type_call(node->type);	
-		}	
-	}
-	return NULL;
-}
-*/
-
-
 void get_inside_funcBody(Node * node)
 {
 	Node * temp = node->child;
@@ -282,6 +220,8 @@ void get_inside_funcBody(Node * node)
 			
 			temp->type = get_operator_type_result(temp); 
 			get_inside_funcBody(temp);
+
+
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Ne") == 0)
@@ -328,17 +268,7 @@ void get_inside_funcBody(Node * node)
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Add") == 0)
 		{	
-			//printf("Add\n");
-			//temp->type = get_add_type(temp);
-			//temp->type = "int*";
-			/*Node * temp2 = temp->child;
-			while(temp2!= NULL){
-				printf("child->node_type: %s\n", NODE_NAME[temp2->node_type]);
-				printf("child->value: %s\n", temp2->value);
-				printf("child->type: %s\n", temp2->type);
-				temp2 = temp2->child;
-			}*/
-			//temp->type =  get_expr_type(temp);
+
 			get_inside_funcBody(temp);
 			get_add_type(temp);
 
@@ -407,9 +337,9 @@ void get_inside_funcBody(Node * node)
 		{
 			//printf("gotr: %s\n",get_operator_type_result(temp));
 			//temp->type = get_operator_type_result(temp); 
-			temp->type = "int";
-			get_inside_funcBody(temp);
 
+			get_inside_funcBody(temp);
+			get_inside_store(temp);
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Comma") == 0)
 		{
@@ -443,7 +373,6 @@ void get_inside_funcBody(Node * node)
 			
 			get_inside_funcBody(temp);
 		}	
-
 		else{
 			check_inside_funcBody(temp);
 		}
@@ -490,8 +419,6 @@ char * get_operator_type_result(Node * node)
 	}
 	return NULL;
 }
-
-
 
 char * return_symbol_name(Symbol * symbol)
 {
@@ -544,46 +471,6 @@ char * get_expr_type(Node * node)
 	return aux;
 }
 
-void get_inside_operator(Node * node)
-{
-	if (DEBUG_A) printf("get_inside_funcBody\n");
-	Node * temp = node->child;
-	while(temp != NULL)
-	{
-		//printf("%s\n", NODE_NAME[temp->node_type]);
-		if(strcmp(NODE_NAME[temp->node_type], "Id") == 0){
-			get_inside_id(temp);
-		}
-		else if(strcmp(NODE_NAME[temp->node_type], "IntLit") == 0){
-			temp->type = "int";
-		}
-		else if(strcmp(NODE_NAME[temp->node_type], "ChrLit") == 0){
-			temp->type = "char";
-		}
-		else if(strcmp(NODE_NAME[temp->node_type], "StrLit") == 0){
-			get_inside_strlit(temp);
-		}
-		else if(strcmp(NODE_NAME[temp->node_type], "Call") == 0)
-		{
-			
-			//temp->type = check_call_type(temp); 
-			//get_inside_funcBody(temp);
-
-			if (DEBUG_A) printf("call\n");
-			//temp->type = check_call_type(temp); 
-			get_inside_funcBody(temp);
-			check_call_type(temp);
-
-
-		}
-		else{
-			if (DEBUG_A) printf("else: %s\n", NODE_NAME[temp->node_type]);
-			get_inside_funcBody(temp->father);
-		}	
-
-		temp = temp->brother;
-	}
-}
 
 void get_inside_id(Node * node)
 {
@@ -606,10 +493,8 @@ void get_inside_id(Node * node)
 		}
 		
 	}
-	
-	
-
 }
+
 
 void get_inside_strlit(Node * node)
 {
@@ -625,12 +510,9 @@ void get_inside_strlit(Node * node)
 	sprintf(aux, "char[%d]", length);
 
 	//printf("get_inside_strlit: %s\n", aux);
-	node->type = aux;
-
-	
+	node->type = aux;	
 }
 	
-
 int is_escape3(char a, char b, char c)
 {
 	int value = 0;
