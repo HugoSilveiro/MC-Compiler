@@ -41,6 +41,8 @@ int parse_strlit(char * string);
 
 void get_inside_comma(Node * node);
 
+void get_inside_store(Node * node);
+
 //ERRORS
 void check_num_args(Node * temp);
 

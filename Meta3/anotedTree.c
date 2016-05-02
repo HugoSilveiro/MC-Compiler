@@ -7,7 +7,7 @@
 #include "anotedTree.h"
 #include "printer.h"
 
-#define DEBUG_A 1
+#define DEBUG_A 0
 #define ERRORS 0
 
 extern Table * symbol_table;
@@ -73,15 +73,7 @@ void insert_funcBody(Node * node)
 	}
 }
 
-void get_inside_store(Node * node)
-{
-	Node * temp;
-	temp = node->child;
-	if(temp!=NULL)
-	{
-		node->type = temp->type;
-	}
-}
+
 
 void check_inside_funcBody(Node * node)
 {
@@ -124,6 +116,16 @@ void check_inside_funcBody(Node * node)
 
 		temp = temp->brother;
 	}	
+}
+
+void get_inside_store(Node * node)
+{
+	Node * temp;
+	temp = node->child;
+	if(temp!=NULL)
+	{
+		node->type = temp->type;
+	}
 }
 
 void check_call_type(Node * node)
@@ -387,7 +389,11 @@ void get_inside_funcBody(Node * node)
 }
 
 
+
+
+
 void is_Add(Node * node)
+
 {
 	Node * child1 = node->child;
 	Node * child2 = child1->brother;
