@@ -395,8 +395,8 @@ void get_inside_funcBody(Node * node)
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Comma") == 0)
 		{
-			temp->type = "int"; 
 			get_inside_operator(temp);
+			get_inside_comma(temp);
 
 		}
 		
@@ -434,7 +434,20 @@ void get_inside_funcBody(Node * node)
 	}
 }
 
+void get_inside_comma(Node * node)
+{
+	Node * temp1;
+	temp1 = node->child;
 
+	if(temp1!=NULL)
+	{
+		Node * temp2 = temp1->brother;
+		if(temp2 != NULL)
+		{
+			node->type = temp2->type;
+		}
+	}
+}
 
 void get_inside_addr(Node * node)
 {
@@ -578,7 +591,7 @@ void get_add_type(Node * node)
 		temp2 = temp1->brother;
 		if(temp2!=NULL)
 		{
-			node->type = "int*";
+			node->type = temp1->type;
 		}	
 	}
 }
