@@ -367,6 +367,7 @@ void get_inside_funcBody(Node * node)
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Addr") == 0)
 		{
+			get_inside_funcBody(temp);
 			get_inside_addr(temp); 
 			//temp->type = "int"; 
 
@@ -436,26 +437,12 @@ void get_inside_addr(Node * node)
 {
 	Node * temp;
 	temp = node->child;
-
-
-	while(temp!=NULL)
+	if(temp!=NULL)
 	{
-		if(strcmp(NODE_NAME[temp->node_type], "Id")==0 )
-		{
-			get_inside_id(temp);
-			node->type = temp->type;
-			node->type = concat(node->type, "*");
-			return;
-		}
-		else if(strcmp(NODE_NAME[temp->node_type], "Addr") == 0)
-		{
-			get_inside_addr(temp);
-			node->type = temp->type;
-			node->type = concat(node->type, "*");
-		}
-
-		temp = temp->brother;
+		node->type = temp->type;
+		node->type = concat(node->type, "*");
 	}
+	
 }
 
 char * get_operator_type_result(Node * node)
