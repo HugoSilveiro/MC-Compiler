@@ -1,4 +1,4 @@
 int test(char* argv){
-	char * a, * b;
-	a * b;
+	int a;
+-a;
 }

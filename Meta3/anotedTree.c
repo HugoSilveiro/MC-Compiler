@@ -272,14 +272,16 @@ void get_inside_funcBody(Node * node)
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Minus") == 0)
 		{
-			temp->type = "int"; 
+			//temp->type = "int"; 
 			get_inside_funcBody(temp);
+			is_Plus_Minus(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Plus") == 0)
 		{
-			temp->type = "int"; 
+			//temp->type = "int"; 
 			get_inside_funcBody(temp);
+			is_Plus_Minus(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Addr") == 0)
@@ -435,6 +437,26 @@ void is_Mul_Div_Mod(Node * node)
 	}
 }
 
+void is_Plus_Minus(Node * node)
+{
+	Node * child1 = node->child;
+	
+	if(child1 != NULL){
+		if(strcmp(child1->type, "int") == 0 ){
+			node->type = child1->type;
+		}
+		else if(strcmp(child1->type, "char") == 0 ){
+			node->type = "int";
+		}
+		
+		else{
+			// ERRO !!!!!!!!!!!!!!!! CORRIGIR
+			node->type = "int";
+		}
+	}
+
+}
+
 int return_pointers(char * value)
 {
 	if(DEBUG_A) printf("value: %s\n", value);
@@ -450,43 +472,6 @@ int return_pointers(char * value)
 
 
 
-/*
-char is_Mul(Node * node)
-{
-	Node * child1 = node->child;
-	Node * child2 = child1->brother;
-}
-
-char is_Div(Node * node)
-{
-	Node * child1 = node->child;
-	Node * child2 = child1->brother;
-}
-
-char is_Mod(Node * node)
-{
-	Node * child1 = node->child;
-	Node * child2 = child1->brother;
-}
-
-char is_Not(Node * node)
-{
-	Node * child1 = node->child;
-	Node * child2 = child1->brother;
-}
-
-char is_Minus(Node * node)
-{
-	Node * child1 = node->child;
-	Node * child2 = child1->brother;
-}
-
-char is_Plus(Node * node)
-{
-	Node * child1 = node->child;
-	Node * child2 = child1->brother;
-}
-*/
 void get_inside_comma(Node * node)
 {
 	Node * temp1;

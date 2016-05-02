@@ -54,6 +54,8 @@ void is_Sub(Node * node);
 
 void is_Mul_Div_Mod(Node * node);
 
+void is_Plus_Minus(Node * node);
+
 //NUMBER OF POINTERS
 
 int return_pointers(char * value);
