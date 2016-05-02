@@ -312,6 +312,7 @@ void get_inside_funcBody(Node * node)
 		{	
 			//printf("Add\n");
 			temp->type = get_add_type(temp);
+			//temp->type = "int*";
 			/*Node * temp2 = temp->child;
 			while(temp2!= NULL){
 				printf("child->node_type: %s\n", NODE_NAME[temp2->node_type]);
@@ -377,9 +378,10 @@ void get_inside_funcBody(Node * node)
 		else if(strcmp(NODE_NAME[temp->node_type], "Deref") == 0)
 		{	
 			//printf("Deref\nchild:%s\n", NODE_NAME[temp->child->node_type]);
-			temp->type = get_deref_type(temp);
-			//get_deref_type(temp); 
 			get_inside_funcBody(temp);
+			get_deref_type(temp);
+			//get_deref_type(temp); 
+			
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Store") == 0)
@@ -609,82 +611,16 @@ char * get_add_type(Node * temp)
 
 }
 
-char * get_deref_type(Node * node)
+void get_deref_type(Node * node)
 {
-	if (DEBUG_A) printf("get_deref_type\n");
 	Node * temp = node->child;
-	Node * temp2;
-	Symbol * symbol = (Symbol *) malloc(sizeof(Symbol));
-	while(temp!=NULL)
+	if(temp!=NULL)
 	{
-		if (DEBUG_A) printf("deref->node_type:%s\n", NODE_NAME[temp->node_type]);
-		//printf("while1: %s\n", temp->value);
-		if(strcmp(NODE_NAME[temp->node_type], "Add") == 0){
-			if (DEBUG_A) printf("deref_ADD\n");
-			char * addType = NULL;
-			temp2 = temp->child;
-			while(temp2!=NULL){
-
-				if (DEBUG_A) printf("while2: %s\n", NODE_NAME[temp2->node_type]);
-				if (DEBUG_A) printf("temp2->node_type: %s\n", NODE_NAME[temp2->node_type]);
-				if (DEBUG_A) printf("temp2->value: %s\n", temp2->value);
-				if (DEBUG_A) printf("temp2->type: %s\n", temp2->type);
-
-				if(temp2->value != NULL){
-					if (DEBUG_A) printf("temp2 != NULL\n");
-					
-					symbol = search_symbol(temp2->value, current_table2);
-
-					if(symbol!=NULL)
-					{
-						if (DEBUG_A) printf("symbol != NULL");
-						addType = (char*)malloc(sizeof(return_symbol_name(symbol)));
-						strcpy(addType,return_symbol_name(symbol));
-						if (DEBUG_A) printf("addType: %s\n", addType);
-						addType[strlen(addType)-1] = '\0';
-						return addType;	
-						
-					}
-					else{
-						if (DEBUG_A) printf("global table\n");
-						Table * table = search_table("global");
-						
-						symbol = search_symbol(temp2->value, table);
-						if(symbol!=NULL){
-							if (DEBUG_A) printf("symbol global != NULL\n");
-							addType = (char*)malloc(sizeof(return_symbol_name(symbol)));
-							strcpy(addType,return_symbol_name(symbol));
-							if (DEBUG_A) printf("addType: %s\n", addType);
-							addType[strlen(addType)-1] = '\0';
-							return addType;	
-						}
-						else{
-							if (DEBUG_A) printf("boi não encontrou na global\n");
-						}
-
-
-					}	
-				}
-				/*else{
-					printf("temp2 == NULL\n");
-					get_deref_type(temp2);
-				}*/
-				
-				
-				temp2 = temp2->child;
-								
-			}
-		}
-		temp=temp->brother;
+		node->type = strdup(temp->type);
+		node->type[strlen(temp->type)-1] = '\0';
 	}
-	return NULL;
-	
-
-	//Symbol * symbol = (Symbol *) malloc(sizeof(Symbol));
-	//symbol = search_symbol(NODE_NAME[node->node_type], current_table2);
-	//print_symbol(symbol);
-
 }
+
 
 char * get_expr_type(Node * node)
 {
