@@ -7,7 +7,7 @@
 #include "anotedTree.h"
 #include "printer.h"
 
-#define DEBUG_A 0
+#define DEBUG_A 1
 #define ERRORS 0
 
 extern Table * symbol_table;
@@ -434,6 +434,7 @@ char is_Plus(Node * node)
 {
 	Node * child1 = node->child;
 	Node * child2 = child1->brother;
+}
 
 void get_inside_comma(Node * node)
 {
