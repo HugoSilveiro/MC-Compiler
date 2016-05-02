@@ -245,20 +245,23 @@ void get_inside_funcBody(Node * node)
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Mul") == 0)
 		{
-			temp->type = "int"; 
+			//temp->type = "int"; 
 			get_inside_funcBody(temp);
+			is_Mul_Div_Mod(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Div") == 0)
 		{
-			temp->type = "int"; 
+			//temp->type = "int"; 
 			get_inside_funcBody(temp);
+			is_Mul_Div_Mod(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Mod") == 0)
 		{
-			temp->type = "int"; 
+			//temp->type = "int"; 
 			get_inside_funcBody(temp);
+			is_Mul_Div_Mod(temp);
 
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "Not") == 0)
@@ -400,6 +403,30 @@ void is_Sub(Node * node)
 
 		else if(return_pointers(child1->type) > 0){
 			node->type = child1->type;
+		}
+		else{
+			// ERRO !!!!!!!!!!!!!!!! CORRIGIR
+			node->type = "int";
+		}
+	}
+}
+
+void is_Mul_Div_Mod(Node * node)
+{
+	Node * child1 = node->child;
+	Node * child2 = child1->brother;
+	if(child1 != NULL && child2 != NULL){
+		if(strcmp(child1->type, "int") == 0 && strcmp(child1->type, "int") == 0){
+			node->type = child1->type;
+		}
+		else if(strcmp(child1->type, "char") == 0 && strcmp(child2->type, "char") == 0){
+			node->type = "int";
+		}
+		else if(strcmp(child1->type, "int") == 0 && strcmp(child2->type, "char") == 0){
+			node->type = child1->type;
+		}
+		else if(strcmp(child1->type, "char") == 0 && strcmp(child2->type, "int") == 0){
+			node->type = child2->type;
 		}
 		else{
 			// ERRO !!!!!!!!!!!!!!!! CORRIGIR
