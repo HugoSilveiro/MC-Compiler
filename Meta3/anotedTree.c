@@ -442,7 +442,7 @@ void is_Add(Node * node)
 
 
 	if(child1 != NULL && child2 != NULL){
-		if(strcmp(child1->type, "int") == 0 && strcmp(child1->type, "char") == 0){
+		if(strcmp(child1->type, "int") == 0 && strcmp(child2->type, "char") == 0){
 			node->type = child1->type;
 		}
 		else if(strcmp(child1->type, "char") == 0 && strcmp(child2->type, "int") == 0){
@@ -451,11 +451,20 @@ void is_Add(Node * node)
 		else if(strcmp(child1->type, "int") == 0 && strcmp(child2->type, "int") == 0){
 			node->type = child1->type;
 		}
+		else if(strcmp(child1->type, "char") == 0 && strcmp(child2->type, "char") == 0){
+			node->type = "int";
+		}
 		else if(strcmp(child1->type, "int") == 0  && strcmp(child2->type, "int") != 0){
 			 node->type = child2->type;
 		}
 		else if(strcmp(child2->type, "int") == 0  && strcmp(child1->type, "int") != 0){
 			node->type =  child1->type;
+		}
+		else if(strcmp(child1->type, "char") == 0 && return_pointers(child2->type)>0){
+			node->type = child2->type;
+		}
+		else if(strcmp(child2->type, "char") == 0 && return_pointers(child1->type)>0){
+			node->type = child1->type;
 		}
 		else{
 			node->type = "int";
@@ -505,9 +514,13 @@ void is_Sub(Node * node)
 			node->type = child1->type;
 		}
 
-		else if(return_pointers(child1->type) > 0){
+		else if(return_pointers(child1->type) > 0 && strcmp(child2->type, "int") == 0){
 			node->type = child1->type;
 		}
+		else if(return_pointers(child1->type) > 0 && strcmp(child2->type, "char") == 0){
+			node->type = child1->type;
+		}
+				
 		else{
 			// ERRO !!!!!!!!!!!!!!!! CORRIGIR
 			node->type = "int";
