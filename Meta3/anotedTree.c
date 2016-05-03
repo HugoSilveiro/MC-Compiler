@@ -168,7 +168,7 @@ void get_inside_funcBody(Node * node)
 			temp->type = "int";
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "ChrLit") == 0){
-			temp->type = "char";
+			temp->type = "int";
 		}
 		else if(strcmp(NODE_NAME[temp->node_type], "StrLit") == 0){
 			get_inside_strlit(temp);
