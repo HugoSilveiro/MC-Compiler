@@ -395,8 +395,8 @@ void is_Add(Node * node)
 	//printf("child2: %s\n", child2->type);
 	char * type1aux, * type2aux;
 	
-	type1aux = (char*)malloc(strlen(child1->type)+10);
-	type2aux = (char*)malloc(strlen(child2->type)+10);
+	type1aux = (char*)malloc(strlen(child1->type));
+	type2aux = (char*)malloc(strlen(child2->type));
 
 	int aux_value1 = aux_Arrray_Declarations(child1->type);
 	int aux_value2 = aux_Arrray_Declarations(child2->type);
@@ -494,8 +494,8 @@ void is_Sub(Node * node)
 	Node * child1 = node->child;
 	Node * child2 = child1->brother;
 	char * type1aux, * type2aux;
-	type1aux = (char*)malloc(strlen(child1->type)+100);
-	type2aux = (char*)malloc(strlen(child2->type)+100);
+	type1aux = (char*)malloc(strlen(child1->type));
+	type2aux = (char*)malloc(strlen(child2->type));
 	strcpy(type1aux, child1->type);
 	strcpy(type2aux, child2->type);
 	int aux_value1 = aux_Arrray_Declarations(child1->type);
@@ -592,8 +592,8 @@ void is_Mul_Div_Mod(Node * node)
 	Node * child1 = node->child;
 	Node * child2 = child1->brother;
 	char * type1aux, * type2aux;
-	type1aux = (char*)malloc(strlen(child1->type)+100);
-	type2aux = (char*)malloc(strlen(child2->type)+100);
+	type1aux = (char*)malloc(strlen(child1->type));
+	type2aux = (char*)malloc(strlen(child2->type));
 	strcpy(type1aux, child1->type);
 	strcpy(type2aux, child2->type);
 	int aux_value1 = aux_Arrray_Declarations(child1->type);
