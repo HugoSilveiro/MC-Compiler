@@ -442,33 +442,53 @@ void is_Add(Node * node)
 
 
 	if(child1 != NULL && child2 != NULL){
+		//printf("%s\n%s\n", child1->type, child2->type);
 		if(strcmp(child1->type, "int") == 0 && strcmp(child2->type, "char") == 0){
+			if(DEBUG_A)printf("int && char\n");
 			node->type = child1->type;
 		}
 		else if(strcmp(child1->type, "char") == 0 && strcmp(child2->type, "int") == 0){
-			node->type = child1->type;
+			if(DEBUG_A)printf("char && int\n");
+			node->type = child2->type;
 		}
 		else if(strcmp(child1->type, "int") == 0 && strcmp(child2->type, "int") == 0){
+			if(DEBUG_A)printf("int && int\n");
 			node->type = child1->type;
 		}
 		else if(strcmp(child1->type, "char") == 0 && strcmp(child2->type, "char") == 0){
+			if(DEBUG_A)printf("char && char\n");
 			node->type = "int";
 		}
-		else if(strcmp(child1->type, "int") == 0  && strcmp(child2->type, "int") != 0){
+		
+		else if(strcmp(child1->type, "int") == 0  && return_pointers(child2->type)>0){
+			if(DEBUG_A)printf("1-int 2-pointerr\n");
 			 node->type = child2->type;
 		}
-		else if(strcmp(child2->type, "int") == 0  && strcmp(child1->type, "int") != 0){
-			node->type =  child1->type;
-		}
+
+		
+	
 		else if(strcmp(child1->type, "char") == 0 && return_pointers(child2->type)>0){
+			if(DEBUG_A)printf("1-char  2-pointerr\n");
 			node->type = child2->type;
 		}
 		else if(strcmp(child2->type, "char") == 0 && return_pointers(child1->type)>0){
+			if(DEBUG_A)printf("1-pointer 2-char\n");
 			node->type = child1->type;
 		}
-		else{
-			node->type = "int";
+		
+		else if(strcmp(child2->type, "int") == 0  && return_pointers(child1->type)>0){
+			if(DEBUG_A)printf("1-pointer 2-int\n");
+			node->type =  child1->type;
+		}	
+
+		else if(strcmp(child1->type, child2->type)==0){
+			if(DEBUG_A)printf("igual\n");
+			node->type = child1->type;
 		}
+
+		
+		
+		
 	}
 	child1->type = type1aux;
 	child2->type = type2aux;
@@ -501,14 +521,14 @@ void is_Sub(Node * node)
 	if(DEBUG_A) printf("child1->type: %s\n", child1->value);
 	if(DEBUG_A) printf("child2->type: %s\n", child2->value);
 	if(child1 != NULL && child2 != NULL){
-		if(strcmp(child1->type, "int") == 0 && strcmp(child1->type, "char") == 0){
+		if(strcmp(child1->type, "int") == 0 && strcmp(child2->type, "char") == 0){
 			node->type = child1->type;
 		}
 		else if(strcmp(child1->type, child2->type) == 0){
 			node->type = "int";
 		}
 		else if(strcmp(child1->type, "char") == 0 && strcmp(child2->type, "int") == 0){
-			node->type = child1->type;
+			node->type = child2->type;
 		}
 		else if(strcmp(child1->type, "int") == 0 && strcmp(child2->type, "int") == 0){
 			node->type = child1->type;
@@ -519,12 +539,8 @@ void is_Sub(Node * node)
 		}
 		else if(return_pointers(child1->type) > 0 && strcmp(child2->type, "char") == 0){
 			node->type = child1->type;
-		}
-				
-		else{
-			// ERRO !!!!!!!!!!!!!!!! CORRIGIR
-			node->type = "int";
-		}
+		}				
+	
 	}
 	child1->type = type1aux;
 	child2->type = type2aux;
@@ -565,7 +581,7 @@ void is_Mul_Div_Mod(Node * node)
 
 	
 	if(child1 != NULL && child2 != NULL){
-		if(strcmp(child1->type, "int") == 0 && strcmp(child1->type, "int") == 0){
+		if(strcmp(child1->type, "int") == 0 && strcmp(child2->type, "int") == 0){
 			node->type = child1->type;
 		}
 		else if(strcmp(child1->type, "char") == 0 && strcmp(child2->type, "char") == 0){
@@ -577,10 +593,7 @@ void is_Mul_Div_Mod(Node * node)
 		else if(strcmp(child1->type, "char") == 0 && strcmp(child2->type, "int") == 0){
 			node->type = child2->type;
 		}
-		else{
-			// ERRO !!!!!!!!!!!!!!!! CORRIGIR
-			node->type = "int";
-		}
+		
 	}
 	child1->type = type1aux;
 	child2->type = type2aux;
@@ -597,11 +610,6 @@ void is_Plus_Minus(Node * node)
 		else if(strcmp(child1->type, "char") == 0 ){
 			node->type = "int";
 		}
-		
-		else{
-			// ERRO !!!!!!!!!!!!!!!! CORRIGIR
-			node->type = "int";
-		}
 	}
 
 }
@@ -611,11 +619,12 @@ int return_pointers(char * value)
 	if(DEBUG_A) printf("value: %s\n", value);
 	int i;
 	int n_pointers = 0;
-	for(i = 0; i < strlen(value)-1; i++){
+	for(i = 0; i < strlen(value); i++){
 		if(value[i] == '*'){
 			n_pointers++;
 		}
 	}
+	if(DEBUG_A)printf("n_pointers: %d\n", n_pointers);
 	return n_pointers;
 }
 

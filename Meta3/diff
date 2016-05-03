@@ -1,0 +1,73 @@
+Line 7, col 5: unterminated string constant
+===== Global Symbol Table =====
+atoi	int(char*)
+itoa	char*(int,char*)
+puts	int(char*)
+main	void(void)
+
+===== Function main Symbol Table =====
+return	void
+a	int
+b	int
+c	char
+d	char
+e	char*
+
+Program
+..FuncDefinition
+....Void
+....Id(main)
+....ParamList
+......ParamDeclaration
+........Void
+....FuncBody
+......Declaration
+........Int
+........Id(a)
+......Declaration
+........Int
+........Id(b)
+......Declaration
+........Char
+........Id(c)
+......Declaration
+........Char
+........Id(d)
+......Declaration
+........Char
+........Pointer
+........Id(e)
+......StrLit("a\n") - char[3]
+......StrLit("\"") - char[2]
+......StrLit("\'") - char[2]
+......StrLit("\101") - char[2]
+......StrLit("\0ola") - char[5]
+......StrLit("\181c") - char[5]
+......StrLit("\101c\012a") - char[5]
+......StrLit("\1012\012\073\09") - char[7]
+......ChrLit('a') - int
+......ChrLit('\\') - int
+......ChrLit('~') - int
+......ChrLit('\n') - int
+......ChrLit('\000') - int
+......Store - int
+........Id(a) - int
+........Id(c) - char
+......Store - char
+........Id(d) - char
+........Id(b) - int
+......Store - char*
+........Id(e) - char*
+........Id(a) - int
+......Store - int
+........Id(a) - int
+........Id(e) - char*
+......Comma - int
+........Comma - char
+..........Comma - char
+............Id(a) - int
+............Id(c) - char
+..........Comma - char
+............Id(e) - char*
+............Id(d) - char
+........Id(b) - int

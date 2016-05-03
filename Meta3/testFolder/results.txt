@@ -1,42 +1,496 @@
-[get_anoted_tree]
-FuncDefinition
-FuncDefinition
-[insert_function_definition]
-insert_function_funcBody
-check_inside_funcBody
-Declaration
-Store
-get_inside_operator
-[get_inside_id] node->value: a
-else: Sub
-[get_inside_funcBody] Id
-[get_inside_id] node->value: a
-[get_inside_funcBody] Sub
-get_inside_operator
+int
+int
+int
+char
+int
+char*
+int
+int**
+int
+void*
+char
+int
+char
+char
+char
+char*
+char
+int**
+char
+void*
+char*
+int
+char*
+char
+char*
+char*
+char*
+int**
+char*
+void*
+int**
+int
+int**
+char
+int**
+char*
+int**
+int**
+int**
+void*
+void*
+int
+void*
+char
+void*
+char*
+void*
+int**
+void*
+void*
 ===== Global Symbol Table =====
 atoi	int(char*)
 itoa	char*(int,char*)
 puts	int(char*)
-test	int(void)
+main	void(void)
 
-===== Function test Symbol Table =====
-return	int
-a	char*
+===== Function main Symbol Table =====
+return	void
+a	int
+b	char
+c	char*
+d	int**
+e	void*
 
 Program
 ..FuncDefinition
-....Int
-....Id(test)
+....Void
+....Id(main)
 ....ParamList
 ......ParamDeclaration
 ........Void
 ....FuncBody
 ......Declaration
+........Int
+........Id(a)
+......Declaration
+........Char
+........Id(b)
+......Declaration
 ........Char
 ........Pointer
-........Id(a)
-......Store - int
-........Id(a) - char*
-........Sub - int
-..........IntLit(5) - int
-..........IntLit(1) - int
+........Id(c)
+......Declaration
+........Int
+........Pointer
+........Pointer
+........Id(d)
+......Declaration
+........Void
+........Pointer
+........Id(e)
+......Add - int
+........Id(a) - int
+........Id(a) - int
+......Sub - int
+........Id(a) - int
+........Id(a) - int
+......Mul - int
+........Id(a) - int
+........Id(a) - int
+......Div - int
+........Id(a) - int
+........Id(a) - int
+......Mod - int
+........Id(a) - int
+........Id(a) - int
+......Add - int
+........Id(a) - int
+........Id(b) - char
+......Sub - int
+........Id(a) - int
+........Id(b) - char
+......Mul - int
+........Id(a) - int
+........Id(b) - char
+......Div - int
+........Id(a) - int
+........Id(b) - char
+......Mod - int
+........Id(a) - int
+........Id(b) - char
+......Add - char*
+........Id(a) - int
+........Id(c) - char*
+......Sub
+........Id(a) - int
+........Id(c) - char*
+......Mul
+........Id(a) - int
+........Id(c) - char*
+......Div
+........Id(a) - int
+........Id(c) - char*
+......Mod
+........Id(a) - int
+........Id(c) - char*
+......Add - int**
+........Id(a) - int
+........Id(d) - int**
+......Sub
+........Id(a) - int
+........Id(d) - int**
+......Mul
+........Id(a) - int
+........Id(d) - int**
+......Div
+........Id(a) - int
+........Id(d) - int**
+......Mod
+........Id(a) - int
+........Id(d) - int**
+......Add - void*
+........Id(a) - int
+........Id(e) - void*
+......Sub
+........Id(a) - int
+........Id(e) - void*
+......Mul
+........Id(a) - int
+........Id(e) - void*
+......Div
+........Id(a) - int
+........Id(e) - void*
+......Mod
+........Id(a) - int
+........Id(e) - void*
+......Not - int
+........Id(a) - int
+......Plus - int
+........Id(a) - int
+......Minus - int
+........Id(a) - int
+......Add - int
+........Id(b) - char
+........Id(a) - int
+......Sub - int
+........Id(b) - char
+........Id(a) - int
+......Mul - int
+........Id(b) - char
+........Id(a) - int
+......Div - int
+........Id(b) - char
+........Id(a) - int
+......Mod - int
+........Id(b) - char
+........Id(a) - int
+......Add - int
+........Id(b) - char
+........Id(b) - char
+......Sub - int
+........Id(b) - char
+........Id(b) - char
+......Mul - int
+........Id(b) - char
+........Id(b) - char
+......Div - int
+........Id(b) - char
+........Id(b) - char
+......Mod - int
+........Id(b) - char
+........Id(b) - char
+......Add - char*
+........Id(b) - char
+........Id(c) - char*
+......Sub
+........Id(b) - char
+........Id(c) - char*
+......Mul
+........Id(b) - char
+........Id(c) - char*
+......Div
+........Id(b) - char
+........Id(c) - char*
+......Mod
+........Id(b) - char
+........Id(c) - char*
+......Add - int**
+........Id(b) - char
+........Id(d) - int**
+......Sub
+........Id(b) - char
+........Id(d) - int**
+......Mul
+........Id(b) - char
+........Id(d) - int**
+......Div
+........Id(b) - char
+........Id(d) - int**
+......Mod
+........Id(b) - char
+........Id(d) - int**
+......Add - void*
+........Id(b) - char
+........Id(e) - void*
+......Sub
+........Id(b) - char
+........Id(e) - void*
+......Mul
+........Id(b) - char
+........Id(e) - void*
+......Div
+........Id(b) - char
+........Id(e) - void*
+......Mod
+........Id(b) - char
+........Id(e) - void*
+......Not - int
+........Id(b) - char
+......Plus - int
+........Id(b) - char
+......Minus - int
+........Id(b) - char
+......Add - char*
+........Id(c) - char*
+........Id(a) - int
+......Sub - char*
+........Id(c) - char*
+........Id(a) - int
+......Mul
+........Id(c) - char*
+........Id(a) - int
+......Div
+........Id(c) - char*
+........Id(a) - int
+......Mod
+........Id(c) - char*
+........Id(a) - int
+......Add - char*
+........Id(c) - char*
+........Id(b) - char
+......Sub - char*
+........Id(c) - char*
+........Id(b) - char
+......Mul
+........Id(c) - char*
+........Id(b) - char
+......Div
+........Id(c) - char*
+........Id(b) - char
+......Mod
+........Id(c) - char*
+........Id(b) - char
+......Add - char*
+........Id(c) - char*
+........Id(c) - char*
+......Sub - int
+........Id(c) - char*
+........Id(c) - char*
+......Mul
+........Id(c) - char*
+........Id(c) - char*
+......Div
+........Id(c) - char*
+........Id(c) - char*
+......Mod
+........Id(c) - char*
+........Id(c) - char*
+......Add
+........Id(c) - char*
+........Id(d) - int**
+......Sub
+........Id(c) - char*
+........Id(d) - int**
+......Mul
+........Id(c) - char*
+........Id(d) - int**
+......Div
+........Id(c) - char*
+........Id(d) - int**
+......Mod
+........Id(c) - char*
+........Id(d) - int**
+......Add
+........Id(c) - char*
+........Id(e) - void*
+......Sub
+........Id(c) - char*
+........Id(e) - void*
+......Mul
+........Id(c) - char*
+........Id(e) - void*
+......Div
+........Id(c) - char*
+........Id(e) - void*
+......Mod
+........Id(c) - char*
+........Id(e) - void*
+......Not - int
+........Id(c) - char*
+......Plus
+........Id(c) - char*
+......Minus
+........Id(c) - char*
+......Add - int**
+........Id(d) - int**
+........Id(a) - int
+......Sub - int**
+........Id(d) - int**
+........Id(a) - int
+......Mul
+........Id(d) - int**
+........Id(a) - int
+......Div
+........Id(d) - int**
+........Id(a) - int
+......Mod
+........Id(d) - int**
+........Id(a) - int
+......Add - int**
+........Id(d) - int**
+........Id(b) - char
+......Sub - int**
+........Id(d) - int**
+........Id(b) - char
+......Mul
+........Id(d) - int**
+........Id(b) - char
+......Div
+........Id(d) - int**
+........Id(b) - char
+......Mod
+........Id(d) - int**
+........Id(b) - char
+......Add
+........Id(d) - int**
+........Id(c) - char*
+......Sub
+........Id(d) - int**
+........Id(c) - char*
+......Mul
+........Id(d) - int**
+........Id(c) - char*
+......Div
+........Id(d) - int**
+........Id(c) - char*
+......Mod
+........Id(d) - int**
+........Id(c) - char*
+......Add - int**
+........Id(d) - int**
+........Id(d) - int**
+......Sub - int
+........Id(d) - int**
+........Id(d) - int**
+......Mul
+........Id(d) - int**
+........Id(d) - int**
+......Div
+........Id(d) - int**
+........Id(d) - int**
+......Mod
+........Id(d) - int**
+........Id(d) - int**
+......Add
+........Id(d) - int**
+........Id(e) - void*
+......Sub
+........Id(d) - int**
+........Id(e) - void*
+......Mul
+........Id(d) - int**
+........Id(e) - void*
+......Div
+........Id(d) - int**
+........Id(e) - void*
+......Mod
+........Id(d) - int**
+........Id(e) - void*
+......Not - int
+........Id(d) - int**
+......Plus
+........Id(d) - int**
+......Minus
+........Id(d) - int**
+......Add - void*
+........Id(e) - void*
+........Id(a) - int
+......Sub - void*
+........Id(e) - void*
+........Id(a) - int
+......Mul
+........Id(e) - void*
+........Id(a) - int
+......Div
+........Id(e) - void*
+........Id(a) - int
+......Mod
+........Id(e) - void*
+........Id(a) - int
+......Add - void*
+........Id(e) - void*
+........Id(b) - char
+......Sub - void*
+........Id(e) - void*
+........Id(b) - char
+......Mul
+........Id(e) - void*
+........Id(b) - char
+......Div
+........Id(e) - void*
+........Id(b) - char
+......Mod
+........Id(e) - void*
+........Id(b) - char
+......Add
+........Id(e) - void*
+........Id(c) - char*
+......Sub
+........Id(e) - void*
+........Id(c) - char*
+......Mul
+........Id(e) - void*
+........Id(c) - char*
+......Div
+........Id(e) - void*
+........Id(c) - char*
+......Mod
+........Id(e) - void*
+........Id(c) - char*
+......Add
+........Id(e) - void*
+........Id(d) - int**
+......Sub
+........Id(e) - void*
+........Id(d) - int**
+......Mul
+........Id(e) - void*
+........Id(d) - int**
+......Div
+........Id(e) - void*
+........Id(d) - int**
+......Mod
+........Id(e) - void*
+........Id(d) - int**
+......Add - void*
+........Id(e) - void*
+........Id(e) - void*
+......Sub - int
+........Id(e) - void*
+........Id(e) - void*
+......Mul
+........Id(e) - void*
+........Id(e) - void*
+......Div
+........Id(e) - void*
+........Id(e) - void*
+......Mod
+........Id(e) - void*
+........Id(e) - void*
+......Not - int
+........Id(e) - void*
+......Plus
+........Id(e) - void*
+......Minus
+........Id(e) - void*
