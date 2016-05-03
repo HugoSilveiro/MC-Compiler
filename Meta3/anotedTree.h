@@ -59,3 +59,5 @@ void is_Plus_Minus(Node * node);
 //NUMBER OF POINTERS
 
 int return_pointers(char * value);
+
+int aux_Arrray_Declarations(char * value);
