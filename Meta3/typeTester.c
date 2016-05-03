@@ -22,7 +22,7 @@ int main()
     int* d;
     void* e;
 
-       printf("%s\n", typename(!e) );
+       printf("%s\n", typename(e||e));
     //printf("%s\n", typename(+e) );
     //printf("%s\n", typename(-e) );
 
