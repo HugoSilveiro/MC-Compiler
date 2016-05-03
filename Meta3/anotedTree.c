@@ -392,12 +392,9 @@ void is_Add(Node * node)
 	//printf("child1: %s\n", node->child->type);
 	Node * child1 = node->child;
 	Node * child2 = child1->brother;
-	//printf("child1: %s\n", child1->type);
-	//printf("child2: %s\n", child2->type);
+	int aux_value1;
+	int aux_value2;
 	char * type1aux, * type2aux;
-	
-	int aux_value1 = aux_Arrray_Declarations(child1->type);
-	int aux_value2 = aux_Arrray_Declarations(child2->type);
 
 	//printf("aux_value1: %d\n", aux_value1);
 	//printf("aux_value2: %d\n", aux_value2);
@@ -408,8 +405,16 @@ void is_Add(Node * node)
 	
 	//printf("aux_value2: %d\n", aux_value2);
 
-	aux_pointer(child1, aux_value1);
-	aux_pointer(child2, aux_value2);
+	if(child1->type != NULL){
+		aux_value1 = aux_Arrray_Declarations(child1->type);
+		aux_pointer(child1, aux_value1);	
+	}
+	if(child2->type != NULL){
+		aux_value2 = aux_Arrray_Declarations(child2->type);
+		aux_pointer(child2, aux_value2);	
+	}
+		
+
 
 	if(child1 != NULL && child2 != NULL){
 		if(strcmp(child1->type, "int") == 0 && strcmp(child1->type, "char") == 0){
@@ -440,15 +445,24 @@ void is_Sub(Node * node)
 {
 	Node * child1 = node->child;
 	Node * child2 = child1->brother;
+	int aux_value1;
+	int aux_value2;
 	char * type1aux, * type2aux;
 
 	type1aux = strdup(child1->type);
 	type2aux = strdup(child2->type);
-	int aux_value1 = aux_Arrray_Declarations(child1->type);
-	int aux_value2 = aux_Arrray_Declarations(child2->type);
 
-	aux_pointer(child1, aux_value1);
-	aux_pointer(child2, aux_value2);
+
+	if(child1->type != NULL){
+		aux_value1 = aux_Arrray_Declarations(child1->type);
+		aux_pointer(child1, aux_value1);	
+	}
+	if(child2->type != NULL){
+		aux_value2 = aux_Arrray_Declarations(child2->type);
+		aux_pointer(child2, aux_value2);	
+	}
+
+
 	
 	if(DEBUG_A) printf("child1->type: %s\n", child1->value);
 	if(DEBUG_A) printf("child2->type: %s\n", child2->value);
@@ -494,14 +508,23 @@ void is_Mul_Div_Mod(Node * node)
 {
 	Node * child1 = node->child;
 	Node * child2 = child1->brother;
+	int aux_value1;
+	int aux_value2;
 	char * type1aux, * type2aux;
+
+
 	type1aux = strdup(child1->type);
 	type2aux = strdup(child2->type);
-	int aux_value1 = aux_Arrray_Declarations(child1->type);
-	int aux_value2 = aux_Arrray_Declarations(child2->type);
 
-	aux_pointer(child1, aux_value1);
-	aux_pointer(child2, aux_value2);
+	if(child1->type != NULL){
+		aux_value1 = aux_Arrray_Declarations(child1->type);
+		aux_pointer(child1, aux_value1);	
+	}
+	if(child2->type != NULL){
+		aux_value2 = aux_Arrray_Declarations(child2->type);
+		aux_pointer(child2, aux_value2);	
+	}
+
 	
 	if(child1 != NULL && child2 != NULL){
 		if(strcmp(child1->type, "int") == 0 && strcmp(child1->type, "int") == 0){
