@@ -353,6 +353,7 @@ void get_inside_funcBody(Node * node)
 }
 char * get_type_without_array(char * type)
 {
+	if(DEBUG_A) printf("get_type_without_array\n");
 	int i;
 	char * aux = (char*)malloc(strlen(type));
 	for(i = 0; i < strlen(type)-1; i++){
@@ -369,6 +370,7 @@ char * get_type_without_array(char * type)
 
 void aux_pointer(Node* node, int aux_value)
 {
+	if(DEBUG_A)printf("node->type: %s\n", node->type);
 	if(node!=NULL)
 	{
 		char * aux1 = NULL;
@@ -632,15 +634,34 @@ int return_pointers(char * value)
 
 void get_inside_comma(Node * node)
 {
+	if(DEBUG_A)printf("get_inside_comma\n");
 	Node * temp1;
 	temp1 = node->child;
-
+	char * aux;
+	int n_pointers = 0;
 	if(temp1!=NULL)
 	{
 		Node * temp2 = temp1->brother;
 		if(temp2 != NULL)
 		{
-			node->type = temp2->type;
+			
+			n_pointers = aux_Arrray_Declarations(temp2->type);
+			if(DEBUG_A) printf("n_pointers: %d\n", n_pointers);
+			if(DEBUG_A) printf("node->type: %s\n", temp2->type);
+
+			if(n_pointers>0){
+				//aux = (char*)malloc(strlen(temp2->type));
+				aux = strdup(temp2->type); 
+				aux_pointer(temp2, n_pointers);
+				node->type = temp2->type;
+				temp2->type = strdup(aux);	
+			}
+			else{
+				node->type = temp2->type;	
+			}
+			
+			//node->type = temp2->type;
+			
 		}
 	}
 
