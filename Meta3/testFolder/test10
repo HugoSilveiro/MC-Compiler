@@ -1,5 +1,5 @@
 int test(char* argv){
-	char buffer[20];
-	5 - buffer;
+	void * buffer[20];
+	5 + buffer;
 	
 }

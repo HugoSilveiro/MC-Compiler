@@ -377,7 +377,16 @@ void aux_pointer(Node* node, int aux_value)
 				aux1 = concat(aux1, "*");
 			}
 		}
+		else if(node->type[0] == 'v'){
+			aux1 = (char*)malloc(strlen("void")+1);
+			strcpy(aux1, "void");
+			int i;
+			for(i = 0; i < aux_value; i++){
+				aux1 = concat(aux1, "*");
+			}
+		}
 		node->type = aux1;
+		//printf("node->type: %s\n", node->type);
 		if(DEBUG_A)printf("aux1: %s\n", aux1);
 	}	
 	}
@@ -407,10 +416,12 @@ void is_Add(Node * node)
 
 	if(child1->type != NULL){
 		aux_value1 = aux_Arrray_Declarations(child1->type);
+		//printf("%d\n", aux_value1);
 		aux_pointer(child1, aux_value1);	
 	}
 	if(child2->type != NULL){
 		aux_value2 = aux_Arrray_Declarations(child2->type);
+		//printf("%d\n", aux_value2);
 		aux_pointer(child2, aux_value2);	
 	}
 		
@@ -493,7 +504,7 @@ void is_Sub(Node * node)
 }
 int aux_Arrray_Declarations(char * value)
 {
-	if(DEBUG_A) printf("value: %s\n", value);
+	//printf("value: %s\n", value);
 	int n_pointers=0;
 	int i;
 	for(i =0; i < strlen(value)-1; i++){
@@ -501,7 +512,7 @@ int aux_Arrray_Declarations(char * value)
 			n_pointers++;
 		}
 	}
-	if(DEBUG_A) printf("n_pointers: %d\n", n_pointers);
+	//printf("n_pointers: %d\n", n_pointers);
 	return n_pointers;
 }
 void is_Mul_Div_Mod(Node * node)
