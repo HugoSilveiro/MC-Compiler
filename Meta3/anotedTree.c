@@ -369,47 +369,49 @@ void is_Add(Node * node)
 	int aux_value1 = aux_Arrray_Declarations(child1->type);
 	int aux_value2 = aux_Arrray_Declarations(child2->type);
 	if(aux_value1>0){
-		printf("aux_value: %d\n", aux_value1);
+		if(DEBUG_A)printf("aux_value: %d\n", aux_value1);
 		if(child1->type[0] == 'i'){
-			aux1 = (char*)malloc(strlen("int")+sizeof(aux_value1));
-			aux1 = concat(aux1, "int");
+			aux1 = (char*)malloc(strlen("int")+1);
+			strcpy(aux1, "int");
 			int i;
 			for(i = 0; i < aux_value1; i++){
 				aux1 = concat(aux1, "*");
 			}
-			aux1[strlen(aux1)-1] = '\0';
+			aux1[strlen(aux1)] = '\0';
 
 		}
 		else if(child1->type[0] == 'c'){
-			aux1 = (char*)malloc(strlen("char")+sizeof(aux_value1));
-			aux1 = concat(aux1, "char");
+			aux1 = (char*)malloc(strlen("char")+1);
+			strcpy(aux1, "char");
 			int i;
 			for(i = 0; i < aux_value1; i++){
 				aux1 = concat(aux1, "*");
 			}
-			aux1[strlen(aux1)-1] = '\0';
+			aux1[strlen(aux1)] = '\0';
 		}
 		child1->type = aux1;
-		printf("aux1: %s\n", aux1);
+		if(DEBUG_A)printf("aux1: %s\n", aux1);
 	}
 	if(aux_value2>0){
 		if(child2->type[0] == 'i'){
-			aux2 = (char*)malloc(strlen("int")+sizeof(aux_value1));
-			aux2 = concat(aux2, "int");
+			aux2 = (char*)malloc(strlen("int")+1);
+			strcpy(aux2, "int");
 			int i;
 			for(i = 0; i < aux_value1; i++){
 				aux2 = concat(aux2, "*");
 			}
-			aux2[strlen(aux2)-1] = '\0';
+			aux1[strlen(aux1)] = '\0';
+			
 		}
 		else if(child2->type[0] == 'c'){
-			aux2 = (char*)malloc(strlen("char")+sizeof(aux_value1));
-			aux2= concat(aux2, "char");
+			aux2 = (char*)malloc(strlen("char")+1);
+			strcpy(aux2, "char");
 			int i;
 			for(i = 0; i < aux_value2; i++){
 				aux2 = concat(aux2, "*");
 			}
-			aux2[strlen(aux2)-1] = '\0';
+			aux1[strlen(aux1)] = '\0';
+			
 		}
 		child2->type = aux2;
 	}
