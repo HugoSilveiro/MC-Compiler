@@ -63,3 +63,5 @@ int return_pointers(char * value);
 int aux_Arrray_Declarations(char * value);
 
 void aux_pointer(Node* node, int aux_value);
+
+char * get_type_without_array(char * type);

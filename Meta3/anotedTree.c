@@ -351,6 +351,20 @@ void get_inside_funcBody(Node * node)
 	}
 
 }
+char * get_type_without_array(char * type)
+{
+	int i;
+	char * aux = (char*)malloc(strlen(type));
+	for(i = 0; i < strlen(type)-1; i++){
+		if(type[i] != '['){
+			aux[i] = type[i];
+		}
+		else{
+			return aux;
+		}
+	}
+	return type;
+}
 
 
 void aux_pointer(Node* node, int aux_value)
@@ -362,7 +376,7 @@ void aux_pointer(Node* node, int aux_value)
 		if(DEBUG_A)printf("aux_value: %d\n", aux_value);
 		if(node->type[0] == 'i'){
 			aux1 = (char*)malloc(strlen("int")+1);
-			strcpy(aux1, "int");
+			strcpy(aux1, get_type_without_array(node->type));
 			int i;
 			for(i = 0; i < aux_value; i++){
 				aux1 = concat(aux1, "*");
@@ -371,7 +385,7 @@ void aux_pointer(Node* node, int aux_value)
 		}
 		else if(node->type[0] == 'c'){
 			aux1 = (char*)malloc(strlen("char")+1);
-			strcpy(aux1, "char");
+			strcpy(aux1, get_type_without_array(node->type));
 			int i;
 			for(i = 0; i < aux_value; i++){
 				aux1 = concat(aux1, "*");
@@ -379,7 +393,7 @@ void aux_pointer(Node* node, int aux_value)
 		}
 		else if(node->type[0] == 'v'){
 			aux1 = (char*)malloc(strlen("void")+1);
-			strcpy(aux1, "void");
+			strcpy(aux1, get_type_without_array(node->type));
 			int i;
 			for(i = 0; i < aux_value; i++){
 				aux1 = concat(aux1, "*");
