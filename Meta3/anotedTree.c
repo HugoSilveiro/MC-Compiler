@@ -442,11 +442,11 @@ void is_Add(Node * node)
 
 
 	if(child1 != NULL && child2 != NULL){
-		if(strcmp(child1->type, "int") == 0 && strcmp(child1->type, "char") == 0){
+		if(strcmp(child1->type, "int") == 0 && strcmp(child2->type, "char") == 0){
 			node->type = child1->type;
 		}
 		else if(strcmp(child1->type, "char") == 0 && strcmp(child2->type, "int") == 0){
-			node->type = child1->type;
+			node->type = child2->type;
 		}
 		else if(strcmp(child1->type, "int") == 0 && strcmp(child2->type, "int") == 0){
 			node->type = child1->type;
@@ -457,9 +457,10 @@ void is_Add(Node * node)
 		else if(strcmp(child2->type, "int") == 0  && strcmp(child1->type, "int") != 0){
 			node->type =  child1->type;
 		}
-		else{
+		else if(strcmp(child1->type, "char") == 0 && strcmp(child2->type, "char") == 0){
 			node->type = "int";
 		}
+		
 	}
 	child1->type = type1aux;
 	child2->type = type2aux;
@@ -492,14 +493,14 @@ void is_Sub(Node * node)
 	if(DEBUG_A) printf("child1->type: %s\n", child1->value);
 	if(DEBUG_A) printf("child2->type: %s\n", child2->value);
 	if(child1 != NULL && child2 != NULL){
-		if(strcmp(child1->type, "int") == 0 && strcmp(child1->type, "char") == 0){
+		if(strcmp(child1->type, "int") == 0 && strcmp(child2->type, "char") == 0){
 			node->type = child1->type;
 		}
 		else if(strcmp(child1->type, child2->type) == 0){
 			node->type = "int";
 		}
 		else if(strcmp(child1->type, "char") == 0 && strcmp(child2->type, "int") == 0){
-			node->type = child1->type;
+			node->type = child2->type;
 		}
 		else if(strcmp(child1->type, "int") == 0 && strcmp(child2->type, "int") == 0){
 			node->type = child1->type;
@@ -508,10 +509,7 @@ void is_Sub(Node * node)
 		else if(return_pointers(child1->type) > 0){
 			node->type = child1->type;
 		}
-		else{
-			// ERRO !!!!!!!!!!!!!!!! CORRIGIR
-			node->type = "int";
-		}
+		
 	}
 	child1->type = type1aux;
 	child2->type = type2aux;
@@ -552,7 +550,7 @@ void is_Mul_Div_Mod(Node * node)
 
 	
 	if(child1 != NULL && child2 != NULL){
-		if(strcmp(child1->type, "int") == 0 && strcmp(child1->type, "int") == 0){
+		if(strcmp(child1->type, "int") == 0 && strcmp(child2->type, "int") == 0){
 			node->type = child1->type;
 		}
 		else if(strcmp(child1->type, "char") == 0 && strcmp(child2->type, "char") == 0){
@@ -564,10 +562,7 @@ void is_Mul_Div_Mod(Node * node)
 		else if(strcmp(child1->type, "char") == 0 && strcmp(child2->type, "int") == 0){
 			node->type = child2->type;
 		}
-		else{
-			// ERRO !!!!!!!!!!!!!!!! CORRIGIR
-			node->type = "int";
-		}
+		
 	}
 	child1->type = type1aux;
 	child2->type = type2aux;
@@ -582,11 +577,6 @@ void is_Plus_Minus(Node * node)
 			node->type = child1->type;
 		}
 		else if(strcmp(child1->type, "char") == 0 ){
-			node->type = "int";
-		}
-		
-		else{
-			// ERRO !!!!!!!!!!!!!!!! CORRIGIR
 			node->type = "int";
 		}
 	}
