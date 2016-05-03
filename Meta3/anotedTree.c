@@ -349,6 +349,7 @@ void get_inside_funcBody(Node * node)
 		
 		temp = temp->brother;
 	}
+
 }
 
 
@@ -360,6 +361,58 @@ void is_Add(Node * node)
 {
 	Node * child1 = node->child;
 	Node * child2 = child1->brother;
+	char * aux1 = NULL, * aux2 = NULL, *type1aux, *type2aux;
+	type1aux = (char*)malloc(strlen(child1->type)+100);
+	type2aux = (char*)malloc(strlen(child2->type)+100);
+	strcpy(type1aux, child1->type);
+	strcpy(type2aux, child2->type);
+	int aux_value1 = aux_Arrray_Declarations(child1->type);
+	int aux_value2 = aux_Arrray_Declarations(child2->type);
+	if(aux_value1>0){
+		printf("aux_value: %d\n", aux_value1);
+		if(child1->type[0] == 'i'){
+			aux1 = (char*)malloc(strlen("int")+sizeof(aux_value1));
+			aux1 = concat(aux1, "int");
+			int i;
+			for(i = 0; i < aux_value1; i++){
+				aux1 = concat(aux1, "*");
+			}
+			aux1[strlen(aux1)-1] = '\0';
+
+		}
+		else if(child1->type[0] == 'c'){
+			aux1 = (char*)malloc(strlen("char")+sizeof(aux_value1));
+			aux1 = concat(aux1, "char");
+			int i;
+			for(i = 0; i < aux_value1; i++){
+				aux1 = concat(aux1, "*");
+			}
+			aux1[strlen(aux1)-1] = '\0';
+		}
+		child1->type = aux1;
+		printf("aux1: %s\n", aux1);
+	}
+	if(aux_value2>0){
+		if(child2->type[0] == 'i'){
+			aux2 = (char*)malloc(strlen("int")+sizeof(aux_value1));
+			aux2 = concat(aux2, "int");
+			int i;
+			for(i = 0; i < aux_value1; i++){
+				aux2 = concat(aux2, "*");
+			}
+			aux2[strlen(aux2)-1] = '\0';
+		}
+		else if(child2->type[0] == 'c'){
+			aux2 = (char*)malloc(strlen("char")+sizeof(aux_value1));
+			aux2= concat(aux2, "char");
+			int i;
+			for(i = 0; i < aux_value2; i++){
+				aux2 = concat(aux2, "*");
+			}
+			aux2[strlen(aux2)-1] = '\0';
+		}
+		child2->type = aux2;
+	}
 
 	if(child1 != NULL && child2 != NULL){
 		if(strcmp(child1->type, "int") == 0 && strcmp(child1->type, "char") == 0){
@@ -380,13 +433,65 @@ void is_Add(Node * node)
 		else{
 			node->type = "int";
 		}
-	}	
+	}
+	child1->type = type1aux;
+	child2->type = type2aux;
+
 }
 
 void is_Sub(Node * node)
 {
 	Node * child1 = node->child;
 	Node * child2 = child1->brother;
+	char * aux1 = NULL, * aux2 = NULL , *type1aux, *type2aux;
+	type1aux = (char*)malloc(strlen(child1->type)+100);
+	type2aux = (char*)malloc(strlen(child2->type)+100);
+	strcpy(type1aux, child1->type);
+	strcpy(type2aux, child2->type);
+	int aux_value1 = aux_Arrray_Declarations(child1->type);
+	int aux_value2 = aux_Arrray_Declarations(child2->type);
+	if(aux_value1>0){
+		if(child1->type[0] == 'i'){
+			aux1 = (char*)malloc(strlen("int")+sizeof(aux_value1));
+			strcat(aux1, "int");
+			int i;
+			for(i = 0; i < aux_value1; i++){
+				strcat(aux1, "*");
+			}
+			aux1[strlen(aux1)-1] = '\0';
+		}
+		else if(child1->type[0] == 'c'){
+			aux1 = (char*)malloc(strlen("char")+sizeof(aux_value1));
+			strcat(aux1, "char");
+			int i;
+			for(i = 0; i < aux_value1; i++){
+				strcat(aux1, "*");
+			}
+			aux1[strlen(aux1)-1] = '\0';
+		}
+		child1->type = aux1;
+	}
+	if(aux_value2>0){
+		if(child2->type[0] == 'i'){
+			aux2 = (char*)malloc(strlen("int")+sizeof(aux_value1));
+			strcat(aux2, "int");
+			int i;
+			for(i = 0; i < aux_value2; i++){
+				strcat(aux2, "*");
+			}
+			aux2[strlen(aux2)-1] = '\0';
+		}
+		else if(child2->type[0] == 'c'){
+			aux2 = (char*)malloc(strlen("char")+sizeof(aux_value1));
+			strcat(aux2, "char");
+			int i;
+			for(i = 0; i < aux_value2; i++){
+				strcat(aux2, "*");
+			}
+			aux2[strlen(aux2)-1] = '\0';
+		}
+		child2->type = aux2;
+	}
 	if(DEBUG_A) printf("child1->type: %s\n", child1->value);
 	if(DEBUG_A) printf("child2->type: %s\n", child2->value);
 	if(child1 != NULL && child2 != NULL){
@@ -411,22 +516,76 @@ void is_Sub(Node * node)
 			node->type = "int";
 		}
 	}
+	child1->type = type1aux;
+	child2->type = type2aux;
 }
 int aux_Arrray_Declarations(char * value)
 {
-	int n_pointers;
+	if(DEBUG_A) printf("value: %s\n", value);
+	int n_pointers=0;
 	int i;
 	for(i =0; i < strlen(value); i++){
 		if(value[i] == '['){
 			n_pointers++;
 		}
 	}
+	if(DEBUG_A) printf("n_pointers: %d\n", n_pointers);
 	return n_pointers;
 }
 void is_Mul_Div_Mod(Node * node)
 {
 	Node * child1 = node->child;
 	Node * child2 = child1->brother;
+	char * aux1 = NULL, * aux2 = NULL, *type1aux, *type2aux;
+	type1aux = (char*)malloc(strlen(child1->type)+100);
+	type2aux = (char*)malloc(strlen(child2->type)+100);
+	strcpy(type1aux, child1->type);
+	strcpy(type2aux, child2->type);
+	int aux_value1 = aux_Arrray_Declarations(child1->type);
+	int aux_value2 = aux_Arrray_Declarations(child2->type);
+	if(aux_value1>0){
+		if(child1->type[0] == 'i'){
+			aux1 = (char*)malloc(strlen("int")+sizeof(aux_value1));
+			strcat(aux1, "int");
+			int i;
+			for(i = 0; i < aux_value1; i++){
+				strcat(aux1, "*");
+			}
+			aux1[strlen(aux1)-1] = '\0';
+		}
+		else if(child1->type[0] == 'c'){
+			aux1 = (char*)malloc(strlen("char")+sizeof(aux_value1));
+			strcat(aux1, "char");
+			int i;
+			for(i = 0; i < aux_value1; i++){
+				strcat(aux1, "*");
+			}
+			aux1[strlen(aux1)-1] = '\0';
+		}
+		child1->type = aux1;
+	}
+	if(aux_value2>0){
+		if(child2->type[0] == 'i'){
+			aux2 = (char*)malloc(strlen("int")+sizeof(aux_value1));
+			strcat(aux2, "int");
+			int i;
+			for(i = 0; i < aux_value2; i++){
+				strcat(aux2, "*");
+			}
+			aux2[strlen(aux2)-1] = '\0';
+		}
+		else if(child2->type[0] == 'c'){
+			aux2 = (char*)malloc(strlen("char")+sizeof(aux_value1));
+			strcat(aux2, "char");
+			int i;
+			for(i = 0; i < aux_value2; i++){
+				strcat(aux2, "*");
+			}
+			aux2[strlen(aux2)-1] = '\0';
+		}
+		child2->type = aux2;
+	}
+
 	if(child1 != NULL && child2 != NULL){
 		if(strcmp(child1->type, "int") == 0 && strcmp(child1->type, "int") == 0){
 			node->type = child1->type;
@@ -445,6 +604,8 @@ void is_Mul_Div_Mod(Node * node)
 			node->type = "int";
 		}
 	}
+	child1->type = type1aux;
+	child2->type = type2aux;
 }
 
 void is_Plus_Minus(Node * node)
