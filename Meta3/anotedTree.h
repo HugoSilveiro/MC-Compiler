@@ -61,3 +61,5 @@ void is_Plus_Minus(Node * node);
 int return_pointers(char * value);
 
 int aux_Arrray_Declarations(char * value);
+
+void aux_pointer(Node* node, int aux_value);
