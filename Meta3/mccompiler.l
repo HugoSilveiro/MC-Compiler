@@ -7,7 +7,7 @@ STRLIT			"\""(([^"\\\n]|{ESCAPE})*)"\""
 CHRLIT			("'"([^'\\\n]|{ESCAPE})"'")
 
 
-NOSTRLIT 		\"([^\"\n]|{ESCAPE})*
+NOSTRLIT 		\"([^\"\n\\]|{ESCAPE})*
 NOCHRLIT		\'({ESCAPE}*|(\\.|[^'\n\\]))*\\?
 
 INVALIDCHR		\'([^'\n\\]|{NOTESCAPE})*\'
