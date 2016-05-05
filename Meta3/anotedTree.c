@@ -784,58 +784,44 @@ void get_inside_strlit(Node * node)
 	node->type = aux;	
 }
 	
-int is_escape3(char a, char b, char c)
-{
-	int value = 0;
-	if(isdigit(a)&& a-'0'<=7 )
-	{
-		value++;
-		if(isdigit(b)&& b-'0'<=7)
-		{
-			value++;
-			if(isdigit(c) && c-'0' <=7)
-			{
-				value++;
-			}
-		}
-	}
-	return value;
+
+int parse_strlit(char* str) {
+    int size = 0;
+    int flag = 0;
+    int  i;
+    for(i = 0; i < strlen(str); i++) {
+
+        if(flag == 0) {
+            size++;
+
+            if(str[i] == '\\') {
+                flag++;
+            }
+        } else {
+            if( flag == 1 && (str[i] == 'n' || str[i] == 't' || str[i] == '\\' || str[i] == '\'' || str[i] == '\"') ) {
+                flag = 0;
+            } else if(flag == 4) {
+                if(str[i] == '\\') {
+                    flag = 1;
+                } else {
+                    flag = 0;
+                }
+
+                size++;
+            } else if(isdigit(str[i]) &&   str[i]-'0' <= 7) {
+                flag++;
+            } else {
+                if(str[i] == '\\') {
+                    flag = 1;
+                } else {
+                    flag = 0;
+                }
+
+                size++;
+            }
+        }
+
+    }
+
+    return size - 1;
 }
-
-int parse_strlit(char * string)
-{
-	int scape2 = 0;
-	int scape3 = 0;
-
-	int length = strlen(string)-1;
-	int i;
-	for(i = 0;i<length-1;i++)
-	{
-		if(string[i]=='\\')
-		{
-			if(string[i+1] == 'n' || string[i+1] == 't' || string[i+1] == '\'' || string[i+1] == '"' || string[i+1] == '\\')
-			{
-				scape2++;
-			}
-		}
-	}
-
-	for(i = 0;i<length-2;i++)
-	{
-		if(string[i]=='\\')
-		{
-			int value =is_escape3(string[i+1], string[i+2], string[i+3]); 
-			if(value!=0)
-			{
-				scape3=scape3+value;
-			}
-		}
-	}
-
-	length = length -scape2-scape3;
-	return length;
-}
-
-
-
-

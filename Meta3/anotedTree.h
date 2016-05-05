@@ -35,9 +35,7 @@ char * get_operator_type_result(Node * node);
 
 void get_inside_addr(Node * node);
 
-int is_escape3(char a, char b, char c);
-
-int parse_strlit(char * string);
+int parse_strlit(char* str) ;
 
 void get_inside_comma(Node * node);
 
